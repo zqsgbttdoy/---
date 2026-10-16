@@ -1,0 +1,309 @@
+/* ==========================================================
+ * 监理现场管理系统 - 移动端响应式覆盖
+ * 依赖: assets/style.css(必须先引入,提供 @keyframes)
+ * 引入位置: 各页面 inline <style> 之后(本文件用 !important 覆盖)
+ * 断点: 1024px(平板/窄窗口)  768px(手机)  480px(小屏手机)
+ * 范围: 不适用 welcome.html(该页使用 .topbar 顶栏导航体系)
+ * ========================================================== */
+
+/* ==========================================================
+ * 全局默认:隐藏 JS 动态注入的移动端专属元素
+ * 避免在桌面(>768)与平板(901-1024)上出现多余的汉堡按钮与遮罩层
+ * 依赖 .mobile-menu-btn / .sidebar-backdrop 仅在 ≤768 下被覆盖为可见
+ * ========================================================== */
+.mobile-menu-btn { display: none !important; }
+.sidebar-backdrop { display: none !important; }
+
+/* 桌面(>768)侧边栏需保持原始静态位置,避免被错改为抽屉隐藏 */
+@media (min-width: 769px) {
+    .sidebar { transform: none !important; }
+}
+
+/* ==========================================================
+ * @media 901px-1024px: 平板/小笔记本 — 侧边栏与主区自适应
+ * 仅做"侧边栏收窄 + 内容边距压缩",不切换汉堡菜单
+ * 覆盖类名来源: index.html / project-ledger.html / department-management.html
+ *               permission-settings.html / project-data-upload.html
+ * ========================================================== */
+@media (min-width: 901px) and (max-width: 1024px) {
+    .sidebar { width: 200px !important; }
+    .main { margin-left: 200px !important; }
+    .content { padding: 16px !important; }
+    .stats-grid { grid-template-columns: repeat(3, 1fr) !important; }
+    .quick-actions { grid-template-columns: repeat(3, 1fr) !important; }
+    /* 双列布局自动收缩(部门管理 / 项目资料上传 / 子项库) */
+    .layout { grid-template-columns: 240px 1fr !important; }
+    /* 通知面板/用户面板宽度自适应,避免右侧溢出 */
+    .notification-panel { width: calc(100vw - 32px); right: 0; }
+    .user-panel { width: calc(100vw - 32px); right: 0; }
+}
+
+/* ==========================================================
+ * @media ≤768px: 折叠侧边栏为抽屉,启用汉堡菜单
+ * ========================================================== */
+@media (max-width: 768px) {
+    /* ---- 侧边栏抽屉化 ---- */
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        width: 260px !important;
+        box-shadow: none;
+        z-index: 999;
+    }
+    .sidebar.mobile-open {
+        transform: translateX(0);
+        animation: sidebarSlideIn 0.25s ease;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ---- 汉堡按钮可见(initMobileMenu 在 .header-left 首部注入) ---- */
+    .mobile-menu-btn {
+        display: flex !important;
+        width: 44px;
+        height: 44px;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        color: #1E3A5F;
+        font-size: 22px;
+        margin-right: 4px;
+        flex-shrink: 0;
+        transition: background 0.15s;
+    }
+    .mobile-menu-btn:active { background: rgba(37, 99, 235, 0.1); }
+
+    /* ---- 遮罩层可见逻辑(默认在 .sidebar-backdrop.show 时显示) ---- */
+    .sidebar-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 998;
+        /* 这里不重复写 display 避免与全局隐藏冲突,由下面 .show 走重要位覆盖 */
+    }
+    .sidebar-backdrop.show {
+        display: block !important;
+        animation: backdropFade 0.2s ease;
+    }
+
+    /* ---- 主区域全宽 ---- */
+    .main { margin-left: 0 !important; }
+    body { min-width: 0 !important; }
+
+    /* ---- Header 压缩 ---- */
+    .header { padding: 0 12px !important; height: 56px !important; }
+    .header-left { gap: 8px !important; min-width: 0; flex: 1; }
+    .header-left h3 { font-size: 14px !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .header-right { gap: 8px !important; }
+    .breadcrumb { display: none; }
+    .user-name { display: none; }
+
+    /* ---- 内容区 ---- */
+    .content { padding: 16px 12px !important; }
+
+    /* ---- 网格布局折叠 ---- */
+    .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .panel-grid { grid-template-columns: 1fr !important; }
+    .bottom-grid { grid-template-columns: 1fr !important; }
+    .quick-actions { grid-template-columns: repeat(4, 1fr) !important; gap: 8px !important; }
+
+    /* 双列/三列表单行(常见:监理通知单/日记/巡检/旁站/日志/部门/人员/流程) */
+    .form-row,
+    .form-row-3,
+    .form-row-compact,
+    .form-row-3-compact,
+    .info-grid,
+    .info-grid-3,
+    .dept-info,
+    .flow-info,
+    .compare-grid,
+    .vc-field-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* 流程列表 / 视图元数据:2 列 */
+    .flow-list,
+    .view-meta {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    /* 左右两栏布局(项目台账/部门管理/资料上传/子项库)折叠为单列 */
+    .layout {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+    .tree-panel {
+        max-height: 220px;
+        overflow-y: auto;
+    }
+
+    /* ---- 工具栏 ---- */
+    .toolbar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+    }
+    .toolbar-left {
+        width: 100% !important;
+        flex-wrap: wrap;
+        gap: 8px !important;
+    }
+    .toolbar > div:not(.toolbar-left) {
+        width: 100%;
+        display: flex;
+        gap: 8px;
+    }
+    .toolbar > div:not(.toolbar-left) > .btn { flex: 1; justify-content: center; }
+    .search-box { flex: 1; min-width: 0; }
+    .search-box input { width: 100% !important; }
+    .filter-select { flex: 1; min-width: 100px; }
+
+    /* ---- 触摸目标 ≥ 44px ---- */
+    .btn,
+    .btn-sm,
+    .page-btn,
+    .menu-item,
+    .up-menu-item {
+        min-height: 44px;
+    }
+    .btn, .btn-sm {
+        padding: 10px 16px !important;
+        font-size: 13px !important;
+    }
+    .page-btn {
+        min-width: 40px;
+        width: auto;
+        padding: 0 10px;
+    }
+    .menu-item {
+        font-size: 14px !important;
+        padding: 12px 20px !important;
+    }
+    .sub-menu .menu-item {
+        padding-left: 44px !important;
+        font-size: 13px !important;
+    }
+
+    /* ---- 表单控件 ---- */
+    .form-control,
+    input[type="text"],
+    input[type="password"],
+    input[type="number"],
+    input[type="email"],
+    input[type="date"],
+    input[type="datetime-local"],
+    textarea,
+    select {
+        font-size: 16px !important; /* iOS Safari ≥16px 防止聚焦自动缩放 */
+        min-height: 44px;
+    }
+    textarea { min-height: 88px; }
+    .modal .form-group { margin-bottom: 14px !important; }
+    .modal .form-group label { font-size: 13px; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea { padding: 10px 12px !important; }
+
+    /* ---- 弹窗全屏化 ---- */
+    .modal-overlay { padding: 12px; }
+    .modal,
+    .confirm-modal .modal,
+    .avatar-modal-content,
+    .settings-modal-content {
+        width: 100% !important;
+        max-width: 560px;
+        max-height: calc(100vh - 24px) !important;
+    }
+    .modal-header,
+    .avatar-modal-header,
+    .settings-modal-header { padding: 14px 16px !important; }
+    .modal-body,
+    .avatar-modal-body,
+    .settings-modal-body { padding: 16px !important; }
+    .modal-footer,
+    .avatar-modal-footer,
+    .settings-modal-footer { padding: 12px 16px !important; }
+
+    /* ---- 通知/用户下拉面板(已有 inline @media 768 规则,本处 !important 兜底) ---- */
+    .notification-panel,
+    .user-panel {
+        width: calc(100vw - 24px) !important;
+        left: 12px !important;
+        right: 12px !important;
+        max-width: 480px !important;
+    }
+
+    /* ---- 表格紧凑 ---- */
+    th { padding: 10px 8px !important; font-size: 12px !important; }
+    td { padding: 10px 8px !important; font-size: 12px !important; }
+    .table-container { border-radius: 8px; }
+
+    /* ---- 分页 ---- */
+    .pagination {
+        flex-direction: column !important;
+        gap: 10px;
+        padding: 12px !important;
+    }
+    .pagination-info { text-align: center; }
+
+    /* ---- 项目选择器(仪表盘顶栏) ---- */
+    .project-selector {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+        padding: 12px 14px !important;
+    }
+    .project-tabs { width: 100%; }
+    .project-tab {
+        padding: 8px 14px !important;
+        min-height: 36px;
+    }
+
+    /* ---- 欢迎/统计卡片字号 ---- */
+    .stat-card { padding: 16px !important; }
+    .stat-card .value { font-size: 22px !important; }
+    .stat-card .label { font-size: 12px !important; }
+
+    /* ---- 通知/任务条目 ---- */
+    .diary-item,
+    .task-item,
+    .alert-item,
+    .np-item { padding: 10px 0 !important; }
+    .quick-action { padding: 12px 6px !important; }
+    .quick-action .qa-icon { width: 36px; height: 36px; font-size: 16px; }
+    .quick-action .qa-label { font-size: 11px !important; }
+
+    /* ---- 上下文菜单(sub-item-database 右键菜单) ---- */
+    .context-menu {
+        max-width: calc(100vw - 24px);
+    }
+
+    /* ---- 上传选择框(project-data-upload 顶部) ---- */
+    .selector-select {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+    }
+}
+
+/* ==========================================================
+ * @media ≤480px: 小屏手机进一步压缩
+ * ========================================================== */
+@media (max-width: 480px) {
+    .content { padding: 12px 8px !important; }
+    .stats-grid { grid-template-columns: 1fr !important; }
+    .quick-actions { grid-template-columns: repeat(2, 1fr) !important; }
+    .flow-list,
+    .view-meta { grid-template-columns: 1fr !important; }
+    .header { padding: 0 8px !important; }
+    .header-left h3 { font-size: 13px !important; }
+    .modal,
+    .confirm-modal .modal { max-height: 100vh !important; border-radius: 0; }
+    .modal-overlay { padding: 0; }
+    .search-box, .filter-select { font-size: 13px; }
+    /* 操作按钮组竖排 */
+    .actions { flex-direction: column; gap: 4px; }
+    .actions .btn { width: 100%; justify-content: center; }
+}

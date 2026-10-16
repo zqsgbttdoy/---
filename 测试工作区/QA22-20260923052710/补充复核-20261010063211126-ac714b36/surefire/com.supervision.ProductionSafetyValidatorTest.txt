@@ -1,0 +1,15 @@
+-------------------------------------------------------------------------------
+Test set: com.supervision.ProductionSafetyValidatorTest
+-------------------------------------------------------------------------------
+Tests run: 20, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.326 s <<< FAILURE! -- in com.supervision.ProductionSafetyValidatorTest
+com.supervision.ProductionSafetyValidatorTest.qaAcceptanceJwtTemplatePlaceholderMustFail -- Time elapsed: 0.004 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 公开模板占位密钥不得通过生产启动校验 ==> Expected java.lang.IllegalStateException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:39)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3131)
+	at com.supervision.ProductionSafetyValidatorTest.qaAcceptanceJwtTemplatePlaceholderMustFail(ProductionSafetyValidatorTest.java:64)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+

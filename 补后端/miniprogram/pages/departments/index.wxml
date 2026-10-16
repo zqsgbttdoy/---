@@ -1,0 +1,39 @@
+<view class="container">
+  <view class="hero"><view class="title">部门管理</view><view>共 {{rows.length}} 个部门 · 与 PC 端同一数据</view></view>
+  <view class="card" wx:if="{{!isAdmin}}">
+    <view class="warning">部门维护仅限管理员账号。如需调整请联系项目管理员在 PC 端操作。</view>
+  </view>
+  <view class="card" wx:if="{{isAdmin}}">
+    <view class="row">
+      <input style="flex:1" value="{{keyword}}" bindinput="input" confirm-type="search" bindconfirm="load" placeholder="按部门名称搜索" />
+      <button class="small" bindtap="load">搜索</button>
+    </view>
+    <button class="primary" bindtap="create">新增部门</button>
+    <view class="error" wx:if="{{error}}">{{error}}</view>
+  </view>
+  <view wx:for="{{rows}}" wx:key="id" class="card">
+    <view class="row"><view class="label">{{item.name}}</view><view class="badge">{{item.statusText}}</view></view>
+    <view class="muted">{{item.parentText}} · 负责人：{{item.leaderText}} · 排序 {{item.sortOrder}}</view>
+    <view class="muted pre">{{item.descText}}</view>
+    <view wx:if="{{isAdmin}}">
+      <button class="small" data-id="{{item.id}}" bindtap="edit">编辑</button>
+      <button class="small" data-id="{{item.id}}" bindtap="remove">删除</button>
+    </view>
+  </view>
+  <view class="warning" wx:if="{{isAdmin && total > rows.length}}">部门总数超过 {{rows.length}} 个，当前仅展示部分，请用搜索缩小范围后再编辑。</view>
+  <view class="muted" wx:if="{{isAdmin && !rows.length && !loading}}">暂无部门，点击「新增部门」创建。</view>
+  <view class="mask" wx:if="{{form}}">
+    <view class="sheet">
+      <view class="label">{{form.id ? '编辑部门' : '新增部门'}}</view>
+      <view class="label">名称 *</view><input value="{{form.name}}" data-field="name" bindinput="formInput" placeholder="必填，不超过100字" />
+      <view class="label">上级部门</view>
+      <picker range="{{options}}" range-key="name" bindchange="pickParent"><view class="picker">{{form.parentName}}</view></picker>
+      <view class="label">负责人</view><input value="{{form.leader}}" data-field="leader" bindinput="formInput" />
+      <view class="label">排序（数字越小越靠前）</view><input type="number" value="{{form.sortOrder}}" data-field="sortOrder" bindinput="formInput" />
+      <view class="label">描述</view><textarea value="{{form.description}}" data-field="description" bindinput="formInput" placeholder="不超过500字" />
+      <view class="error" wx:if="{{error}}">{{error}}</view>
+      <button class="primary" loading="{{saving}}" disabled="{{saving}}" bindtap="save">保存</button>
+      <button bindtap="closeForm">取消</button>
+    </view>
+  </view>
+</view>

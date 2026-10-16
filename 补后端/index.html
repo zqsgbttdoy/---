@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监理现场管理系统 - 仪表盘</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background: #F0F5FF; color: #1F2937; display: flex; min-height: 100vh; }
+        .sidebar { width: 240px; background: linear-gradient(180deg, #1E3A5F 0%, #0F2440 100%); color: #fff; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; overflow-y: auto; }
+        .sidebar-logo { padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo h2 { font-size: 16px; font-weight: 600; letter-spacing: 1px; }
+        .sidebar-logo p { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+        .menu-group { padding: 8px 0; }
+        .menu-group-title { padding: 10px 20px 6px; font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
+        .menu-item { display: flex; align-items: center; padding: 10px 20px; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; transition: all 0.2s; cursor: pointer; }
+        .menu-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+        .menu-item.active { background: rgba(37,99,235,0.3); color: #fff; border-right: 3px solid #2563EB; }
+        .menu-item .icon { width: 20px; margin-right: 10px; text-align: center; font-size: 14px; }
+        .menu-item .arrow { margin-left: auto; font-size: 10px; transition: transform 0.2s; }
+        .menu-item .arrow.open { transform: rotate(90deg); }
+        .sub-menu { display: none; background: rgba(0,0,0,0.15); }
+        .sub-menu.show { display: block; }
+        .sub-menu .menu-item { padding-left: 50px; font-size: 12px; }
+        .main { margin-left: 240px; flex: 1; }
+        .header { background: #fff; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 50; }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .header-left h3 { font-size: 15px; font-weight: 600; color: #1E3A5F; }
+        .breadcrumb { font-size: 12px; color: #6B7280; }
+        .breadcrumb a { color: #2563EB; text-decoration: none; }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .header-right .notification { position: relative; cursor: pointer; font-size: 18px; }
+        .notification-panel { display: none; position: absolute; top: 44px; right: 0; width: 380px; background: #fff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); z-index: 200; overflow: hidden; }
+        .notification-panel.show { display: block; animation: npFadeIn 0.2s ease; }
+        @keyframes npFadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+        .np-header { padding: 14px 16px; border-bottom: 1px solid #F3F4F6; display: flex; align-items: center; justify-content: space-between; }
+        .np-header h4 { font-size: 14px; font-weight: 600; color: #1E3A5F; }
+        .np-header-actions { display: flex; gap: 8px; }
+        .np-header-actions a { font-size: 12px; color: #2563EB; text-decoration: none; cursor: pointer; }
+        .np-header-actions a:hover { text-decoration: underline; }
+        .np-list { max-height: 360px; overflow-y: auto; }
+        .np-item { display: flex; align-items: flex-start; padding: 12px 16px; border-bottom: 1px solid #F9FAFB; cursor: pointer; transition: background 0.15s; position: relative; }
+        .np-item:hover { background: #F8FAFC; }
+        .np-item.unread { background: #F0F5FF; }
+        .np-item.unread::before { content: ''; position: absolute; left: 8px; top: 50%; transform: translateY(-50%); width: 6px; height: 6px; border-radius: 50%; background: #2563EB; }
+        .np-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; margin-right: 10px; flex-shrink: 0; }
+        .np-icon.system { background: #DBEAFE; }
+        .np-icon.remind { background: #FEF3C7; }
+        .np-icon.notice { background: #D1FAE5; }
+        .np-icon.approval { background: #FCE7F3; }
+        .np-body { flex: 1; min-width: 0; }
+        .np-title { font-size: 13px; font-weight: 500; color: #1F2937; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .np-desc { font-size: 11px; color: #6B7280; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .np-time { font-size: 10px; color: #9CA3AF; margin-top: 3px; }
+        .np-actions { display: flex; gap: 4px; margin-left: 8px; flex-shrink: 0; align-self: center; }
+        .np-btn { width: 24px; height: 24px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 11px; cursor: pointer; border: none; background: none; color: #9CA3AF; transition: all 0.15s; }
+        .np-btn:hover { background: #F3F4F6; color: #374151; }
+        .np-btn.del:hover { background: #FEE2E2; color: #EF4444; }
+        .np-empty { text-align: center; padding: 40px 16px; color: #9CA3AF; }
+        .np-empty-icon { font-size: 36px; margin-bottom: 8px; }
+        .np-empty-text { font-size: 13px; }
+        .np-footer { padding: 10px 16px; border-top: 1px solid #F3F4F6; text-align: center; }
+        .np-footer a { font-size: 13px; color: #2563EB; text-decoration: none; }
+        .np-footer a:hover { text-decoration: underline; }
+        .np-toast { position: fixed; top: 70px; right: 24px; padding: 10px 20px; border-radius: 8px; font-size: 13px; z-index: 300; animation: npToastIn 0.3s ease; transition: opacity 0.3s; }
+        .np-toast.success { background: #D1FAE5; color: #059669; }
+        .np-toast.info { background: #DBEAFE; color: #2563EB; }
+        .np-toast.warning { background: #FEF3C7; color: #D97706; }
+        @keyframes npToastIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        @media (max-width: 768px) { .notification-panel { width: calc(100vw - 32px); right: -60px; } }
+        .header-right .badge { position: absolute; top: -6px; right: -6px; background: #EF4444; color: #fff; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .user-info { display: flex; align-items: center; gap: 8px; cursor: pointer; position: relative; padding: 4px 8px; border-radius: 8px; transition: background 0.15s; }
+        .user-info:hover { background: rgba(37,99,235,0.06); }
+        .user-info:active { background: rgba(37,99,235,0.1); }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #2563EB; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; overflow: hidden; flex-shrink: 0; }
+        .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .user-name { font-size: 13px; color: #374151; }
+        .user-panel { display: none; position: absolute; top: 48px; right: 0; width: 320px; background: #fff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); z-index: 200; overflow: hidden; }
+        .user-panel.show { display: block; animation: upFadeIn 0.2s ease; }
+        @keyframes upFadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+        .up-profile { padding: 20px; text-align: center; border-bottom: 1px solid #F3F4F6; position: relative; }
+        .up-avatar-wrap { width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 10px; position: relative; cursor: pointer; overflow: hidden; }
+        .up-avatar-wrap .up-avatar { width: 72px; height: 72px; border-radius: 50%; background: #2563EB; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 600; }
+        .up-avatar-wrap .up-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+        .up-avatar-overlay { position: absolute; inset: 0; border-radius: 50%; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s; }
+        .up-avatar-wrap:hover .up-avatar-overlay { opacity: 1; }
+        .up-avatar-overlay span { color: #fff; font-size: 11px; }
+        .up-name { font-size: 16px; font-weight: 600; color: #1F2937; }
+        .up-role { font-size: 12px; color: #6B7280; margin-top: 2px; }
+        .up-menu { padding: 8px 0; }
+        .up-menu-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; font-size: 13px; color: #374151; cursor: pointer; transition: background 0.15s; }
+        .up-menu-item:hover { background: #F8FAFC; }
+        .up-menu-item .up-menu-icon { width: 20px; text-align: center; font-size: 14px; }
+        .up-menu-divider { height: 1px; background: #F3F4F6; margin: 4px 0; }
+        .up-menu-item.danger { color: #EF4444; }
+        .up-menu-item.danger:hover { background: #FEF2F2; }
+        .avatar-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 500; align-items: center; justify-content: center; }
+        .avatar-modal.show { display: flex; animation: modalIn 0.2s ease; }
+        @keyframes modalIn { from { opacity: 0; } to { opacity: 1; } }
+        .avatar-modal-content { background: #fff; border-radius: 16px; width: 420px; max-width: 90vw; overflow: hidden; }
+        .avatar-modal-header { padding: 16px 20px; border-bottom: 1px solid #F3F4F6; display: flex; align-items: center; justify-content: space-between; }
+        .avatar-modal-header h3 { font-size: 16px; font-weight: 600; color: #1F2937; }
+        .avatar-modal-close { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; color: #6B7280; border: none; background: none; }
+        .avatar-modal-close:hover { background: #F3F4F6; color: #374151; }
+        .avatar-modal-body { padding: 20px; }
+        .avatar-upload-zone { width: 240px; height: 240px; margin: 0 auto 16px; border-radius: 50%; border: 3px dashed #D1D5DB; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; background: #F9FAFB; }
+        .avatar-upload-zone:hover { border-color: #2563EB; background: #F0F5FF; }
+        .avatar-upload-zone.dragover { border-color: #2563EB; background: #DBEAFE; transform: scale(1.02); }
+        .avatar-upload-zone.has-image { border-style: solid; border-color: #2563EB; }
+        .avatar-upload-zone img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+        .avatar-upload-placeholder { text-align: center; color: #9CA3AF; }
+        .avatar-upload-placeholder .upload-icon { font-size: 36px; margin-bottom: 6px; }
+        .avatar-upload-placeholder .upload-text { font-size: 13px; }
+        .avatar-upload-placeholder .upload-hint { font-size: 11px; margin-top: 4px; color: #D1D5DB; }
+        .avatar-crop-area { width: 240px; height: 240px; margin: 0 auto 16px; border-radius: 50%; overflow: hidden; position: relative; background: #F3F4F6; cursor: move; border: 3px solid #2563EB; }
+        .avatar-crop-area img { position: absolute; user-select: none; -webkit-user-drag: none; }
+        .avatar-crop-controls { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 16px; }
+        .avatar-crop-controls label { font-size: 12px; color: #6B7280; }
+        .avatar-crop-controls input[type="range"] { width: 120px; accent-color: #2563EB; }
+        .avatar-preview-row { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 8px; }
+        .avatar-preview-item { text-align: center; }
+        .avatar-preview-item .preview-label { font-size: 11px; color: #9CA3AF; margin-bottom: 4px; }
+        .avatar-preview-circle { border-radius: 50%; background: #E5E7EB; overflow: hidden; display: flex; align-items: center; justify-content: center; margin: 0 auto; }
+        .avatar-preview-circle.large { width: 72px; height: 72px; }
+        .avatar-preview-circle.medium { width: 40px; height: 40px; }
+        .avatar-preview-circle.small { width: 28px; height: 28px; }
+        .avatar-preview-circle canvas { border-radius: 50%; }
+        .avatar-error { padding: 8px 12px; background: #FEF2F2; color: #EF4444; border-radius: 6px; font-size: 12px; margin-bottom: 12px; display: none; }
+        .avatar-error.show { display: block; }
+        .avatar-modal-footer { padding: 12px 20px; border-top: 1px solid #F3F4F6; display: flex; justify-content: flex-end; gap: 8px; }
+        .avatar-modal-footer .btn { padding: 8px 20px; border-radius: 8px; font-size: 13px; cursor: pointer; border: none; transition: all 0.15s; }
+        .avatar-modal-footer .btn-cancel { background: #F3F4F6; color: #374151; }
+        .avatar-modal-footer .btn-cancel:hover { background: #E5E7EB; }
+        .avatar-modal-footer .btn-save { background: #2563EB; color: #fff; }
+        .avatar-modal-footer .btn-save:hover { background: #1D4ED8; }
+        .avatar-modal-footer .btn-save:disabled { background: #93C5FD; cursor: not-allowed; }
+        .avatar-modal-footer .btn-save .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; vertical-align: middle; margin-right: 4px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media (max-width: 768px) { .user-panel { width: calc(100vw - 32px); right: -40px; } .avatar-modal-content { width: 95vw; } }
+        .settings-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 500; align-items: center; justify-content: center; }
+        .settings-modal.show { display: flex; animation: modalIn 0.2s ease; }
+        .settings-modal-content { background: #fff; border-radius: 16px; width: 520px; max-width: 95vw; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden; }
+        .settings-modal-header { padding: 16px 20px; border-bottom: 1px solid #F3F4F6; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+        .settings-modal-header h3 { font-size: 16px; font-weight: 600; color: #1F2937; }
+        .settings-modal-body { flex: 1; overflow-y: auto; padding: 20px; }
+        .settings-section { margin-bottom: 24px; }
+        .settings-section:last-child { margin-bottom: 0; }
+        .settings-section-title { font-size: 13px; font-weight: 600; color: #6B7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid #F3F4F6; }
+        .settings-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; }
+        .settings-row + .settings-row { border-top: 1px solid #F9FAFB; }
+        .settings-label { font-size: 13px; color: #374151; font-weight: 500; }
+        .settings-desc { font-size: 11px; color: #9CA3AF; margin-top: 2px; }
+        .settings-control { flex-shrink: 0; margin-left: 16px; }
+        .settings-input { padding: 6px 10px; border: 1px solid #D1D5DB; border-radius: 6px; font-size: 13px; width: 180px; transition: border-color 0.15s; outline: none; }
+        .settings-input:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .settings-select { padding: 6px 10px; border: 1px solid #D1D5DB; border-radius: 6px; font-size: 13px; width: 180px; background: #fff; outline: none; cursor: pointer; }
+        .settings-select:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .toggle-switch { position: relative; width: 40px; height: 22px; cursor: pointer; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+        .toggle-slider { position: absolute; inset: 0; background: #D1D5DB; border-radius: 11px; transition: background 0.2s; }
+        .toggle-slider::before { content: ''; position: absolute; width: 16px; height: 16px; border-radius: 50%; background: #fff; top: 3px; left: 3px; transition: transform 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+        .toggle-switch input:checked + .toggle-slider { background: #2563EB; }
+        .toggle-switch input:checked + .toggle-slider::before { transform: translateX(18px); }
+        .toggle-switch input:focus + .toggle-slider { box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+        .settings-modal-footer { padding: 12px 20px; border-top: 1px solid #F3F4F6; display: flex; justify-content: flex-end; gap: 8px; flex-shrink: 0; }
+        .settings-modal-footer .btn { padding: 8px 20px; border-radius: 8px; font-size: 13px; cursor: pointer; border: none; transition: all 0.15s; font-weight: 500; }
+        .settings-modal-footer .btn-cancel { background: #F3F4F6; color: #374151; }
+        .settings-modal-footer .btn-cancel:hover { background: #E5E7EB; }
+        .settings-modal-footer .btn-save { background: #2563EB; color: #fff; }
+        .settings-modal-footer .btn-save:hover { background: #1D4ED8; }
+        .settings-modal-footer .btn-save:disabled { background: #93C5FD; cursor: not-allowed; }
+        .settings-modal-footer .btn-save .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; vertical-align: middle; margin-right: 4px; }
+        .settings-pwd-row { display: flex; gap: 8px; align-items: center; }
+        .settings-pwd-row .settings-input { width: 140px; }
+        .settings-pwd-toggle { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1px solid #D1D5DB; background: #fff; font-size: 12px; color: #6B7280; transition: all 0.15s; }
+        .settings-pwd-toggle:hover { background: #F3F4F6; color: #374151; }
+        @media (max-width: 768px) { .settings-modal-content { width: 95vw; max-height: 90vh; } .settings-row { flex-direction: column; align-items: flex-start; gap: 6px; } .settings-control { margin-left: 0; width: 100%; } .settings-input, .settings-select { width: 100%; } .settings-pwd-row { width: 100%; } .settings-pwd-row .settings-input { flex: 1; } }
+        .content { padding: 24px; }
+        .project-selector { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; background: #fff; padding: 14px 20px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        .project-selector .selector-label { font-size: 14px; font-weight: 600; color: #1E3A5F; white-space: nowrap; }
+        .project-selector .selector-label .icon { margin-right: 6px; }
+        .project-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+        .project-tab { padding: 6px 16px; border-radius: 20px; font-size: 13px; cursor: pointer; transition: all 0.2s; border: 1px solid #E5E7EB; background: #fff; color: #374151; }
+        .project-tab:hover { border-color: #2563EB; color: #2563EB; }
+        .project-tab.active { background: #2563EB; color: #fff; border-color: #2563EB; }
+        .stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 24px; }
+        .stat-card { background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); position: relative; overflow: hidden; text-decoration: none; display: block; transition: transform 0.2s, box-shadow 0.2s; }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); cursor: pointer; }
+        .stat-card::after { content: ''; position: absolute; top: 0; right: 0; width: 80px; height: 80px; border-radius: 50%; opacity: 0.08; }
+        .stat-card.blue::after { background: #2563EB; }
+        .stat-card.green::after { background: #10B981; }
+        .stat-card.orange::after { background: #F59E0B; }
+        .stat-card.red::after { background: #EF4444; }
+        .stat-card .label { font-size: 13px; color: #6B7280; margin-bottom: 8px; }
+        .stat-card .value { font-size: 28px; font-weight: 700; }
+        .stat-card.blue .value { color: #2563EB; }
+        .stat-card.green .value { color: #10B981; }
+        .stat-card.orange .value { color: #F59E0B; }
+        .stat-card.red .value { color: #EF4444; }
+        .stat-card .trend { font-size: 12px; margin-top: 6px; display: flex; align-items: center; gap: 4px; }
+        .stat-card .trend.up { color: #10B981; }
+        .stat-card .trend.down { color: #EF4444; }
+        .panel-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 24px; }
+        .panel { background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        .panel-header { padding: 16px 20px; border-bottom: 1px solid #F3F4F6; display: flex; align-items: center; justify-content: space-between; }
+        .panel-header h4 { font-size: 14px; font-weight: 600; color: #1E3A5F; }
+        .panel-header .more { font-size: 12px; color: #2563EB; cursor: pointer; text-decoration: none; }
+        .panel-body { padding: 16px 20px; }
+        .diary-list .diary-item { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid #F9FAFB; }
+        .diary-list .diary-item:last-child { border-bottom: none; }
+        .diary-item .date { width: 60px; text-align: center; }
+        .diary-item .date .day { font-size: 20px; font-weight: 700; color: #2563EB; }
+        .diary-item .date .month { font-size: 11px; color: #9CA3AF; }
+        .diary-item .info { flex: 1; margin-left: 16px; }
+        .diary-item .info .title { font-size: 13px; font-weight: 500; color: #1F2937; }
+        .diary-item .info .desc { font-size: 12px; color: #9CA3AF; margin-top: 2px; }
+        .diary-item .status { padding: 3px 10px; border-radius: 12px; font-size: 11px; }
+        .status.completed { background: #ECFDF5; color: #10B981; }
+        .status.pending { background: #FFF7ED; color: #F59E0B; }
+        .status.draft { background: #F3F4F6; color: #6B7280; }
+        .task-list .task-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #F9FAFB; }
+        .task-list .task-item:last-child { border-bottom: none; }
+        .task-item .task-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; margin-right: 12px; }
+        .task-icon.notice { background: #FEF3C7; color: #F59E0B; }
+        .task-icon.inspection { background: #DBEAFE; color: #2563EB; }
+        .task-icon.contact { background: #E0E7FF; color: #6366F1; }
+        .task-icon.meeting { background: #FCE7F3; color: #EC4899; }
+        .task-item .task-info { flex: 1; }
+        .task-item .task-info .task-title { font-size: 13px; color: #1F2937; }
+        .task-item .task-info .task-time { font-size: 11px; color: #9CA3AF; margin-top: 2px; }
+        .task-item .task-action { font-size: 12px; color: #2563EB; cursor: pointer; }
+        .bottom-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+        .quick-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .quick-action { display: flex; flex-direction: column; align-items: center; padding: 16px 8px; border-radius: 8px; background: #F0F5FF; cursor: pointer; transition: all 0.2s; text-decoration: none; color: #1F2937; }
+        .quick-action:hover { background: #DBEAFE; transform: translateY(-2px); }
+        .quick-action .qa-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 8px; }
+        .quick-action .qa-label { font-size: 12px; color: #374151; }
+        .attendance-chart { margin-top: 12px; }
+        .chart-bar-group { display: flex; align-items: flex-end; gap: 8px; height: 120px; padding-top: 10px; }
+        .chart-bar-item { flex: 1; display: flex; flex-direction: column; align-items: center; }
+        .chart-bar { width: 100%; border-radius: 4px 4px 0 0; transition: height 0.5s; }
+        .chart-bar.blue { background: linear-gradient(180deg, #2563EB, #3B82F6); }
+        .chart-bar.green { background: linear-gradient(180deg, #10B981, #34D399); }
+        .chart-label { font-size: 10px; color: #9CA3AF; margin-top: 6px; }
+        .chart-value { font-size: 10px; color: #374151; margin-bottom: 4px; font-weight: 600; }
+        .alert-list .alert-item { display: flex; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid #F9FAFB; }
+        .alert-list .alert-item:last-child { border-bottom: none; }
+        .alert-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; margin-right: 10px; flex-shrink: 0; }
+        .alert-dot.red { background: #EF4444; }
+        .alert-dot.orange { background: #F59E0B; }
+        .alert-dot.blue { background: #2563EB; }
+        .alert-item .alert-text { font-size: 13px; color: #374151; flex: 1; }
+        .alert-item .alert-time { font-size: 11px; color: #9CA3AF; white-space: nowrap; margin-left: 12px; }
+    </style>
+    <script src="assets/app.js"></script>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/responsive.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <h2>监理现场管理系统</h2>
+            <p>Supervision Site Management</p>
+        </div>
+        <div class="menu-group">
+            <a class="menu-item active" href="index.html">
+                <span class="icon">📊</span> 仪表盘
+            </a>
+        </div>
+        <div class="menu-group">
+            <div class="menu-group-title">项目管理</div>
+            <a class="menu-item" href="project-ledger.html">
+                <span class="icon">📁</span> 项目台账
+            </a>
+        </div>
+        <div class="menu-group">
+            <div class="menu-group-title">监理现场工作</div>
+            <a class="menu-item" href="daily-inspection.html">
+                <span class="icon">🔍</span> 日常巡检
+            </a>
+            <a class="menu-item" href="sideline-inspection.html">
+                <span class="icon">👁️</span> 旁站
+            </a>
+            <a class="menu-item" href="supervision-notice.html">
+                <span class="icon">📋</span> 监理通知单
+            </a>
+            <a class="menu-item" href="work-contact.html">
+                <span class="icon">✉️</span> 工作联系单
+            </a>
+            <a class="menu-item" href="supervision-diary.html">
+                <span class="icon">📝</span> 监理日记
+            </a>
+            <a class="menu-item" href="supervision-log.html">
+                <span class="icon">📄</span> 监理日志
+            </a>
+            <a class="menu-item" href="safety-log.html">
+                <span class="icon">🛡️</span> 监理安全日志
+            </a>
+            <a class="menu-item" href="meeting-minutes.html">
+                <span class="icon">📅</span> 会议纪要
+            </a>
+            <a class="menu-item" href="supervision-monthly-report.html">
+                <span class="icon">📊</span> 监理月报
+            </a>
+        </div>
+        <div class="menu-group">
+            <div class="menu-group-title">项目资料</div>
+            <a class="menu-item" href="sub-item-database.html">
+                <span class="icon">🗄️</span> 工程资料目录设置
+            </a>
+            <a class="menu-item" href="project-data-upload.html">
+                <span class="icon">📤</span> 工程资料上传
+            </a>
+        </div>
+        <div class="menu-group">
+            <div class="menu-group-title">数据统计</div>
+            <a class="menu-item" href="diary-statistics.html">
+                <span class="icon">📈</span> 日记统计
+            </a>
+            <a class="menu-item" href="diary-report.html">
+                <span class="icon">📑</span> 日记报表
+            </a>
+            <a class="menu-item" href="log-statistics.html">
+                <span class="icon">📊</span> 日志统计
+            </a>
+            <a class="menu-item" href="safety-log-statistics.html">
+                <span class="icon">🛡️</span> 安全日志统计
+            </a>
+        </div>
+        <div class="menu-group">
+            <div class="menu-group-title">团队管理</div>
+            <a class="menu-item" href="department-management.html">
+                <span class="icon">🏢</span> 部门管理
+            </a>
+            <a class="menu-item" href="personnel-management.html">
+                <span class="icon">👥</span> 人员管理
+            </a>
+            <a class="menu-item" href="permission-settings.html">
+                <span class="icon">🔐</span> 权限设置
+            </a>
+            <a class="menu-item" href="process-management.html">
+                <span class="icon">🔄</span> 流程管理
+            </a>
+        </div>
+        <div class="menu-group">
+            <div class="menu-group-title">系统设置</div>
+            <a class="menu-item" href="operation-log.html">
+                <span class="icon">📜</span> 操作日志
+            </a>
+            <a class="menu-item" href="message-center.html">
+                <span class="icon">🔔</span> 消息中心
+            </a>
+            <a class="menu-item" href="work-standard-config.html">
+                <span class="icon">⚙️</span> 工作标准配置
+            </a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <div class="header-left">
+                <h3>仪表盘</h3>
+                <span class="breadcrumb">首页</span>
+            </div>
+            <div class="header-right">
+                <div class="notification" onclick="toggleNotificationPanel(event)">
+                    🔔<span class="badge" id="notifBadge">3</span>
+                    <div class="notification-panel" id="notifPanel">
+                        <div class="np-header">
+                            <h4>消息通知</h4>
+                            <div class="np-header-actions">
+                                <a onclick="markAllReadFromPanel(event)">全部已读</a>
+                                <a onclick="clearAllFromPanel(event)">清空</a>
+                            </div>
+                        </div>
+                        <div class="np-list" id="npList"></div>
+                        <div class="np-footer"><a href="message-center.html">查看全部消息 →</a></div>
+                    </div>
+                </div>
+                <div class="user-info" onclick="toggleUserPanel(event)">
+                    <div class="user-avatar" id="headerAvatar">张</div>
+                    <span class="user-name">张监理</span>
+                    <div class="user-panel" id="userPanel">
+                        <div class="up-profile">
+                            <div class="up-avatar-wrap" onclick="openAvatarModal(event)">
+                                <div class="up-avatar" id="panelAvatar">张</div>
+                                <div class="up-avatar-overlay"><span>更换头像</span></div>
+                            </div>
+                            <div class="up-name">张监理</div>
+                            <div class="up-role"></div>
+                        </div>
+                        <div class="up-menu">
+                            <div class="up-menu-item" onclick="window.location.href='message-center.html'"><span class="up-menu-icon">💬</span>消息中心</div>
+                            <div class="up-menu-item" onclick="openAvatarModal(event)"><span class="up-menu-icon">📷</span>更换头像</div>
+                            <div class="up-menu-item" onclick="openSettingsModal(event)" role="menuitem" tabindex="0" aria-label="个人设置"><span class="up-menu-icon">⚙️</span>个人设置</div>
+                            <div class="up-menu-divider"></div>
+                            <div class="up-menu-item danger" onclick="closeUserPanel(); App.logout()"><span class="up-menu-icon">🚪</span>退出登录</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="avatar-modal" id="avatarModal">
+            <div class="avatar-modal-content">
+                <div class="avatar-modal-header">
+                    <h3>更换头像</h3>
+                    <button class="avatar-modal-close" onclick="closeAvatarModal()">✕</button>
+                </div>
+                <div class="avatar-modal-body">
+                    <div class="avatar-error" id="avatarError"></div>
+                    <div id="avatarStep1">
+                        <div class="avatar-upload-zone" id="avatarUploadZone" onclick="document.getElementById('avatarFileInput').click()">
+                            <div class="avatar-upload-placeholder">
+                                <div class="upload-icon">📷</div>
+                                <div class="upload-text">点击或拖拽上传图片</div>
+                                <div class="upload-hint">支持 JPG、PNG，最大 5MB</div>
+                            </div>
+                        </div>
+                        <input type="file" id="avatarFileInput" accept="image/jpeg,image/png,image/gif,image/webp" style="display:none" onchange="handleAvatarFileSelect(event)">
+                    </div>
+                    <div id="avatarStep2" style="display:none">
+                        <div class="avatar-crop-area" id="avatarCropArea">
+                            <img id="avatarCropImg" src="" alt="">
+                        </div>
+                        <div class="avatar-crop-controls">
+                            <label>缩放</label>
+                            <input type="range" id="avatarZoomRange" min="50" max="300" value="100" oninput="updateAvatarCrop()">
+                            <label>调整位置</label>
+                        </div>
+                        <div class="avatar-preview-row">
+                            <div class="avatar-preview-item"><div class="preview-label">预览</div><div class="avatar-preview-circle large"><canvas id="previewLarge" width="72" height="72"></canvas></div></div>
+                            <div class="avatar-preview-item"><div class="preview-label">导航栏</div><div class="avatar-preview-circle medium"><canvas id="previewMedium" width="40" height="40"></canvas></div></div>
+                            <div class="avatar-preview-item"><div class="preview-label">小图标</div><div class="avatar-preview-circle small"><canvas id="previewSmall" width="28" height="28"></canvas></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="avatar-modal-footer">
+                    <button class="btn btn-cancel" onclick="closeAvatarModal()">取消</button>
+                    <button class="btn btn-save" id="avatarSaveBtn" onclick="saveAvatar()" disabled>保存</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+            <div class="settings-modal-content">
+                <div class="settings-modal-header">
+                    <h3 id="settingsModalTitle">个人设置</h3>
+                    <button class="avatar-modal-close" onclick="closeSettingsModal()" aria-label="关闭">✕</button>
+                </div>
+                <div class="settings-modal-body">
+                    <div class="settings-section">
+                        <div class="settings-section-title">基本信息</div>
+                        <div class="settings-row">
+                            <div><div class="settings-label">姓名</div></div>
+                            <div class="settings-control"><input class="settings-input" id="settingName" type="text" value="张监理" aria-label="姓名"></div>
+                        </div>
+                        <div class="settings-row">
+                            <div><div class="settings-label">手机号</div></div>
+                            <div class="settings-control"><input class="settings-input" id="settingPhone" type="tel" value="138****6789" aria-label="手机号"></div>
+                        </div>
+                        <div class="settings-row">
+                            <div><div class="settings-label">邮箱</div></div>
+                            <div class="settings-control"><input class="settings-input" id="settingEmail" type="email" value="zhangjl@supervision.com" aria-label="邮箱"></div>
+                        </div>
+                        <div class="settings-row">
+                            <div><div class="settings-label">职务</div></div>
+                            <div class="settings-control">
+                                <select class="settings-select" id="settingRole" aria-label="职务">
+                                    <option value="总监理工程师" selected>总监理工程师</option>
+                                    <option value="专业监理工程师">专业监理工程师</option>
+                                    <option value="监理员">监理员</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-section">
+                        <div class="settings-section-title">通知偏好</div>
+                        <div class="settings-row">
+                            <div><div class="settings-label">日记提交提醒</div><div class="settings-desc">每日16:30提醒未提交的监理日记</div></div>
+                            <div class="settings-control"><label class="toggle-switch" aria-label="日记提交提醒开关"><input type="checkbox" id="settingDiaryRemind" checked><span class="toggle-slider"></span></label></div>
+                        </div>
+                        <div class="settings-row">
+                            <div><div class="settings-label">通知单回复催办</div><div class="settings-desc">超过回复期限自动催办提醒</div></div>
+                            <div class="settings-control"><label class="toggle-switch" aria-label="通知单回复催办开关"><input type="checkbox" id="settingNoticeRemind" checked><span class="toggle-slider"></span></label></div>
+                        </div>
+                        <div class="settings-row">
+                            <div><div class="settings-label">审批结果通知</div><div class="settings-desc">日记/日志审批通过或驳回时通知</div></div>
+                            <div class="settings-control"><label class="toggle-switch" aria-label="审批结果通知开关"><input type="checkbox" id="settingApprovalNotify" checked><span class="toggle-slider"></span></label></div>
+                        </div>
+                        <div class="settings-row">
+                            <div><div class="settings-label">系统公告通知</div><div class="settings-desc">系统维护、更新等公告信息</div></div>
+                            <div class="settings-control"><label class="toggle-switch" aria-label="系统公告通知开关"><input type="checkbox" id="settingSystemNotify"><span class="toggle-slider"></span></label></div>
+                        </div>
+                    </div>
+                    <div class="settings-section">
+                        <div class="settings-section-title">显示设置</div>
+                        <div class="settings-row">
+                            <div><div class="settings-label">语言</div></div>
+                            <div class="settings-control">
+                                <select class="settings-select" id="settingLang" aria-label="语言">
+                                    <option value="zh-CN" selected>简体中文</option>
+                                    <option value="zh-TW">繁體中文</option>
+                                    <option value="en">English</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="settings-row">
+                            <div><div class="settings-label">日期格式</div></div>
+                            <div class="settings-control">
+                                <select class="settings-select" id="settingDateFormat" aria-label="日期格式">
+                                    <option value="YYYY-MM-DD" selected>2026-05-30</option>
+                                    <option value="DD/MM/YYYY">30/05/2026</option>
+                                    <option value="MM/DD/YYYY">05/30/2026</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="settings-row">
+                            <div><div class="settings-label">每页显示条数</div></div>
+                            <div class="settings-control">
+                                <select class="settings-select" id="settingPageSize" aria-label="每页显示条数">
+                                    <option value="10">10条</option>
+                                    <option value="20" selected>20条</option>
+                                    <option value="50">50条</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-section">
+                        <div class="settings-section-title">安全设置</div>
+                        <div class="settings-row">
+                            <div><div class="settings-label">当前密码</div></div>
+                            <div class="settings-control"><div class="settings-pwd-row"><input class="settings-input" id="settingOldPwd" type="password" placeholder="输入当前密码" aria-label="当前密码"><button class="settings-pwd-toggle" onclick="togglePwdVisibility('settingOldPwd', this)" aria-label="显示/隐藏密码">👁</button></div></div>
+                        </div>
+                        <div class="settings-row">
+                            <div><div class="settings-label">新密码</div></div>
+                            <div class="settings-control"><div class="settings-pwd-row"><input class="settings-input" id="settingNewPwd" type="password" placeholder="输入新密码" aria-label="新密码"><button class="settings-pwd-toggle" onclick="togglePwdVisibility('settingNewPwd', this)" aria-label="显示/隐藏密码">👁</button></div></div>
+                        </div>
+                        <div class="settings-row">
+                            <div><div class="settings-label">确认新密码</div></div>
+                            <div class="settings-control"><div class="settings-pwd-row"><input class="settings-input" id="settingConfirmPwd" type="password" placeholder="再次输入新密码" aria-label="确认新密码"><button class="settings-pwd-toggle" onclick="togglePwdVisibility('settingConfirmPwd', this)" aria-label="显示/隐藏密码">👁</button></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings-modal-footer">
+                    <button class="btn btn-cancel" onclick="closeSettingsModal()">取消</button>
+                    <button class="btn btn-save" id="settingsSaveBtn" onclick="saveSettings()">保存设置</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="project-selector">
+                <div class="selector-label"><span class="icon">📁</span>当前项目：</div>
+                <div class="project-tabs">
+                    <span class="project-tab active">全部项目</span>
+                    <span class="project-tab">城东综合体项目</span>
+                    <span class="project-tab">滨河路改造工程</span>
+                    <span class="project-tab">科技产业园二期</span>
+                </div>
+            </div>
+            <div class="stats-grid">
+                <a class="stat-card orange" href="supervision-notice.html?status=overdue">
+                    <div class="label">待处理通知单</div>
+                    <div class="value" id="statPendingNotices">0</div>
+                    <div class="trend down">↓ 需及时回复</div>
+                </a>
+                <a class="stat-card blue" href="work-contact.html?status=overdue">
+                    <div class="label">待处理联系单</div>
+                    <div class="value" id="statPendingContacts">0</div>
+                    <div class="trend down">↓ 需及时回复</div>
+                </a>
+                <a class="stat-card red" href="supervision-diary.html?status=abnormal">
+                    <div class="label">监理日记异常</div>
+                    <div class="value" id="statAbnormalDiaries">0</div>
+                    <div class="trend down">↓ 被驳回/未提交</div>
+                </a>
+                <a class="stat-card orange" href="supervision-log.html?status=abnormal">
+                    <div class="label">监理日志异常</div>
+                    <div class="value" id="statAbnormalLogs">0</div>
+                    <div class="trend down">↓ 被驳回/未提交</div>
+                </a>
+                <a class="stat-card blue" href="safety-log.html?status=abnormal">
+                    <div class="label">监理安全日志异常</div>
+                    <div class="value" id="statAbnormalSafetyLogs">0</div>
+                    <div class="trend down">↓ 被驳回/未提交</div>
+                </a>
+            </div>
+
+            <div class="panel-grid">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h4>最近监理日记</h4>
+                        <a class="more" href="supervision-diary.html">查看全部 →</a>
+                    </div>
+                    <div class="panel-body">
+                        <div class="diary-list">
+                            <div class="diary-item">
+                                <div class="date"><div class="day">28</div><div class="month">4月</div></div>
+                                <div class="info"><div class="title">城东综合体项目 - 日常监理</div><div class="desc">张监理 · 晴 · 巡检2次，通知单1份</div></div>
+                                <span class="status completed">通过</span>
+                            </div>
+                            <div class="diary-item">
+                                <div class="date"><div class="day">28</div><div class="month">4月</div></div>
+                                <div class="info"><div class="title">滨河路改造工程 - 基础施工</div><div class="desc">李监理 · 多云 · 巡检1次，会议1场</div></div>
+                                <span class="status completed">通过</span>
+                            </div>
+                            <div class="diary-item">
+                                <div class="date"><div class="day">28</div><div class="month">4月</div></div>
+                                <div class="info"><div class="title">科技产业园二期 - 主体结构</div><div class="desc">王监理 · 阴 · 巡检3次</div></div>
+                                <span class="status pending">待提交</span>
+                            </div>
+                            <div class="diary-item">
+                                <div class="date"><div class="day">27</div><div class="month">4月</div></div>
+                                <div class="info"><div class="title">城东综合体项目 - 钢结构安装</div><div class="desc">张监理 · 晴 · 巡检2次，联系单1份</div></div>
+                                <span class="status draft">草稿</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h4>消息中心</h4>
+                        <a class="more" href="message-center.html">全部消息 →</a>
+                    </div>
+                    <div class="panel-body">
+                        <div class="task-list">
+                            <div class="task-item">
+                                <div class="task-icon inspection">�</div>
+                                <div class="task-info"><div class="task-title">科技产业园二期监理日记待审核</div><div class="task-time">王监理提交 · 4月28日</div></div>
+                                <span class="task-action">审核</span>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-icon notice">📋</div>
+                                <div class="task-info"><div class="task-title">监理通知单 #2024-015 待回复</div><div class="task-time">城东综合体项目 · 4月28日</div></div>
+                                <span class="task-action">回复</span>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-icon contact">✉️</div>
+                                <div class="task-info"><div class="task-title">工作联系单 #2024-008 待回复</div><div class="task-time">滨河路改造工程 · 4月27日</div></div>
+                                <span class="task-action">回复</span>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-icon inspection">�</div>
+                                <div class="task-info"><div class="task-title">滨河路改造工程监理日记待审核</div><div class="task-time">李监理提交 · 4月27日</div></div>
+                                <span class="task-action">审核</span>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-icon notice">📋</div>
+                                <div class="task-info"><div class="task-title">监理通知单 #2024-012 待回复</div><div class="task-time">科技产业园二期 · 4月26日</div></div>
+                                <span class="task-action">回复</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-grid">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h4>快捷操作</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="quick-actions">
+                            <a class="quick-action" href="supervision-diary.html">
+                                <div class="qa-icon" style="background:#DBEAFE;color:#2563EB;">📝</div>
+                                <span class="qa-label">写日记</span>
+                            </a>
+                            <a class="quick-action" href="daily-inspection.html">
+                                <div class="qa-icon" style="background:#ECFDF5;color:#10B981;">🔍</div>
+                                <span class="qa-label">发起巡检</span>
+                            </a>
+                            <a class="quick-action" href="sideline-inspection.html">
+                                <div class="qa-icon" style="background:#E0E7FF;color:#6366F1;">👁️</div>
+                                <span class="qa-label">发起旁站</span>
+                            </a>
+                            <a class="quick-action" href="supervision-notice.html">
+                                <div class="qa-icon" style="background:#FEF3C7;color:#F59E0B;">📋</div>
+                                <span class="qa-label">发通知单</span>
+                            </a>
+                            <a class="quick-action" href="meeting-minutes.html">
+                                <div class="qa-icon" style="background:#FCE7F3;color:#EC4899;">📅</div>
+                                <span class="qa-label">写纪要</span>
+                            </a>
+                            <a class="quick-action" href="work-contact.html">
+                                <div class="qa-icon" style="background:#E0E7FF;color:#6366F1;">✉️</div>
+                                <span class="qa-label">联系单</span>
+                            </a>
+                            <a class="quick-action" href="supervision-log.html">
+                                <div class="qa-icon" style="background:#F0FDF4;color:#22C55E;">📄</div>
+                                <span class="qa-label">填日志</span>
+                            </a>
+                            <a class="quick-action" href="diary-statistics.html">
+                                <div class="qa-icon" style="background:#FFF7ED;color:#EA580C;">📈</div>
+                                <span class="qa-label">看统计</span>
+                            </a>
+                            <a class="quick-action" href="project-ledger.html">
+                                <div class="qa-icon" style="background:#F5F3FF;color:#7C3AED;">📁</div>
+                                <span class="qa-label">项目台账</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="panel" style="margin-top:16px;">
+                <div class="panel-header">
+                    <h4>系统提醒</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="alert-list">
+                        <div class="alert-item">
+                            <div class="alert-dot red"></div>
+                            <div class="alert-text">监理通知单 #2024-015 已超过回复期限3天，请立即回复</div>
+                            <div class="alert-time">10分钟前</div>
+                        </div>
+                        <div class="alert-item">
+                            <div class="alert-dot orange"></div>
+                            <div class="alert-text">王监理 4月28日日记未提交，请及时跟进</div>
+                            <div class="alert-time">1小时前</div>
+                        </div>
+                        <div class="alert-item">
+                            <div class="alert-dot blue"></div>
+                            <div class="alert-text">城东综合体项目本周巡检计划已生成，请确认</div>
+                            <div class="alert-time">2小时前</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        if (window.App) App.requireAuth();
+
+        var notifMessages = [];
+
+        function formatMsgTime(t) {
+            if (!t) return '';
+            var d = new Date((typeof t === 'string' && t.indexOf('T') < 0) ? t.replace(' ', 'T') : t);
+            if (isNaN(d.getTime())) return String(t);
+            var now = new Date();
+            var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
+            if (d.toDateString() === now.toDateString()) return pad(d.getHours()) + ':' + pad(d.getMinutes());
+            return (d.getMonth() + 1) + '月' + d.getDate() + '日';
+        }
+
+        function iconForType(type) {
+            switch (type) {
+                case 'remind': return '⏰';
+                case 'notice': return '✅';
+                case 'approval': return '✅';
+                case 'system': return '⚙️';
+                case 'warning': return '⚠️';
+                default: return '🔔';
+            }
+        }
+
+        function mapMessage(m) {
+            return {
+                id: m.id,
+                type: m.type || 'system',
+                icon: iconForType(m.type),
+                title: m.title || '系统消息',
+                desc: m.content || '',
+                time: formatMsgTime(m.createTime),
+                link: 'message-center.html',
+                read: m.isRead === '1' || m.isRead === 1 || m.isRead === true
+            };
+        }
+
+        function loadMessages() {
+            if (!window.App) return;
+            var user = App.getUser();
+            if (!user.userId) return;
+            App.apiGetPage('/messages', { receiverId: user.userId, pageNum: 1, pageSize: 20 })
+                .then(function (page) {
+                    notifMessages = (page.list || []).map(mapMessage);
+                    updateBadge();
+                    var panel = document.getElementById('notifPanel');
+                    if (panel && panel.classList.contains('show')) renderNotifList();
+                }).catch(function () { });
+        }
+
+        function loadDashboardStats() {
+            if (!window.App) return;
+            App.apiFetch('/dashboard/stats', { silent: true }).then(function (s) {
+                if (!s) return;
+                var set = function (id, v) { var el = document.getElementById(id); if (el) el.textContent = (v == null ? 0 : v); };
+                set('statPendingNotices', s.pendingNotices);
+                set('statPendingContacts', s.pendingContacts);
+                set('statAbnormalDiaries', s.abnormalDiaries);
+                set('statAbnormalLogs', s.abnormalLogs);
+                set('statAbnormalSafetyLogs', s.abnormalSafetyLogs);
+            }).catch(function () { });
+        }
+
+        function toggleNotificationPanel(e) {
+            e.stopPropagation();
+            var panel = document.getElementById('notifPanel');
+            if (panel.classList.contains('show')) {
+                panel.classList.remove('show');
+            } else {
+                renderNotifList();
+                panel.classList.add('show');
+            }
+        }
+
+        function renderNotifList() {
+            var list = document.getElementById('npList');
+            if (notifMessages.length === 0) {
+                list.innerHTML = '<div class="np-empty"><div class="np-empty-icon">📭</div><div class="np-empty-text">暂无消息</div></div>';
+                return;
+            }
+            var html = '';
+            for (var i = 0; i < notifMessages.length; i++) {
+                var m = notifMessages[i];
+                html += '<div class="np-item' + (m.read ? '' : ' unread') + '" data-id="' + m.id + '" onclick="handleNotifClick(event,' + m.id + ')">';
+                html += '<div class="np-icon ' + m.type + '">' + m.icon + '</div>';
+                html += '<div class="np-body">';
+                html += '<div class="np-title">' + m.title + '</div>';
+                html += '<div class="np-desc">' + m.desc + '</div>';
+                html += '<div class="np-time">' + m.time + '</div>';
+                html += '</div>';
+                html += '<div class="np-actions">';
+                if (!m.read) {
+                    html += '<button class="np-btn" title="标记已读" onclick="markReadFromPanel(event,' + m.id + ')">✓</button>';
+                }
+                html += '<button class="np-btn del" title="删除" onclick="deleteFromPanel(event,' + m.id + ')">✕</button>';
+                html += '</div>';
+                html += '</div>';
+            }
+            list.innerHTML = html;
+        }
+
+        function handleNotifClick(e, id) {
+            if (e.target.closest('.np-btn') || e.target.closest('.np-actions')) return;
+            var msg = findMsg(id);
+            if (!msg) return;
+            if (!msg.read) {
+                if (window.App) App.apiFetch('/messages/' + id + '/read', { method: 'PUT', silent: true }).catch(function () { });
+                msg.read = true;
+                updateBadge();
+                renderNotifList();
+            }
+            window.location.href = msg.link;
+        }
+
+        function markReadFromPanel(e, id) {
+            e.stopPropagation();
+            App.apiFetch('/messages/' + id + '/read', { method: 'PUT' }).then(function () {
+                var msg = findMsg(id);
+                if (msg) { msg.read = true; updateBadge(); renderNotifList(); }
+                showNotifToast('已标记为已读', 'success');
+            }).catch(function () { });
+        }
+
+        function deleteFromPanel(e, id) {
+            e.stopPropagation();
+            App.apiFetch('/messages/' + id, { method: 'DELETE' }).then(function () {
+                notifMessages = notifMessages.filter(function (m) { return m.id !== id; });
+                updateBadge();
+                renderNotifList();
+                showNotifToast('消息已删除', 'info');
+            }).catch(function () { });
+        }
+
+        function markAllReadFromPanel(e) {
+            e.stopPropagation();
+            var unread = notifMessages.filter(function (m) { return !m.read; });
+            if (unread.length === 0) { showNotifToast('没有未读消息', 'info'); return; }
+            Promise.all(unread.map(function (m) {
+                return App.apiFetch('/messages/' + m.id + '/read', { method: 'PUT', silent: true }).catch(function () { });
+            })).then(function () {
+                unread.forEach(function (m) { m.read = true; });
+                updateBadge();
+                renderNotifList();
+                showNotifToast('已全部标记为已读', 'success');
+            });
+        }
+
+        function clearAllFromPanel(e) {
+            e.stopPropagation();
+            if (notifMessages.length === 0) { showNotifToast('没有可清空的消息', 'info'); return; }
+            var ids = notifMessages.map(function (m) { return m.id; });
+            Promise.all(ids.map(function (id) {
+                return App.apiFetch('/messages/' + id, { method: 'DELETE', silent: true }).catch(function () { });
+            })).then(function () {
+                notifMessages = [];
+                updateBadge();
+                renderNotifList();
+                showNotifToast('消息已全部清空', 'info');
+            });
+        }
+
+        function findMsg(id) {
+            for (var i = 0; i < notifMessages.length; i++) {
+                if (notifMessages[i].id === id) return notifMessages[i];
+            }
+            return null;
+        }
+
+        function updateBadge() {
+            var unread = 0;
+            for (var i = 0; i < notifMessages.length; i++) {
+                if (!notifMessages[i].read) unread++;
+            }
+            var badge = document.getElementById('notifBadge');
+            if (badge) {
+                if (unread > 0) {
+                    badge.textContent = unread;
+                    badge.style.display = 'flex';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+        }
+
+        function showNotifToast(message, type) {
+            var existing = document.querySelector('.np-toast');
+            if (existing) existing.remove();
+            var toast = document.createElement('div');
+            toast.className = 'np-toast ' + (type || 'info');
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { if (toast.parentElement) toast.remove(); }, 300);
+            }, 2000);
+        }
+
+        document.addEventListener('click', function(e) {
+            var panel = document.getElementById('notifPanel');
+            if (panel && panel.classList.contains('show') && !e.target.closest('.notification')) {
+                panel.classList.remove('show');
+            }
+            var up = document.getElementById('userPanel');
+            if (up && up.classList.contains('show') && !e.target.closest('.user-info')) {
+                up.classList.remove('show');
+            }
+        });
+
+        function toggleUserPanel(e) {
+            e.stopPropagation();
+            var panel = document.getElementById('userPanel');
+            if (panel.classList.contains('show')) { panel.classList.remove('show'); }
+            else { panel.classList.add('show'); }
+        }
+
+        function closeUserPanel() {
+            var panel = document.getElementById('userPanel');
+            if (panel) panel.classList.remove('show');
+        }
+
+        var avatarCropState = { img: null, naturalW: 0, naturalH: 0, offsetX: 0, offsetY: 0, zoom: 1, dragging: false, dragStartX: 0, dragStartY: 0, startOffsetX: 0, startOffsetY: 0 };
+
+        function openAvatarModal(e) {
+            if (e) e.stopPropagation();
+            closeUserPanel();
+            document.getElementById('avatarModal').classList.add('show');
+            document.getElementById('avatarStep1').style.display = '';
+            document.getElementById('avatarStep2').style.display = 'none';
+            document.getElementById('avatarSaveBtn').disabled = true;
+            hideAvatarError();
+            var zone = document.getElementById('avatarUploadZone');
+            zone.classList.remove('has-image');
+            zone.innerHTML = '<div class="avatar-upload-placeholder"><div class="upload-icon">📷</div><div class="upload-text">点击或拖拽上传图片</div><div class="upload-hint">支持 JPG、PNG，最大 5MB</div></div>';
+            zone.onclick = function() { document.getElementById('avatarFileInput').click(); };
+            document.getElementById('avatarFileInput').value = '';
+            avatarCropState = { img: null, naturalW: 0, naturalH: 0, offsetX: 0, offsetY: 0, zoom: 1, dragging: false, dragStartX: 0, dragStartY: 0, startOffsetX: 0, startOffsetY: 0 };
+            setupDragDrop();
+        }
+
+        function closeAvatarModal() {
+            document.getElementById('avatarModal').classList.remove('show');
+        }
+
+        function setupDragDrop() {
+            var zone = document.getElementById('avatarUploadZone');
+            zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('dragover'); });
+            zone.addEventListener('dragleave', function() { zone.classList.remove('dragover'); });
+            zone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                zone.classList.remove('dragover');
+                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                    processAvatarFile(e.dataTransfer.files[0]);
+                }
+            });
+        }
+
+        function handleAvatarFileSelect(e) {
+            if (e.target.files && e.target.files[0]) {
+                processAvatarFile(e.target.files[0]);
+            }
+        }
+
+        function processAvatarFile(file) {
+            hideAvatarError();
+            var allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            if (allowedTypes.indexOf(file.type) === -1) {
+                showAvatarError('不支持的文件格式，请上传 JPG、PNG、GIF 或 WebP 格式的图片');
+                return;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                showAvatarError('文件大小超过 5MB 限制，请选择更小的图片');
+                return;
+            }
+            var reader = new FileReader();
+            reader.onload = function(ev) {
+                var img = new Image();
+                img.onload = function() {
+                    if (img.width < 100 || img.height < 100) {
+                        showAvatarError('图片尺寸过小，建议上传至少 100×100 像素的图片');
+                        return;
+                    }
+                    avatarCropState.img = img;
+                    avatarCropState.naturalW = img.width;
+                    avatarCropState.naturalH = img.height;
+                    avatarCropState.zoom = 1;
+                    avatarCropState.offsetX = 0;
+                    avatarCropState.offsetY = 0;
+                    showCropStep();
+                };
+                img.onerror = function() { showAvatarError('图片加载失败，请重新选择'); };
+                img.src = ev.target.result;
+            };
+            reader.onerror = function() { showAvatarError('文件读取失败，请重新选择'); };
+            reader.readAsDataURL(file);
+        }
+
+        function showCropStep() {
+            document.getElementById('avatarStep1').style.display = 'none';
+            document.getElementById('avatarStep2').style.display = '';
+            document.getElementById('avatarSaveBtn').disabled = false;
+            var cropImg = document.getElementById('avatarCropImg');
+            cropImg.src = avatarCropState.img.src;
+            var range = document.getElementById('avatarZoomRange');
+            range.value = 100;
+            avatarCropState.zoom = 1;
+            centerCropImage();
+            updateAvatarCrop();
+            setupCropDrag();
+        }
+
+        function centerCropImage() {
+            var areaSize = 240;
+            var img = avatarCropState;
+            var scaledW = img.naturalW * img.zoom;
+            var scaledH = img.naturalH * img.zoom;
+            img.offsetX = (areaSize - scaledW) / 2;
+            img.offsetY = (areaSize - scaledH) / 2;
+        }
+
+        function setupCropDrag() {
+            var area = document.getElementById('avatarCropArea');
+            area.onmousedown = function(e) {
+                e.preventDefault();
+                avatarCropState.dragging = true;
+                avatarCropState.dragStartX = e.clientX;
+                avatarCropState.dragStartY = e.clientY;
+                avatarCropState.startOffsetX = avatarCropState.offsetX;
+                avatarCropState.startOffsetY = avatarCropState.offsetY;
+            };
+            document.onmousemove = function(e) {
+                if (!avatarCropState.dragging) return;
+                var dx = e.clientX - avatarCropState.dragStartX;
+                var dy = e.clientY - avatarCropState.dragStartY;
+                avatarCropState.offsetX = avatarCropState.startOffsetX + dx;
+                avatarCropState.offsetY = avatarCropState.startOffsetY + dy;
+                clampOffset();
+                renderCropImage();
+                renderPreviews();
+            };
+            document.onmouseup = function() { avatarCropState.dragging = false; };
+            area.ontouchstart = function(e) {
+                if (e.touches.length === 1) {
+                    var t = e.touches[0];
+                    avatarCropState.dragging = true;
+                    avatarCropState.dragStartX = t.clientX;
+                    avatarCropState.dragStartY = t.clientY;
+                    avatarCropState.startOffsetX = avatarCropState.offsetX;
+                    avatarCropState.startOffsetY = avatarCropState.offsetY;
+                }
+            };
+            document.ontouchmove = function(e) {
+                if (!avatarCropState.dragging || e.touches.length !== 1) return;
+                var t = e.touches[0];
+                var dx = t.clientX - avatarCropState.dragStartX;
+                var dy = t.clientY - avatarCropState.dragStartY;
+                avatarCropState.offsetX = avatarCropState.startOffsetX + dx;
+                avatarCropState.offsetY = avatarCropState.startOffsetY + dy;
+                clampOffset();
+                renderCropImage();
+                renderPreviews();
+            };
+            document.ontouchend = function() { avatarCropState.dragging = false; };
+        }
+
+        function clampOffset() {
+            var areaSize = 240;
+            var s = avatarCropState;
+            var scaledW = s.naturalW * s.zoom;
+            var scaledH = s.naturalH * s.zoom;
+            if (scaledW <= areaSize) { s.offsetX = (areaSize - scaledW) / 2; }
+            else { s.offsetX = Math.min(0, Math.max(areaSize - scaledW, s.offsetX)); }
+            if (scaledH <= areaSize) { s.offsetY = (areaSize - scaledH) / 2; }
+            else { s.offsetY = Math.min(0, Math.max(areaSize - scaledH, s.offsetY)); }
+        }
+
+        function updateAvatarCrop() {
+            var range = document.getElementById('avatarZoomRange');
+            avatarCropState.zoom = range.value / 100;
+            clampOffset();
+            renderCropImage();
+            renderPreviews();
+        }
+
+        function renderCropImage() {
+            var cropImg = document.getElementById('avatarCropImg');
+            var s = avatarCropState;
+            var scaledW = s.naturalW * s.zoom;
+            var scaledH = s.naturalH * s.zoom;
+            cropImg.style.width = scaledW + 'px';
+            cropImg.style.height = scaledH + 'px';
+            cropImg.style.left = s.offsetX + 'px';
+            cropImg.style.top = s.offsetY + 'px';
+        }
+
+        function renderPreviews() {
+            var s = avatarCropState;
+            var areaSize = 240;
+            var sizes = [
+                { canvas: 'previewLarge', size: 72 },
+                { canvas: 'previewMedium', size: 40 },
+                { canvas: 'previewSmall', size: 28 }
+            ];
+            for (var i = 0; i < sizes.length; i++) {
+                var cvs = document.getElementById(sizes[i].canvas);
+                var ctx = cvs.getContext('2d');
+                var sz = sizes[i].size;
+                cvs.width = sz;
+                cvs.height = sz;
+                ctx.clearRect(0, 0, sz, sz);
+                var scale = sz / areaSize;
+                var sx = -s.offsetX / s.zoom;
+                var sy = -s.offsetY / s.zoom;
+                var sw = areaSize / s.zoom;
+                var sh = areaSize / s.zoom;
+                ctx.drawImage(s.img, sx, sy, sw, sh, 0, 0, sz, sz);
+            }
+        }
+
+        function saveAvatar() {
+            var btn = document.getElementById('avatarSaveBtn');
+            if (btn.disabled) return;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span>保存中...';
+            var s = avatarCropState;
+            var areaSize = 240;
+            var outputCanvas = document.createElement('canvas');
+            outputCanvas.width = 200;
+            outputCanvas.height = 200;
+            var ctx = outputCanvas.getContext('2d');
+            var sx = -s.offsetX / s.zoom;
+            var sy = -s.offsetY / s.zoom;
+            var sw = areaSize / s.zoom;
+            var sh = areaSize / s.zoom;
+            ctx.drawImage(s.img, sx, sy, sw, sh, 0, 0, 200, 200);
+            var dataUrl = outputCanvas.toDataURL('image/png');
+            try {
+                sessionStorage.setItem('userAvatar', dataUrl);
+            } catch(e) { /* ignore */ }
+            setTimeout(function() {
+                applyAvatar(dataUrl);
+                btn.disabled = false;
+                btn.innerHTML = '保存';
+                closeAvatarModal();
+                showNotifToast('头像更新成功', 'success');
+            }, 800);
+        }
+
+        function applyAvatar(dataUrl) {
+            var headerAvatar = document.getElementById('headerAvatar');
+            if (headerAvatar) { headerAvatar.innerHTML = '<img src="' + dataUrl + '" alt="头像">'; }
+            var panelAvatar = document.getElementById('panelAvatar');
+            if (panelAvatar) { panelAvatar.innerHTML = '<img src="' + dataUrl + '" alt="头像">'; }
+        }
+
+        function loadSavedAvatar() {
+            try {
+                var saved = sessionStorage.getItem('userAvatar');
+                if (saved) applyAvatar(saved);
+            } catch(e) { /* ignore */ }
+        }
+
+        function showAvatarError(msg) {
+            var el = document.getElementById('avatarError');
+            el.textContent = msg;
+            el.classList.add('show');
+        }
+
+        function hideAvatarError() {
+            var el = document.getElementById('avatarError');
+            el.classList.remove('show');
+        }
+
+        function openSettingsModal(e) {
+            if (e) e.stopPropagation();
+            closeUserPanel();
+            loadSettingsFromStorage();
+            document.getElementById('settingName').value = App.getUser().userName;
+            document.getElementById('settingsModal').classList.add('show');
+            document.getElementById('settingOldPwd').value = '';
+            document.getElementById('settingNewPwd').value = '';
+            document.getElementById('settingConfirmPwd').value = '';
+        }
+
+        function closeSettingsModal() {
+            document.getElementById('settingsModal').classList.remove('show');
+        }
+
+        function loadSettingsFromStorage() {
+            try {
+                var saved = sessionStorage.getItem('userSettings');
+                if (saved) {
+                    var s = JSON.parse(saved);
+                    if (s.name) document.getElementById('settingName').value = s.name;
+                    if (s.phone) document.getElementById('settingPhone').value = s.phone;
+                    if (s.email) document.getElementById('settingEmail').value = s.email;
+                    if (s.role) document.getElementById('settingRole').value = s.role;
+                    if (s.diaryRemind !== undefined) document.getElementById('settingDiaryRemind').checked = s.diaryRemind;
+                    if (s.noticeRemind !== undefined) document.getElementById('settingNoticeRemind').checked = s.noticeRemind;
+                    if (s.approvalNotify !== undefined) document.getElementById('settingApprovalNotify').checked = s.approvalNotify;
+                    if (s.systemNotify !== undefined) document.getElementById('settingSystemNotify').checked = s.systemNotify;
+                    if (s.lang) document.getElementById('settingLang').value = s.lang;
+                    if (s.dateFormat) document.getElementById('settingDateFormat').value = s.dateFormat;
+                    if (s.pageSize) document.getElementById('settingPageSize').value = s.pageSize;
+                }
+            } catch(e) { /* ignore */ }
+        }
+
+        function saveSettings() {
+            var btn = document.getElementById('settingsSaveBtn');
+            var name = document.getElementById('settingName').value.trim();
+            if (!name) { showNotifToast('姓名不能为空', 'warning'); return; }
+            var email = document.getElementById('settingEmail').value.trim();
+            if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showNotifToast('邮箱格式不正确', 'warning'); return; }
+            var newPwd = document.getElementById('settingNewPwd').value;
+            var confirmPwd = document.getElementById('settingConfirmPwd').value;
+            if (newPwd || confirmPwd) {
+                var oldPwd = document.getElementById('settingOldPwd').value;
+                if (!oldPwd) { showNotifToast('请输入当前密码', 'warning'); return; }
+                if (newPwd.length < 6) { showNotifToast('新密码长度不能少于6位', 'warning'); return; }
+                if (newPwd !== confirmPwd) { showNotifToast('两次输入的新密码不一致', 'warning'); return; }
+            }
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span>保存中...';
+            var settings = {
+                name: name,
+                phone: document.getElementById('settingPhone').value.trim(),
+                email: email,
+                role: document.getElementById('settingRole').value,
+                diaryRemind: document.getElementById('settingDiaryRemind').checked,
+                noticeRemind: document.getElementById('settingNoticeRemind').checked,
+                approvalNotify: document.getElementById('settingApprovalNotify').checked,
+                systemNotify: document.getElementById('settingSystemNotify').checked,
+                lang: document.getElementById('settingLang').value,
+                dateFormat: document.getElementById('settingDateFormat').value,
+                pageSize: document.getElementById('settingPageSize').value
+            };
+            try { sessionStorage.setItem('userSettings', JSON.stringify(settings)); } catch(e) { /* ignore */ }
+            function finishSave(msg, type) {
+                btn.disabled = false;
+                btn.innerHTML = '保存设置';
+                closeSettingsModal();
+                showNotifToast(msg || '设置已保存', type || 'success');
+            }
+            if (newPwd) {
+                var oldPwd = document.getElementById('settingOldPwd').value;
+                apiFetch('/auth/change-password', { method: 'POST', body: { oldPassword: oldPwd, newPassword: newPwd } })
+                    .then(function() {
+                        document.getElementById('settingOldPwd').value = '';
+                        document.getElementById('settingNewPwd').value = '';
+                        document.getElementById('settingConfirmPwd').value = '';
+                        finishSave('设置已保存，密码修改成功', 'success');
+                    })
+                    .catch(function(e) {
+                        btn.disabled = false;
+                        btn.innerHTML = '保存设置';
+                        showNotifToast(e && e.message ? e.message : '密码修改失败', 'error');
+                    });
+            } else {
+                setTimeout(function() { finishSave('设置已保存', 'success'); }, 600);
+            }
+        }
+
+        function togglePwdVisibility(inputId, btn) {
+            var input = document.getElementById(inputId);
+            if (input.type === 'password') { input.type = 'text'; btn.textContent = '🔒'; }
+            else { input.type = 'password'; btn.textContent = '👁'; }
+        }
+
+        document.querySelectorAll('.project-tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.project-tab').forEach(function(t) { t.classList.remove('active'); });
+                this.classList.add('active');
+            });
+        });
+        document.querySelectorAll('.task-action').forEach(function(action) {
+            action.addEventListener('click', function() {
+                var text = this.textContent;
+                if (text === '审核') { window.location.href = 'supervision-diary.html'; }
+                else if (text === '回复') { window.location.href = 'supervision-notice.html'; }
+            });
+        });
+        loadSavedAvatar();
+        if (window.App) {
+            App.initTopbar();
+            loadDashboardStats();
+            loadMessages();
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                var sm = document.getElementById('settingsModal');
+                if (sm && sm.classList.contains('show')) { closeSettingsModal(); return; }
+                var am = document.getElementById('avatarModal');
+                if (am && am.classList.contains('show')) { closeAvatarModal(); return; }
+            }
+        });
+    </script>
+</body>
+</html>

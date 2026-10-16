@@ -1,0 +1,4750 @@
+{
+  "run": "QA22-20260923052547",
+  "base": "http://127.0.0.1:8091/api",
+  "time": "2026-09-23T05:25:54.996Z",
+  "counts": {
+    "通过": 213,
+    "失败": 23,
+    "功能尚未实现": 5,
+    "受阻": 1
+  },
+  "results": [
+    {
+      "id": "T001",
+      "module": "登录与认证",
+      "title": "账号认证并签发 JWT：admin",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "userId": 1,
+        "roles": [
+          "admin"
+        ]
+      }
+    },
+    {
+      "id": "T002",
+      "module": "登录与认证",
+      "title": "JWT具有签名、签发时间和有效期",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "exp": 1790227548,
+        "iat": 1790141148
+      }
+    },
+    {
+      "id": "T003",
+      "module": "登录与认证",
+      "title": "错误密码拒绝登录",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 400,
+        "code": 400,
+        "message": "用户名或密码错误"
+      }
+    },
+    {
+      "id": "T004",
+      "module": "登录与认证",
+      "title": "无令牌访问返回401",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 401,
+        "code": 401,
+        "message": "未登录或登录已过期，请重新登录"
+      }
+    },
+    {
+      "id": "T005",
+      "module": "登录与认证",
+      "title": "伪造令牌访问返回401",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 401,
+        "code": 401,
+        "message": "登录已过期或令牌无效，请重新登录"
+      }
+    },
+    {
+      "id": "T006",
+      "module": "部门管理",
+      "title": "新增模拟记录 QA22-20260923052547模拟总公司",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 3,
+          "createTime": "2026-09-23T13:25:48.8578732",
+          "updateTime": "2026-09-23T13:25:48.8578732",
+          "name": "QA22-20260923052547模拟总公司",
+          "sortOrder": 1,
+          "status": "active"
+        }
+      }
+    },
+    {
+      "id": "T007",
+      "module": "部门管理",
+      "title": "新增模拟记录 QA22-20260923052547监理一部",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 4,
+          "createTime": "2026-09-23T13:25:48.9230499",
+          "updateTime": "2026-09-23T13:25:48.9230499",
+          "name": "QA22-20260923052547监理一部",
+          "parentId": 3,
+          "leader": "模拟总监",
+          "sortOrder": 1,
+          "status": "active"
+        }
+      }
+    },
+    {
+      "id": "T008",
+      "module": "部门管理",
+      "title": "新增模拟记录 QA22-20260923052547项目监理组",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 5,
+          "createTime": "2026-09-23T13:25:48.9390096",
+          "updateTime": "2026-09-23T13:25:48.9390096",
+          "name": "QA22-20260923052547项目监理组",
+          "parentId": 4,
+          "sortOrder": 1,
+          "status": "active"
+        }
+      }
+    },
+    {
+      "id": "T009",
+      "module": "部门管理",
+      "title": "新增模拟记录 QA22-20260923052547资料档案部",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 6,
+          "createTime": "2026-09-23T13:25:48.9479832",
+          "updateTime": "2026-09-23T13:25:48.9479832",
+          "name": "QA22-20260923052547资料档案部",
+          "parentId": 3,
+          "sortOrder": 2,
+          "status": "active"
+        }
+      }
+    },
+    {
+      "id": "T010",
+      "module": "部门管理",
+      "title": "四节点三级部门结构可查询",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "list": [
+          {
+            "id": 3,
+            "createTime": "2026-09-23T13:25:48.857873",
+            "updateTime": "2026-09-23T13:25:48.857873",
+            "name": "QA22-20260923052547模拟总公司",
+            "sortOrder": 1,
+            "status": "active"
+          },
+          {
+            "id": 4,
+            "createTime": "2026-09-23T13:25:48.92305",
+            "updateTime": "2026-09-23T13:25:48.92305",
+            "name": "QA22-20260923052547监理一部",
+            "parentId": 3,
+            "leader": "模拟总监",
+            "sortOrder": 1,
+            "status": "active"
+          },
+          {
+            "id": 5,
+            "createTime": "2026-09-23T13:25:48.93901",
+            "updateTime": "2026-09-23T13:25:48.93901",
+            "name": "QA22-20260923052547项目监理组",
+            "parentId": 4,
+            "sortOrder": 1,
+            "status": "active"
+          },
+          {
+            "id": 6,
+            "createTime": "2026-09-23T13:25:48.947983",
+            "updateTime": "2026-09-23T13:25:48.947983",
+            "name": "QA22-20260923052547资料档案部",
+            "parentId": 3,
+            "sortOrder": 2,
+            "status": "active"
+          }
+        ],
+        "total": 4,
+        "pageNum": 1,
+        "pageSize": 10
+      }
+    },
+    {
+      "id": "T011",
+      "module": "部门管理",
+      "title": "空部门名称被拒绝",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 400,
+        "code": 400,
+        "message": "部门名称不能为空"
+      }
+    },
+    {
+      "id": "T012",
+      "module": "人员管理",
+      "title": "新增模拟记录 QA22-20260923052547现场监理",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 3,
+          "createTime": "2026-09-23T13:25:49.1161406",
+          "updateTime": "2026-09-23T13:25:49.1161406",
+          "name": "QA22-20260923052547现场监理",
+          "gender": "男",
+          "deptId": 5,
+          "position": "专业监理工程师",
+          "certNo": "模拟资格-1",
+          "phone": "[已脱敏]",
+          "hireDate": "2026-01-01",
+          "status": "active",
+          "password": "[已脱敏]"
+        }
+      }
+    },
+    {
+      "id": "T013",
+      "module": "人员管理",
+      "title": "新增模拟记录 QA22-20260923052547项目总监",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 4,
+          "createTime": "2026-09-23T13:25:49.2037574",
+          "updateTime": "2026-09-23T13:25:49.2037574",
+          "name": "QA22-20260923052547项目总监",
+          "gender": "男",
+          "deptId": 5,
+          "position": "总监理工程师",
+          "certNo": "模拟资格-2",
+          "phone": "[已脱敏]",
+          "hireDate": "2026-01-01",
+          "status": "active",
+          "password": "[已脱敏]"
+        }
+      }
+    },
+    {
+      "id": "T014",
+      "module": "人员管理",
+      "title": "新增模拟记录 QA22-20260923052547乙项目监理",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 5,
+          "createTime": "2026-09-23T13:25:49.2821311",
+          "updateTime": "2026-09-23T13:25:49.2821311",
+          "name": "QA22-20260923052547乙项目监理",
+          "gender": "男",
+          "deptId": 5,
+          "position": "监理员",
+          "certNo": "模拟资格-3",
+          "phone": "[已脱敏]",
+          "hireDate": "2026-01-01",
+          "status": "active",
+          "password": "[已脱敏]"
+        }
+      }
+    },
+    {
+      "id": "T015",
+      "module": "人员管理",
+      "title": "部门筛选返回三种测试人员",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "list": [
+          {
+            "id": 5,
+            "createTime": "2026-09-23T13:25:49.282131",
+            "updateTime": "2026-09-23T13:25:49.282131",
+            "name": "QA22-20260923052547乙项目监理",
+            "gender": "男",
+            "deptId": 5,
+            "position": "监理员",
+            "certNo": "模拟资格-3",
+            "phone": "[已脱敏]",
+            "hireDate": "2026-01-01",
+            "status": "active",
+            "password": "[已脱敏]"
+          },
+          {
+            "id": 4,
+            "createTime": "2026-09-23T13:25:49.203757",
+            "updateTime": "2026-09-23T13:25:49.203757",
+            "name": "QA22-20260923052547项目总监",
+            "gender": "男",
+            "deptId": 5,
+            "position": "总监理工程师",
+            "certNo": "模拟资格-2",
+            "phone": "[已脱敏]",
+            "hireDate": "2026-01-01",
+            "status": "active",
+            "password": "[已脱敏]"
+          },
+          {
+            "id": 3,
+            "createTime": "2026-09-23T13:25:49.116141",
+            "updateTime": "2026-09-23T13:25:49.116141",
+            "name": "QA22-20260923052547现场监理",
+            "gender": "男",
+            "deptId": 5,
+            "position": "专业监理工程师",
+            "certNo": "模拟资格-1",
+            "phone": "[已脱敏]",
+            "hireDate": "2026-01-01",
+            "status": "active",
+            "password": "[已脱敏]"
+          }
+        ],
+        "total": 3,
+        "pageNum": 1,
+        "pageSize": 10
+      }
+    },
+    {
+      "id": "T016",
+      "module": "人员管理",
+      "title": "不合规手机号拒绝",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 400,
+        "code": 400,
+        "message": "手机号格式不正确"
+      }
+    },
+    {
+      "id": "T017",
+      "module": "权限设置",
+      "title": "新增模拟记录 QA22-20260923052547-read",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 2,
+          "createTime": "2026-09-23T13:25:49.3136056",
+          "updateTime": "2026-09-23T13:25:49.3136056",
+          "name": "QA22-20260923052547只读角色",
+          "code": "QA22-20260923052547-read",
+          "description": "测试角色，不具管理员权限",
+          "status": "active"
+        }
+      }
+    },
+    {
+      "id": "T018",
+      "module": "权限设置",
+      "title": "新增模拟记录 QA22-20260923052547-review",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 3,
+          "createTime": "2026-09-23T13:25:49.3636737",
+          "updateTime": "2026-09-23T13:25:49.3641357",
+          "name": "QA22-20260923052547总监角色",
+          "code": "QA22-20260923052547-review",
+          "description": "审核权限由项目成员授权",
+          "status": "active"
+        }
+      }
+    },
+    {
+      "id": "T019",
+      "module": "权限设置",
+      "title": "新增模拟记录 QA22-20260923052547:diary:read",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "createTime": "2026-09-23T13:25:49.3875637",
+          "updateTime": "2026-09-23T13:25:49.3875637",
+          "name": "QA22-20260923052547日记查看",
+          "code": "QA22-20260923052547:diary:read",
+          "module": "supervision-diary",
+          "sortOrder": 1
+        }
+      }
+    },
+    {
+      "id": "T020",
+      "module": "权限设置",
+      "title": "管理员配置测试角色权限",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功"
+      }
+    },
+    {
+      "id": "T021",
+      "module": "权限设置",
+      "title": "管理员分配测试普通角色",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功"
+      }
+    },
+    {
+      "id": "T022",
+      "module": "权限设置",
+      "title": "管理员分配测试审核角色",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功"
+      }
+    },
+    {
+      "id": "T023",
+      "module": "登录与认证",
+      "title": "账号认证并签发 JWT：QA22-20260923052547现场监理",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "userId": 3,
+        "roles": [
+          "QA22-20260923052547-read"
+        ]
+      }
+    },
+    {
+      "id": "T024",
+      "module": "登录与认证",
+      "title": "JWT具有签名、签发时间和有效期",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "exp": 1790227549,
+        "iat": 1790141149
+      }
+    },
+    {
+      "id": "T025",
+      "module": "登录与认证",
+      "title": "账号认证并签发 JWT：QA22-20260923052547项目总监",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "userId": 4,
+        "roles": [
+          "QA22-20260923052547-review"
+        ]
+      }
+    },
+    {
+      "id": "T026",
+      "module": "登录与认证",
+      "title": "JWT具有签名、签发时间和有效期",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "exp": 1790227549,
+        "iat": 1790141149
+      }
+    },
+    {
+      "id": "T027",
+      "module": "登录与认证",
+      "title": "账号认证并签发 JWT：QA22-20260923052547乙项目监理",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "userId": 5,
+        "roles": []
+      }
+    },
+    {
+      "id": "T028",
+      "module": "登录与认证",
+      "title": "JWT具有签名、签发时间和有效期",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "exp": 1790227549,
+        "iat": 1790141149
+      }
+    },
+    {
+      "id": "T029",
+      "module": "权限设置",
+      "title": "普通用户禁止读取管理接口 /roles",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "权限不足"
+      }
+    },
+    {
+      "id": "T030",
+      "module": "权限设置",
+      "title": "普通用户禁止读取管理接口 /permissions",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "权限不足"
+      }
+    },
+    {
+      "id": "T031",
+      "module": "权限设置",
+      "title": "普通用户禁止读取管理接口 /departments",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "权限不足"
+      }
+    },
+    {
+      "id": "T032",
+      "module": "权限设置",
+      "title": "普通用户禁止读取管理接口 /operation-logs",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "权限不足"
+      }
+    },
+    {
+      "id": "T033",
+      "module": "人员管理",
+      "title": "普通用户禁止新增人员",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "权限不足"
+      }
+    },
+    {
+      "id": "T034",
+      "module": "项目台账",
+      "title": "新增模拟记录 QA22-20260923052547-A",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "createTime": "2026-09-23T13:25:49.8663471",
+          "updateTime": "2026-09-23T13:25:49.8663471",
+          "name": "QA22-20260923052547示范楼A项目",
+          "code": "QA22-20260923052547-A",
+          "address": "测试区A地块（非真实地址）",
+          "buildUnit": "模拟建设单位甲",
+          "type": "房屋建筑",
+          "status": "active",
+          "startDate": "2026-01-01",
+          "endDate": "2026-12-31",
+          "managerId": 4
+        }
+      }
+    },
+    {
+      "id": "T035",
+      "module": "项目台账",
+      "title": "新增模拟记录 QA22-20260923052547-B",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 2,
+          "createTime": "2026-09-23T13:25:49.8827858",
+          "updateTime": "2026-09-23T13:25:49.8827858",
+          "name": "QA22-20260923052547配套道路B项目",
+          "code": "QA22-20260923052547-B",
+          "buildUnit": "模拟建设单位乙",
+          "type": "市政",
+          "status": "active",
+          "startDate": "2026-03-01",
+          "endDate": "2027-03-01",
+          "managerId": 5
+        }
+      }
+    },
+    {
+      "id": "T036",
+      "module": "权限设置",
+      "title": "设置项目成员/审核权 QA22-20260923052547现场监理",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:49.9477982",
+        "updateTime": "2026-09-23T13:25:49.9477982",
+        "projectId": 1,
+        "userId": 3,
+        "enabled": true,
+        "canReview": false
+      }
+    },
+    {
+      "id": "T037",
+      "module": "权限设置",
+      "title": "设置项目成员/审核权 QA22-20260923052547项目总监",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 2,
+        "createTime": "2026-09-23T13:25:49.9640084",
+        "updateTime": "2026-09-23T13:25:49.9640084",
+        "projectId": 1,
+        "userId": 4,
+        "enabled": true,
+        "canReview": true
+      }
+    },
+    {
+      "id": "T038",
+      "module": "项目台账",
+      "title": "普通用户只看到获授权项目",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "list": [
+          {
+            "id": 1,
+            "createTime": "2026-09-23T13:25:49.866347",
+            "updateTime": "2026-09-23T13:25:49.866347",
+            "name": "QA22-20260923052547示范楼A项目",
+            "code": "QA22-20260923052547-A",
+            "address": "测试区A地块（非真实地址）",
+            "buildUnit": "模拟建设单位甲",
+            "type": "房屋建筑",
+            "status": "active",
+            "startDate": "2026-01-01",
+            "endDate": "2026-12-31",
+            "managerId": 4
+          }
+        ],
+        "total": 1,
+        "pageNum": 1,
+        "pageSize": 10
+      }
+    },
+    {
+      "id": "T039",
+      "module": "项目台账",
+      "title": "直接猜ID也不能跨项目读取",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "无权访问该项目"
+      }
+    },
+    {
+      "id": "T040",
+      "module": "项目台账",
+      "title": "普通用户不能新增项目",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "仅管理员可以维护项目授权"
+      }
+    },
+    {
+      "id": "T041",
+      "module": "项目台账",
+      "title": "重复项目编号拒绝",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 400,
+        "code": 400,
+        "message": "项目编号已存在"
+      }
+    },
+    {
+      "id": "T042",
+      "module": "项目台账",
+      "title": "项目编号搜索准确",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "list": [
+          {
+            "id": 1,
+            "createTime": "2026-09-23T13:25:49.866347",
+            "updateTime": "2026-09-23T13:25:49.866347",
+            "name": "QA22-20260923052547示范楼A项目",
+            "code": "QA22-20260923052547-A",
+            "address": "测试区A地块（非真实地址）",
+            "buildUnit": "模拟建设单位甲",
+            "type": "房屋建筑",
+            "status": "active",
+            "startDate": "2026-01-01",
+            "endDate": "2026-12-31",
+            "managerId": 4
+          }
+        ],
+        "total": 1,
+        "pageNum": 1,
+        "pageSize": 10
+      }
+    },
+    {
+      "id": "T043",
+      "module": "工程资料目录与上传",
+      "title": "multipart照片上传与UUID存储",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "size": 68,
+          "name": "模拟现场图.png",
+          "url": "/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png"
+        }
+      }
+    },
+    {
+      "id": "T044",
+      "module": "工程资料目录与上传",
+      "title": "文字附件上传",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "size": 81,
+          "name": "模拟检查说明.txt",
+          "url": "/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt"
+        }
+      }
+    },
+    {
+      "id": "T045",
+      "module": "工程资料目录与上传",
+      "title": "非白名单扩展名拒绝",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 400,
+        "code": 400,
+        "message": "不支持的文件类型: exe"
+      }
+    },
+    {
+      "id": "T046",
+      "module": "工程资料目录与上传",
+      "title": "空文件拒绝",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 400,
+        "code": 400,
+        "message": "上传文件不能为空"
+      }
+    },
+    {
+      "id": "T047",
+      "module": "工程资料目录与上传",
+      "title": "新增模拟记录 QA22-20260923052547A楼单位工程",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "createTime": "2026-09-23T13:25:50.1783198",
+          "updateTime": "2026-09-23T13:25:50.1783198",
+          "projectId": 1,
+          "name": "QA22-20260923052547A楼单位工程",
+          "sortOrder": 1,
+          "status": "active"
+        }
+      }
+    },
+    {
+      "id": "T048",
+      "module": "工程资料目录与上传",
+      "title": "新增模拟记录 主体结构分部工程",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 2,
+          "createTime": "2026-09-23T13:25:50.1920213",
+          "updateTime": "2026-09-23T13:25:50.1920213",
+          "projectId": 1,
+          "name": "主体结构分部工程",
+          "parentId": 1,
+          "sortOrder": 1,
+          "status": "active"
+        }
+      }
+    },
+    {
+      "id": "T049",
+      "module": "工程资料目录与上传",
+      "title": "新增模拟记录 钢筋分项工程",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 3,
+          "createTime": "2026-09-23T13:25:50.1994714",
+          "updateTime": "2026-09-23T13:25:50.1994714",
+          "projectId": 1,
+          "name": "钢筋分项工程",
+          "parentId": 2,
+          "sortOrder": 1,
+          "status": "active"
+        }
+      }
+    },
+    {
+      "id": "T050",
+      "module": "工程资料目录与上传",
+      "title": "单位/分部/分项三级资料树",
+      "result": "通过",
+      "expected": "",
+      "actual": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [],
+                  "sortOrder": 1,
+                  "name": "钢筋分项工程",
+                  "id": 3,
+                  "projectId": 1,
+                  "parentId": 2,
+                  "status": "active"
+                }
+              ],
+              "sortOrder": 1,
+              "name": "主体结构分部工程",
+              "id": 2,
+              "projectId": 1,
+              "parentId": 1,
+              "status": "active"
+            }
+          ],
+          "sortOrder": 1,
+          "name": "QA22-20260923052547A楼单位工程",
+          "id": 1,
+          "projectId": 1,
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "id": "T051",
+      "module": "工程资料目录与上传",
+      "title": "其他项目用户不能读取资料目录",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 3,
+          "createTime": "2026-09-23T13:25:50.199471",
+          "updateTime": "2026-09-23T13:25:50.199471",
+          "projectId": 1,
+          "name": "钢筋分项工程",
+          "parentId": 2,
+          "sortOrder": 1,
+          "status": "active"
+        }
+      }
+    },
+    {
+      "id": "T052",
+      "module": "工程资料目录与上传",
+      "title": "资料必须关联有效子项",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 400,
+        "code": 400,
+        "message": "请选择资料所属子项"
+      }
+    },
+    {
+      "id": "T053",
+      "module": "工程资料目录与上传",
+      "title": "新增模拟记录 QA22-20260923052547隐蔽验收说明",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "createTime": "2026-09-23T13:25:50.260883",
+          "updateTime": "2026-09-23T13:25:50.260883",
+          "projectId": 1,
+          "subItemId": 3,
+          "name": "QA22-20260923052547隐蔽验收说明",
+          "filePath": "/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt",
+          "uploadDate": "2026-09-23",
+          "uploaderId": 3
+        }
+      }
+    },
+    {
+      "id": "T054",
+      "module": "工程资料目录与上传",
+      "title": "跨项目文档详情拒绝",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "无权访问该项目"
+      }
+    },
+    {
+      "id": "T055",
+      "module": "工程资料目录与上传",
+      "title": "工程资料专用上传接口",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 2,
+        "createTime": "2026-09-23T13:25:50.3332273",
+        "updateTime": "2026-09-23T13:25:50.3332273",
+        "projectId": 1,
+        "subItemId": 3,
+        "name": "模拟专项说明.txt",
+        "filePath": "/api/uploads/20260923/9925004ec9c54fd08b2eb6fb4f16b6cb.txt",
+        "fileSize": 38,
+        "uploadDate": "2026-09-23",
+        "uploaderId": 3
+      }
+    },
+    {
+      "id": "T056",
+      "module": "监理日记",
+      "title": "新增模拟记录 QA22-20260923052547-sup-flow",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "createTime": "2026-09-23T13:25:50.4019575",
+          "updateTime": "2026-09-23T13:25:50.4019575",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-sup-flow",
+          "projectId": 1,
+          "diaryDate": "2026-09-23",
+          "authorId": 3,
+          "weather": "晴",
+          "wind": "东北风2级",
+          "temperature": "23℃~29℃",
+          "construction": "A区1层梁板钢筋绑扎，轴线1-3/A-C，保护层25mm；检查记录为模拟数据。",
+          "management": "监理2人、施工12人，交底记录齐全。",
+          "inspection": "发现保护层垫块间距偏大，要求补设并复查。",
+          "status": "draft",
+          "version": 1,
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T057",
+      "module": "监理日记",
+      "title": "服务端绑定真实作者，不接受冒名",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "authorId": 3
+      }
+    },
+    {
+      "id": "T058",
+      "module": "监理日记",
+      "title": "重复请求幂等，不生成第二张单",
+      "result": "通过",
+      "expected": "",
+      "actual": 1
+    },
+    {
+      "id": "T059",
+      "module": "监理日记",
+      "title": "同键不同正文返回409",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 409,
+        "code": 409,
+        "message": "同一请求标识不能提交不同内容"
+      }
+    },
+    {
+      "id": "T060",
+      "module": "监理日记",
+      "title": "其他项目用户禁止查看",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "无权访问该项目"
+      }
+    },
+    {
+      "id": "T061",
+      "module": "监理日记",
+      "title": "审核人不能查看未提交私人草稿",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "无权查看他人的草稿或待办"
+      }
+    },
+    {
+      "id": "T062",
+      "module": "监理日记",
+      "title": "缺并发版本拒绝写入",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 428,
+        "code": 428,
+        "message": "缺少记录版本，请重新打开记录后操作"
+      }
+    },
+    {
+      "id": "T063",
+      "module": "监理日记",
+      "title": "编辑草稿并保留服务器编号",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:50.401958",
+        "updateTime": "2026-09-23T13:25:50.401958",
+        "lockVersion": 0,
+        "code": "QA22-20260923052547-sup-flow",
+        "projectId": 1,
+        "diaryDate": "2026-09-23",
+        "authorId": 3,
+        "weather": "晴",
+        "wind": "东北风2级",
+        "temperature": "23℃~29℃",
+        "construction": "A区1层梁板钢筋绑扎，轴线1-3/A-C，保护层25mm；检查记录为模拟数据。",
+        "management": "监理2人、施工12人，交底记录齐全。",
+        "inspection": "发现保护层垫块间距偏大，要求补设并复查。",
+        "status": "draft",
+        "version": 1,
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+      }
+    },
+    {
+      "id": "T064",
+      "module": "监理日记",
+      "title": "旧版本更新返回409，不覆盖新稿",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "createTime": "2026-09-23T13:25:50.401958",
+          "updateTime": "2026-09-23T13:25:50.401958",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-sup-flow",
+          "projectId": 1,
+          "diaryDate": "2026-09-23",
+          "authorId": 3,
+          "weather": "晴",
+          "wind": "东北风2级",
+          "temperature": "23℃~29℃",
+          "construction": "A区1层梁板钢筋绑扎，轴线1-3/A-C，保护层25mm；检查记录为模拟数据。",
+          "management": "监理2人、施工12人，交底记录齐全。",
+          "inspection": "发现保护层垫块间距偏大，要求补设并复查。",
+          "status": "draft",
+          "version": 1,
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T065",
+      "module": "监理日记",
+      "title": "草稿提交进入待审核",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:50.401958",
+        "updateTime": "2026-09-23T13:25:50.5960198",
+        "lockVersion": 1,
+        "code": "QA22-20260923052547-sup-flow",
+        "projectId": 1,
+        "diaryDate": "2026-09-23",
+        "authorId": 3,
+        "weather": "晴",
+        "wind": "东北风2级",
+        "temperature": "23℃~29℃",
+        "construction": "A区1层梁板钢筋绑扎，轴线1-3/A-C，保护层25mm；检查记录为模拟数据。",
+        "management": "监理2人、施工12人，交底记录齐全。",
+        "inspection": "发现保护层垫块间距偏大，要求补设并复查。",
+        "status": "submitted",
+        "version": 1,
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+        "submittedAt": "2026-09-23T13:25:50.5960198",
+        "submittedBy": "QA22-20260923052547现场监理"
+      }
+    },
+    {
+      "id": "T066",
+      "module": "监理日记",
+      "title": "普通作者禁止自行审核",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "没有该项目的审核权限"
+      }
+    },
+    {
+      "id": "T067",
+      "module": "监理日记",
+      "title": "退回必须填写原因",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 400,
+        "code": 400,
+        "message": "请填写退回原因"
+      }
+    },
+    {
+      "id": "T068",
+      "module": "监理日记",
+      "title": "授权审核人退回",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:50.401958",
+        "updateTime": "2026-09-23T13:25:50.7759932",
+        "lockVersion": 2,
+        "code": "QA22-20260923052547-sup-flow",
+        "projectId": 1,
+        "diaryDate": "2026-09-23",
+        "authorId": 3,
+        "weather": "晴",
+        "wind": "东北风2级",
+        "temperature": "23℃~29℃",
+        "construction": "A区1层梁板钢筋绑扎，轴线1-3/A-C，保护层25mm；检查记录为模拟数据。",
+        "management": "监理2人、施工12人，交底记录齐全。",
+        "inspection": "发现保护层垫块间距偏大，要求补设并复查。",
+        "status": "rejected",
+        "version": 1,
+        "rejectReason": "请补充部位说明及复查结论",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+        "reviewerId": 4,
+        "reviewedAt": "2026-09-23T13:25:50.7759932",
+        "submittedAt": "2026-09-23T13:25:50.59602",
+        "submittedBy": "QA22-20260923052547现场监理",
+        "rejectedAt": "2026-09-23T13:25:50.7759932",
+        "rejectedBy": "QA22-20260923052547项目总监"
+      }
+    },
+    {
+      "id": "T069",
+      "module": "监理日记",
+      "title": "退回后可修改",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:50.401958",
+        "updateTime": "2026-09-23T13:25:50.8360797",
+        "lockVersion": 3,
+        "code": "QA22-20260923052547-sup-flow",
+        "projectId": 1,
+        "diaryDate": "2026-09-23",
+        "authorId": 3,
+        "weather": "晴",
+        "wind": "东北风2级",
+        "temperature": "23℃~29℃",
+        "construction": "A区1层梁板钢筋绑扎，轴线1-3/A-C，保护层25mm；检查记录为模拟数据。",
+        "management": "监理2人、施工12人，交底记录齐全。",
+        "inspection": "发现保护层垫块间距偏大，要求补设并复查。",
+        "status": "draft",
+        "version": 1,
+        "rejectReason": "请补充部位说明及复查结论",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+        "reviewerId": 4,
+        "reviewedAt": "2026-09-23T13:25:50.775993",
+        "submittedAt": "2026-09-23T13:25:50.59602",
+        "submittedBy": "QA22-20260923052547现场监理",
+        "rejectedAt": "2026-09-23T13:25:50.775993",
+        "rejectedBy": "QA22-20260923052547项目总监"
+      }
+    },
+    {
+      "id": "T070",
+      "module": "监理日记",
+      "title": "修改后再次提交",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:50.401958",
+        "updateTime": "2026-09-23T13:25:50.8517081",
+        "lockVersion": 4,
+        "code": "QA22-20260923052547-sup-flow",
+        "projectId": 1,
+        "diaryDate": "2026-09-23",
+        "authorId": 3,
+        "weather": "晴",
+        "wind": "东北风2级",
+        "temperature": "23℃~29℃",
+        "construction": "A区1层梁板钢筋绑扎，轴线1-3/A-C，保护层25mm；检查记录为模拟数据。",
+        "management": "监理2人、施工12人，交底记录齐全。",
+        "inspection": "发现保护层垫块间距偏大，要求补设并复查。",
+        "status": "submitted",
+        "version": 1,
+        "rejectReason": "请补充部位说明及复查结论",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+        "reviewerId": 4,
+        "reviewedAt": "2026-09-23T13:25:50.775993",
+        "submittedAt": "2026-09-23T13:25:50.8517081",
+        "submittedBy": "QA22-20260923052547现场监理",
+        "rejectedAt": "2026-09-23T13:25:50.775993",
+        "rejectedBy": "QA22-20260923052547项目总监"
+      }
+    },
+    {
+      "id": "T071",
+      "module": "监理日记",
+      "title": "再次提交后审核通过",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:50.401958",
+        "updateTime": "2026-09-23T13:25:50.8802422",
+        "lockVersion": 5,
+        "code": "QA22-20260923052547-sup-flow",
+        "projectId": 1,
+        "diaryDate": "2026-09-23",
+        "authorId": 3,
+        "weather": "晴",
+        "wind": "东北风2级",
+        "temperature": "23℃~29℃",
+        "construction": "A区1层梁板钢筋绑扎，轴线1-3/A-C，保护层25mm；检查记录为模拟数据。",
+        "management": "监理2人、施工12人，交底记录齐全。",
+        "inspection": "发现保护层垫块间距偏大，要求补设并复查。",
+        "status": "approved",
+        "version": 1,
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+        "reviewerId": 4,
+        "reviewedAt": "2026-09-23T13:25:50.8802422",
+        "submittedAt": "2026-09-23T13:25:50.851708",
+        "submittedBy": "QA22-20260923052547现场监理",
+        "rejectedAt": "2026-09-23T13:25:50.775993",
+        "rejectedBy": "QA22-20260923052547项目总监"
+      }
+    },
+    {
+      "id": "T072",
+      "module": "监理日记",
+      "title": "已通过正文锁定",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 409,
+        "code": 409,
+        "message": "记录已提交或已审核，不能直接修改；已审核记录请建立修订稿"
+      }
+    },
+    {
+      "id": "T073",
+      "module": "监理日记",
+      "title": "版本历史含提交、退回、通过与正文快照",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "actions": [
+          "approved",
+          "submit",
+          "save",
+          "rejected",
+          "submit",
+          "save",
+          "save",
+          "create"
+        ],
+        "length": 8
+      }
+    },
+    {
+      "id": "T074",
+      "module": "监理日记",
+      "title": "新增模拟记录 QA22-20260923052547-sup-rev",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 2,
+          "createTime": "2026-09-23T13:25:50.9831769",
+          "updateTime": "2026-09-23T13:25:50.9831769",
+          "lockVersion": 0,
+          "sourceRecordId": 1,
+          "code": "QA22-20260923052547-sup-rev",
+          "projectId": 1,
+          "diaryDate": "2026-09-23",
+          "authorId": 3,
+          "weather": "晴",
+          "wind": "东北风2级",
+          "temperature": "23℃~29℃",
+          "construction": "A区1层梁板钢筋绑扎，轴线1-3/A-C，保护层25mm；检查记录为模拟数据。",
+          "management": "监理2人、施工12人，交底记录齐全。",
+          "inspection": "发现保护层垫块间距偏大，要求补设并复查。",
+          "status": "draft",
+          "version": 2,
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T075",
+      "module": "监理日记",
+      "title": "修订稿保留来源且不覆盖已审核原件",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 2,
+        "sourceRecordId": 1,
+        "version": 2
+      }
+    },
+    {
+      "id": "T076",
+      "module": "监理日记",
+      "title": "新增模拟记录 QA22-20260923052547-sup-draft",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 3,
+          "createTime": "2026-09-23T13:25:51.0306217",
+          "updateTime": "2026-09-23T13:25:51.0306217",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-sup-draft",
+          "projectId": 1,
+          "diaryDate": "2026-09-23",
+          "authorId": 3,
+          "weather": "晴",
+          "wind": "东北风2级",
+          "temperature": "23℃~29℃",
+          "construction": "A区1层梁板钢筋绑扎，轴线1-3/A-C，保护层25mm；检查记录为模拟数据。",
+          "management": "监理2人、施工12人，交底记录齐全。",
+          "inspection": "发现保护层垫块间距偏大，要求补设并复查。",
+          "status": "draft",
+          "version": 1,
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T077",
+      "module": "监理日记",
+      "title": "新增模拟记录 QA22-20260923052547-sup-submitted",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 4,
+          "createTime": "2026-09-23T13:25:51.0649589",
+          "updateTime": "2026-09-23T13:25:51.0649589",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-sup-submitted",
+          "projectId": 1,
+          "diaryDate": "2026-09-23",
+          "authorId": 3,
+          "weather": "晴",
+          "wind": "东北风2级",
+          "temperature": "23℃~29℃",
+          "construction": "A区1层梁板钢筋绑扎，轴线1-3/A-C，保护层25mm；检查记录为模拟数据。",
+          "management": "监理2人、施工12人，交底记录齐全。",
+          "inspection": "发现保护层垫块间距偏大，要求补设并复查。",
+          "status": "draft",
+          "version": 1,
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T078",
+      "module": "监理日记",
+      "title": "新增模拟记录 QA22-20260923052547-sup-rejected",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 5,
+          "createTime": "2026-09-23T13:25:51.1139066",
+          "updateTime": "2026-09-23T13:25:51.1139066",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-sup-rejected",
+          "projectId": 1,
+          "diaryDate": "2026-09-23",
+          "authorId": 3,
+          "weather": "晴",
+          "wind": "东北风2级",
+          "temperature": "23℃~29℃",
+          "construction": "A区1层梁板钢筋绑扎，轴线1-3/A-C，保护层25mm；检查记录为模拟数据。",
+          "management": "监理2人、施工12人，交底记录齐全。",
+          "inspection": "发现保护层垫块间距偏大，要求补设并复查。",
+          "status": "draft",
+          "version": 1,
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T079",
+      "module": "监理日记",
+      "title": "保留退回样本",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 5,
+        "createTime": "2026-09-23T13:25:51.113907",
+        "updateTime": "2026-09-23T13:25:51.1496374",
+        "lockVersion": 2,
+        "code": "QA22-20260923052547-sup-rejected",
+        "projectId": 1,
+        "diaryDate": "2026-09-23",
+        "authorId": 3,
+        "weather": "晴",
+        "wind": "东北风2级",
+        "temperature": "23℃~29℃",
+        "construction": "A区1层梁板钢筋绑扎，轴线1-3/A-C，保护层25mm；检查记录为模拟数据。",
+        "management": "监理2人、施工12人，交底记录齐全。",
+        "inspection": "发现保护层垫块间距偏大，要求补设并复查。",
+        "status": "rejected",
+        "version": 1,
+        "rejectReason": "待补充照片部位说明",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+        "reviewerId": 4,
+        "reviewedAt": "2026-09-23T13:25:51.1496374",
+        "submittedAt": "2026-09-23T13:25:51.132718",
+        "submittedBy": "QA22-20260923052547现场监理",
+        "rejectedAt": "2026-09-23T13:25:51.1496374",
+        "rejectedBy": "QA22-20260923052547项目总监"
+      }
+    },
+    {
+      "id": "T080",
+      "module": "监理日记",
+      "title": "项目/状态/日期过滤准确",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "list": [
+          {
+            "id": 1,
+            "createTime": "2026-09-23T13:25:50.401958",
+            "updateTime": "2026-09-23T13:25:50.880242",
+            "lockVersion": 5,
+            "code": "QA22-20260923052547-sup-flow",
+            "projectId": 1,
+            "diaryDate": "2026-09-23",
+            "authorId": 3,
+            "weather": "晴",
+            "wind": "东北风2级",
+            "temperature": "23℃~29℃",
+            "construction": "A区1层梁板钢筋绑扎，轴线1-3/A-C，保护层25mm；检查记录为模拟数据。",
+            "management": "监理2人、施工12人，交底记录齐全。",
+            "inspection": "发现保护层垫块间距偏大，要求补设并复查。",
+            "status": "approved",
+            "version": 1,
+            "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+            "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+            "reviewerId": 4,
+            "reviewedAt": "2026-09-23T13:25:50.880242",
+            "submittedAt": "2026-09-23T13:25:50.851708",
+            "submittedBy": "QA22-20260923052547现场监理",
+            "rejectedAt": "2026-09-23T13:25:50.775993",
+            "rejectedBy": "QA22-20260923052547项目总监"
+          }
+        ],
+        "total": 1,
+        "pageNum": 1,
+        "pageSize": 20
+      }
+    },
+    {
+      "id": "T081",
+      "module": "监理日记",
+      "title": "分页总数一致且无重复记录",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "page1": [
+          5,
+          4
+        ],
+        "page2": [
+          3,
+          2
+        ],
+        "total": 5
+      }
+    },
+    {
+      "id": "T082",
+      "module": "监理日志",
+      "title": "新增模拟记录 QA22-20260923052547-sup-flow",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "createTime": "2026-09-23T13:25:51.2620655",
+          "updateTime": "2026-09-23T13:25:51.2620655",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-sup-flow",
+          "projectId": 1,
+          "logDate": "2026-09-23",
+          "authorId": 3,
+          "content": "项目当日监理工作汇总；已核对图纸与日记来源。",
+          "management": "安排钢筋隐蔽验收。",
+          "status": "draft",
+          "version": 1,
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+          "weather": "晴"
+        }
+      }
+    },
+    {
+      "id": "T083",
+      "module": "监理日志",
+      "title": "服务端绑定真实作者，不接受冒名",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "authorId": 3
+      }
+    },
+    {
+      "id": "T084",
+      "module": "监理日志",
+      "title": "重复请求幂等，不生成第二张单",
+      "result": "通过",
+      "expected": "",
+      "actual": 1
+    },
+    {
+      "id": "T085",
+      "module": "监理日志",
+      "title": "同键不同正文返回409",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 409,
+        "code": 409,
+        "message": "同一请求标识不能提交不同内容"
+      }
+    },
+    {
+      "id": "T086",
+      "module": "监理日志",
+      "title": "其他项目用户禁止查看",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "无权访问该项目"
+      }
+    },
+    {
+      "id": "T087",
+      "module": "监理日志",
+      "title": "审核人不能查看未提交私人草稿",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "无权查看他人的草稿或待办"
+      }
+    },
+    {
+      "id": "T088",
+      "module": "监理日志",
+      "title": "缺并发版本拒绝写入",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 428,
+        "code": 428,
+        "message": "缺少记录版本，请重新打开记录后操作"
+      }
+    },
+    {
+      "id": "T089",
+      "module": "监理日志",
+      "title": "编辑草稿并保留服务器编号",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:51.262066",
+        "updateTime": "2026-09-23T13:25:51.262066",
+        "lockVersion": 0,
+        "code": "QA22-20260923052547-sup-flow",
+        "projectId": 1,
+        "logDate": "2026-09-23",
+        "authorId": 3,
+        "content": "项目当日监理工作汇总；已核对图纸与日记来源。",
+        "management": "安排钢筋隐蔽验收。",
+        "status": "draft",
+        "version": 1,
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+        "weather": "晴"
+      }
+    },
+    {
+      "id": "T090",
+      "module": "监理日志",
+      "title": "旧版本更新返回409，不覆盖新稿",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "createTime": "2026-09-23T13:25:51.262066",
+          "updateTime": "2026-09-23T13:25:51.262066",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-sup-flow",
+          "projectId": 1,
+          "logDate": "2026-09-23",
+          "authorId": 3,
+          "content": "项目当日监理工作汇总；已核对图纸与日记来源。",
+          "management": "安排钢筋隐蔽验收。",
+          "status": "draft",
+          "version": 1,
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+          "weather": "晴"
+        }
+      }
+    },
+    {
+      "id": "T091",
+      "module": "监理日志",
+      "title": "草稿提交进入待审核",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:51.262066",
+        "updateTime": "2026-09-23T13:25:51.4312048",
+        "lockVersion": 1,
+        "code": "QA22-20260923052547-sup-flow",
+        "projectId": 1,
+        "logDate": "2026-09-23",
+        "authorId": 3,
+        "content": "项目当日监理工作汇总；已核对图纸与日记来源。",
+        "management": "安排钢筋隐蔽验收。",
+        "status": "submitted",
+        "version": 1,
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+        "weather": "晴",
+        "submittedAt": "2026-09-23T13:25:51.4312048",
+        "submittedBy": "QA22-20260923052547现场监理"
+      }
+    },
+    {
+      "id": "T092",
+      "module": "监理日志",
+      "title": "普通作者禁止自行审核",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "没有该项目的审核权限"
+      }
+    },
+    {
+      "id": "T093",
+      "module": "监理日志",
+      "title": "退回必须填写原因",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 400,
+        "code": 400,
+        "message": "请填写退回原因"
+      }
+    },
+    {
+      "id": "T094",
+      "module": "监理日志",
+      "title": "授权审核人退回",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:51.262066",
+        "updateTime": "2026-09-23T13:25:51.4782096",
+        "lockVersion": 2,
+        "code": "QA22-20260923052547-sup-flow",
+        "projectId": 1,
+        "logDate": "2026-09-23",
+        "authorId": 3,
+        "content": "项目当日监理工作汇总；已核对图纸与日记来源。",
+        "management": "安排钢筋隐蔽验收。",
+        "status": "rejected",
+        "version": 1,
+        "rejectReason": "请补充部位说明及复查结论",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+        "weather": "晴",
+        "reviewerId": 4,
+        "reviewedAt": "2026-09-23T13:25:51.4782096",
+        "submittedAt": "2026-09-23T13:25:51.431205",
+        "submittedBy": "QA22-20260923052547现场监理",
+        "rejectedAt": "2026-09-23T13:25:51.4782096",
+        "rejectedBy": "QA22-20260923052547项目总监"
+      }
+    },
+    {
+      "id": "T095",
+      "module": "监理日志",
+      "title": "退回后可修改",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:51.262066",
+        "updateTime": "2026-09-23T13:25:51.498452",
+        "lockVersion": 3,
+        "code": "QA22-20260923052547-sup-flow",
+        "projectId": 1,
+        "logDate": "2026-09-23",
+        "authorId": 3,
+        "content": "项目当日监理工作汇总；已核对图纸与日记来源。",
+        "management": "安排钢筋隐蔽验收。",
+        "status": "draft",
+        "version": 1,
+        "rejectReason": "请补充部位说明及复查结论",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+        "weather": "晴",
+        "reviewerId": 4,
+        "reviewedAt": "2026-09-23T13:25:51.47821",
+        "submittedAt": "2026-09-23T13:25:51.431205",
+        "submittedBy": "QA22-20260923052547现场监理",
+        "rejectedAt": "2026-09-23T13:25:51.47821",
+        "rejectedBy": "QA22-20260923052547项目总监"
+      }
+    },
+    {
+      "id": "T096",
+      "module": "监理日志",
+      "title": "修改后再次提交",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:51.262066",
+        "updateTime": "2026-09-23T13:25:51.5241764",
+        "lockVersion": 4,
+        "code": "QA22-20260923052547-sup-flow",
+        "projectId": 1,
+        "logDate": "2026-09-23",
+        "authorId": 3,
+        "content": "项目当日监理工作汇总；已核对图纸与日记来源。",
+        "management": "安排钢筋隐蔽验收。",
+        "status": "submitted",
+        "version": 1,
+        "rejectReason": "请补充部位说明及复查结论",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+        "weather": "晴",
+        "reviewerId": 4,
+        "reviewedAt": "2026-09-23T13:25:51.47821",
+        "submittedAt": "2026-09-23T13:25:51.5241764",
+        "submittedBy": "QA22-20260923052547现场监理",
+        "rejectedAt": "2026-09-23T13:25:51.47821",
+        "rejectedBy": "QA22-20260923052547项目总监"
+      }
+    },
+    {
+      "id": "T097",
+      "module": "监理日志",
+      "title": "再次提交后审核通过",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:51.262066",
+        "updateTime": "2026-09-23T13:25:51.5337711",
+        "lockVersion": 5,
+        "code": "QA22-20260923052547-sup-flow",
+        "projectId": 1,
+        "logDate": "2026-09-23",
+        "authorId": 3,
+        "content": "项目当日监理工作汇总；已核对图纸与日记来源。",
+        "management": "安排钢筋隐蔽验收。",
+        "status": "approved",
+        "version": 1,
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+        "weather": "晴",
+        "reviewerId": 4,
+        "reviewedAt": "2026-09-23T13:25:51.5337711",
+        "submittedAt": "2026-09-23T13:25:51.524176",
+        "submittedBy": "QA22-20260923052547现场监理",
+        "rejectedAt": "2026-09-23T13:25:51.47821",
+        "rejectedBy": "QA22-20260923052547项目总监"
+      }
+    },
+    {
+      "id": "T098",
+      "module": "监理日志",
+      "title": "已通过正文锁定",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 409,
+        "code": 409,
+        "message": "记录已提交或已审核，不能直接修改；已审核记录请建立修订稿"
+      }
+    },
+    {
+      "id": "T099",
+      "module": "监理日志",
+      "title": "版本历史含提交、退回、通过与正文快照",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "actions": [
+          "approved",
+          "submit",
+          "save",
+          "rejected",
+          "submit",
+          "save",
+          "save",
+          "create"
+        ],
+        "length": 8
+      }
+    },
+    {
+      "id": "T100",
+      "module": "监理日志",
+      "title": "新增模拟记录 QA22-20260923052547-sup-rev",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 2,
+          "createTime": "2026-09-23T13:25:51.6160185",
+          "updateTime": "2026-09-23T13:25:51.6160185",
+          "lockVersion": 0,
+          "sourceRecordId": 1,
+          "code": "QA22-20260923052547-sup-rev",
+          "projectId": 1,
+          "logDate": "2026-09-23",
+          "authorId": 3,
+          "content": "项目当日监理工作汇总；已核对图纸与日记来源。",
+          "management": "安排钢筋隐蔽验收。",
+          "status": "draft",
+          "version": 2,
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+          "weather": "晴"
+        }
+      }
+    },
+    {
+      "id": "T101",
+      "module": "监理日志",
+      "title": "修订稿保留来源且不覆盖已审核原件",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 2,
+        "sourceRecordId": 1,
+        "version": 2
+      }
+    },
+    {
+      "id": "T102",
+      "module": "监理日志",
+      "title": "新增模拟记录 QA22-20260923052547-sup-draft",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 3,
+          "createTime": "2026-09-23T13:25:51.6302024",
+          "updateTime": "2026-09-23T13:25:51.6302024",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-sup-draft",
+          "projectId": 1,
+          "logDate": "2026-09-23",
+          "authorId": 3,
+          "content": "项目当日监理工作汇总；已核对图纸与日记来源。",
+          "management": "安排钢筋隐蔽验收。",
+          "status": "draft",
+          "version": 1,
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+          "weather": "晴"
+        }
+      }
+    },
+    {
+      "id": "T103",
+      "module": "监理日志",
+      "title": "新增模拟记录 QA22-20260923052547-sup-submitted",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 4,
+          "createTime": "2026-09-23T13:25:51.6624216",
+          "updateTime": "2026-09-23T13:25:51.6624216",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-sup-submitted",
+          "projectId": 1,
+          "logDate": "2026-09-23",
+          "authorId": 3,
+          "content": "项目当日监理工作汇总；已核对图纸与日记来源。",
+          "management": "安排钢筋隐蔽验收。",
+          "status": "draft",
+          "version": 1,
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+          "weather": "晴"
+        }
+      }
+    },
+    {
+      "id": "T104",
+      "module": "监理日志",
+      "title": "新增模拟记录 QA22-20260923052547-sup-rejected",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 5,
+          "createTime": "2026-09-23T13:25:51.6943838",
+          "updateTime": "2026-09-23T13:25:51.6943838",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-sup-rejected",
+          "projectId": 1,
+          "logDate": "2026-09-23",
+          "authorId": 3,
+          "content": "项目当日监理工作汇总；已核对图纸与日记来源。",
+          "management": "安排钢筋隐蔽验收。",
+          "status": "draft",
+          "version": 1,
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+          "weather": "晴"
+        }
+      }
+    },
+    {
+      "id": "T105",
+      "module": "监理日志",
+      "title": "保留退回样本",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 5,
+        "createTime": "2026-09-23T13:25:51.694384",
+        "updateTime": "2026-09-23T13:25:51.7454007",
+        "lockVersion": 2,
+        "code": "QA22-20260923052547-sup-rejected",
+        "projectId": 1,
+        "logDate": "2026-09-23",
+        "authorId": 3,
+        "content": "项目当日监理工作汇总；已核对图纸与日记来源。",
+        "management": "安排钢筋隐蔽验收。",
+        "status": "rejected",
+        "version": 1,
+        "rejectReason": "待补充照片部位说明",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+        "weather": "晴",
+        "reviewerId": 4,
+        "reviewedAt": "2026-09-23T13:25:51.7454007",
+        "submittedAt": "2026-09-23T13:25:51.716222",
+        "submittedBy": "QA22-20260923052547现场监理",
+        "rejectedAt": "2026-09-23T13:25:51.7454007",
+        "rejectedBy": "QA22-20260923052547项目总监"
+      }
+    },
+    {
+      "id": "T106",
+      "module": "监理日志",
+      "title": "项目/状态/日期过滤准确",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "list": [
+          {
+            "id": 1,
+            "createTime": "2026-09-23T13:25:51.262066",
+            "updateTime": "2026-09-23T13:25:51.533771",
+            "lockVersion": 5,
+            "code": "QA22-20260923052547-sup-flow",
+            "projectId": 1,
+            "logDate": "2026-09-23",
+            "authorId": 3,
+            "content": "项目当日监理工作汇总；已核对图纸与日记来源。",
+            "management": "安排钢筋隐蔽验收。",
+            "status": "approved",
+            "version": 1,
+            "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+            "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+            "weather": "晴",
+            "reviewerId": 4,
+            "reviewedAt": "2026-09-23T13:25:51.533771",
+            "submittedAt": "2026-09-23T13:25:51.524176",
+            "submittedBy": "QA22-20260923052547现场监理",
+            "rejectedAt": "2026-09-23T13:25:51.47821",
+            "rejectedBy": "QA22-20260923052547项目总监"
+          }
+        ],
+        "total": 1,
+        "pageNum": 1,
+        "pageSize": 20
+      }
+    },
+    {
+      "id": "T107",
+      "module": "监理日志",
+      "title": "分页总数一致且无重复记录",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "page1": [
+          5,
+          4
+        ],
+        "page2": [
+          3,
+          2
+        ],
+        "total": 5
+      }
+    },
+    {
+      "id": "T108",
+      "module": "日常巡检",
+      "title": "新增模拟记录 QA22-20260923052547-dai-flow",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "createTime": "2026-09-23T13:25:51.8120828",
+          "updateTime": "2026-09-23T13:25:51.8120828",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-dai-flow",
+          "projectId": 1,
+          "inspectionDate": "2026-09-23",
+          "inspectorId": 3,
+          "location": "A区1层梁板1-3/A-C轴",
+          "content": "检查钢筋规格、数量、保护层和临边防护。",
+          "issues": "[{\"content\":\"垫块间距偏大\",\"status\":\"unfixed\"}]",
+          "status": "draft",
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T109",
+      "module": "日常巡检",
+      "title": "服务端绑定真实作者，不接受冒名",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "inspectorId": 3
+      }
+    },
+    {
+      "id": "T110",
+      "module": "日常巡检",
+      "title": "重复请求幂等，不生成第二张单",
+      "result": "通过",
+      "expected": "",
+      "actual": 1
+    },
+    {
+      "id": "T111",
+      "module": "日常巡检",
+      "title": "同键不同正文返回409",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 409,
+        "code": 409,
+        "message": "同一请求标识不能提交不同内容"
+      }
+    },
+    {
+      "id": "T112",
+      "module": "日常巡检",
+      "title": "其他项目用户禁止查看",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "无权访问该项目"
+      }
+    },
+    {
+      "id": "T113",
+      "module": "日常巡检",
+      "title": "审核人不能查看未提交私人草稿",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "无权查看他人的草稿或待办"
+      }
+    },
+    {
+      "id": "T114",
+      "module": "日常巡检",
+      "title": "缺并发版本拒绝写入",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 428,
+        "code": 428,
+        "message": "缺少记录版本，请重新打开记录后操作"
+      }
+    },
+    {
+      "id": "T115",
+      "module": "日常巡检",
+      "title": "编辑草稿并保留服务器编号",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:51.812083",
+        "updateTime": "2026-09-23T13:25:51.812083",
+        "lockVersion": 0,
+        "code": "QA22-20260923052547-dai-flow",
+        "projectId": 1,
+        "inspectionDate": "2026-09-23",
+        "inspectorId": 3,
+        "location": "A区1层梁板1-3/A-C轴",
+        "content": "检查钢筋规格、数量、保护层和临边防护。",
+        "issues": "[{\"content\":\"垫块间距偏大\",\"status\":\"unfixed\"}]",
+        "status": "draft",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+      }
+    },
+    {
+      "id": "T116",
+      "module": "日常巡检",
+      "title": "旧版本更新返回409，不覆盖新稿",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "createTime": "2026-09-23T13:25:51.812083",
+          "updateTime": "2026-09-23T13:25:51.812083",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-dai-flow",
+          "projectId": 1,
+          "inspectionDate": "2026-09-23",
+          "inspectorId": 3,
+          "location": "A区1层梁板1-3/A-C轴",
+          "content": "检查钢筋规格、数量、保护层和临边防护。",
+          "issues": "[{\"content\":\"垫块间距偏大\",\"status\":\"unfixed\"}]",
+          "status": "draft",
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T117",
+      "module": "日常巡检",
+      "title": "草稿提交进入待审核",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:51.812083",
+        "updateTime": "2026-09-23T13:25:51.9691187",
+        "lockVersion": 1,
+        "code": "QA22-20260923052547-dai-flow",
+        "projectId": 1,
+        "inspectionDate": "2026-09-23",
+        "inspectorId": 3,
+        "location": "A区1层梁板1-3/A-C轴",
+        "content": "检查钢筋规格、数量、保护层和临边防护。",
+        "issues": "[{\"content\":\"垫块间距偏大\",\"status\":\"unfixed\"}]",
+        "status": "submitted",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+      }
+    },
+    {
+      "id": "T118",
+      "module": "日常巡检",
+      "title": "普通作者禁止自行审核",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "没有该项目的审核权限"
+      }
+    },
+    {
+      "id": "T119",
+      "module": "日常巡检",
+      "title": "退回必须填写原因",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 400,
+        "code": 400,
+        "message": "请填写退回原因"
+      }
+    },
+    {
+      "id": "T120",
+      "module": "日常巡检",
+      "title": "授权审核人退回",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:51.812083",
+        "updateTime": "2026-09-23T13:25:52.0420249",
+        "lockVersion": 2,
+        "code": "QA22-20260923052547-dai-flow",
+        "projectId": 1,
+        "inspectionDate": "2026-09-23",
+        "inspectorId": 3,
+        "location": "A区1层梁板1-3/A-C轴",
+        "content": "检查钢筋规格、数量、保护层和临边防护。",
+        "issues": "[{\"content\":\"垫块间距偏大\",\"status\":\"unfixed\"}]",
+        "status": "rejected",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+      }
+    },
+    {
+      "id": "T121",
+      "module": "日常巡检",
+      "title": "退回后可修改",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:51.812083",
+        "updateTime": "2026-09-23T13:25:52.066743",
+        "lockVersion": 3,
+        "code": "QA22-20260923052547-dai-flow",
+        "projectId": 1,
+        "inspectionDate": "2026-09-23",
+        "inspectorId": 3,
+        "location": "A区1层梁板1-3/A-C轴",
+        "content": "检查钢筋规格、数量、保护层和临边防护。",
+        "issues": "[{\"content\":\"垫块间距偏大\",\"status\":\"unfixed\"}]",
+        "status": "draft",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+      }
+    },
+    {
+      "id": "T122",
+      "module": "日常巡检",
+      "title": "修改后再次提交",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:51.812083",
+        "updateTime": "2026-09-23T13:25:52.079587",
+        "lockVersion": 4,
+        "code": "QA22-20260923052547-dai-flow",
+        "projectId": 1,
+        "inspectionDate": "2026-09-23",
+        "inspectorId": 3,
+        "location": "A区1层梁板1-3/A-C轴",
+        "content": "检查钢筋规格、数量、保护层和临边防护。",
+        "issues": "[{\"content\":\"垫块间距偏大\",\"status\":\"unfixed\"}]",
+        "status": "submitted",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+      }
+    },
+    {
+      "id": "T123",
+      "module": "日常巡检",
+      "title": "再次提交后审核通过",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:51.812083",
+        "updateTime": "2026-09-23T13:25:52.097251",
+        "lockVersion": 5,
+        "code": "QA22-20260923052547-dai-flow",
+        "projectId": 1,
+        "inspectionDate": "2026-09-23",
+        "inspectorId": 3,
+        "location": "A区1层梁板1-3/A-C轴",
+        "content": "检查钢筋规格、数量、保护层和临边防护。",
+        "issues": "[{\"content\":\"垫块间距偏大\",\"status\":\"unfixed\"}]",
+        "status": "approved",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+      }
+    },
+    {
+      "id": "T124",
+      "module": "日常巡检",
+      "title": "已通过正文锁定",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 409,
+        "code": 409,
+        "message": "记录已提交或已审核，不能直接修改；已审核记录请建立修订稿"
+      }
+    },
+    {
+      "id": "T125",
+      "module": "日常巡检",
+      "title": "版本历史含提交、退回、通过与正文快照",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "actions": [
+          "approved",
+          "submit",
+          "save",
+          "rejected",
+          "submit",
+          "save",
+          "save",
+          "create"
+        ],
+        "length": 8
+      }
+    },
+    {
+      "id": "T126",
+      "module": "日常巡检",
+      "title": "新增模拟记录 QA22-20260923052547-dai-rev",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 2,
+          "createTime": "2026-09-23T13:25:52.1447527",
+          "updateTime": "2026-09-23T13:25:52.1447527",
+          "lockVersion": 0,
+          "sourceRecordId": 1,
+          "code": "QA22-20260923052547-dai-rev",
+          "projectId": 1,
+          "inspectionDate": "2026-09-23",
+          "inspectorId": 3,
+          "location": "A区1层梁板1-3/A-C轴",
+          "content": "检查钢筋规格、数量、保护层和临边防护。",
+          "issues": "[{\"content\":\"垫块间距偏大\",\"status\":\"unfixed\"}]",
+          "status": "draft",
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T127",
+      "module": "日常巡检",
+      "title": "修订稿保留来源且不覆盖已审核原件",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 2,
+        "sourceRecordId": 1
+      }
+    },
+    {
+      "id": "T128",
+      "module": "日常巡检",
+      "title": "新增模拟记录 QA22-20260923052547-dai-draft",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 3,
+          "createTime": "2026-09-23T13:25:52.161281",
+          "updateTime": "2026-09-23T13:25:52.161281",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-dai-draft",
+          "projectId": 1,
+          "inspectionDate": "2026-09-23",
+          "inspectorId": 3,
+          "location": "A区1层梁板1-3/A-C轴",
+          "content": "检查钢筋规格、数量、保护层和临边防护。",
+          "issues": "[{\"content\":\"垫块间距偏大\",\"status\":\"unfixed\"}]",
+          "status": "draft",
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T129",
+      "module": "日常巡检",
+      "title": "新增模拟记录 QA22-20260923052547-dai-submitted",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 4,
+          "createTime": "2026-09-23T13:25:52.1905327",
+          "updateTime": "2026-09-23T13:25:52.1905327",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-dai-submitted",
+          "projectId": 1,
+          "inspectionDate": "2026-09-23",
+          "inspectorId": 3,
+          "location": "A区1层梁板1-3/A-C轴",
+          "content": "检查钢筋规格、数量、保护层和临边防护。",
+          "issues": "[{\"content\":\"垫块间距偏大\",\"status\":\"unfixed\"}]",
+          "status": "draft",
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T130",
+      "module": "日常巡检",
+      "title": "新增模拟记录 QA22-20260923052547-dai-rejected",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 5,
+          "createTime": "2026-09-23T13:25:52.2110161",
+          "updateTime": "2026-09-23T13:25:52.2110161",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-dai-rejected",
+          "projectId": 1,
+          "inspectionDate": "2026-09-23",
+          "inspectorId": 3,
+          "location": "A区1层梁板1-3/A-C轴",
+          "content": "检查钢筋规格、数量、保护层和临边防护。",
+          "issues": "[{\"content\":\"垫块间距偏大\",\"status\":\"unfixed\"}]",
+          "status": "draft",
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T131",
+      "module": "日常巡检",
+      "title": "保留退回样本",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 5,
+        "createTime": "2026-09-23T13:25:52.211016",
+        "updateTime": "2026-09-23T13:25:52.2634601",
+        "lockVersion": 2,
+        "code": "QA22-20260923052547-dai-rejected",
+        "projectId": 1,
+        "inspectionDate": "2026-09-23",
+        "inspectorId": 3,
+        "location": "A区1层梁板1-3/A-C轴",
+        "content": "检查钢筋规格、数量、保护层和临边防护。",
+        "issues": "[{\"content\":\"垫块间距偏大\",\"status\":\"unfixed\"}]",
+        "status": "rejected",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+      }
+    },
+    {
+      "id": "T132",
+      "module": "日常巡检",
+      "title": "项目/状态/日期过滤准确",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "list": [
+          {
+            "id": 1,
+            "createTime": "2026-09-23T13:25:51.812083",
+            "updateTime": "2026-09-23T13:25:52.097251",
+            "lockVersion": 5,
+            "code": "QA22-20260923052547-dai-flow",
+            "projectId": 1,
+            "inspectionDate": "2026-09-23",
+            "inspectorId": 3,
+            "location": "A区1层梁板1-3/A-C轴",
+            "content": "检查钢筋规格、数量、保护层和临边防护。",
+            "issues": "[{\"content\":\"垫块间距偏大\",\"status\":\"unfixed\"}]",
+            "status": "approved",
+            "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+            "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+          }
+        ],
+        "total": 1,
+        "pageNum": 1,
+        "pageSize": 20
+      }
+    },
+    {
+      "id": "T133",
+      "module": "日常巡检",
+      "title": "分页总数一致且无重复记录",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "page1": [
+          5,
+          4
+        ],
+        "page2": [
+          3,
+          2
+        ],
+        "total": 5
+      }
+    },
+    {
+      "id": "T134",
+      "module": "旁站检查",
+      "title": "新增模拟记录 QA22-20260923052547-sid-flow",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "createTime": "2026-09-23T13:25:52.3670385",
+          "updateTime": "2026-09-23T13:25:52.3670385",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-sid-flow",
+          "projectId": 1,
+          "inspectionDate": "2026-09-23",
+          "inspectorId": 3,
+          "location": "A区1层梁板",
+          "content": "{\"process\":\"混凝土浇筑\",\"result\":\"完成\",\"manageCount\":2,\"workerCount\":12,\"docs\":[\"结构图S-01\"],\"issues\":\"坍落度复核合格\",\"text\":\"C30混凝土，见证取样；模拟施工数据。\"}",
+          "startTime": "2026-09-23T08:00:00",
+          "endTime": "2026-09-23T10:30:00",
+          "status": "draft",
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T135",
+      "module": "旁站检查",
+      "title": "服务端绑定真实作者，不接受冒名",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "inspectorId": 3
+      }
+    },
+    {
+      "id": "T136",
+      "module": "旁站检查",
+      "title": "重复请求幂等，不生成第二张单",
+      "result": "通过",
+      "expected": "",
+      "actual": 1
+    },
+    {
+      "id": "T137",
+      "module": "旁站检查",
+      "title": "同键不同正文返回409",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 409,
+        "code": 409,
+        "message": "同一请求标识不能提交不同内容"
+      }
+    },
+    {
+      "id": "T138",
+      "module": "旁站检查",
+      "title": "其他项目用户禁止查看",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "无权访问该项目"
+      }
+    },
+    {
+      "id": "T139",
+      "module": "旁站检查",
+      "title": "审核人不能查看未提交私人草稿",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "无权查看他人的草稿或待办"
+      }
+    },
+    {
+      "id": "T140",
+      "module": "旁站检查",
+      "title": "缺并发版本拒绝写入",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 428,
+        "code": 428,
+        "message": "缺少记录版本，请重新打开记录后操作"
+      }
+    },
+    {
+      "id": "T141",
+      "module": "旁站检查",
+      "title": "编辑草稿并保留服务器编号",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:52.367039",
+        "updateTime": "2026-09-23T13:25:52.367039",
+        "lockVersion": 0,
+        "code": "QA22-20260923052547-sid-flow",
+        "projectId": 1,
+        "inspectionDate": "2026-09-23",
+        "inspectorId": 3,
+        "location": "A区1层梁板",
+        "content": "{\"process\":\"混凝土浇筑\",\"result\":\"完成\",\"manageCount\":2,\"workerCount\":12,\"docs\":[\"结构图S-01\"],\"issues\":\"坍落度复核合格\",\"text\":\"C30混凝土，见证取样；模拟施工数据。\"}",
+        "startTime": "2026-09-23T08:00:00",
+        "endTime": "2026-09-23T10:30:00",
+        "status": "draft",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+      }
+    },
+    {
+      "id": "T142",
+      "module": "旁站检查",
+      "title": "旧版本更新返回409，不覆盖新稿",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "createTime": "2026-09-23T13:25:52.367039",
+          "updateTime": "2026-09-23T13:25:52.367039",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-sid-flow",
+          "projectId": 1,
+          "inspectionDate": "2026-09-23",
+          "inspectorId": 3,
+          "location": "A区1层梁板",
+          "content": "{\"process\":\"混凝土浇筑\",\"result\":\"完成\",\"manageCount\":2,\"workerCount\":12,\"docs\":[\"结构图S-01\"],\"issues\":\"坍落度复核合格\",\"text\":\"C30混凝土，见证取样；模拟施工数据。\"}",
+          "startTime": "2026-09-23T08:00:00",
+          "endTime": "2026-09-23T10:30:00",
+          "status": "draft",
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T143",
+      "module": "旁站检查",
+      "title": "草稿提交进入待审核",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:52.367039",
+        "updateTime": "2026-09-23T13:25:52.5845322",
+        "lockVersion": 1,
+        "code": "QA22-20260923052547-sid-flow",
+        "projectId": 1,
+        "inspectionDate": "2026-09-23",
+        "inspectorId": 3,
+        "location": "A区1层梁板",
+        "content": "{\"process\":\"混凝土浇筑\",\"result\":\"完成\",\"manageCount\":2,\"workerCount\":12,\"docs\":[\"结构图S-01\"],\"issues\":\"坍落度复核合格\",\"text\":\"C30混凝土，见证取样；模拟施工数据。\"}",
+        "startTime": "2026-09-23T08:00:00",
+        "endTime": "2026-09-23T10:30:00",
+        "status": "submitted",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+      }
+    },
+    {
+      "id": "T144",
+      "module": "旁站检查",
+      "title": "普通作者禁止自行审核",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "没有该项目的审核权限"
+      }
+    },
+    {
+      "id": "T145",
+      "module": "旁站检查",
+      "title": "退回必须填写原因",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 400,
+        "code": 400,
+        "message": "请填写退回原因"
+      }
+    },
+    {
+      "id": "T146",
+      "module": "旁站检查",
+      "title": "授权审核人退回",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:52.367039",
+        "updateTime": "2026-09-23T13:25:52.7122099",
+        "lockVersion": 2,
+        "code": "QA22-20260923052547-sid-flow",
+        "projectId": 1,
+        "inspectionDate": "2026-09-23",
+        "inspectorId": 3,
+        "location": "A区1层梁板",
+        "content": "{\"process\":\"混凝土浇筑\",\"result\":\"完成\",\"manageCount\":2,\"workerCount\":12,\"docs\":[\"结构图S-01\"],\"issues\":\"坍落度复核合格\",\"text\":\"C30混凝土，见证取样；模拟施工数据。\"}",
+        "startTime": "2026-09-23T08:00:00",
+        "endTime": "2026-09-23T10:30:00",
+        "status": "rejected",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+      }
+    },
+    {
+      "id": "T147",
+      "module": "旁站检查",
+      "title": "退回后可修改",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:52.367039",
+        "updateTime": "2026-09-23T13:25:52.7361009",
+        "lockVersion": 3,
+        "code": "QA22-20260923052547-sid-flow",
+        "projectId": 1,
+        "inspectionDate": "2026-09-23",
+        "inspectorId": 3,
+        "location": "A区1层梁板",
+        "content": "{\"process\":\"混凝土浇筑\",\"result\":\"完成\",\"manageCount\":2,\"workerCount\":12,\"docs\":[\"结构图S-01\"],\"issues\":\"坍落度复核合格\",\"text\":\"C30混凝土，见证取样；模拟施工数据。\"}",
+        "startTime": "2026-09-23T08:00:00",
+        "endTime": "2026-09-23T10:30:00",
+        "status": "draft",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+      }
+    },
+    {
+      "id": "T148",
+      "module": "旁站检查",
+      "title": "修改后再次提交",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:52.367039",
+        "updateTime": "2026-09-23T13:25:52.7522091",
+        "lockVersion": 4,
+        "code": "QA22-20260923052547-sid-flow",
+        "projectId": 1,
+        "inspectionDate": "2026-09-23",
+        "inspectorId": 3,
+        "location": "A区1层梁板",
+        "content": "{\"process\":\"混凝土浇筑\",\"result\":\"完成\",\"manageCount\":2,\"workerCount\":12,\"docs\":[\"结构图S-01\"],\"issues\":\"坍落度复核合格\",\"text\":\"C30混凝土，见证取样；模拟施工数据。\"}",
+        "startTime": "2026-09-23T08:00:00",
+        "endTime": "2026-09-23T10:30:00",
+        "status": "submitted",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+      }
+    },
+    {
+      "id": "T149",
+      "module": "旁站检查",
+      "title": "再次提交后审核通过",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:52.367039",
+        "updateTime": "2026-09-23T13:25:52.7724594",
+        "lockVersion": 5,
+        "code": "QA22-20260923052547-sid-flow",
+        "projectId": 1,
+        "inspectionDate": "2026-09-23",
+        "inspectorId": 3,
+        "location": "A区1层梁板",
+        "content": "{\"process\":\"混凝土浇筑\",\"result\":\"完成\",\"manageCount\":2,\"workerCount\":12,\"docs\":[\"结构图S-01\"],\"issues\":\"坍落度复核合格\",\"text\":\"C30混凝土，见证取样；模拟施工数据。\"}",
+        "startTime": "2026-09-23T08:00:00",
+        "endTime": "2026-09-23T10:30:00",
+        "status": "approved",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+      }
+    },
+    {
+      "id": "T150",
+      "module": "旁站检查",
+      "title": "已通过正文锁定",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 409,
+        "code": 409,
+        "message": "记录已提交或已审核，不能直接修改；已审核记录请建立修订稿"
+      }
+    },
+    {
+      "id": "T151",
+      "module": "旁站检查",
+      "title": "版本历史含提交、退回、通过与正文快照",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "actions": [
+          "approved",
+          "submit",
+          "save",
+          "rejected",
+          "submit",
+          "save",
+          "save",
+          "create"
+        ],
+        "length": 8
+      }
+    },
+    {
+      "id": "T152",
+      "module": "旁站检查",
+      "title": "新增模拟记录 QA22-20260923052547-sid-rev",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 2,
+          "createTime": "2026-09-23T13:25:52.8743363",
+          "updateTime": "2026-09-23T13:25:52.8743363",
+          "lockVersion": 0,
+          "sourceRecordId": 1,
+          "code": "QA22-20260923052547-sid-rev",
+          "projectId": 1,
+          "inspectionDate": "2026-09-23",
+          "inspectorId": 3,
+          "location": "A区1层梁板",
+          "content": "{\"process\":\"混凝土浇筑\",\"result\":\"完成\",\"manageCount\":2,\"workerCount\":12,\"docs\":[\"结构图S-01\"],\"issues\":\"坍落度复核合格\",\"text\":\"C30混凝土，见证取样；模拟施工数据。\"}",
+          "startTime": "2026-09-23T08:00:00",
+          "endTime": "2026-09-23T10:30:00",
+          "status": "draft",
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T153",
+      "module": "旁站检查",
+      "title": "修订稿保留来源且不覆盖已审核原件",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 2,
+        "sourceRecordId": 1
+      }
+    },
+    {
+      "id": "T154",
+      "module": "旁站检查",
+      "title": "新增模拟记录 QA22-20260923052547-sid-draft",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 3,
+          "createTime": "2026-09-23T13:25:52.9060655",
+          "updateTime": "2026-09-23T13:25:52.9060655",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-sid-draft",
+          "projectId": 1,
+          "inspectionDate": "2026-09-23",
+          "inspectorId": 3,
+          "location": "A区1层梁板",
+          "content": "{\"process\":\"混凝土浇筑\",\"result\":\"完成\",\"manageCount\":2,\"workerCount\":12,\"docs\":[\"结构图S-01\"],\"issues\":\"坍落度复核合格\",\"text\":\"C30混凝土，见证取样；模拟施工数据。\"}",
+          "startTime": "2026-09-23T08:00:00",
+          "endTime": "2026-09-23T10:30:00",
+          "status": "draft",
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T155",
+      "module": "旁站检查",
+      "title": "新增模拟记录 QA22-20260923052547-sid-submitted",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 4,
+          "createTime": "2026-09-23T13:25:53.0680336",
+          "updateTime": "2026-09-23T13:25:53.0680336",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-sid-submitted",
+          "projectId": 1,
+          "inspectionDate": "2026-09-23",
+          "inspectorId": 3,
+          "location": "A区1层梁板",
+          "content": "{\"process\":\"混凝土浇筑\",\"result\":\"完成\",\"manageCount\":2,\"workerCount\":12,\"docs\":[\"结构图S-01\"],\"issues\":\"坍落度复核合格\",\"text\":\"C30混凝土，见证取样；模拟施工数据。\"}",
+          "startTime": "2026-09-23T08:00:00",
+          "endTime": "2026-09-23T10:30:00",
+          "status": "draft",
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T156",
+      "module": "旁站检查",
+      "title": "新增模拟记录 QA22-20260923052547-sid-rejected",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 5,
+          "createTime": "2026-09-23T13:25:53.191695",
+          "updateTime": "2026-09-23T13:25:53.191695",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-sid-rejected",
+          "projectId": 1,
+          "inspectionDate": "2026-09-23",
+          "inspectorId": 3,
+          "location": "A区1层梁板",
+          "content": "{\"process\":\"混凝土浇筑\",\"result\":\"完成\",\"manageCount\":2,\"workerCount\":12,\"docs\":[\"结构图S-01\"],\"issues\":\"坍落度复核合格\",\"text\":\"C30混凝土，见证取样；模拟施工数据。\"}",
+          "startTime": "2026-09-23T08:00:00",
+          "endTime": "2026-09-23T10:30:00",
+          "status": "draft",
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T157",
+      "module": "旁站检查",
+      "title": "保留退回样本",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 5,
+        "createTime": "2026-09-23T13:25:53.191695",
+        "updateTime": "2026-09-23T13:25:53.2257152",
+        "lockVersion": 2,
+        "code": "QA22-20260923052547-sid-rejected",
+        "projectId": 1,
+        "inspectionDate": "2026-09-23",
+        "inspectorId": 3,
+        "location": "A区1层梁板",
+        "content": "{\"process\":\"混凝土浇筑\",\"result\":\"完成\",\"manageCount\":2,\"workerCount\":12,\"docs\":[\"结构图S-01\"],\"issues\":\"坍落度复核合格\",\"text\":\"C30混凝土，见证取样；模拟施工数据。\"}",
+        "startTime": "2026-09-23T08:00:00",
+        "endTime": "2026-09-23T10:30:00",
+        "status": "rejected",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+      }
+    },
+    {
+      "id": "T158",
+      "module": "旁站检查",
+      "title": "项目/状态/日期过滤准确",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "list": [
+          {
+            "id": 1,
+            "createTime": "2026-09-23T13:25:52.367039",
+            "updateTime": "2026-09-23T13:25:52.772459",
+            "lockVersion": 5,
+            "code": "QA22-20260923052547-sid-flow",
+            "projectId": 1,
+            "inspectionDate": "2026-09-23",
+            "inspectorId": 3,
+            "location": "A区1层梁板",
+            "content": "{\"process\":\"混凝土浇筑\",\"result\":\"完成\",\"manageCount\":2,\"workerCount\":12,\"docs\":[\"结构图S-01\"],\"issues\":\"坍落度复核合格\",\"text\":\"C30混凝土，见证取样；模拟施工数据。\"}",
+            "startTime": "2026-09-23T08:00:00",
+            "endTime": "2026-09-23T10:30:00",
+            "status": "approved",
+            "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+            "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]"
+          }
+        ],
+        "total": 1,
+        "pageNum": 1,
+        "pageSize": 20
+      }
+    },
+    {
+      "id": "T159",
+      "module": "旁站检查",
+      "title": "分页总数一致且无重复记录",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "page1": [
+          5,
+          4
+        ],
+        "page2": [
+          3,
+          2
+        ],
+        "total": 5
+      }
+    },
+    {
+      "id": "T160",
+      "module": "工程资料目录与上传",
+      "title": "跨项目不可获取附件签名",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "无权访问该项目"
+      }
+    },
+    {
+      "id": "T161",
+      "module": "工程资料目录与上传",
+      "title": "项目审核人可预览已提交记录照片",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200
+      }
+    },
+    {
+      "id": "T162",
+      "module": "工程资料目录与上传",
+      "title": "签名附件返回原文件且禁止公共缓存",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "bytes": 68,
+        "type": "image/png",
+        "cache": "private, no-store"
+      }
+    },
+    {
+      "id": "T163",
+      "module": "工程资料目录与上传",
+      "title": "签名篡改被拒绝",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403
+      }
+    },
+    {
+      "id": "T164",
+      "module": "工程资料目录与上传",
+      "title": "原始上传路径不能匿名直出",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 401
+      }
+    },
+    {
+      "id": "T165",
+      "module": "统计报表",
+      "title": "当日取数仅含已通过日记",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "content": "【QA22-20260923052547现场监理｜日记 QA22-20260923052547-sup-flow】\nA区1层梁板钢筋绑扎，轴线1-3/A-C，保护层25mm；检查记录为模拟数据。",
+        "management": "【QA22-20260923052547现场监理｜日记 QA22-20260923052547-sup-flow】\n监理2人、施工12人，交底记录齐全。",
+        "inspection": "【QA22-20260923052547现场监理｜日记 QA22-20260923052547-sup-flow】\n发现保护层垫块间距偏大，要求补设并复查。",
+        "otherMatters": "",
+        "morningMeeting": "",
+        "drawingReview": "",
+        "sources": [
+          {
+            "lockVersion": 5,
+            "date": "2026-09-23",
+            "code": "QA22-20260923052547-sup-flow",
+            "id": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "T166",
+      "module": "统计报表",
+      "title": "次日不混入当日日记",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "content": "",
+        "management": "",
+        "inspection": "",
+        "otherMatters": "",
+        "morningMeeting": "",
+        "drawingReview": "",
+        "sources": []
+      }
+    },
+    {
+      "id": "T167",
+      "module": "统计报表",
+      "title": "每日摘要按四类业务及真实状态计数",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "supervision-diaries": {
+          "draft": 2,
+          "submitted": 1,
+          "approved": 1,
+          "rejected": 1,
+          "recorded": 0
+        },
+        "supervision-logs": {
+          "draft": 2,
+          "submitted": 1,
+          "approved": 1,
+          "rejected": 1,
+          "recorded": 0
+        },
+        "daily-inspections": {
+          "draft": 2,
+          "submitted": 1,
+          "approved": 1,
+          "rejected": 1,
+          "recorded": 0
+        },
+        "sideline-inspections": {
+          "draft": 2,
+          "submitted": 1,
+          "approved": 1,
+          "rejected": 1,
+          "recorded": 0
+        },
+        "date": "2026-09-23",
+        "canReview": false
+      }
+    },
+    {
+      "id": "T168",
+      "module": "监理日志",
+      "title": "新增模拟记录 QA22-20260923052547-sup-source",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 6,
+          "createTime": "2026-09-23T13:25:53.8271018",
+          "updateTime": "2026-09-23T13:25:53.8271018",
+          "lockVersion": 0,
+          "code": "QA22-20260923052547-sup-source",
+          "projectId": 1,
+          "logDate": "2026-09-23",
+          "authorId": 3,
+          "diarySources": "[{\"lockVersion\":5,\"date\":\"2026-09-23\",\"code\":\"QA22-20260923052547-sup-flow\",\"id\":1}]",
+          "content": "【QA22-20260923052547现场监理｜日记 QA22-20260923052547-sup-flow】\nA区1层梁板钢筋绑扎，轴线1-3/A-C，保护层25mm；检查记录为模拟数据。",
+          "management": "安排钢筋隐蔽验收。",
+          "status": "draft",
+          "version": 1,
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+          "weather": "晴"
+        }
+      }
+    },
+    {
+      "id": "T169",
+      "module": "监理日志",
+      "title": "日记取数日志持久化且来源可追溯",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 6,
+        "createTime": "2026-09-23T13:25:53.8271018",
+        "updateTime": "2026-09-23T13:25:53.8271018",
+        "lockVersion": 0,
+        "code": "QA22-20260923052547-sup-source",
+        "projectId": 1,
+        "logDate": "2026-09-23",
+        "authorId": 3,
+        "diarySources": "[{\"lockVersion\":5,\"date\":\"2026-09-23\",\"code\":\"QA22-20260923052547-sup-flow\",\"id\":1}]",
+        "content": "【QA22-20260923052547现场监理｜日记 QA22-20260923052547-sup-flow】\nA区1层梁板钢筋绑扎，轴线1-3/A-C，保护层25mm；检查记录为模拟数据。",
+        "management": "安排钢筋隐蔽验收。",
+        "status": "draft",
+        "version": 1,
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+        "weather": "晴"
+      }
+    },
+    {
+      "id": "T170",
+      "module": "监理日志",
+      "title": "跨日日记来源拒绝",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 409,
+        "code": 409,
+        "message": "日记来源不是本项目当日已审核版本，请重新取数"
+      }
+    },
+    {
+      "id": "T171",
+      "module": "统计报表",
+      "title": "周范围真实记录可查询（不等同周报生成）",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "list": [
+          {
+            "id": 1,
+            "createTime": "2026-09-23T13:25:50.401958",
+            "updateTime": "2026-09-23T13:25:50.880242",
+            "lockVersion": 5,
+            "code": "QA22-20260923052547-sup-flow",
+            "projectId": 1,
+            "diaryDate": "2026-09-23",
+            "authorId": 3,
+            "weather": "晴",
+            "wind": "东北风2级",
+            "temperature": "23℃~29℃",
+            "construction": "A区1层梁板钢筋绑扎，轴线1-3/A-C，保护层25mm；检查记录为模拟数据。",
+            "management": "监理2人、施工12人，交底记录齐全。",
+            "inspection": "发现保护层垫块间距偏大，要求补设并复查。",
+            "status": "approved",
+            "version": 1,
+            "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟照片：A区钢筋检查，仅用于测试，不是真实施工证据\"}]",
+            "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\",\"name\":\"模拟检查说明.txt\"}]",
+            "reviewerId": 4,
+            "reviewedAt": "2026-09-23T13:25:50.880242",
+            "submittedAt": "2026-09-23T13:25:50.851708",
+            "submittedBy": "QA22-20260923052547现场监理",
+            "rejectedAt": "2026-09-23T13:25:50.775993",
+            "rejectedBy": "QA22-20260923052547项目总监"
+          }
+        ],
+        "total": 1,
+        "pageNum": 1,
+        "pageSize": 20
+      }
+    },
+    {
+      "id": "T172",
+      "module": "统计报表",
+      "title": "正式周报自动生成/定版/导出",
+      "result": "功能尚未实现",
+      "actual": "未发现独立周报生成端点；周范围查询与测试器汇总不能冒充正式周报。"
+    },
+    {
+      "id": "T173",
+      "module": "安全日志",
+      "title": "新增模拟记录 QA22-20260923052547-safety",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "createTime": "2026-09-23T13:25:53.8905451",
+          "updateTime": "2026-09-23T13:25:53.8905451",
+          "code": "QA22-20260923052547-safety",
+          "projectId": 1,
+          "logDate": "2026-09-23",
+          "authorId": 3,
+          "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。",
+          "inspection": "临边防护完整",
+          "safety": "未发生安全事故（模拟）",
+          "status": "draft",
+          "version": 1,
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]",
+          "weather": "晴"
+        }
+      }
+    },
+    {
+      "id": "T174",
+      "module": "安全日志",
+      "title": "跨项目详情访问被拒绝",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "无权访问该项目"
+      }
+    },
+    {
+      "id": "T175",
+      "module": "安全日志",
+      "title": "编辑正文持久化",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:53.890545",
+        "updateTime": "2026-09-23T13:25:53.9302702",
+        "code": "QA22-20260923052547-safety",
+        "projectId": 1,
+        "logDate": "2026-09-23",
+        "authorId": 3,
+        "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。补充复查说明。",
+        "inspection": "临边防护完整",
+        "safety": "未发生安全事故（模拟）",
+        "status": "draft",
+        "version": 1,
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]",
+        "weather": "晴"
+      }
+    },
+    {
+      "id": "T176",
+      "module": "安全日志",
+      "title": "项目及编号过滤/分页",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "list": [
+          {
+            "id": 1,
+            "createTime": "2026-09-23T13:25:53.890545",
+            "updateTime": "2026-09-23T13:25:53.93027",
+            "code": "QA22-20260923052547-safety",
+            "projectId": 1,
+            "logDate": "2026-09-23",
+            "authorId": 3,
+            "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。补充复查说明。",
+            "inspection": "临边防护完整",
+            "safety": "未发生安全事故（模拟）",
+            "status": "draft",
+            "version": 1,
+            "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+            "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]",
+            "weather": "晴"
+          }
+        ],
+        "total": 1,
+        "pageNum": 1,
+        "pageSize": 1
+      }
+    },
+    {
+      "id": "T177",
+      "module": "安全日志",
+      "title": "重复单据编号拒绝",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 400,
+        "code": 400,
+        "message": "编号已存在"
+      }
+    },
+    {
+      "id": "T178",
+      "module": "安全日志",
+      "title": "表单提交应进入待审核",
+      "result": "失败",
+      "expected": "submitted",
+      "actual": "draft"
+    },
+    {
+      "id": "T179",
+      "module": "安全日志",
+      "title": "项目授权总监无需管理员也应可审核",
+      "result": "失败",
+      "expected": "HTTP200",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "权限不足"
+      }
+    },
+    {
+      "id": "T180",
+      "module": "安全日志",
+      "title": "不应跳过提交直接审核草稿",
+      "result": "失败",
+      "expected": "拒绝草稿直接审核",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:53.890545",
+        "updateTime": "2026-09-23T13:25:54.0113506",
+        "code": "QA22-20260923052547-safety",
+        "projectId": 1,
+        "logDate": "2026-09-23",
+        "authorId": 3,
+        "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。",
+        "inspection": "临边防护完整",
+        "safety": "未发生安全事故（模拟）",
+        "status": "approved",
+        "version": 1,
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]",
+        "weather": "晴"
+      }
+    },
+    {
+      "id": "T181",
+      "module": "安全日志",
+      "title": "已审核正文不可直接覆盖",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:53.890545",
+        "updateTime": "2026-09-23T13:25:54.0375667",
+        "code": "QA22-20260923052547-safety",
+        "projectId": 1,
+        "logDate": "2026-09-23",
+        "authorId": 3,
+        "content": "测试：审核后尝试覆盖正文",
+        "inspection": "临边防护完整",
+        "safety": "未发生安全事故（模拟）",
+        "status": "approved",
+        "version": 1,
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]",
+        "weather": "晴"
+      }
+    },
+    {
+      "id": "T182",
+      "module": "安全日志",
+      "title": "新增模拟记录 QA22-20260923052547-safety-reject",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 2,
+          "createTime": "2026-09-23T13:25:54.0696004",
+          "updateTime": "2026-09-23T13:25:54.0696004",
+          "code": "QA22-20260923052547-safety-reject",
+          "projectId": 1,
+          "logDate": "2026-09-23",
+          "authorId": 3,
+          "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。",
+          "inspection": "临边防护完整",
+          "safety": "未发生安全事故（模拟）",
+          "status": "draft",
+          "version": 1,
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]",
+          "weather": "晴"
+        }
+      }
+    },
+    {
+      "id": "T183",
+      "module": "安全日志",
+      "title": "退回样本保存",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 2,
+        "createTime": "2026-09-23T13:25:54.0696",
+        "updateTime": "2026-09-23T13:25:54.110143",
+        "code": "QA22-20260923052547-safety-reject",
+        "projectId": 1,
+        "logDate": "2026-09-23",
+        "authorId": 3,
+        "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。",
+        "inspection": "临边防护完整",
+        "safety": "未发生安全事故（模拟）",
+        "status": "rejected",
+        "version": 1,
+        "rejectReason": "补全复查结论",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]",
+        "weather": "晴"
+      }
+    },
+    {
+      "id": "T184",
+      "module": "安全日志",
+      "title": "退回修改后应可再提交",
+      "result": "失败",
+      "expected": "",
+      "actual": "rejected"
+    },
+    {
+      "id": "T185",
+      "module": "安全日志",
+      "title": "历史快照接口",
+      "result": "功能尚未实现",
+      "actual": "仅普通version字段；控制器未暴露历史快照/修订入口。"
+    },
+    {
+      "id": "T186",
+      "module": "会议纪要",
+      "title": "新增模拟记录 QA22-20260923052547-meetin",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "createTime": "2026-09-23T13:25:54.1836981",
+          "updateTime": "2026-09-23T13:25:54.1836981",
+          "code": "QA22-20260923052547-meetin",
+          "projectId": 1,
+          "meetingDate": "2026-09-23",
+          "authorId": 3,
+          "title": "QA22-20260923052547会议纪要模拟记录",
+          "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。",
+          "attendees": "模拟总监、施工负责人",
+          "location": "项目会议室",
+          "status": "draft",
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T187",
+      "module": "会议纪要",
+      "title": "跨项目详情访问被拒绝",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "无权访问该项目"
+      }
+    },
+    {
+      "id": "T188",
+      "module": "会议纪要",
+      "title": "编辑正文持久化",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:54.183698",
+        "updateTime": "2026-09-23T13:25:54.2095113",
+        "code": "QA22-20260923052547-meetin",
+        "projectId": 1,
+        "meetingDate": "2026-09-23",
+        "authorId": 3,
+        "title": "QA22-20260923052547会议纪要模拟记录",
+        "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。补充复查说明。",
+        "attendees": "模拟总监、施工负责人",
+        "location": "项目会议室",
+        "status": "draft",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]"
+      }
+    },
+    {
+      "id": "T189",
+      "module": "会议纪要",
+      "title": "项目及编号过滤/分页",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "list": [
+          {
+            "id": 1,
+            "createTime": "2026-09-23T13:25:54.183698",
+            "updateTime": "2026-09-23T13:25:54.209511",
+            "code": "QA22-20260923052547-meetin",
+            "projectId": 1,
+            "meetingDate": "2026-09-23",
+            "authorId": 3,
+            "title": "QA22-20260923052547会议纪要模拟记录",
+            "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。补充复查说明。",
+            "attendees": "模拟总监、施工负责人",
+            "location": "项目会议室",
+            "status": "draft",
+            "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+            "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]"
+          }
+        ],
+        "total": 1,
+        "pageNum": 1,
+        "pageSize": 1
+      }
+    },
+    {
+      "id": "T190",
+      "module": "会议纪要",
+      "title": "重复单据编号拒绝",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 400,
+        "code": 400,
+        "message": "编号已存在"
+      }
+    },
+    {
+      "id": "T191",
+      "module": "监理月报",
+      "title": "新增模拟记录 QA22-20260923052547-superv",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "createTime": "2026-09-23T13:25:54.2587041",
+          "updateTime": "2026-09-23T13:25:54.2587041",
+          "code": "QA22-20260923052547-superv",
+          "projectId": 1,
+          "reportMonth": "2026-09",
+          "authorId": 3,
+          "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。",
+          "status": "draft",
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T192",
+      "module": "监理月报",
+      "title": "跨项目详情访问被拒绝",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "无权访问该项目"
+      }
+    },
+    {
+      "id": "T193",
+      "module": "监理月报",
+      "title": "编辑正文持久化",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:54.258704",
+        "updateTime": "2026-09-23T13:25:54.2845282",
+        "code": "QA22-20260923052547-superv",
+        "projectId": 1,
+        "reportMonth": "2026-09",
+        "authorId": 3,
+        "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。补充复查说明。",
+        "status": "draft",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]"
+      }
+    },
+    {
+      "id": "T194",
+      "module": "监理月报",
+      "title": "项目及编号过滤/分页",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "list": [
+          {
+            "id": 1,
+            "createTime": "2026-09-23T13:25:54.258704",
+            "updateTime": "2026-09-23T13:25:54.284528",
+            "code": "QA22-20260923052547-superv",
+            "projectId": 1,
+            "reportMonth": "2026-09",
+            "authorId": 3,
+            "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。补充复查说明。",
+            "status": "draft",
+            "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+            "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]"
+          }
+        ],
+        "total": 1,
+        "pageNum": 1,
+        "pageSize": 1
+      }
+    },
+    {
+      "id": "T195",
+      "module": "监理月报",
+      "title": "重复单据编号拒绝",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 400,
+        "code": 400,
+        "message": "编号已存在"
+      }
+    },
+    {
+      "id": "T196",
+      "module": "监理月报",
+      "title": "从确认记录自动生成月报",
+      "result": "功能尚未实现",
+      "actual": "当前仅人工正文CRUD；本轮已录入模拟月报，不能视为自动生成。"
+    },
+    {
+      "id": "T197",
+      "module": "监理通知单",
+      "title": "新增模拟记录 QA22-20260923052547-superv",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "createTime": "2026-09-23T13:25:54.3335198",
+          "updateTime": "2026-09-23T13:25:54.3335198",
+          "code": "QA22-20260923052547-superv",
+          "projectId": 1,
+          "noticeDate": "2026-09-23",
+          "authorId": 3,
+          "title": "QA22-20260923052547监理通知单模拟记录",
+          "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。",
+          "deadline": "2026-09-25",
+          "status": "draft",
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T198",
+      "module": "监理通知单",
+      "title": "跨项目详情访问被拒绝",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "无权访问该项目"
+      }
+    },
+    {
+      "id": "T199",
+      "module": "监理通知单",
+      "title": "编辑正文持久化",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:54.33352",
+        "updateTime": "2026-09-23T13:25:54.3695285",
+        "code": "QA22-20260923052547-superv",
+        "projectId": 1,
+        "noticeDate": "2026-09-23",
+        "authorId": 3,
+        "title": "QA22-20260923052547监理通知单模拟记录",
+        "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。补充复查说明。",
+        "deadline": "2026-09-25",
+        "status": "draft",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]"
+      }
+    },
+    {
+      "id": "T200",
+      "module": "监理通知单",
+      "title": "项目及编号过滤/分页",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "list": [
+          {
+            "id": 1,
+            "createTime": "2026-09-23T13:25:54.33352",
+            "updateTime": "2026-09-23T13:25:54.369529",
+            "code": "QA22-20260923052547-superv",
+            "projectId": 1,
+            "noticeDate": "2026-09-23",
+            "authorId": 3,
+            "title": "QA22-20260923052547监理通知单模拟记录",
+            "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。补充复查说明。",
+            "deadline": "2026-09-25",
+            "status": "draft",
+            "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+            "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]"
+          }
+        ],
+        "total": 1,
+        "pageNum": 1,
+        "pageSize": 1
+      }
+    },
+    {
+      "id": "T201",
+      "module": "监理通知单",
+      "title": "重复单据编号拒绝",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 400,
+        "code": 400,
+        "message": "编号已存在"
+      }
+    },
+    {
+      "id": "T202",
+      "module": "监理通知单",
+      "title": "草稿通过页面更新转为下发/发送",
+      "result": "失败",
+      "expected": "issued",
+      "actual": "draft"
+    },
+    {
+      "id": "T203",
+      "module": "监理通知单",
+      "title": "新增模拟记录 QA22-20260923052547-superv-sent",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 2,
+          "createTime": "2026-09-23T13:25:54.4553204",
+          "updateTime": "2026-09-23T13:25:54.4553204",
+          "code": "QA22-20260923052547-superv-sent",
+          "projectId": 1,
+          "noticeDate": "2026-09-23",
+          "authorId": 3,
+          "title": "QA22-20260923052547监理通知单模拟记录",
+          "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。",
+          "deadline": "2026-09-25",
+          "status": "issued",
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T204",
+      "module": "监理通知单",
+      "title": "已下发/发送记录回复",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 2,
+        "createTime": "2026-09-23T13:25:54.45532",
+        "updateTime": "2026-09-23T13:25:54.4675459",
+        "code": "QA22-20260923052547-superv-sent",
+        "projectId": 1,
+        "noticeDate": "2026-09-23",
+        "authorId": 3,
+        "title": "QA22-20260923052547监理通知单模拟记录",
+        "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。",
+        "deadline": "2026-09-25",
+        "replyContent": "已增设垫块，复查符合要求（模拟回复）",
+        "replyDate": "2026-09-23",
+        "status": "responded",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]"
+      }
+    },
+    {
+      "id": "T205",
+      "module": "监理通知单",
+      "title": "回复后验证闭环状态应持久化",
+      "result": "失败",
+      "expected": "verified",
+      "actual": "responded"
+    },
+    {
+      "id": "T206",
+      "module": "监理通知单",
+      "title": "不能创建即伪造已验证状态",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "id": 3,
+        "createTime": "2026-09-23T13:25:54.5083002",
+        "updateTime": "2026-09-23T13:25:54.5083002",
+        "code": "QA22-20260923052547-superv-skip",
+        "projectId": 1,
+        "noticeDate": "2026-09-23",
+        "authorId": 3,
+        "title": "QA22-20260923052547监理通知单模拟记录",
+        "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。",
+        "deadline": "2026-09-25",
+        "status": "verified",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]"
+      }
+    },
+    {
+      "id": "T207",
+      "module": "监理通知单",
+      "title": "已下发/回复记录应锁定原正文",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "id": 2,
+        "createTime": "2026-09-23T13:25:54.45532",
+        "updateTime": "2026-09-23T13:25:54.5192962",
+        "code": "QA22-20260923052547-superv-sent",
+        "projectId": 1,
+        "noticeDate": "2026-09-23",
+        "authorId": 3,
+        "title": "QA22-20260923052547监理通知单模拟记录",
+        "content": "已回复后覆盖原通知内容",
+        "deadline": "2026-09-25",
+        "replyContent": "已增设垫块，复查符合要求（模拟回复）",
+        "replyDate": "2026-09-23",
+        "status": "responded",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]"
+      }
+    },
+    {
+      "id": "T208",
+      "module": "监理通知单",
+      "title": "回复状态观察",
+      "result": "通过",
+      "actual": {
+        "expectedExistingApi": "responded",
+        "actual": "responded"
+      }
+    },
+    {
+      "id": "T209",
+      "module": "工作联系单",
+      "title": "新增模拟记录 QA22-20260923052547-work-c",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "createTime": "2026-09-23T13:25:54.5443149",
+          "updateTime": "2026-09-23T13:25:54.5443149",
+          "code": "QA22-20260923052547-work-c",
+          "projectId": 1,
+          "contactDate": "2026-09-23",
+          "authorId": 3,
+          "title": "QA22-20260923052547工作联系单模拟记录",
+          "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。",
+          "status": "draft",
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T210",
+      "module": "工作联系单",
+      "title": "跨项目详情访问被拒绝",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "无权访问该项目"
+      }
+    },
+    {
+      "id": "T211",
+      "module": "工作联系单",
+      "title": "编辑正文持久化",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:54.544315",
+        "updateTime": "2026-09-23T13:25:54.5759232",
+        "code": "QA22-20260923052547-work-c",
+        "projectId": 1,
+        "contactDate": "2026-09-23",
+        "authorId": 3,
+        "title": "QA22-20260923052547工作联系单模拟记录",
+        "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。补充复查说明。",
+        "status": "draft",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]"
+      }
+    },
+    {
+      "id": "T212",
+      "module": "工作联系单",
+      "title": "项目及编号过滤/分页",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "list": [
+          {
+            "id": 1,
+            "createTime": "2026-09-23T13:25:54.544315",
+            "updateTime": "2026-09-23T13:25:54.575923",
+            "code": "QA22-20260923052547-work-c",
+            "projectId": 1,
+            "contactDate": "2026-09-23",
+            "authorId": 3,
+            "title": "QA22-20260923052547工作联系单模拟记录",
+            "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。补充复查说明。",
+            "status": "draft",
+            "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+            "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]"
+          }
+        ],
+        "total": 1,
+        "pageNum": 1,
+        "pageSize": 1
+      }
+    },
+    {
+      "id": "T213",
+      "module": "工作联系单",
+      "title": "重复单据编号拒绝",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 400,
+        "code": 400,
+        "message": "编号已存在"
+      }
+    },
+    {
+      "id": "T214",
+      "module": "工作联系单",
+      "title": "草稿通过页面更新转为下发/发送",
+      "result": "失败",
+      "expected": "sent",
+      "actual": "draft"
+    },
+    {
+      "id": "T215",
+      "module": "工作联系单",
+      "title": "新增模拟记录 QA22-20260923052547-work-c-sent",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 2,
+          "createTime": "2026-09-23T13:25:54.6432837",
+          "updateTime": "2026-09-23T13:25:54.6432837",
+          "code": "QA22-20260923052547-work-c-sent",
+          "projectId": 1,
+          "contactDate": "2026-09-23",
+          "authorId": 3,
+          "title": "QA22-20260923052547工作联系单模拟记录",
+          "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。",
+          "status": "sent",
+          "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+          "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]"
+        }
+      }
+    },
+    {
+      "id": "T216",
+      "module": "工作联系单",
+      "title": "已下发/发送记录回复",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 2,
+        "createTime": "2026-09-23T13:25:54.643284",
+        "updateTime": "2026-09-23T13:25:54.659668",
+        "code": "QA22-20260923052547-work-c-sent",
+        "projectId": 1,
+        "contactDate": "2026-09-23",
+        "authorId": 3,
+        "title": "QA22-20260923052547工作联系单模拟记录",
+        "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。",
+        "replyContent": "已增设垫块，复查符合要求（模拟回复）",
+        "replyDate": "2026-09-23",
+        "status": "replied",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]"
+      }
+    },
+    {
+      "id": "T217",
+      "module": "工作联系单",
+      "title": "回复后验证闭环状态应持久化",
+      "result": "失败",
+      "expected": "verified",
+      "actual": "replied"
+    },
+    {
+      "id": "T218",
+      "module": "工作联系单",
+      "title": "不能创建即伪造已验证状态",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "id": 3,
+        "createTime": "2026-09-23T13:25:54.7000749",
+        "updateTime": "2026-09-23T13:25:54.7000749",
+        "code": "QA22-20260923052547-work-c-skip",
+        "projectId": 1,
+        "contactDate": "2026-09-23",
+        "authorId": 3,
+        "title": "QA22-20260923052547工作联系单模拟记录",
+        "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。",
+        "status": "verified",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]"
+      }
+    },
+    {
+      "id": "T219",
+      "module": "工作联系单",
+      "title": "已下发/回复记录应锁定原正文",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "id": 2,
+        "createTime": "2026-09-23T13:25:54.643284",
+        "updateTime": "2026-09-23T13:25:54.7051099",
+        "code": "QA22-20260923052547-work-c-sent",
+        "projectId": 1,
+        "contactDate": "2026-09-23",
+        "authorId": 3,
+        "title": "QA22-20260923052547工作联系单模拟记录",
+        "content": "已回复后覆盖原通知内容",
+        "replyContent": "已增设垫块，复查符合要求（模拟回复）",
+        "replyDate": "2026-09-23",
+        "status": "replied",
+        "photos": "[{\"url\":\"/api/uploads/20260923/96fb36d57cb84a96b976a8ea97db7cb1.png\",\"description\":\"模拟图\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/9a0bbe11e14b4fb391009b7169fa807d.txt\"}]"
+      }
+    },
+    {
+      "id": "T220",
+      "module": "工作联系单",
+      "title": "回复状态观察",
+      "result": "通过",
+      "actual": {
+        "expectedExistingApi": "replied",
+        "actual": "replied"
+      }
+    },
+    {
+      "id": "T221",
+      "module": "消息中心",
+      "title": "新增模拟记录 QA22-20260923052547待复查通知",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "createTime": "2026-09-23T13:25:54.7277854",
+          "updateTime": "2026-09-23T13:25:54.7277854",
+          "senderId": 4,
+          "receiverId": 3,
+          "title": "QA22-20260923052547待复查通知",
+          "content": "请于9月25日前复查垫块布设（模拟）",
+          "type": "notice",
+          "isRead": "0"
+        }
+      }
+    },
+    {
+      "id": "T222",
+      "module": "消息中心",
+      "title": "收件人可分页查询模拟通知",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "list": [
+          {
+            "id": 1,
+            "createTime": "2026-09-23T13:25:54.727785",
+            "updateTime": "2026-09-23T13:25:54.727785",
+            "senderId": 4,
+            "receiverId": 3,
+            "title": "QA22-20260923052547待复查通知",
+            "content": "请于9月25日前复查垫块布设（模拟）",
+            "type": "notice",
+            "isRead": "0"
+          }
+        ],
+        "total": 1,
+        "pageNum": 1,
+        "pageSize": 10
+      }
+    },
+    {
+      "id": "T223",
+      "module": "消息中心",
+      "title": "未读数量正确",
+      "result": "通过",
+      "expected": "",
+      "actual": 1
+    },
+    {
+      "id": "T224",
+      "module": "消息中心",
+      "title": "非收件人禁止查看消息",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "createTime": "2026-09-23T13:25:54.727785",
+          "updateTime": "2026-09-23T13:25:54.727785",
+          "senderId": 4,
+          "receiverId": 3,
+          "title": "QA22-20260923052547待复查通知",
+          "content": "请于9月25日前复查垫块布设（模拟）",
+          "type": "notice",
+          "isRead": "0"
+        }
+      }
+    },
+    {
+      "id": "T225",
+      "module": "消息中心",
+      "title": "不能指定他人receiverId读取消息",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "list": [
+          {
+            "id": 1,
+            "createTime": "2026-09-23T13:25:54.727785",
+            "updateTime": "2026-09-23T13:25:54.727785",
+            "senderId": 4,
+            "receiverId": 3,
+            "title": "QA22-20260923052547待复查通知",
+            "content": "请于9月25日前复查垫块布设（模拟）",
+            "type": "notice",
+            "isRead": "0"
+          }
+        ],
+        "total": 1,
+        "pageNum": 1,
+        "pageSize": 10
+      }
+    },
+    {
+      "id": "T226",
+      "module": "消息中心",
+      "title": "非收件人不能代标已读",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功"
+      }
+    },
+    {
+      "id": "T227",
+      "module": "消息中心",
+      "title": "本人标记已读",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功"
+      }
+    },
+    {
+      "id": "T228",
+      "module": "消息中心",
+      "title": "已读后未读数量归零",
+      "result": "通过",
+      "expected": "",
+      "actual": 0
+    },
+    {
+      "id": "T229",
+      "module": "工作标准配置",
+      "title": "新增模拟记录 QA22-20260923052547日记提交截止",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "createTime": "2026-09-23T13:25:54.8094283",
+          "updateTime": "2026-09-23T13:25:54.8094283",
+          "name": "QA22-20260923052547日记提交截止",
+          "module": "supervision-diary",
+          "standard": "18:00",
+          "description": "仅模拟配置，不代表定时提醒已启用",
+          "status": "active"
+        }
+      }
+    },
+    {
+      "id": "T230",
+      "module": "工作标准配置",
+      "title": "标准按名称检索",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "list": [
+          {
+            "id": 1,
+            "createTime": "2026-09-23T13:25:54.809428",
+            "updateTime": "2026-09-23T13:25:54.809428",
+            "name": "QA22-20260923052547日记提交截止",
+            "module": "supervision-diary",
+            "standard": "18:00",
+            "description": "仅模拟配置，不代表定时提醒已启用",
+            "status": "active"
+          }
+        ],
+        "total": 1,
+        "pageNum": 1,
+        "pageSize": 10
+      }
+    },
+    {
+      "id": "T231",
+      "module": "工作标准配置",
+      "title": "管理员更新标准",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:54.809428",
+        "updateTime": "2026-09-23T13:25:54.8359728",
+        "name": "QA22-20260923052547日记提交截止",
+        "module": "supervision-diary",
+        "standard": "17:30",
+        "description": "仅模拟配置，不代表定时提醒已启用",
+        "status": "active"
+      }
+    },
+    {
+      "id": "T232",
+      "module": "工作标准配置",
+      "title": "普通用户不能更改全局标准",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "id": 1,
+        "createTime": "2026-09-23T13:25:54.809428",
+        "updateTime": "2026-09-23T13:25:54.8436575",
+        "name": "QA22-20260923052547日记提交截止",
+        "module": "supervision-diary",
+        "standard": "16:00",
+        "description": "仅模拟配置，不代表定时提醒已启用",
+        "status": "active"
+      }
+    },
+    {
+      "id": "T233",
+      "module": "工作标准配置",
+      "title": "定时催办/工作日调度效果",
+      "result": "功能尚未实现",
+      "actual": "当前为普通配置记录，未发现相应定时执行器；配置成功不能证明提醒生效。"
+    },
+    {
+      "id": "T234",
+      "module": "操作日志",
+      "title": "管理员操作日志列表可查询",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "list": [
+          {
+            "id": 2,
+            "createTime": "2026-09-23T13:25:49.964008",
+            "updateTime": "2026-09-23T13:25:49.964008",
+            "userId": 1,
+            "action": "成员授权变更",
+            "module": "项目授权",
+            "detail": "projectId=1, userId=4, enabled=true, canReview=true"
+          },
+          {
+            "id": 1,
+            "createTime": "2026-09-23T13:25:49.947798",
+            "updateTime": "2026-09-23T13:25:49.947798",
+            "userId": 1,
+            "action": "成员授权变更",
+            "module": "项目授权",
+            "detail": "projectId=1, userId=3, enabled=true, canReview=false"
+          }
+        ],
+        "total": 2,
+        "pageNum": 1,
+        "pageSize": 200
+      }
+    },
+    {
+      "id": "T235",
+      "module": "操作日志",
+      "title": "本轮真实创建/审核应写入全局审计日志",
+      "result": "失败",
+      "expected": "至少包含本轮QA22操作",
+      "actual": {
+        "total": 2,
+        "sample": [
+          {
+            "id": 2,
+            "createTime": "2026-09-23T13:25:49.964008",
+            "updateTime": "2026-09-23T13:25:49.964008",
+            "userId": 1,
+            "action": "成员授权变更",
+            "module": "项目授权",
+            "detail": "projectId=1, userId=4, enabled=true, canReview=true"
+          },
+          {
+            "id": 1,
+            "createTime": "2026-09-23T13:25:49.947798",
+            "updateTime": "2026-09-23T13:25:49.947798",
+            "userId": 1,
+            "action": "成员授权变更",
+            "module": "项目授权",
+            "detail": "projectId=1, userId=3, enabled=true, canReview=false"
+          }
+        ]
+      }
+    },
+    {
+      "id": "T236",
+      "module": "仪表盘",
+      "title": "统计接口返回真实退回计数",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "abnormalDiaries": 1,
+        "unreadMessages": 0,
+        "pendingContacts": 0,
+        "abnormalLogs": 1,
+        "abnormalSafetyLogs": 1,
+        "pendingNotices": 0
+      }
+    },
+    {
+      "id": "T237",
+      "module": "仪表盘",
+      "title": "其他项目不能计入本项目退回记录",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "abnormalDiaries": 0,
+        "unreadMessages": 0,
+        "pendingContacts": 0,
+        "abnormalLogs": 0,
+        "abnormalSafetyLogs": 0,
+        "pendingNotices": 0
+      }
+    },
+    {
+      "id": "T238",
+      "module": "个人资料与设置",
+      "title": "个人身份接口与实际账号一致",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "roles": [
+          "QA22-20260923052547-read"
+        ],
+        "deptId": 5,
+        "position": "专业监理工程师",
+        "userName": "QA22-20260923052547现场监理",
+        "userId": 3
+      }
+    },
+    {
+      "id": "T239",
+      "module": "个人资料与设置",
+      "title": "浏览器个人设置保存及头像裁剪",
+      "result": "受阻",
+      "actual": "遵循本轮不进入凭据/个人设置表单限制，未操作。"
+    },
+    {
+      "id": "T240",
+      "module": "登录与认证",
+      "title": "退出接口返回成功",
+      "result": "通过",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "退出成功"
+      }
+    },
+    {
+      "id": "T241",
+      "module": "登录与认证",
+      "title": "退出后旧JWT观察",
+      "result": "通过",
+      "actual": {
+        "http": 200,
+        "explanation": "当前为无状态JWT设计；退出只清客户端，旧JWT仍有效，服务端撤销未实现。"
+      }
+    },
+    {
+      "id": "T242",
+      "module": "流程管理",
+      "title": "配置真实审批节点并驱动业务",
+      "result": "功能尚未实现",
+      "actual": "process-management.html仅本地演示，saveFlow显示alert，无控制器或持久化端点；未伪造成功样本。"
+    }
+  ]
+}

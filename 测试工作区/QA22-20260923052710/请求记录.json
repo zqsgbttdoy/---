@@ -1,0 +1,2018 @@
+[
+  {
+    "method": "POST",
+    "route": "/auth/login",
+    "http": 200,
+    "code": 200,
+    "message": "登录成功",
+    "elapsedMs": 325
+  },
+  {
+    "method": "POST",
+    "route": "/auth/login",
+    "http": 400,
+    "code": 400,
+    "message": "用户名或密码错误",
+    "elapsedMs": 172
+  },
+  {
+    "method": "GET",
+    "route": "/projects",
+    "http": 401,
+    "code": 401,
+    "message": "未登录或登录已过期，请重新登录",
+    "elapsedMs": 12
+  },
+  {
+    "method": "GET",
+    "route": "/projects",
+    "http": 401,
+    "code": 401,
+    "message": "登录已过期或令牌无效，请重新登录",
+    "elapsedMs": 15
+  },
+  {
+    "method": "POST",
+    "route": "/departments",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 15
+  },
+  {
+    "method": "POST",
+    "route": "/departments",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 15
+  },
+  {
+    "method": "POST",
+    "route": "/departments",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 22
+  },
+  {
+    "method": "POST",
+    "route": "/departments",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 37
+  },
+  {
+    "method": "GET",
+    "route": "/departments?name=QA22-20260923052710",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 17
+  },
+  {
+    "method": "POST",
+    "route": "/departments",
+    "http": 400,
+    "code": 400,
+    "message": "部门名称不能为空",
+    "elapsedMs": 24
+  },
+  {
+    "method": "POST",
+    "route": "/users",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 126
+  },
+  {
+    "method": "POST",
+    "route": "/users",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 104
+  },
+  {
+    "method": "POST",
+    "route": "/users",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 93
+  },
+  {
+    "method": "GET",
+    "route": "/users?deptId=9",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 11
+  },
+  {
+    "method": "POST",
+    "route": "/users",
+    "http": 400,
+    "code": 400,
+    "message": "手机号格式不正确",
+    "elapsedMs": 12
+  },
+  {
+    "method": "POST",
+    "route": "/roles",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 9
+  },
+  {
+    "method": "POST",
+    "route": "/roles",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 10
+  },
+  {
+    "method": "POST",
+    "route": "/permissions",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 11
+  },
+  {
+    "method": "POST",
+    "route": "/roles/4/permissions",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 17
+  },
+  {
+    "method": "GET",
+    "route": "/permissions/tree",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 6
+  },
+  {
+    "method": "POST",
+    "route": "/roles/4/users",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 15
+  },
+  {
+    "method": "POST",
+    "route": "/roles/5/users",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 16
+  },
+  {
+    "method": "POST",
+    "route": "/auth/login",
+    "http": 200,
+    "code": 200,
+    "message": "登录成功",
+    "elapsedMs": 109
+  },
+  {
+    "method": "POST",
+    "route": "/auth/login",
+    "http": 200,
+    "code": 200,
+    "message": "登录成功",
+    "elapsedMs": 103
+  },
+  {
+    "method": "POST",
+    "route": "/auth/login",
+    "http": 200,
+    "code": 200,
+    "message": "登录成功",
+    "elapsedMs": 150
+  },
+  {
+    "method": "GET",
+    "route": "/roles",
+    "http": 403,
+    "code": 403,
+    "message": "权限不足",
+    "elapsedMs": 3
+  },
+  {
+    "method": "GET",
+    "route": "/permissions",
+    "http": 403,
+    "code": 403,
+    "message": "权限不足",
+    "elapsedMs": 8
+  },
+  {
+    "method": "GET",
+    "route": "/departments",
+    "http": 403,
+    "code": 403,
+    "message": "权限不足",
+    "elapsedMs": 4
+  },
+  {
+    "method": "GET",
+    "route": "/operation-logs",
+    "http": 403,
+    "code": 403,
+    "message": "权限不足",
+    "elapsedMs": 4
+  },
+  {
+    "method": "POST",
+    "route": "/users",
+    "http": 403,
+    "code": 403,
+    "message": "权限不足",
+    "elapsedMs": 9
+  },
+  {
+    "method": "POST",
+    "route": "/projects",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "POST",
+    "route": "/projects",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "PUT",
+    "route": "/projects/3/members",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "PUT",
+    "route": "/projects/3/members",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "GET",
+    "route": "/projects",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 14
+  },
+  {
+    "method": "GET",
+    "route": "/projects/4",
+    "http": 403,
+    "code": 403,
+    "message": "无权访问该项目",
+    "elapsedMs": 7
+  },
+  {
+    "method": "POST",
+    "route": "/projects",
+    "http": 403,
+    "code": 403,
+    "message": "仅管理员可以维护项目授权",
+    "elapsedMs": 12
+  },
+  {
+    "method": "POST",
+    "route": "/projects",
+    "http": 400,
+    "code": 400,
+    "message": "项目编号已存在",
+    "elapsedMs": 15
+  },
+  {
+    "method": "GET",
+    "route": "/projects?code=QA22-20260923052710-A",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 17
+  },
+  {
+    "method": "POST",
+    "route": "/files/upload",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 46
+  },
+  {
+    "method": "POST",
+    "route": "/files/upload",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 17
+  },
+  {
+    "method": "POST",
+    "route": "/files/upload",
+    "http": 400,
+    "code": 400,
+    "message": "不支持的文件类型: exe",
+    "elapsedMs": 12
+  },
+  {
+    "method": "POST",
+    "route": "/files/upload",
+    "http": 400,
+    "code": 400,
+    "message": "上传文件不能为空",
+    "elapsedMs": 8
+  },
+  {
+    "method": "POST",
+    "route": "/sub-item-databases",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "POST",
+    "route": "/sub-item-databases",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 11
+  },
+  {
+    "method": "POST",
+    "route": "/sub-item-databases",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 10
+  },
+  {
+    "method": "GET",
+    "route": "/sub-item-databases/tree?projectId=3",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 19
+  },
+  {
+    "method": "GET",
+    "route": "/sub-item-databases/6",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 15
+  },
+  {
+    "method": "POST",
+    "route": "/project-documents",
+    "http": 400,
+    "code": 400,
+    "message": "请选择资料所属子项",
+    "elapsedMs": 20
+  },
+  {
+    "method": "POST",
+    "route": "/project-documents",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 17
+  },
+  {
+    "method": "GET",
+    "route": "/project-documents/3",
+    "http": 403,
+    "code": 403,
+    "message": "无权访问该项目",
+    "elapsedMs": 14
+  },
+  {
+    "method": "POST",
+    "route": "/project-documents/upload?projectId=3&subItemId=6",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 30
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 33
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries",
+    "http": 409,
+    "code": 409,
+    "message": "同一请求标识不能提交不同内容",
+    "elapsedMs": 16
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-diaries/6",
+    "http": 403,
+    "code": 403,
+    "message": "无权访问该项目",
+    "elapsedMs": 17
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-diaries/6",
+    "http": 403,
+    "code": 403,
+    "message": "无权查看他人的草稿或待办",
+    "elapsedMs": 16
+  },
+  {
+    "method": "PUT",
+    "route": "/supervision-diaries/6",
+    "http": 428,
+    "code": 428,
+    "message": "缺少记录版本，请重新打开记录后操作",
+    "elapsedMs": 27
+  },
+  {
+    "method": "PUT",
+    "route": "/supervision-diaries/6",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 30
+  },
+  {
+    "method": "PUT",
+    "route": "/supervision-diaries/6",
+    "http": 409,
+    "code": 409,
+    "message": "记录已被其他端修改；本次内容未覆盖，请保留草稿并重新打开核对",
+    "elapsedMs": 40
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-diaries/6",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 11
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries/6/submit",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 19
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries/6/approve",
+    "http": 403,
+    "code": 403,
+    "message": "没有该项目的审核权限",
+    "elapsedMs": 13
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries/6/approve",
+    "http": 400,
+    "code": 400,
+    "message": "请填写退回原因",
+    "elapsedMs": 11
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries/6/approve",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "PUT",
+    "route": "/supervision-diaries/6",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 19
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries/6/submit",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 10
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries/6/approve",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 11
+  },
+  {
+    "method": "PUT",
+    "route": "/supervision-diaries/6",
+    "http": 409,
+    "code": 409,
+    "message": "记录已提交或已审核，不能直接修改；已审核记录请建立修订稿",
+    "elapsedMs": 7
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-diaries/6/history",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 10
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 15
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 14
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries/9/submit",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 10
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 15
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries/10/submit",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries/10/approve",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-diaries?projectId=3&status=approved&dateFrom=2026-09-23&dateTo=2026-09-23",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 10
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-diaries?projectId=3&pageNum=1&pageSize=2",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-diaries?projectId=3&pageNum=2&pageSize=2",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 8
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-logs",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-logs",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 10
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-logs",
+    "http": 409,
+    "code": 409,
+    "message": "同一请求标识不能提交不同内容",
+    "elapsedMs": 11
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-logs/7",
+    "http": 403,
+    "code": 403,
+    "message": "无权访问该项目",
+    "elapsedMs": 7
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-logs/7",
+    "http": 403,
+    "code": 403,
+    "message": "无权查看他人的草稿或待办",
+    "elapsedMs": 10
+  },
+  {
+    "method": "PUT",
+    "route": "/supervision-logs/7",
+    "http": 428,
+    "code": 428,
+    "message": "缺少记录版本，请重新打开记录后操作",
+    "elapsedMs": 6
+  },
+  {
+    "method": "PUT",
+    "route": "/supervision-logs/7",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "PUT",
+    "route": "/supervision-logs/7",
+    "http": 409,
+    "code": 409,
+    "message": "记录已被其他端修改；本次内容未覆盖，请保留草稿并重新打开核对",
+    "elapsedMs": 9
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-logs/7",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 6
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-logs/7/submit",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 16
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-logs/7/approve",
+    "http": 403,
+    "code": 403,
+    "message": "没有该项目的审核权限",
+    "elapsedMs": 8
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-logs/7/approve",
+    "http": 400,
+    "code": 400,
+    "message": "请填写退回原因",
+    "elapsedMs": 10
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-logs/7/approve",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 14
+  },
+  {
+    "method": "PUT",
+    "route": "/supervision-logs/7",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 14
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-logs/7/submit",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 9
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-logs/7/approve",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "PUT",
+    "route": "/supervision-logs/7",
+    "http": 409,
+    "code": 409,
+    "message": "记录已提交或已审核，不能直接修改；已审核记录请建立修订稿",
+    "elapsedMs": 12
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-logs/7/history",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 10
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-logs",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 16
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-logs",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-logs",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 14
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-logs/10/submit",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 8
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-logs",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 14
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-logs/11/submit",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 9
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-logs/11/approve",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 11
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-logs?projectId=3&status=approved&dateFrom=2026-09-23&dateTo=2026-09-23",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-logs?projectId=3&pageNum=1&pageSize=2",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-logs?projectId=3&pageNum=2&pageSize=2",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 9
+  },
+  {
+    "method": "POST",
+    "route": "/daily-inspections",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "POST",
+    "route": "/daily-inspections",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 15
+  },
+  {
+    "method": "POST",
+    "route": "/daily-inspections",
+    "http": 409,
+    "code": 409,
+    "message": "同一请求标识不能提交不同内容",
+    "elapsedMs": 16
+  },
+  {
+    "method": "GET",
+    "route": "/daily-inspections/6",
+    "http": 403,
+    "code": 403,
+    "message": "无权访问该项目",
+    "elapsedMs": 10
+  },
+  {
+    "method": "GET",
+    "route": "/daily-inspections/6",
+    "http": 403,
+    "code": 403,
+    "message": "无权查看他人的草稿或待办",
+    "elapsedMs": 9
+  },
+  {
+    "method": "PUT",
+    "route": "/daily-inspections/6",
+    "http": 428,
+    "code": 428,
+    "message": "缺少记录版本，请重新打开记录后操作",
+    "elapsedMs": 8
+  },
+  {
+    "method": "PUT",
+    "route": "/daily-inspections/6",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "PUT",
+    "route": "/daily-inspections/6",
+    "http": 409,
+    "code": 409,
+    "message": "记录已被其他端修改；本次内容未覆盖，请保留草稿并重新打开核对",
+    "elapsedMs": 15
+  },
+  {
+    "method": "GET",
+    "route": "/daily-inspections/6",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 9
+  },
+  {
+    "method": "POST",
+    "route": "/daily-inspections/6/submit",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 7
+  },
+  {
+    "method": "POST",
+    "route": "/daily-inspections/6/approve",
+    "http": 403,
+    "code": 403,
+    "message": "没有该项目的审核权限",
+    "elapsedMs": 9
+  },
+  {
+    "method": "POST",
+    "route": "/daily-inspections/6/approve",
+    "http": 400,
+    "code": 400,
+    "message": "请填写退回原因",
+    "elapsedMs": 8
+  },
+  {
+    "method": "POST",
+    "route": "/daily-inspections/6/approve",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 10
+  },
+  {
+    "method": "PUT",
+    "route": "/daily-inspections/6",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 15
+  },
+  {
+    "method": "POST",
+    "route": "/daily-inspections/6/submit",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 8
+  },
+  {
+    "method": "POST",
+    "route": "/daily-inspections/6/approve",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "PUT",
+    "route": "/daily-inspections/6",
+    "http": 409,
+    "code": 409,
+    "message": "记录已提交或已审核，不能直接修改；已审核记录请建立修订稿",
+    "elapsedMs": 9
+  },
+  {
+    "method": "GET",
+    "route": "/daily-inspections/6/history",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 7
+  },
+  {
+    "method": "POST",
+    "route": "/daily-inspections",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 15
+  },
+  {
+    "method": "POST",
+    "route": "/daily-inspections",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 14
+  },
+  {
+    "method": "POST",
+    "route": "/daily-inspections",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 15
+  },
+  {
+    "method": "POST",
+    "route": "/daily-inspections/9/submit",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 7
+  },
+  {
+    "method": "POST",
+    "route": "/daily-inspections",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "POST",
+    "route": "/daily-inspections/10/submit",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 9
+  },
+  {
+    "method": "POST",
+    "route": "/daily-inspections/10/approve",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 11
+  },
+  {
+    "method": "GET",
+    "route": "/daily-inspections?projectId=3&status=approved&dateFrom=2026-09-23&dateTo=2026-09-23",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "GET",
+    "route": "/daily-inspections?projectId=3&pageNum=1&pageSize=2",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "GET",
+    "route": "/daily-inspections?projectId=3&pageNum=2&pageSize=2",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "POST",
+    "route": "/sideline-inspections",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 11
+  },
+  {
+    "method": "POST",
+    "route": "/sideline-inspections",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 10
+  },
+  {
+    "method": "POST",
+    "route": "/sideline-inspections",
+    "http": 409,
+    "code": 409,
+    "message": "同一请求标识不能提交不同内容",
+    "elapsedMs": 14
+  },
+  {
+    "method": "GET",
+    "route": "/sideline-inspections/6",
+    "http": 403,
+    "code": 403,
+    "message": "无权访问该项目",
+    "elapsedMs": 9
+  },
+  {
+    "method": "GET",
+    "route": "/sideline-inspections/6",
+    "http": 403,
+    "code": 403,
+    "message": "无权查看他人的草稿或待办",
+    "elapsedMs": 9
+  },
+  {
+    "method": "PUT",
+    "route": "/sideline-inspections/6",
+    "http": 428,
+    "code": 428,
+    "message": "缺少记录版本，请重新打开记录后操作",
+    "elapsedMs": 7
+  },
+  {
+    "method": "PUT",
+    "route": "/sideline-inspections/6",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 15
+  },
+  {
+    "method": "PUT",
+    "route": "/sideline-inspections/6",
+    "http": 409,
+    "code": 409,
+    "message": "记录已被其他端修改；本次内容未覆盖，请保留草稿并重新打开核对",
+    "elapsedMs": 10
+  },
+  {
+    "method": "GET",
+    "route": "/sideline-inspections/6",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 5
+  },
+  {
+    "method": "POST",
+    "route": "/sideline-inspections/6/submit",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "POST",
+    "route": "/sideline-inspections/6/approve",
+    "http": 403,
+    "code": 403,
+    "message": "没有该项目的审核权限",
+    "elapsedMs": 7
+  },
+  {
+    "method": "POST",
+    "route": "/sideline-inspections/6/approve",
+    "http": 400,
+    "code": 400,
+    "message": "请填写退回原因",
+    "elapsedMs": 12
+  },
+  {
+    "method": "POST",
+    "route": "/sideline-inspections/6/approve",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "PUT",
+    "route": "/sideline-inspections/6",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 15
+  },
+  {
+    "method": "POST",
+    "route": "/sideline-inspections/6/submit",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 15
+  },
+  {
+    "method": "POST",
+    "route": "/sideline-inspections/6/approve",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 9
+  },
+  {
+    "method": "PUT",
+    "route": "/sideline-inspections/6",
+    "http": 409,
+    "code": 409,
+    "message": "记录已提交或已审核，不能直接修改；已审核记录请建立修订稿",
+    "elapsedMs": 8
+  },
+  {
+    "method": "GET",
+    "route": "/sideline-inspections/6/history",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 10
+  },
+  {
+    "method": "POST",
+    "route": "/sideline-inspections",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "POST",
+    "route": "/sideline-inspections",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 14
+  },
+  {
+    "method": "POST",
+    "route": "/sideline-inspections",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 17
+  },
+  {
+    "method": "POST",
+    "route": "/sideline-inspections/9/submit",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "POST",
+    "route": "/sideline-inspections",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 14
+  },
+  {
+    "method": "POST",
+    "route": "/sideline-inspections/10/submit",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "POST",
+    "route": "/sideline-inspections/10/approve",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 20
+  },
+  {
+    "method": "GET",
+    "route": "/sideline-inspections?projectId=3&status=approved&dateFrom=2026-09-23&dateTo=2026-09-23",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 16
+  },
+  {
+    "method": "GET",
+    "route": "/sideline-inspections?projectId=3&pageNum=1&pageSize=2",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 15
+  },
+  {
+    "method": "GET",
+    "route": "/sideline-inspections?projectId=3&pageNum=2&pageSize=2",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 14
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-diaries?projectId=3",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 11
+  },
+  {
+    "method": "GET",
+    "route": "/files/access?url=%2Fapi%2Fuploads%2F20260923%2Fee9b7ebd8fee41ffa5a70dc5a4ff776e.png",
+    "http": 403,
+    "code": 403,
+    "message": "无权访问该项目",
+    "elapsedMs": 8
+  },
+  {
+    "method": "GET",
+    "route": "/files/access?url=%2Fapi%2Fuploads%2F20260923%2Fee9b7ebd8fee41ffa5a70dc5a4ff776e.png",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 8
+  },
+  {
+    "method": "PUT",
+    "route": "/projects/3/members",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "PUT",
+    "route": "/projects/3/members",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "GET",
+    "route": "/field/diary-source?projectId=3&date=2026-09-23",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "GET",
+    "route": "/field/diary-source?projectId=3&date=2026-09-24",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 8
+  },
+  {
+    "method": "GET",
+    "route": "/field/summary?projectId=3&date=2026-09-23",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 64
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-logs",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 21
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-logs",
+    "http": 409,
+    "code": 409,
+    "message": "日记来源不是本项目当日已审核版本，请重新取数",
+    "elapsedMs": 11
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-diaries?projectId=3&dateFrom=2026-09-21&dateTo=2026-09-27&status=approved",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 27
+  },
+  {
+    "method": "POST",
+    "route": "/safety-logs",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "GET",
+    "route": "/safety-logs/3",
+    "http": 403,
+    "code": 403,
+    "message": "无权访问该项目",
+    "elapsedMs": 12
+  },
+  {
+    "method": "PUT",
+    "route": "/safety-logs/3",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 16
+  },
+  {
+    "method": "GET",
+    "route": "/safety-logs?projectId=3&code=QA22-20260923052710-safety&pageSize=1",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "POST",
+    "route": "/safety-logs",
+    "http": 400,
+    "code": 400,
+    "message": "编号已存在",
+    "elapsedMs": 13
+  },
+  {
+    "method": "PUT",
+    "route": "/safety-logs/3",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 14
+  },
+  {
+    "method": "POST",
+    "route": "/safety-logs/3/approve",
+    "http": 403,
+    "code": 403,
+    "message": "权限不足",
+    "elapsedMs": 5
+  },
+  {
+    "method": "POST",
+    "route": "/safety-logs/3/approve",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 7
+  },
+  {
+    "method": "PUT",
+    "route": "/safety-logs/3",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 16
+  },
+  {
+    "method": "POST",
+    "route": "/safety-logs",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 14
+  },
+  {
+    "method": "POST",
+    "route": "/safety-logs/4/approve",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 8
+  },
+  {
+    "method": "PUT",
+    "route": "/safety-logs/4",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "POST",
+    "route": "/meeting-minutes",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 28
+  },
+  {
+    "method": "GET",
+    "route": "/meeting-minutes/2",
+    "http": 403,
+    "code": 403,
+    "message": "无权访问该项目",
+    "elapsedMs": 20
+  },
+  {
+    "method": "PUT",
+    "route": "/meeting-minutes/2",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "GET",
+    "route": "/meeting-minutes?projectId=3&code=QA22-20260923052710-meetin&pageSize=1",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "POST",
+    "route": "/meeting-minutes",
+    "http": 400,
+    "code": 400,
+    "message": "编号已存在",
+    "elapsedMs": 15
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-monthly-reports",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 14
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-monthly-reports/2",
+    "http": 403,
+    "code": 403,
+    "message": "无权访问该项目",
+    "elapsedMs": 10
+  },
+  {
+    "method": "PUT",
+    "route": "/supervision-monthly-reports/2",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 11
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-monthly-reports?projectId=3&code=QA22-20260923052710-superv&pageSize=1",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-monthly-reports",
+    "http": 400,
+    "code": 400,
+    "message": "编号已存在",
+    "elapsedMs": 17
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-notices",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 15
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-notices/4",
+    "http": 403,
+    "code": 403,
+    "message": "无权访问该项目",
+    "elapsedMs": 10
+  },
+  {
+    "method": "PUT",
+    "route": "/supervision-notices/4",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 19
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-notices?projectId=3&code=QA22-20260923052710-superv&pageSize=1",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-notices",
+    "http": 400,
+    "code": 400,
+    "message": "编号已存在",
+    "elapsedMs": 14
+  },
+  {
+    "method": "PUT",
+    "route": "/supervision-notices/4",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-notices",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-notices/5/reply",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 10
+  },
+  {
+    "method": "PUT",
+    "route": "/supervision-notices/5",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 8
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-notices",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 11
+  },
+  {
+    "method": "PUT",
+    "route": "/supervision-notices/5",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 10
+  },
+  {
+    "method": "POST",
+    "route": "/work-contacts",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "GET",
+    "route": "/work-contacts/4",
+    "http": 403,
+    "code": 403,
+    "message": "无权访问该项目",
+    "elapsedMs": 13
+  },
+  {
+    "method": "PUT",
+    "route": "/work-contacts/4",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 18
+  },
+  {
+    "method": "GET",
+    "route": "/work-contacts?projectId=3&code=QA22-20260923052710-work-c&pageSize=1",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 21
+  },
+  {
+    "method": "POST",
+    "route": "/work-contacts",
+    "http": 400,
+    "code": 400,
+    "message": "编号已存在",
+    "elapsedMs": 16
+  },
+  {
+    "method": "PUT",
+    "route": "/work-contacts/4",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 19
+  },
+  {
+    "method": "POST",
+    "route": "/work-contacts",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 16
+  },
+  {
+    "method": "POST",
+    "route": "/work-contacts/5/reply",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 13
+  },
+  {
+    "method": "PUT",
+    "route": "/work-contacts/5",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 23
+  },
+  {
+    "method": "POST",
+    "route": "/work-contacts",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 26
+  },
+  {
+    "method": "PUT",
+    "route": "/work-contacts/5",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 14
+  },
+  {
+    "method": "POST",
+    "route": "/messages",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 6
+  },
+  {
+    "method": "GET",
+    "route": "/messages?receiverId=6",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 8
+  },
+  {
+    "method": "GET",
+    "route": "/messages/unread-count?receiverId=6",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 5
+  },
+  {
+    "method": "GET",
+    "route": "/messages/2",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 4
+  },
+  {
+    "method": "GET",
+    "route": "/messages?receiverId=6",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 7
+  },
+  {
+    "method": "PUT",
+    "route": "/messages/2/read",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 5
+  },
+  {
+    "method": "PUT",
+    "route": "/messages/2/read",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 8
+  },
+  {
+    "method": "GET",
+    "route": "/messages/unread-count?receiverId=6",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 6
+  },
+  {
+    "method": "POST",
+    "route": "/work-standard-configs",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 5
+  },
+  {
+    "method": "GET",
+    "route": "/work-standard-configs?name=QA22-20260923052710",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 6
+  },
+  {
+    "method": "PUT",
+    "route": "/work-standard-configs/2",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 6
+  },
+  {
+    "method": "PUT",
+    "route": "/work-standard-configs/2",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 10
+  },
+  {
+    "method": "GET",
+    "route": "/operation-logs?pageSize=200",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 4
+  },
+  {
+    "method": "GET",
+    "route": "/operation-logs?userName=QA22-20260923052710%E7%8E%B0%E5%9C%BA%E7%9B%91%E7%90%86&pageSize=200",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 7
+  },
+  {
+    "method": "GET",
+    "route": "/dashboard/stats",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 19
+  },
+  {
+    "method": "GET",
+    "route": "/dashboard/stats",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 22
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 41
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries",
+    "http": 409,
+    "code": 409,
+    "message": "编号已存在，请使用新编号",
+    "elapsedMs": 46
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries",
+    "http": 409,
+    "code": 409,
+    "message": "编号已存在，请使用新编号",
+    "elapsedMs": 47
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries",
+    "http": 409,
+    "code": 409,
+    "message": "编号已存在，请使用新编号",
+    "elapsedMs": 48
+  },
+  {
+    "method": "DELETE",
+    "route": "/supervision-diaries/11",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "GET",
+    "route": "/supervision-diaries/11",
+    "http": 404,
+    "code": 404,
+    "message": "记录不存在",
+    "elapsedMs": 5
+  },
+  {
+    "method": "POST",
+    "route": "/supervision-diaries",
+    "http": 400,
+    "code": 400,
+    "message": "监理日记至少上传一张现场照片",
+    "elapsedMs": 17
+  },
+  {
+    "method": "POST",
+    "route": "/departments",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 10
+  },
+  {
+    "method": "PUT",
+    "route": "/departments/11",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 10
+  },
+  {
+    "method": "DELETE",
+    "route": "/departments/11",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 15
+  },
+  {
+    "method": "DELETE",
+    "route": "/departments/9",
+    "http": 400,
+    "code": 400,
+    "message": "该部门下还有 3 名在职/休假人员，请先转移或离职后再删除",
+    "elapsedMs": 9
+  },
+  {
+    "method": "PUT",
+    "route": "/users/8/status?status=inactive",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 10
+  },
+  {
+    "method": "GET",
+    "route": "/projects",
+    "http": 401,
+    "code": 401,
+    "message": "账号不可用，请重新登录",
+    "elapsedMs": 13
+  },
+  {
+    "method": "PUT",
+    "route": "/users/8/status?status=active",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 12
+  },
+  {
+    "method": "GET",
+    "route": "/auth/info",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 9
+  },
+  {
+    "method": "POST",
+    "route": "/auth/logout",
+    "http": 200,
+    "code": 200,
+    "message": "退出成功",
+    "elapsedMs": 10
+  },
+  {
+    "method": "GET",
+    "route": "/auth/info",
+    "http": 200,
+    "code": 200,
+    "message": "操作成功",
+    "elapsedMs": 11
+  }
+]

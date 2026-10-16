@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监理现场管理系统 - 工程资料目录设置</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background: #F0F5FF; color: #1F2937; display: flex; min-height: 100vh; }
+        .sidebar { width: 240px; background: linear-gradient(180deg, #1E3A5F 0%, #0F2440 100%); color: #fff; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; overflow-y: auto; }
+        .sidebar-logo { padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo h2 { font-size: 16px; font-weight: 600; letter-spacing: 1px; }
+        .sidebar-logo p { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+        .menu-group { padding: 8px 0; }
+        .menu-group-title { padding: 10px 20px 6px; font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
+        .menu-item { display: flex; align-items: center; padding: 10px 20px; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; transition: all 0.2s; cursor: pointer; }
+        .menu-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+        .menu-item.active { background: rgba(37,99,235,0.3); color: #fff; border-right: 3px solid #2563EB; }
+        .menu-item .icon { width: 20px; margin-right: 10px; text-align: center; font-size: 14px; }
+        .main { margin-left: 240px; flex: 1; }
+        .header { background: #fff; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 50; }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .header-left h3 { font-size: 15px; font-weight: 600; color: #1E3A5F; }
+        .breadcrumb { font-size: 12px; color: #6B7280; }
+        .breadcrumb a { color: #2563EB; text-decoration: none; }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .notification { position: relative; cursor: pointer; font-size: 18px; }
+        .badge { position: absolute; top: -6px; right: -6px; background: #EF4444; color: #fff; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .user-info { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #2563EB; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; }
+        .user-name { font-size: 13px; color: #374151; }
+        .content { padding: 24px; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; border: none; transition: all 0.2s; }
+        .btn-primary { background: #2563EB; color: #fff; }
+        .btn-primary:hover { background: #1D4ED8; }
+        .btn-outline { background: #fff; color: #374151; border: 1px solid #E5E7EB; }
+        .btn-outline:hover { background: #F9FAFB; }
+        .btn-sm { padding: 4px 10px; font-size: 12px; }
+        .btn-danger { background: #EF4444; color: #fff; }
+        .btn-danger:hover { background: #DC2626; }
+        .tree-panel { background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; }
+        .tree-header { padding: 14px 20px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: space-between; background: #FAFBFC; }
+        .tree-header h4 { font-size: 14px; font-weight: 600; color: #1E3A5F; display: flex; align-items: center; gap: 8px; }
+        .tree-header-actions { display: flex; gap: 8px; }
+        .tree-body { padding: 12px; min-height: 500px; max-height: calc(100vh - 200px); overflow-y: auto; }
+        .tree-node { padding: 7px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 6px; transition: background 0.15s; user-select: none; }
+        .tree-node:hover { background: #F0F5FF; }
+        .tree-node.active { background: #DBEAFE; color: #1D4ED8; font-weight: 500; }
+        .tree-node .expand { font-size: 10px; color: #9CA3AF; width: 16px; text-align: center; flex-shrink: 0; cursor: pointer; }
+        .tree-node .expand:hover { color: #2563EB; }
+        .tree-node .node-icon { font-size: 14px; flex-shrink: 0; }
+        .tree-node .node-name { flex: 1; min-width: 0; }
+        .tree-children { padding-left: 22px; }
+        .tree-children.collapsed { display: none; }
+        .tree-hint { font-size: 12px; color: #9CA3AF; padding: 16px; text-align: center; border-top: 1px solid #F3F4F6; margin-top: 12px; }
+        .context-menu { display: none; position: fixed; background: #fff; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.12); border: 1px solid #E5E7EB; z-index: 2000; min-width: 180px; padding: 4px 0; }
+        .context-menu.show { display: block; }
+        .context-menu-item { padding: 8px 16px; font-size: 13px; color: #374151; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background 0.15s; }
+        .context-menu-item:hover { background: #EFF6FF; color: #2563EB; }
+        .context-menu-item.danger { color: #EF4444; }
+        .context-menu-item.danger:hover { background: #FEF2F2; }
+        .context-menu-item.disabled { color: #D1D5DB; cursor: not-allowed; }
+        .context-menu-item.disabled:hover { background: transparent; color: #D1D5DB; }
+        .context-menu-divider { height: 1px; background: #F3F4F6; margin: 4px 0; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 3000; align-items: center; justify-content: center; }
+        .modal-overlay.show { display: flex; }
+        .modal-box { background: #fff; border-radius: 12px; width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+        .modal-box-header { padding: 20px 24px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: space-between; }
+        .modal-box-header h3 { font-size: 16px; font-weight: 600; color: #1E3A5F; }
+        .modal-close { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer; font-size: 16px; color: #6B7280; border: none; background: none; }
+        .modal-close:hover { background: #F3F4F6; }
+        .modal-box-body { padding: 24px; }
+        .modal-box-body label { display: block; font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px; }
+        .modal-box-body label .required { color: #EF4444; }
+        .form-control { width: 100%; height: 36px; border: 1px solid #E5E7EB; border-radius: 6px; padding: 0 12px; font-size: 13px; outline: none; transition: border-color 0.2s; }
+        .form-control:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .form-error { font-size: 12px; color: #EF4444; margin-top: 4px; display: none; }
+        .modal-box-footer { padding: 16px 24px; border-top: 1px solid #E5E7EB; display: flex; justify-content: flex-end; gap: 12px; }
+    </style>
+    <script src="assets/app.js"></script>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/responsive.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-logo"><h2>监理现场管理系统</h2><p>Supervision Site Management</p></div>
+        <div class="menu-group"><a class="menu-item" href="index.html"><span class="icon">📊</span> 仪表盘</a></div>
+        <div class="menu-group"><div class="menu-group-title">项目管理</div><a class="menu-item" href="project-ledger.html"><span class="icon">📁</span> 项目台账</a></div>
+        <div class="menu-group"><div class="menu-group-title">监理现场工作</div><a class="menu-item" href="daily-inspection.html"><span class="icon">🔍</span> 日常巡检</a><a class="menu-item" href="sideline-inspection.html"><span class="icon">👁️</span> 旁站</a><a class="menu-item" href="supervision-notice.html"><span class="icon">📋</span> 监理通知单</a><a class="menu-item" href="work-contact.html"><span class="icon">✉️</span> 工作联系单</a><a class="menu-item" href="supervision-diary.html"><span class="icon">📝</span> 监理日记</a><a class="menu-item" href="supervision-log.html"><span class="icon">📄</span> 监理日志</a><a class="menu-item" href="safety-log.html"><span class="icon">🛡️</span> 监理安全日志</a><a class="menu-item" href="meeting-minutes.html"><span class="icon">📅</span> 会议纪要</a><a class="menu-item" href="supervision-monthly-report.html"><span class="icon">📊</span> 监理月报</a></div>
+        <div class="menu-group"><div class="menu-group-title">项目资料</div><a class="menu-item active" href="sub-item-database.html"><span class="icon">🗄️</span> 工程资料目录设置</a><a class="menu-item" href="project-data-upload.html"><span class="icon">📤</span> 工程资料上传</a></div>
+        <div class="menu-group"><div class="menu-group-title">数据统计</div><a class="menu-item" href="diary-statistics.html"><span class="icon">📈</span> 日记统计</a><a class="menu-item" href="diary-report.html"><span class="icon">📑</span> 日记报表</a><a class="menu-item" href="log-statistics.html"><span class="icon">📊</span> 日志统计</a><a class="menu-item" href="safety-log-statistics.html"><span class="icon">🛡️</span> 安全日志统计</a></div>
+        <div class="menu-group"><div class="menu-group-title">团队管理</div><a class="menu-item" href="department-management.html"><span class="icon">🏢</span> 部门管理</a><a class="menu-item" href="personnel-management.html"><span class="icon">👥</span> 人员管理</a><a class="menu-item" href="permission-settings.html"><span class="icon">🔐</span> 权限设置</a><a class="menu-item" href="process-management.html"><span class="icon">🔄</span> 流程管理</a></div>
+        <div class="menu-group"><div class="menu-group-title">系统设置</div><a class="menu-item" href="operation-log.html"><span class="icon">📜</span> 操作日志</a><a class="menu-item" href="message-center.html"><span class="icon">🔔</span> 消息中心</a><a class="menu-item" href="work-standard-config.html"><span class="icon">⚙️</span> 工作标准配置</a></div>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <div class="header-left"><h3>工程资料目录设置</h3><span class="breadcrumb"><a href="index.html">首页</a> / 项目资料 / 工程资料目录设置</span></div>
+            <div class="header-right"><div class="notification">🔔<span class="badge" id="notifBadge" style="display:none;">0</span></div><div class="user-info"><div class="user-avatar">张</div><span class="user-name">张监理</span></div></div>
+        </div>
+
+        <div class="content">
+            <div class="tree-panel">
+                <div class="tree-header">
+                    <h4>📂 工程资料目录结构
+                        <select id="projectSelect" class="form-control" style="width:220px;height:32px;margin-left:12px;" onchange="onProjectChange()"></select>
+                    </h4>
+                    <div class="tree-header-actions">
+                        <button class="btn btn-outline btn-sm" onclick="expandAll()">展开全部</button>
+                        <button class="btn btn-outline btn-sm" onclick="collapseAll()">折叠全部</button>
+                        <button class="btn btn-primary btn-sm" onclick="addRootFolder()">＋ 新建文件夹</button>
+                    </div>
+                </div>
+                <div class="tree-body" id="treeBody">
+                    <div class="tree-node" onclick="selectNode(this)" oncontextmenu="onTreeContext(event, this)">
+                        <span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▼</span>
+                        <span class="node-icon">📂</span>
+                        <span class="node-name">单位工程</span>
+                    </div>
+                    <div class="tree-children">
+                        <div class="tree-node" onclick="selectNode(this)" oncontextmenu="onTreeContext(event, this)">
+                            <span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▼</span>
+                            <span class="node-icon">📂</span>
+                            <span class="node-name">分部工程</span>
+                        </div>
+                        <div class="tree-children">
+                            <div class="tree-node" onclick="selectNode(this)" oncontextmenu="onTreeContext(event, this)">
+                                <span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▼</span>
+                                <span class="node-icon">📂</span>
+                                <span class="node-name">地基基础</span>
+                            </div>
+                            <div class="tree-children">
+                                <div class="tree-node" onclick="selectNode(this)" oncontextmenu="onTreeContext(event, this)">
+                                    <span class="node-icon">📂</span>
+                                    <span class="node-name">土方工程</span>
+                                </div>
+                                <div class="tree-node" onclick="selectNode(this)" oncontextmenu="onTreeContext(event, this)">
+                                    <span class="node-icon">📂</span>
+                                    <span class="node-name">地基处理</span>
+                                </div>
+                                <div class="tree-node" onclick="selectNode(this)" oncontextmenu="onTreeContext(event, this)">
+                                    <span class="node-icon">📂</span>
+                                    <span class="node-name">桩基工程</span>
+                                </div>
+                            </div>
+                            <div class="tree-node" onclick="selectNode(this)" oncontextmenu="onTreeContext(event, this)">
+                                <span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▶</span>
+                                <span class="node-icon">📂</span>
+                                <span class="node-name">主体结构</span>
+                            </div>
+                            <div class="tree-children collapsed"></div>
+                            <div class="tree-node" onclick="selectNode(this)" oncontextmenu="onTreeContext(event, this)">
+                                <span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▶</span>
+                                <span class="node-icon">📂</span>
+                                <span class="node-name">装饰装修</span>
+                            </div>
+                            <div class="tree-children collapsed"></div>
+                            <div class="tree-node" onclick="selectNode(this)" oncontextmenu="onTreeContext(event, this)">
+                                <span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▶</span>
+                                <span class="node-icon">📂</span>
+                                <span class="node-name">屋面工程</span>
+                            </div>
+                            <div class="tree-children collapsed"></div>
+                            <div class="tree-node" onclick="selectNode(this)" oncontextmenu="onTreeContext(event, this)">
+                                <span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▶</span>
+                                <span class="node-icon">📂</span>
+                                <span class="node-name">给排水及采暖</span>
+                            </div>
+                            <div class="tree-children collapsed"></div>
+                            <div class="tree-node" onclick="selectNode(this)" oncontextmenu="onTreeContext(event, this)">
+                                <span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▶</span>
+                                <span class="node-icon">📂</span>
+                                <span class="node-name">电气工程</span>
+                            </div>
+                            <div class="tree-children collapsed"></div>
+                        </div>
+                        <div class="tree-node" onclick="selectNode(this)" oncontextmenu="onTreeContext(event, this)">
+                            <span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▶</span>
+                            <span class="node-icon">📂</span>
+                            <span class="node-name">子分部工程</span>
+                        </div>
+                        <div class="tree-children collapsed"></div>
+                        <div class="tree-node" onclick="selectNode(this)" oncontextmenu="onTreeContext(event, this)">
+                            <span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▶</span>
+                            <span class="node-icon">📂</span>
+                            <span class="node-name">分项工程</span>
+                        </div>
+                        <div class="tree-children collapsed"></div>
+                    </div>
+                    <div class="tree-node" onclick="selectNode(this)" oncontextmenu="onTreeContext(event, this)">
+                        <span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▶</span>
+                        <span class="node-icon">📂</span>
+                        <span class="node-name">监理资料</span>
+                    </div>
+                    <div class="tree-children collapsed"></div>
+                    <div class="tree-node" onclick="selectNode(this)" oncontextmenu="onTreeContext(event, this)">
+                        <span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▶</span>
+                        <span class="node-icon">📂</span>
+                        <span class="node-name">施工资料</span>
+                    </div>
+                    <div class="tree-children collapsed"></div>
+                    <div class="tree-node" onclick="selectNode(this)" oncontextmenu="onTreeContext(event, this)">
+                        <span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▶</span>
+                        <span class="node-icon">📂</span>
+                        <span class="node-name">竣工图</span>
+                    </div>
+                    <div class="tree-children collapsed"></div>
+                    <div class="tree-node" onclick="selectNode(this)" oncontextmenu="onTreeContext(event, this)">
+                        <span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▶</span>
+                        <span class="node-icon">📂</span>
+                        <span class="node-name">竣工验收资料</span>
+                    </div>
+                    <div class="tree-children collapsed"></div>
+                </div>
+                <div class="tree-hint">💡 目录按项目维护，右键点击文件夹可新增同级/子文件夹、重命名、排序或删除</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="context-menu" id="contextMenu">
+        <div class="context-menu-item" onclick="ctxAddSibling()">📁 新增同级文件夹</div>
+        <div class="context-menu-item" onclick="ctxAddChild()">📂 新增子文件夹</div>
+        <div class="context-menu-divider"></div>
+        <div class="context-menu-item" id="ctxMoveUp" onclick="ctxMoveUp()">⬆ 上移</div>
+        <div class="context-menu-item" id="ctxMoveDown" onclick="ctxMoveDown()">⬇ 下移</div>
+        <div class="context-menu-divider"></div>
+        <div class="context-menu-item" onclick="ctxRename()">✏️ 重命名</div>
+        <div class="context-menu-item danger" onclick="ctxDelete()">🗑️ 删除</div>
+    </div>
+
+    <div class="modal-overlay" id="nameModal">
+        <div class="modal-box">
+            <div class="modal-box-header">
+                <h3 id="nameModalTitle">新建文件夹</h3>
+                <button class="modal-close" onclick="closeNameModal()">✕</button>
+            </div>
+            <div class="modal-box-body">
+                <label>文件夹名称 <span class="required">*</span></label>
+                <input type="text" class="form-control" id="folderNameInput" placeholder="请输入文件夹名称" maxlength="50" oninput="clearNameError()">
+                <div class="form-error" id="nameError">请输入文件夹名称</div>
+            </div>
+            <div class="modal-box-footer">
+                <button class="btn btn-outline" onclick="closeNameModal()">取消</button>
+                <button class="btn btn-primary" onclick="confirmNameModal()">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="confirmOverlay">
+        <div class="modal-box">
+            <div class="modal-box-header"><h3>确认删除</h3></div>
+            <div class="modal-box-body" style="text-align:center;">
+                <div style="font-size:48px;margin-bottom:12px;">⚠️</div>
+                <div style="font-size:14px;color:#374151;margin-bottom:6px;" id="confirmText">确定要删除该文件夹吗？</div>
+                <div style="font-size:12px;color:#9CA3AF;">含有子文件夹的目录不可删除，请先删除子文件夹</div>
+            </div>
+            <div class="modal-box-footer">
+                <button class="btn btn-outline" onclick="closeConfirm()">取消</button>
+                <button class="btn btn-danger" onclick="doDelete()">确认删除</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var ctxTarget = null;
+        var nameModalCallback = null;
+        var currentProjectId = null;
+        var nodeMap = {};        // id -> {id, projectId, name, parentId, sortOrder, description, status}
+        var deleteTargetId = null;
+
+        function selectNode(el) {
+            document.querySelectorAll('.tree-node').forEach(function(n) { n.classList.remove('active'); });
+            el.classList.add('active');
+        }
+
+        function onTreeContext(e, el) {
+            e.preventDefault();
+            e.stopPropagation();
+            ctxTarget = el;
+            selectNode(el);
+            updateMoveMenuState();
+            var menu = document.getElementById('contextMenu');
+            var x = e.clientX, y = e.clientY;
+            if (x + 180 > window.innerWidth) x = window.innerWidth - 190;
+            if (y + 260 > window.innerHeight) y = window.innerHeight - 270;
+            menu.style.left = x + 'px';
+            menu.style.top = y + 'px';
+            menu.classList.add('show');
+        }
+
+        function updateMoveMenuState() {
+            var upItem = document.getElementById('ctxMoveUp');
+            var downItem = document.getElementById('ctxMoveDown');
+            var canUp = canMoveUp(ctxTarget);
+            var canDown = canMoveDown(ctxTarget);
+            upItem.className = 'context-menu-item' + (canUp ? '' : ' disabled');
+            downItem.className = 'context-menu-item' + (canDown ? '' : ' disabled');
+        }
+
+        document.addEventListener('click', function() {
+            document.getElementById('contextMenu').classList.remove('show');
+        });
+
+        function toggleExpand(el) {
+            var parent = el.parentElement;
+            var next = parent.nextElementSibling;
+            if (!next || !next.classList.contains('tree-children')) return;
+            if (next.classList.contains('collapsed')) {
+                next.classList.remove('collapsed');
+                el.textContent = '▼';
+            } else {
+                next.classList.add('collapsed');
+                el.textContent = '▶';
+            }
+        }
+
+        function expandAll() {
+            document.querySelectorAll('.tree-children').forEach(function(c) { c.classList.remove('collapsed'); });
+            document.querySelectorAll('.tree-node .expand').forEach(function(e) { e.textContent = '▼'; });
+        }
+
+        function collapseAll() {
+            document.querySelectorAll('.tree-children').forEach(function(c) { c.classList.add('collapsed'); });
+            document.querySelectorAll('.tree-node .expand').forEach(function(e) { e.textContent = '▶'; });
+        }
+
+        function escapeHtml(text) {
+            var d = document.createElement('div');
+            d.textContent = text == null ? '' : text;
+            return d.innerHTML;
+        }
+
+        // ---------- 项目与数据加载 ----------
+        function loadProjects() {
+            return apiGetPage('/projects', { pageNum: 1, pageSize: 500 }).then(function(res) {
+                var sel = document.getElementById('projectSelect');
+                sel.innerHTML = '';
+                (res.list || []).forEach(function(p) {
+                    var opt = document.createElement('option');
+                    opt.value = p.id;
+                    opt.textContent = p.name;
+                    sel.appendChild(opt);
+                });
+                if (res.list && res.list.length) {
+                    currentProjectId = res.list[0].id;
+                    sel.value = currentProjectId;
+                } else {
+                    currentProjectId = null;
+                }
+            });
+        }
+
+        function onProjectChange() {
+            currentProjectId = document.getElementById('projectSelect').value;
+            loadTree();
+        }
+
+        function loadTree() {
+            var treeBody = document.getElementById('treeBody');
+            if (!currentProjectId) {
+                treeBody.innerHTML = '<div style="padding:20px;color:#9CA3AF;text-align:center;">请先选择项目</div>';
+                return;
+            }
+            treeBody.innerHTML = '<div style="padding:20px;color:#9CA3AF;text-align:center;">加载中...</div>';
+            apiFetch('/sub-item-databases/tree?projectId=' + encodeURIComponent(currentProjectId)).then(function(tree) {
+                nodeMap = {};
+                treeBody.innerHTML = '';
+                if (!tree || !tree.length) {
+                    treeBody.innerHTML = '<div style="padding:20px;color:#9CA3AF;text-align:center;">暂无目录，点击「新建文件夹」创建</div>';
+                    return;
+                }
+                renderNodes(tree, treeBody);
+            }).catch(function() {
+                treeBody.innerHTML = '<div style="padding:20px;color:#EF4444;text-align:center;">目录加载失败</div>';
+            });
+        }
+
+        function renderNodes(nodes, container) {
+            nodes.forEach(function(n) {
+                nodeMap[n.id] = { id: n.id, projectId: n.projectId, name: n.name, parentId: n.parentId, sortOrder: n.sortOrder, description: n.description, status: n.status };
+                var hasChildren = n.children && n.children.length;
+                var node = document.createElement('div');
+                node.className = 'tree-node';
+                node.setAttribute('data-id', n.id);
+                node.setAttribute('onclick', 'selectNode(this)');
+                node.setAttribute('oncontextmenu', 'onTreeContext(event, this)');
+                var html = '';
+                if (hasChildren) html += '<span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▼</span>';
+                html += '<span class="node-icon">📂</span><span class="node-name">' + escapeHtml(n.name) + '</span>';
+                node.innerHTML = html;
+                container.appendChild(node);
+                if (hasChildren) {
+                    var childrenDiv = document.createElement('div');
+                    childrenDiv.className = 'tree-children';
+                    container.appendChild(childrenDiv);
+                    renderNodes(n.children, childrenDiv);
+                }
+            });
+        }
+
+        function getNodeId(el) { return el ? Number(el.getAttribute('data-id')) : null; }
+
+        function getSiblings(rec) {
+            var arr = [];
+            for (var k in nodeMap) {
+                var n = nodeMap[k];
+                if ((rec.parentId == null && n.parentId == null) || (rec.parentId != null && n.parentId == rec.parentId)) {
+                    arr.push(n);
+                }
+            }
+            arr.sort(function(a, b) { return (a.sortOrder || 0) - (b.sortOrder || 0); });
+            return arr;
+        }
+
+        function siblingIndex(sibs, id) {
+            for (var i = 0; i < sibs.length; i++) { if (sibs[i].id === id) return i; }
+            return -1;
+        }
+
+        function canMoveUp(el) {
+            var rec = el ? nodeMap[getNodeId(el)] : null;
+            if (!rec) return false;
+            return siblingIndex(getSiblings(rec), rec.id) > 0;
+        }
+
+        function canMoveDown(el) {
+            var rec = el ? nodeMap[getNodeId(el)] : null;
+            if (!rec) return false;
+            var sibs = getSiblings(rec);
+            var idx = siblingIndex(sibs, rec.id);
+            return idx >= 0 && idx < sibs.length - 1;
+        }
+
+        function putNode(rec) {
+            return apiFetch('/sub-item-databases/' + rec.id, { method: 'PUT', body: {
+                projectId: rec.projectId, name: rec.name, parentId: rec.parentId, sortOrder: rec.sortOrder, description: rec.description
+            }, silent: true });
+        }
+
+        function moveNode(rec, direction) {
+            var sibs = getSiblings(rec);
+            var idx = siblingIndex(sibs, rec.id);
+            var target = idx + direction;
+            if (idx < 0 || target < 0 || target >= sibs.length) return;
+            var tmp = sibs[idx]; sibs[idx] = sibs[target]; sibs[target] = tmp;
+            var updates = [];
+            sibs.forEach(function(s, i) { if (s.sortOrder !== i) { s.sortOrder = i; updates.push(putNode(s)); } });
+            Promise.all(updates).then(function() { loadTree(); });
+        }
+
+        function ctxMoveUp() {
+            hideCtxMenu();
+            var rec = ctxTarget ? nodeMap[getNodeId(ctxTarget)] : null;
+            if (rec) moveNode(rec, -1);
+        }
+
+        function ctxMoveDown() {
+            hideCtxMenu();
+            var rec = ctxTarget ? nodeMap[getNodeId(ctxTarget)] : null;
+            if (rec) moveNode(rec, 1);
+        }
+
+        function openNameModal(title, defaultVal, callback) {
+            document.getElementById('nameModalTitle').textContent = title;
+            var input = document.getElementById('folderNameInput');
+            input.value = defaultVal || '';
+            clearNameError();
+            nameModalCallback = callback;
+            document.getElementById('nameModal').classList.add('show');
+            setTimeout(function() { input.focus(); input.select(); }, 100);
+        }
+
+        function closeNameModal() {
+            document.getElementById('nameModal').classList.remove('show');
+            nameModalCallback = null;
+        }
+
+        function clearNameError() {
+            document.getElementById('nameError').style.display = 'none';
+        }
+
+        function confirmNameModal() {
+            var input = document.getElementById('folderNameInput');
+            var name = input.value.trim();
+            if (!name) {
+                document.getElementById('nameError').style.display = 'block';
+                input.focus();
+                return;
+            }
+            var cb = nameModalCallback;
+            closeNameModal();
+            if (cb) cb(name);
+        }
+
+        document.getElementById('folderNameInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); confirmNameModal(); }
+            if (e.key === 'Escape') { closeNameModal(); }
+        });
+
+        function createNode(name, parentId) {
+            if (!currentProjectId) { if (window.App) App.toast('请先选择项目'); return; }
+            var maxOrder = -1;
+            for (var k in nodeMap) {
+                var n = nodeMap[k];
+                if ((parentId == null && n.parentId == null) || (parentId != null && n.parentId == parentId)) {
+                    if ((n.sortOrder || 0) > maxOrder) maxOrder = (n.sortOrder || 0);
+                }
+            }
+            apiFetch('/sub-item-databases', { method: 'POST', body: {
+                projectId: Number(currentProjectId), name: name, parentId: parentId, sortOrder: maxOrder + 1
+            }}).then(function() {
+                if (window.App) App.toast('创建成功');
+                loadTree();
+            });
+        }
+
+        function addRootFolder() {
+            if (!currentProjectId) { if (window.App) App.toast('请先选择项目'); return; }
+            openNameModal('新建文件夹', '', function(name) { createNode(name, null); });
+        }
+
+        function ctxAddSibling() {
+            hideCtxMenu();
+            var rec = ctxTarget ? nodeMap[getNodeId(ctxTarget)] : null;
+            if (!rec) return;
+            openNameModal('新建同级文件夹', '', function(name) { createNode(name, rec.parentId); });
+        }
+
+        function ctxAddChild() {
+            hideCtxMenu();
+            var rec = ctxTarget ? nodeMap[getNodeId(ctxTarget)] : null;
+            if (!rec) return;
+            openNameModal('新建子文件夹', '', function(name) { createNode(name, rec.id); });
+        }
+
+        function ctxRename() {
+            hideCtxMenu();
+            var rec = ctxTarget ? nodeMap[getNodeId(ctxTarget)] : null;
+            if (!rec) return;
+            openNameModal('重命名文件夹', rec.name, function(newName) {
+                if (newName === rec.name) return;
+                apiFetch('/sub-item-databases/' + rec.id, { method: 'PUT', body: {
+                    projectId: rec.projectId, name: newName, parentId: rec.parentId, sortOrder: rec.sortOrder, description: rec.description
+                }}).then(function() {
+                    if (window.App) App.toast('重命名成功');
+                    loadTree();
+                });
+            });
+        }
+
+        function ctxDelete() {
+            hideCtxMenu();
+            var rec = ctxTarget ? nodeMap[getNodeId(ctxTarget)] : null;
+            if (!rec) return;
+            var hasChild = false;
+            for (var k in nodeMap) { if (nodeMap[k].parentId == rec.id) { hasChild = true; break; } }
+            if (hasChild) {
+                if (window.App) App.toast('含有子文件夹的目录不可删除，请先删除子文件夹');
+                return;
+            }
+            deleteTargetId = rec.id;
+            document.getElementById('confirmText').textContent = '确定要删除文件夹「' + rec.name + '」吗？';
+            document.getElementById('confirmOverlay').classList.add('show');
+        }
+
+        function closeConfirm() {
+            document.getElementById('confirmOverlay').classList.remove('show');
+        }
+
+        function doDelete() {
+            closeConfirm();
+            if (!deleteTargetId) return;
+            apiFetch('/sub-item-databases/' + deleteTargetId, { method: 'DELETE' }).then(function() {
+                if (window.App) App.toast('删除成功');
+                deleteTargetId = null;
+                loadTree();
+            });
+        }
+
+        function hideCtxMenu() {
+            document.getElementById('contextMenu').classList.remove('show');
+        }
+
+        if (window.App) {
+            App.requireAuth();
+            App.initTopbar();
+            loadProjects().then(loadTree);
+        }
+    </script>
+</body>
+</html>

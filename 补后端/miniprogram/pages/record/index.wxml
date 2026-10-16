@@ -1,0 +1,48 @@
+<view class="container">
+  <view class="hero"><view class="title">{{title}}</view><view>{{projectName}}</view><view>{{state}}</view></view>
+  <view class="warning" wx:if="{{conflict}}">服务器内容已变化，本机稿已保留，不会自动覆盖。请先核对再决定是否另建副本。</view>
+  <view class="error">{{error}}</view><view class="warning" wx:if="{{rejectReason}}">退回原因：{{rejectReason}}</view>
+  <view class="card">
+    <view class="label">基本信息</view><view class="muted">项目不可在编辑时更换；如项目错误，请返回新建。</view>
+    <view>{{body.code || '编号由服务器生成'}}</view>
+    <picker mode="date" value="{{body[dateField]}}" disabled="{{!editable || busy}}" data-field="{{dateField}}" bindchange="input"><view class="picker">记录日期：{{body[dateField]}}</view></picker>
+    <button wx:if="{{kind === 'supervision-logs' && editable}}" disabled="{{busy}}" bindtap="diarySource">从当日已审核日记填入空白栏目</button>
+    <view wx:for="{{sources}}" wx:key="id" class="muted">来源日记：{{item.code}} · {{item.date}} · 版本 {{item.lockVersion}}</view>
+  </view>
+  <view class="card" wx:for="{{fields}}" wx:key="key">
+    <view class="row"><view class="label">{{item.label}}</view><button wx:if="{{editable}}" class="small" disabled="{{busy}}" data-field="{{item.key}}" bindtap="recordVoice">{{recording ? '结束录音' : '语音'}}</button></view>
+    <textarea wx:if="{{editable}}" value="{{body[item.key]}}" maxlength="60000" auto-height disabled="{{busy}}" data-field="{{item.key}}" bindinput="input" placeholder="点击填写，文字自动暂存本机" />
+    <view wx:else class="pre">{{body[item.key] || '未填写'}}</view>
+  </view>
+  <view class="card">
+    <view class="label">照片附件</view>
+    <view class="muted">照片上传成功不等于表单已保存；请查看最上方同步状态。</view>
+    <block wx:for="{{photos}}" wx:key="url">
+      <image class="photo" mode="aspectFit" src="{{item.preview}}" data-url="{{item.url}}" bindtap="preview" />
+      <input wx:if="{{editable}}" value="{{item.description}}" disabled="{{busy}}" data-url="{{item.url}}" bindinput="remotePhotoDescription" placeholder="照片部位、情况说明" />
+      <view wx:else>{{item.description}}</view><view class="error">{{item.error}}</view>
+      <button wx:if="{{editable}}" class="small" disabled="{{busy}}" data-url="{{item.url}}" bindtap="removeRemotePhoto">移除此照片</button>
+    </block>
+    <view wx:for="{{media}}" wx:key="id">
+      <image class="photo" mode="aspectFit" src="{{item.path}}" data-path="{{item.path}}" bindtap="preview" />
+      <view class="muted">{{item.source === 'camera' ? '现场拍摄' : '相册补传'}} · {{item.url ? '照片已上传' : '照片仅在本机 / 待上传'}}</view>
+      <input wx:if="{{editable}}" value="{{item.description}}" disabled="{{busy}}" data-id="{{item.id}}" bindinput="photoDescription" placeholder="照片部位、情况说明" />
+      <button wx:if="{{editable}}" class="small" disabled="{{busy}}" data-id="{{item.id}}" bindtap="removePhoto">移除此照片</button>
+    </view>
+    <button wx:if="{{editable}}" disabled="{{busy}}" data-source="camera" bindtap="choosePhoto">现场拍照</button>
+    <button wx:if="{{editable}}" disabled="{{busy}}" data-source="album" bindtap="choosePhoto">相册选图</button>
+    <button wx:for="{{attachments}}" wx:key="url" data-url="{{item.url}}" bindtap="openAttachment">查看附件：{{item.name || '文件'}}</button>
+  </view>
+  <view class="card">
+    <button wx:if="{{storageFailed}}" bindtap="persist">重试保存到本机（请勿退出）</button>
+    <block wx:if="{{editable}}"><button class="primary" disabled="{{busy || recording}}" loading="{{busy}}" data-action="save" bindtap="action">联网保存草稿 / 重试</button><button class="primary" disabled="{{busy || recording || conflict}}" data-action="submit" bindtap="action">确认提交审核</button></block>
+    <block wx:if="{{canReview && (status === 'submitted' || status === 'pending')}}"><button class="primary" disabled="{{busy}}" data-status="approved" bindtap="review">审核通过</button><button disabled="{{busy}}" data-status="rejected" bindtap="review">退回修改</button></block>
+    <button wx:if="{{serverId}}" bindtap="history">查看处理记录与快照</button>
+    <button wx:if="{{conflict && serverId}}" bindtap="remote">核对服务器正文</button>
+    <button wx:if="{{conflict}}" bindtap="fork">保留原稿，另建核对副本</button>
+    <button wx:if="{{canRevise}}" bindtap="revise">建立修订稿</button>
+    <button wx:if="{{canClear}}" disabled="{{busy || storageFailed}}" bindtap="forget">清除已同步本机副本</button>
+    <view class="muted">本机保存不是备份；只有服务器确认后才显示已提交。录音及专业数据须本人核对。</view>
+  </view>
+  <view class="card" wx:for="{{history}}" wx:key="id"><view>{{item.actorName}} · {{item.action}} · {{item.createTime}}</view><view>{{item.reason}}</view><view class="pre muted">{{item.text}}</view></view>
+</view>

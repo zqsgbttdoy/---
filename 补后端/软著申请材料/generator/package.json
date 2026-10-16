@@ -1,0 +1,15 @@
+{
+  "name": "copyright-doc-generator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "监理现场管理系统软件著作权申请材料生成器（元数据提取 + Word 文档生成）",
+  "scripts": {
+    "extract": "node extract-metadata.js",
+    "docx": "node generate-docx.js",
+    "build": "node extract-metadata.js && node generate-docx.js"
+  },
+  "dependencies": {
+    "docx": "^8.5.0",
+    "jszip": "^3.10.1"
+  }
+}

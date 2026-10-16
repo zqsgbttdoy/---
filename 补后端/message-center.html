@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监理现场管理系统 - 消息中心</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background: #F0F5FF; color: #1F2937; display: flex; min-height: 100vh; }
+        .sidebar { width: 240px; background: linear-gradient(180deg, #1E3A5F 0%, #0F2440 100%); color: #fff; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; overflow-y: auto; }
+        .sidebar-logo { padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo h2 { font-size: 16px; font-weight: 600; letter-spacing: 1px; }
+        .sidebar-logo p { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+        .menu-group { padding: 8px 0; }
+        .menu-group-title { padding: 10px 20px 6px; font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
+        .menu-item { display: flex; align-items: center; padding: 10px 20px; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; transition: all 0.2s; cursor: pointer; }
+        .menu-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+        .menu-item.active { background: rgba(37,99,235,0.3); color: #fff; border-right: 3px solid #2563EB; }
+        .menu-item .icon { width: 20px; margin-right: 10px; text-align: center; font-size: 14px; }
+        .main { margin-left: 240px; flex: 1; }
+        .header { background: #fff; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 50; }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .header-left h3 { font-size: 15px; font-weight: 600; color: #1E3A5F; }
+        .breadcrumb { font-size: 12px; color: #6B7280; }
+        .breadcrumb a { color: #2563EB; text-decoration: none; }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .notification { position: relative; cursor: pointer; font-size: 18px; }
+        .notification-panel { display: none; position: absolute; top: 44px; right: 0; width: 380px; background: #fff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); z-index: 200; overflow: hidden; }
+        .notification-panel.show { display: block; animation: npFadeIn 0.2s ease; }
+        @keyframes npFadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+        .np-header { padding: 14px 16px; border-bottom: 1px solid #F3F4F6; display: flex; align-items: center; justify-content: space-between; }
+        .np-header h4 { font-size: 14px; font-weight: 600; color: #1E3A5F; }
+        .np-header-actions { display: flex; gap: 8px; }
+        .np-header-actions a { font-size: 12px; color: #2563EB; text-decoration: none; cursor: pointer; }
+        .np-header-actions a:hover { text-decoration: underline; }
+        .np-list { max-height: 360px; overflow-y: auto; }
+        .np-item { display: flex; align-items: flex-start; padding: 12px 16px; border-bottom: 1px solid #F9FAFB; cursor: pointer; transition: background 0.15s; position: relative; }
+        .np-item:hover { background: #F8FAFC; }
+        .np-item.unread { background: #F0F5FF; }
+        .np-item.unread::before { content: ''; position: absolute; left: 8px; top: 50%; transform: translateY(-50%); width: 6px; height: 6px; border-radius: 50%; background: #2563EB; }
+        .np-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; margin-right: 10px; flex-shrink: 0; }
+        .np-icon.system { background: #DBEAFE; }
+        .np-icon.remind { background: #FEF3C7; }
+        .np-icon.notice { background: #D1FAE5; }
+        .np-icon.approval { background: #FCE7F3; }
+        .np-body { flex: 1; min-width: 0; }
+        .np-title { font-size: 13px; font-weight: 500; color: #1F2937; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .np-desc { font-size: 11px; color: #6B7280; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .np-time { font-size: 10px; color: #9CA3AF; margin-top: 3px; }
+        .np-actions { display: flex; gap: 4px; margin-left: 8px; flex-shrink: 0; align-self: center; }
+        .np-btn { width: 24px; height: 24px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 11px; cursor: pointer; border: none; background: none; color: #9CA3AF; transition: all 0.15s; }
+        .np-btn:hover { background: #F3F4F6; color: #374151; }
+        .np-btn.del:hover { background: #FEE2E2; color: #EF4444; }
+        .np-empty { text-align: center; padding: 40px 16px; color: #9CA3AF; }
+        .np-empty-icon { font-size: 36px; margin-bottom: 8px; }
+        .np-empty-text { font-size: 13px; }
+        .np-footer { padding: 10px 16px; border-top: 1px solid #F3F4F6; text-align: center; }
+        .np-footer a { font-size: 13px; color: #2563EB; text-decoration: none; }
+        .np-footer a:hover { text-decoration: underline; }
+        .np-toast { position: fixed; top: 70px; right: 24px; padding: 10px 20px; border-radius: 8px; font-size: 13px; z-index: 300; animation: npToastIn 0.3s ease; transition: opacity 0.3s; }
+        .np-toast.success { background: #D1FAE5; color: #059669; }
+        .np-toast.info { background: #DBEAFE; color: #2563EB; }
+        .np-toast.warning { background: #FEF3C7; color: #D97706; }
+        @keyframes npToastIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        @media (max-width: 768px) { .notification-panel { width: calc(100vw - 32px); right: -60px; } }
+        .badge { position: absolute; top: -6px; right: -6px; background: #EF4444; color: #fff; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .user-info { display: flex; align-items: center; gap: 8px; cursor: pointer; position: relative; padding: 4px 8px; border-radius: 8px; transition: background 0.15s; }
+        .user-info:hover { background: rgba(37,99,235,0.06); }
+        .user-info:active { background: rgba(37,99,235,0.1); }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #2563EB; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; overflow: hidden; flex-shrink: 0; }
+        .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .user-name { font-size: 13px; color: #374151; }
+        .user-panel { display: none; position: absolute; top: 48px; right: 0; width: 320px; background: #fff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); z-index: 200; overflow: hidden; }
+        .user-panel.show { display: block; animation: upFadeIn 0.2s ease; }
+        @keyframes upFadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+        .up-profile { padding: 20px; text-align: center; border-bottom: 1px solid #F3F4F6; position: relative; }
+        .up-avatar-wrap { width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 10px; position: relative; cursor: pointer; overflow: hidden; }
+        .up-avatar-wrap .up-avatar { width: 72px; height: 72px; border-radius: 50%; background: #2563EB; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 600; }
+        .up-avatar-wrap .up-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+        .up-avatar-overlay { position: absolute; inset: 0; border-radius: 50%; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s; }
+        .up-avatar-wrap:hover .up-avatar-overlay { opacity: 1; }
+        .up-avatar-overlay span { color: #fff; font-size: 11px; }
+        .up-name { font-size: 16px; font-weight: 600; color: #1F2937; }
+        .up-role { font-size: 12px; color: #6B7280; margin-top: 2px; }
+        .up-menu { padding: 8px 0; }
+        .up-menu-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; font-size: 13px; color: #374151; cursor: pointer; transition: background 0.15s; }
+        .up-menu-item:hover { background: #F8FAFC; }
+        .up-menu-item .up-menu-icon { width: 20px; text-align: center; font-size: 14px; }
+        .up-menu-divider { height: 1px; background: #F3F4F6; margin: 4px 0; }
+        .up-menu-item.danger { color: #EF4444; }
+        .up-menu-item.danger:hover { background: #FEF2F2; }
+        .avatar-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 500; align-items: center; justify-content: center; }
+        .avatar-modal.show { display: flex; animation: modalIn 0.2s ease; }
+        @keyframes modalIn { from { opacity: 0; } to { opacity: 1; } }
+        .avatar-modal-content { background: #fff; border-radius: 16px; width: 420px; max-width: 90vw; overflow: hidden; }
+        .avatar-modal-header { padding: 16px 20px; border-bottom: 1px solid #F3F4F6; display: flex; align-items: center; justify-content: space-between; }
+        .avatar-modal-header h3 { font-size: 16px; font-weight: 600; color: #1F2937; }
+        .avatar-modal-close { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; color: #6B7280; border: none; background: none; }
+        .avatar-modal-close:hover { background: #F3F4F6; color: #374151; }
+        .avatar-modal-body { padding: 20px; }
+        .avatar-upload-zone { width: 240px; height: 240px; margin: 0 auto 16px; border-radius: 50%; border: 3px dashed #D1D5DB; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; background: #F9FAFB; }
+        .avatar-upload-zone:hover { border-color: #2563EB; background: #F0F5FF; }
+        .avatar-upload-zone.dragover { border-color: #2563EB; background: #DBEAFE; transform: scale(1.02); }
+        .avatar-upload-zone.has-image { border-style: solid; border-color: #2563EB; }
+        .avatar-upload-zone img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+        .avatar-upload-placeholder { text-align: center; color: #9CA3AF; }
+        .avatar-upload-placeholder .upload-icon { font-size: 36px; margin-bottom: 6px; }
+        .avatar-upload-placeholder .upload-text { font-size: 13px; }
+        .avatar-upload-placeholder .upload-hint { font-size: 11px; margin-top: 4px; color: #D1D5DB; }
+        .avatar-crop-area { width: 240px; height: 240px; margin: 0 auto 16px; border-radius: 50%; overflow: hidden; position: relative; background: #F3F4F6; cursor: move; border: 3px solid #2563EB; }
+        .avatar-crop-area img { position: absolute; user-select: none; -webkit-user-drag: none; }
+        .avatar-crop-controls { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 16px; }
+        .avatar-crop-controls label { font-size: 12px; color: #6B7280; }
+        .avatar-crop-controls input[type="range"] { width: 120px; accent-color: #2563EB; }
+        .avatar-preview-row { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 8px; }
+        .avatar-preview-item { text-align: center; }
+        .avatar-preview-item .preview-label { font-size: 11px; color: #9CA3AF; margin-bottom: 4px; }
+        .avatar-preview-circle { border-radius: 50%; background: #E5E7EB; overflow: hidden; display: flex; align-items: center; justify-content: center; margin: 0 auto; }
+        .avatar-preview-circle.large { width: 72px; height: 72px; }
+        .avatar-preview-circle.medium { width: 40px; height: 40px; }
+        .avatar-preview-circle.small { width: 28px; height: 28px; }
+        .avatar-preview-circle canvas { border-radius: 50%; }
+        .avatar-error { padding: 8px 12px; background: #FEF2F2; color: #EF4444; border-radius: 6px; font-size: 12px; margin-bottom: 12px; display: none; }
+        .avatar-error.show { display: block; }
+        .avatar-modal-footer { padding: 12px 20px; border-top: 1px solid #F3F4F6; display: flex; justify-content: flex-end; gap: 8px; }
+        .avatar-modal-footer .btn { padding: 8px 20px; border-radius: 8px; font-size: 13px; cursor: pointer; border: none; transition: all 0.15s; }
+        .avatar-modal-footer .btn-cancel { background: #F3F4F6; color: #374151; }
+        .avatar-modal-footer .btn-cancel:hover { background: #E5E7EB; }
+        .avatar-modal-footer .btn-save { background: #2563EB; color: #fff; }
+        .avatar-modal-footer .btn-save:hover { background: #1D4ED8; }
+        .avatar-modal-footer .btn-save:disabled { background: #93C5FD; cursor: not-allowed; }
+        .avatar-modal-footer .btn-save .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; vertical-align: middle; margin-right: 4px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media (max-width: 768px) { .user-panel { width: calc(100vw - 32px); right: -40px; } .avatar-modal-content { width: 95vw; } }
+        .settings-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 500; align-items: center; justify-content: center; }
+        .settings-modal.show { display: flex; animation: modalIn 0.2s ease; }
+        .settings-modal-content { background: #fff; border-radius: 16px; width: 520px; max-width: 95vw; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden; }
+        .settings-modal-header { padding: 16px 20px; border-bottom: 1px solid #F3F4F6; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+        .settings-modal-header h3 { font-size: 16px; font-weight: 600; color: #1F2937; }
+        .settings-modal-body { flex: 1; overflow-y: auto; padding: 20px; }
+        .settings-section { margin-bottom: 24px; }
+        .settings-section:last-child { margin-bottom: 0; }
+        .settings-section-title { font-size: 13px; font-weight: 600; color: #6B7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid #F3F4F6; }
+        .settings-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; }
+        .settings-row + .settings-row { border-top: 1px solid #F9FAFB; }
+        .settings-label { font-size: 13px; color: #374151; font-weight: 500; }
+        .settings-desc { font-size: 11px; color: #9CA3AF; margin-top: 2px; }
+        .settings-control { flex-shrink: 0; margin-left: 16px; }
+        .settings-input { padding: 6px 10px; border: 1px solid #D1D5DB; border-radius: 6px; font-size: 13px; width: 180px; transition: border-color 0.15s; outline: none; }
+        .settings-input:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .settings-select { padding: 6px 10px; border: 1px solid #D1D5DB; border-radius: 6px; font-size: 13px; width: 180px; background: #fff; outline: none; cursor: pointer; }
+        .settings-select:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .toggle-switch { position: relative; width: 40px; height: 22px; cursor: pointer; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+        .toggle-slider { position: absolute; inset: 0; background: #D1D5DB; border-radius: 11px; transition: background 0.2s; }
+        .toggle-slider::before { content: ''; position: absolute; width: 16px; height: 16px; border-radius: 50%; background: #fff; top: 3px; left: 3px; transition: transform 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+        .toggle-switch input:checked + .toggle-slider { background: #2563EB; }
+        .toggle-switch input:checked + .toggle-slider::before { transform: translateX(18px); }
+        .toggle-switch input:focus + .toggle-slider { box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+        .settings-modal-footer { padding: 12px 20px; border-top: 1px solid #F3F4F6; display: flex; justify-content: flex-end; gap: 8px; flex-shrink: 0; }
+        .settings-modal-footer .btn { padding: 8px 20px; border-radius: 8px; font-size: 13px; cursor: pointer; border: none; transition: all 0.15s; font-weight: 500; }
+        .settings-modal-footer .btn-cancel { background: #F3F4F6; color: #374151; }
+        .settings-modal-footer .btn-cancel:hover { background: #E5E7EB; }
+        .settings-modal-footer .btn-save { background: #2563EB; color: #fff; }
+        .settings-modal-footer .btn-save:hover { background: #1D4ED8; }
+        .settings-modal-footer .btn-save:disabled { background: #93C5FD; cursor: not-allowed; }
+        .settings-modal-footer .btn-save .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; vertical-align: middle; margin-right: 4px; }
+        .settings-pwd-row { display: flex; gap: 8px; align-items: center; }
+        .settings-pwd-row .settings-input { width: 140px; }
+        .settings-pwd-toggle { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1px solid #D1D5DB; background: #fff; font-size: 12px; color: #6B7280; transition: all 0.15s; }
+        .settings-pwd-toggle:hover { background: #F3F4F6; color: #374151; }
+        @media (max-width: 768px) { .settings-modal-content { width: 95vw; max-height: 90vh; } .settings-row { flex-direction: column; align-items: flex-start; gap: 6px; } .settings-control { margin-left: 0; width: 100%; } .settings-input, .settings-select { width: 100%; } .settings-pwd-row { width: 100%; } .settings-pwd-row .settings-input { flex: 1; } }
+        .content { padding: 24px; }
+        .msg-tabs { display: flex; gap: 0; background: #fff; border-radius: 10px 10px 0 0; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border-bottom: 2px solid #E5E7EB; }
+        .msg-tab { padding: 14px 24px; font-size: 14px; color: #6B7280; cursor: pointer; position: relative; transition: all 0.2s; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+        .msg-tab:hover { color: #2563EB; }
+        .msg-tab.active { color: #2563EB; font-weight: 600; border-bottom-color: #2563EB; }
+        .msg-tab .tab-badge { position: absolute; top: 8px; right: 8px; background: #EF4444; color: #fff; font-size: 10px; min-width: 16px; height: 16px; border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 0 4px; }
+        .msg-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: #fff; border-bottom: 1px solid #F3F4F6; }
+        .msg-toolbar-left { display: flex; align-items: center; gap: 12px; }
+        .msg-toolbar-right { display: flex; align-items: center; gap: 8px; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; border: none; transition: all 0.2s; }
+        .btn-primary { background: #2563EB; color: #fff; }
+        .btn-primary:hover { background: #1D4ED8; }
+        .btn-outline { background: #fff; color: #374151; border: 1px solid #E5E7EB; }
+        .btn-outline:hover { background: #F9FAFB; }
+        .btn-danger { background: #EF4444; color: #fff; }
+        .btn-sm { padding: 4px 10px; font-size: 12px; }
+        .checkbox-wrap { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #6B7280; cursor: pointer; }
+        .checkbox-wrap input { cursor: pointer; }
+        .msg-list { background: #fff; border-radius: 0 0 10px 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        .msg-item { display: flex; align-items: flex-start; padding: 16px 20px; border-bottom: 1px solid #F3F4F6; cursor: pointer; transition: background 0.2s; }
+        .msg-item:hover { background: #F8FAFC; }
+        .msg-item.unread { background: #F0F5FF; }
+        .msg-item:last-child { border-bottom: none; }
+        .msg-check { padding-top: 2px; margin-right: 12px; flex-shrink: 0; }
+        .msg-check input { cursor: pointer; }
+        .msg-dot { width: 8px; height: 8px; border-radius: 50%; background: #2563EB; margin-top: 6px; margin-right: 12px; flex-shrink: 0; }
+        .msg-dot.read { background: transparent; }
+        .msg-body { flex: 1; min-width: 0; }
+        .msg-title { font-size: 14px; font-weight: 500; color: #1F2937; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .msg-title .msg-type { font-size: 11px; padding: 1px 8px; border-radius: 4px; font-weight: 400; }
+        .msg-type.system { background: #DBEAFE; color: #2563EB; }
+        .msg-type.remind { background: #FEF3C7; color: #D97706; }
+        .msg-type.notice { background: #FCE7F3; color: #EC4899; }
+        .msg-type.approval { background: #D1FAE5; color: #059669; }
+        .msg-desc { font-size: 12px; color: #6B7280; line-height: 1.6; }
+        .msg-meta { display: flex; align-items: center; gap: 16px; margin-top: 6px; font-size: 11px; color: #9CA3AF; }
+        .msg-action { margin-left: 16px; flex-shrink: 0; display: flex; gap: 8px; align-items: center; }
+        .msg-action .btn { white-space: nowrap; }
+        .pagination { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; background: #fff; border-radius: 10px; margin-top: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        .page-info { font-size: 12px; color: #6B7280; }
+        .page-btns { display: flex; gap: 4px; }
+        .page-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 1px solid #E5E7EB; border-radius: 6px; font-size: 12px; color: #374151; cursor: pointer; background: #fff; transition: all 0.2s; }
+        .page-btn:hover { border-color: #2563EB; color: #2563EB; }
+        .page-btn.active { background: #2563EB; color: #fff; border-color: #2563EB; }
+        .empty-state { text-align: center; padding: 60px 20px; color: #9CA3AF; }
+        .empty-state .empty-icon { font-size: 48px; margin-bottom: 12px; }
+        .empty-state .empty-text { font-size: 14px; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+        .modal-overlay.show { display: flex; }
+        .modal { background: #fff; border-radius: 12px; width: 500px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); max-height: 80vh; overflow-y: auto; }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: space-between; }
+        .modal-header h3 { font-size: 16px; font-weight: 600; color: #1E3A5F; }
+        .modal-close { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer; font-size: 18px; color: #6B7280; border: none; background: none; }
+        .modal-close:hover { background: #F3F4F6; }
+        .modal-body { padding: 24px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid #E5E7EB; display: flex; justify-content: flex-end; gap: 12px; }
+        .detail-row { display: flex; margin-bottom: 12px; font-size: 13px; }
+        .detail-label { width: 80px; color: #6B7280; flex-shrink: 0; }
+        .detail-value { color: #1F2937; flex: 1; }
+    </style>
+    <script src="assets/app.js"></script>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/responsive.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-logo"><h2>监理现场管理系统</h2><p>Supervision Site Management</p></div>
+        <div class="menu-group"><a class="menu-item" href="index.html"><span class="icon">📊</span> 仪表盘</a></div>
+        <div class="menu-group"><div class="menu-group-title">项目管理</div><a class="menu-item" href="project-ledger.html"><span class="icon">📁</span> 项目台账</a></div>
+        <div class="menu-group"><div class="menu-group-title">监理现场工作</div><a class="menu-item" href="daily-inspection.html"><span class="icon">🔍</span> 日常巡检</a><a class="menu-item" href="sideline-inspection.html"><span class="icon">👁️</span> 旁站</a><a class="menu-item" href="supervision-notice.html"><span class="icon">📋</span> 监理通知单</a><a class="menu-item" href="work-contact.html"><span class="icon">✉️</span> 工作联系单</a><a class="menu-item" href="supervision-diary.html"><span class="icon">📝</span> 监理日记</a><a class="menu-item" href="supervision-log.html"><span class="icon">📄</span> 监理日志</a><a class="menu-item" href="safety-log.html"><span class="icon">🛡️</span> 监理安全日志</a><a class="menu-item" href="meeting-minutes.html"><span class="icon">📅</span> 会议纪要</a><a class="menu-item" href="supervision-monthly-report.html"><span class="icon">📊</span> 监理月报</a></div>
+        <div class="menu-group"><div class="menu-group-title">项目资料</div><a class="menu-item" href="sub-item-database.html"><span class="icon">🗄️</span> 工程资料目录设置</a><a class="menu-item" href="project-data-upload.html"><span class="icon">📤</span> 工程资料上传</a></div>
+        <div class="menu-group"><div class="menu-group-title">数据统计</div><a class="menu-item" href="diary-statistics.html"><span class="icon">📈</span> 日记统计</a><a class="menu-item" href="diary-report.html"><span class="icon">📑</span> 日记报表</a><a class="menu-item" href="log-statistics.html"><span class="icon">📊</span> 日志统计</a><a class="menu-item" href="safety-log-statistics.html"><span class="icon">🛡️</span> 安全日志统计</a></div>
+        <div class="menu-group"><div class="menu-group-title">团队管理</div><a class="menu-item" href="department-management.html"><span class="icon">🏢</span> 部门管理</a><a class="menu-item" href="personnel-management.html"><span class="icon">👥</span> 人员管理</a><a class="menu-item" href="permission-settings.html"><span class="icon">🔐</span> 权限设置</a><a class="menu-item" href="process-management.html"><span class="icon">🔄</span> 流程管理</a></div>
+        <div class="menu-group"><div class="menu-group-title">系统设置</div><a class="menu-item" href="operation-log.html"><span class="icon">📜</span> 操作日志</a><a class="menu-item active" href="message-center.html"><span class="icon">🔔</span> 消息中心</a><a class="menu-item" href="work-standard-config.html"><span class="icon">⚙️</span> 工作标准配置</a></div>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <div class="header-left"><h3>消息中心</h3><span class="breadcrumb"><a href="index.html">首页</a> / 系统设置 / 消息中心</span></div>
+            <div class="header-right"><div class="notification" onclick="toggleNotificationPanel(event)">🔔<span class="badge" id="notifBadge" style="display:none;">0</span><div class="notification-panel" id="notifPanel"><div class="np-header"><h4>消息通知</h4><div class="np-header-actions"><a onclick="markAllReadFromPanel(event)">全部已读</a><a onclick="clearAllFromPanel(event)">清空</a></div></div><div class="np-list" id="npList"></div><div class="np-footer"><a href="message-center.html">查看全部消息 →</a></div></div></div><div class="user-info" onclick="toggleUserPanel(event)"><div class="user-avatar" id="headerAvatar">张</div><span class="user-name">张监理</span><div class="user-panel" id="userPanel"><div class="up-profile"><div class="up-avatar-wrap" onclick="openAvatarModal(event)"><div class="up-avatar" id="panelAvatar">张</div><div class="up-avatar-overlay"><span>更换头像</span></div></div><div class="up-name">张监理</div><div class="up-role">总监理工程师 · 城东综合体项目</div></div><div class="up-menu"><div class="up-menu-item" onclick="window.location.href='message-center.html'"><span class="up-menu-icon">💬</span>消息中心</div><div class="up-menu-item" onclick="openAvatarModal(event)"><span class="up-menu-icon">📷</span>更换头像</div><div class="up-menu-item" onclick="openSettingsModal(event)" role="menuitem" tabindex="0" aria-label="个人设置"><span class="up-menu-icon">⚙️</span>个人设置</div><div class="up-menu-divider"></div><div class="up-menu-item danger" onclick="if(window.App){App.logout()}else{closeUserPanel()}"><span class="up-menu-icon">🚪</span>退出登录</div></div></div></div></div>
+        </div>
+
+        <div class="content">
+            <div class="msg-tabs">
+                <div class="msg-tab active" onclick="switchTab(this,'all')">全部消息</div>
+                <div class="msg-tab" onclick="switchTab(this,'system')">系统通知<span class="tab-badge">2</span></div>
+                <div class="msg-tab" onclick="switchTab(this,'remind')">工作提醒<span class="tab-badge">3</span></div>
+                <div class="msg-tab" onclick="switchTab(this,'notice')">审批通知</div>
+                <div class="msg-tab" onclick="switchTab(this,'approval')">催办通知</div>
+            </div>
+
+            <div class="msg-toolbar">
+                <div class="msg-toolbar-left">
+                    <label class="checkbox-wrap"><input type="checkbox" id="selectAll" onchange="toggleSelectAll()"> 全选</label>
+                    <button class="btn btn-outline btn-sm" onclick="markRead()">标记已读</button>
+                    <button class="btn btn-outline btn-sm" onclick="batchDelete()">删除</button>
+                </div>
+                <div class="msg-toolbar-right">
+                    <button class="btn btn-outline btn-sm" onclick="markAllRead()">全部已读</button>
+                </div>
+            </div>
+
+            <div class="msg-list" id="msgList"></div>
+            
+            <div class="pagination">
+                <div class="page-info">共 0 条消息</div>
+                <div class="page-btns">
+                    <div class="page-btn">‹</div>
+                    <div class="page-btn active">1</div>
+                    <div class="page-btn">›</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal">
+            <div class="modal-header"><h3 id="detailTitle">消息详情</h3><button class="modal-close" onclick="closeModal('detailModal')">✕</button></div>
+            <div class="modal-body" id="detailBody"></div>
+            <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('detailModal')">关闭</button></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal" style="width:400px;">
+            <div class="modal-header"><h3>确认删除</h3><button class="modal-close" onclick="closeModal('deleteModal')">✕</button></div>
+            <div class="modal-body" style="padding:32px 24px;text-align:center;">
+                <div style="font-size:48px;margin-bottom:16px;">⚠️</div>
+                <div style="font-size:14px;color:#374151;margin-bottom:8px;">确定要删除选中的消息吗？</div>
+                <div style="font-size:12px;color:#9CA3AF;">删除后消息将无法恢复</div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('deleteModal')">取消</button><button class="btn btn-danger" onclick="executeDelete()">确认删除</button></div>
+        </div>
+    </div>
+
+    <script>
+        var allMsgs = [];
+        var currentTab = 'all';
+        var pendingDeleteIds = [];
+        var TYPE_LABELS = { system:'系统通知', remind:'工作提醒', notice:'审批通知', approval:'催办通知' };
+        var TYPE_CLASS = { system:'system', remind:'remind', notice:'notice', approval:'approval' };
+        var TAB_ORDER = ['all','system','remind','notice','approval'];
+    
+        function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+        function isReadMsg(m){ var v=m.isRead; return v==='1'||v===1||v==='true'||v===true||v==='read'; }
+        function fmtTime(t){ return t ? String(t).replace('T',' ').slice(0,16) : ''; }
+        function currentUserId(){ var u=(window.App&&App.getUser)?App.getUser():null; return u?u.userId:null; }
+        function findMsg(id){ for(var i=0;i<allMsgs.length;i++){ if(String(allMsgs[i].id)===String(id))return allMsgs[i]; } return null; }
+    
+        function loadMessages(){
+            if(!window.apiGetPage) return Promise.resolve();
+            var params = { pageNum:1, pageSize:200 };
+            var uid = currentUserId();
+            if(uid) params.receiverId = uid;
+            return apiGetPage('/messages', params).then(function(page){
+                allMsgs = page.list || [];
+                renderMessages(); updateTabBadges();
+            }).catch(function(){ allMsgs=[]; renderMessages(); });
+        }
+    
+        function filteredMsgs(){ return currentTab==='all' ? allMsgs : allMsgs.filter(function(m){return m.type===currentTab;}); }
+    
+        function renderMessages(){
+            var list = document.getElementById('msgList');
+            var arr = filteredMsgs();
+            if(!arr.length){ list.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">暂无消息</div></div>'; updatePageInfo(); return; }
+            var html='';
+            for(var i=0;i<arr.length;i++){
+                var m=arr[i]; var read=isReadMsg(m); var tcls=TYPE_CLASS[m.type]||'system'; var tlabel=TYPE_LABELS[m.type]||'消息';
+                html += '<div class="msg-item'+(read?'':' unread')+'" data-id="'+m.id+'" data-type="'+(m.type||'')+'">';
+                html += '<div class="msg-check"><input type="checkbox" class="msg-checkbox" value="'+m.id+'"></div>';
+                html += '<div class="msg-dot'+(read?' read':'')+'"></div>';
+                html += '<div class="msg-body" onclick="viewDetail('+m.id+')">';
+                html += '<div class="msg-title">'+esc(m.title||'(无标题)')+' <span class="msg-type '+tcls+'">'+tlabel+'</span></div>';
+                html += '<div class="msg-desc">'+esc(m.content||'')+'</div>';
+                html += '<div class="msg-meta"><span>📅 '+fmtTime(m.createTime)+'</span></div>';
+                html += '</div>';
+                html += '<div class="msg-action"><button class="btn btn-outline btn-sm" onclick="viewDetail('+m.id+')">查看详情</button></div>';
+                html += '</div>';
+            }
+            list.innerHTML = html;
+            updatePageInfo();
+        }
+    
+        function updatePageInfo(){
+            var unread=0; for(var i=0;i<allMsgs.length;i++){ if(!isReadMsg(allMsgs[i])) unread++; }
+            var info=document.querySelector('.page-info');
+            if(info) info.textContent='共 '+allMsgs.length+' 条消息，其中 '+unread+' 条未读';
+        }
+    
+        function updateTabBadges(){
+            var counts={system:0,remind:0,notice:0,approval:0};
+            for(var i=0;i<allMsgs.length;i++){ var m=allMsgs[i]; if(!isReadMsg(m)&&counts[m.type]!==undefined) counts[m.type]++; }
+            var tabs=document.querySelectorAll('.msg-tab');
+            tabs.forEach(function(tab,idx){
+                var key=TAB_ORDER[idx]; if(!key||key==='all') return;
+                var badge=tab.querySelector('.tab-badge'); var c=counts[key]||0;
+                if(c>0){ if(!badge){ badge=document.createElement('span'); badge.className='tab-badge'; tab.appendChild(badge);} badge.textContent=c; badge.style.display='flex'; }
+                else if(badge){ badge.style.display='none'; }
+            });
+        }
+    
+        function switchTab(el, type) {
+            document.querySelectorAll('.msg-tab').forEach(function(t){t.classList.remove('active')});
+            el.classList.add('active'); currentTab=type; renderMessages();
+        }
+    
+        function toggleSelectAll() {
+            var checked = document.getElementById('selectAll').checked;
+            document.querySelectorAll('.msg-checkbox').forEach(function(cb){cb.checked = checked});
+        }
+    
+        function markRead() {
+            var checked = document.querySelectorAll('.msg-checkbox:checked');
+            if(checked.length === 0) { showNotifToast('请先选择消息','warning'); return; }
+            var tasks=[]; checked.forEach(function(cb){ tasks.push(apiFetch('/messages/'+cb.value+'/read',{method:'PUT',silent:true})); });
+            Promise.all(tasks).then(function(){ showNotifToast('已标记为已读','success'); loadMessages(); if(window.App&&App.refreshUnreadBadge)App.refreshUnreadBadge(); }).catch(function(){ showNotifToast('操作失败','warning'); });
+        }
+    
+        function markAllRead() {
+            var tasks=[]; for(var i=0;i<allMsgs.length;i++){ if(!isReadMsg(allMsgs[i])) tasks.push(apiFetch('/messages/'+allMsgs[i].id+'/read',{method:'PUT',silent:true})); }
+            if(!tasks.length){ showNotifToast('没有未读消息','info'); return; }
+            Promise.all(tasks).then(function(){ showNotifToast('已全部标记为已读','success'); loadMessages(); if(window.App&&App.refreshUnreadBadge)App.refreshUnreadBadge(); }).catch(function(){ showNotifToast('操作失败','warning'); });
+        }
+    
+        function batchDelete() {
+            var checked = document.querySelectorAll('.msg-checkbox:checked');
+            if(checked.length === 0) { showNotifToast('请先选择要删除的消息','warning'); return; }
+            pendingDeleteIds=[]; checked.forEach(function(cb){pendingDeleteIds.push(cb.value);});
+            document.getElementById('deleteModal').classList.add('show');
+        }
+    
+        function executeDelete() {
+            var tasks=pendingDeleteIds.map(function(id){return apiFetch('/messages/'+id,{method:'DELETE',silent:true});});
+            Promise.all(tasks).then(function(){ closeModal('deleteModal'); showNotifToast('删除成功','success'); loadMessages(); if(window.App&&App.refreshUnreadBadge)App.refreshUnreadBadge(); }).catch(function(){ closeModal('deleteModal'); showNotifToast('删除失败','warning'); });
+        }
+    
+        function viewDetail(id) {
+            var msg = findMsg(id);
+            if(!msg) return;
+            document.getElementById('detailTitle').textContent = msg.title || '消息详情';
+            document.getElementById('detailBody').innerHTML =
+                '<div class="detail-row"><div class="detail-label">消息类型</div><div class="detail-value">' + (TYPE_LABELS[msg.type]||'消息') + '</div></div>' +
+                '<div class="detail-row"><div class="detail-label">发送时间</div><div class="detail-value">' + fmtTime(msg.createTime) + '</div></div>' +
+                '<div style="margin-top:16px;padding-top:16px;border-top:1px solid #E5E7EB;font-size:13px;color:#374151;line-height:1.8;">' + esc(msg.content||'') + '</div>';
+            document.getElementById('detailModal').classList.add('show');
+            if(!isReadMsg(msg)){
+                apiFetch('/messages/'+id+'/read',{method:'PUT',silent:true}).then(function(){
+                    msg.isRead='1'; renderMessages(); updateTabBadges(); if(window.App&&App.refreshUnreadBadge)App.refreshUnreadBadge();
+                }).catch(function(){});
+            }
+        }
+    
+        function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+        function toggleNotificationPanel(e) {
+            e.stopPropagation();
+            var panel = document.getElementById('notifPanel');
+            if (panel.classList.contains('show')) { panel.classList.remove('show'); }
+            else { renderNotifList(); panel.classList.add('show'); }
+        }
+        
+        function renderNotifList() {
+            var list = document.getElementById('npList');
+            var arr = allMsgs.filter(function(m){ return !isReadMsg(m); }).slice(0, 10);
+            if (arr.length === 0) {
+                list.innerHTML = '<div class="np-empty"><div class="np-empty-icon">📭</div><div class="np-empty-text">暂无未读消息</div></div>';
+                return;
+            }
+            var iconMap = { system:'⚙️', remind:'⏰', notice:'✅', approval:'📋' };
+            var html = '';
+            for (var i = 0; i < arr.length; i++) {
+                var m = arr[i];
+                html += '<div class="np-item unread" data-id="' + m.id + '" onclick="handleNotifClick(event,' + m.id + ')">';
+                html += '<div class="np-icon ' + (m.type||'system') + '">' + (iconMap[m.type]||'🔔') + '</div>';
+                html += '<div class="np-body"><div class="np-title">' + esc(m.title||'') + '</div><div class="np-desc">' + esc(m.content||'') + '</div><div class="np-time">' + fmtTime(m.createTime) + '</div></div>';
+                html += '<div class="np-actions">';
+                html += '<button class="np-btn" title="标记已读" onclick="markReadFromPanel(event,' + m.id + ')">✓</button>';
+                html += '<button class="np-btn del" title="删除" onclick="deleteFromPanel(event,' + m.id + ')">✕</button>';
+                html += '</div></div>';
+            }
+            list.innerHTML = html;
+        }
+        
+        function handleNotifClick(e, id) {
+            if (e.target.closest('.np-btn') || e.target.closest('.np-actions')) return;
+            document.getElementById('notifPanel').classList.remove('show');
+            viewDetail(id);
+        }
+        
+        function markReadFromPanel(e, id) {
+            e.stopPropagation();
+            apiFetch('/messages/'+id+'/read',{method:'PUT',silent:true}).then(function(){
+                var m=findMsg(id); if(m)m.isRead='1';
+                renderNotifList(); renderMessages(); updateTabBadges(); if(window.App&&App.refreshUnreadBadge)App.refreshUnreadBadge();
+                showNotifToast('已标记为已读', 'success');
+            }).catch(function(){ showNotifToast('操作失败', 'warning'); });
+        }
+
+        function deleteFromPanel(e, id) {
+            e.stopPropagation();
+            apiFetch('/messages/'+id,{method:'DELETE',silent:true}).then(function(){
+                allMsgs = allMsgs.filter(function(m){ return String(m.id)!==String(id); });
+                renderNotifList(); renderMessages(); updateTabBadges(); if(window.App&&App.refreshUnreadBadge)App.refreshUnreadBadge();
+                showNotifToast('消息已删除', 'info');
+            }).catch(function(){ showNotifToast('删除失败', 'warning'); });
+        }
+
+        function markAllReadFromPanel(e) {
+            e.stopPropagation();
+            markAllRead(); renderNotifList();
+        }
+
+        function clearAllFromPanel(e) {
+            e.stopPropagation();
+            var ids = allMsgs.map(function(m){ return m.id; });
+            if (ids.length === 0) { showNotifToast('没有可清空的消息', 'info'); return; }
+            var tasks = ids.map(function(id){ return apiFetch('/messages/'+id,{method:'DELETE',silent:true}); });
+            Promise.all(tasks).then(function(){
+                allMsgs = []; renderNotifList(); renderMessages(); updateTabBadges(); if(window.App&&App.refreshUnreadBadge)App.refreshUnreadBadge();
+                showNotifToast('消息已全部清空', 'info');
+            }).catch(function(){ showNotifToast('操作失败', 'warning'); });
+        }
+
+        function showNotifToast(message, type) {
+            var existing = document.querySelector('.np-toast');
+            if (existing) existing.remove();
+            var toast = document.createElement('div');
+            toast.className = 'np-toast ' + (type || 'info');
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(function() { toast.style.opacity = '0'; setTimeout(function() { if (toast.parentElement) toast.remove(); }, 300); }, 2000);
+        }
+
+        document.addEventListener('click', function(e) {
+            var panel = document.getElementById('notifPanel');
+            if (panel && panel.classList.contains('show') && !e.target.closest('.notification')) { panel.classList.remove('show'); }
+            var up = document.getElementById('userPanel');
+            if (up && up.classList.contains('show') && !e.target.closest('.user-info')) { up.classList.remove('show'); }
+        });
+
+        function toggleUserPanel(e) { e.stopPropagation(); var p = document.getElementById('userPanel'); if (p.classList.contains('show')) { p.classList.remove('show'); } else { p.classList.add('show'); } }
+        function closeUserPanel() { var p = document.getElementById('userPanel'); if (p) p.classList.remove('show'); }
+
+        var avatarCropState = { img: null, naturalW: 0, naturalH: 0, offsetX: 0, offsetY: 0, zoom: 1, dragging: false, dragStartX: 0, dragStartY: 0, startOffsetX: 0, startOffsetY: 0 };
+
+        function openAvatarModal(e) {
+            if (e) e.stopPropagation(); closeUserPanel();
+            document.getElementById('avatarModal').classList.add('show');
+            document.getElementById('avatarStep1').style.display = '';
+            document.getElementById('avatarStep2').style.display = 'none';
+            document.getElementById('avatarSaveBtn').disabled = true;
+            hideAvatarError();
+            var zone = document.getElementById('avatarUploadZone');
+            zone.classList.remove('has-image');
+            zone.innerHTML = '<div class="avatar-upload-placeholder"><div class="upload-icon">📷</div><div class="upload-text">点击或拖拽上传图片</div><div class="upload-hint">支持 JPG、PNG，最大 5MB</div></div>';
+            zone.onclick = function() { document.getElementById('avatarFileInput').click(); };
+            document.getElementById('avatarFileInput').value = '';
+            avatarCropState = { img: null, naturalW: 0, naturalH: 0, offsetX: 0, offsetY: 0, zoom: 1, dragging: false, dragStartX: 0, dragStartY: 0, startOffsetX: 0, startOffsetY: 0 };
+            setupDragDrop();
+        }
+        function closeAvatarModal() { document.getElementById('avatarModal').classList.remove('show'); }
+        function setupDragDrop() {
+            var zone = document.getElementById('avatarUploadZone');
+            zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('dragover'); });
+            zone.addEventListener('dragleave', function() { zone.classList.remove('dragover'); });
+            zone.addEventListener('drop', function(e) { e.preventDefault(); zone.classList.remove('dragover'); if (e.dataTransfer.files && e.dataTransfer.files[0]) processAvatarFile(e.dataTransfer.files[0]); });
+        }
+        function handleAvatarFileSelect(e) { if (e.target.files && e.target.files[0]) processAvatarFile(e.target.files[0]); }
+        function processAvatarFile(file) {
+            hideAvatarError();
+            var allowed = ['image/jpeg','image/png','image/gif','image/webp'];
+            if (allowed.indexOf(file.type) === -1) { showAvatarError('不支持的文件格式，请上传 JPG、PNG、GIF 或 WebP 格式的图片'); return; }
+            if (file.size > 5*1024*1024) { showAvatarError('文件大小超过 5MB 限制，请选择更小的图片'); return; }
+            var reader = new FileReader();
+            reader.onload = function(ev) {
+                var img = new Image();
+                img.onload = function() {
+                    if (img.width < 100 || img.height < 100) { showAvatarError('图片尺寸过小，建议上传至少 100×100 像素的图片'); return; }
+                    avatarCropState.img = img; avatarCropState.naturalW = img.width; avatarCropState.naturalH = img.height; avatarCropState.zoom = 1; avatarCropState.offsetX = 0; avatarCropState.offsetY = 0;
+                    showCropStep();
+                };
+                img.onerror = function() { showAvatarError('图片加载失败，请重新选择'); };
+                img.src = ev.target.result;
+            };
+            reader.onerror = function() { showAvatarError('文件读取失败，请重新选择'); };
+            reader.readAsDataURL(file);
+        }
+        function showCropStep() {
+            document.getElementById('avatarStep1').style.display = 'none';
+            document.getElementById('avatarStep2').style.display = '';
+            document.getElementById('avatarSaveBtn').disabled = false;
+            document.getElementById('avatarCropImg').src = avatarCropState.img.src;
+            document.getElementById('avatarZoomRange').value = 100; avatarCropState.zoom = 1;
+            centerCropImage(); updateAvatarCrop(); setupCropDrag();
+        }
+        function centerCropImage() { var a = 240; var s = avatarCropState; s.offsetX = (a - s.naturalW * s.zoom) / 2; s.offsetY = (a - s.naturalH * s.zoom) / 2; }
+        function setupCropDrag() {
+            var area = document.getElementById('avatarCropArea');
+            area.onmousedown = function(e) { e.preventDefault(); avatarCropState.dragging = true; avatarCropState.dragStartX = e.clientX; avatarCropState.dragStartY = e.clientY; avatarCropState.startOffsetX = avatarCropState.offsetX; avatarCropState.startOffsetY = avatarCropState.offsetY; };
+            document.onmousemove = function(e) { if (!avatarCropState.dragging) return; avatarCropState.offsetX = avatarCropState.startOffsetX + (e.clientX - avatarCropState.dragStartX); avatarCropState.offsetY = avatarCropState.startOffsetY + (e.clientY - avatarCropState.dragStartY); clampOffset(); renderCropImage(); renderPreviews(); };
+            document.onmouseup = function() { avatarCropState.dragging = false; };
+            area.ontouchstart = function(e) { if (e.touches.length===1) { var t=e.touches[0]; avatarCropState.dragging=true; avatarCropState.dragStartX=t.clientX; avatarCropState.dragStartY=t.clientY; avatarCropState.startOffsetX=avatarCropState.offsetX; avatarCropState.startOffsetY=avatarCropState.offsetY; } };
+            document.ontouchmove = function(e) { if (!avatarCropState.dragging||e.touches.length!==1) return; var t=e.touches[0]; avatarCropState.offsetX=avatarCropState.startOffsetX+(t.clientX-avatarCropState.dragStartX); avatarCropState.offsetY=avatarCropState.startOffsetY+(t.clientY-avatarCropState.dragStartY); clampOffset(); renderCropImage(); renderPreviews(); };
+            document.ontouchend = function() { avatarCropState.dragging = false; };
+        }
+        function clampOffset() { var a=240; var s=avatarCropState; var sw=s.naturalW*s.zoom; var sh=s.naturalH*s.zoom; if(sw<=a){s.offsetX=(a-sw)/2}else{s.offsetX=Math.min(0,Math.max(a-sw,s.offsetX))} if(sh<=a){s.offsetY=(a-sh)/2}else{s.offsetY=Math.min(0,Math.max(a-sh,s.offsetY))} }
+        function updateAvatarCrop() { avatarCropState.zoom = document.getElementById('avatarZoomRange').value/100; clampOffset(); renderCropImage(); renderPreviews(); }
+        function renderCropImage() { var s=avatarCropState; var ci=document.getElementById('avatarCropImg'); ci.style.width=(s.naturalW*s.zoom)+'px'; ci.style.height=(s.naturalH*s.zoom)+'px'; ci.style.left=s.offsetX+'px'; ci.style.top=s.offsetY+'px'; }
+        function renderPreviews() { var s=avatarCropState; var a=240; var sizes=[{c:'previewLarge',sz:72},{c:'previewMedium',sz:40},{c:'previewSmall',sz:28}]; for(var i=0;i<sizes.length;i++){var cvs=document.getElementById(sizes[i].c);var ctx=cvs.getContext('2d');var sz=sizes[i].sz;cvs.width=sz;cvs.height=sz;ctx.clearRect(0,0,sz,sz);ctx.drawImage(s.img,-s.offsetX/s.zoom,-s.offsetY/s.zoom,a/s.zoom,a/s.zoom,0,0,sz,sz);} }
+        function saveAvatar() {
+            var btn=document.getElementById('avatarSaveBtn'); if(btn.disabled)return; btn.disabled=true; btn.innerHTML='<span class="spinner"></span>保存中...';
+            var s=avatarCropState; var a=240; var oc=document.createElement('canvas'); oc.width=200; oc.height=200; var ctx=oc.getContext('2d'); ctx.drawImage(s.img,-s.offsetX/s.zoom,-s.offsetY/s.zoom,a/s.zoom,a/s.zoom,0,0,200,200);
+            var du=oc.toDataURL('image/png'); try{localStorage.setItem('userAvatar',du)}catch(e){}
+            setTimeout(function(){applyAvatar(du);btn.disabled=false;btn.innerHTML='保存';closeAvatarModal();showNotifToast('头像更新成功','success')},800);
+        }
+        function applyAvatar(du) { var ha=document.getElementById('headerAvatar'); if(ha)ha.innerHTML='<img src="'+du+'" alt="头像">'; var pa=document.getElementById('panelAvatar'); if(pa)pa.innerHTML='<img src="'+du+'" alt="头像">'; }
+        function loadSavedAvatar() { try{var s=localStorage.getItem('userAvatar');if(s)applyAvatar(s)}catch(e){} }
+        function showAvatarError(m) { var e=document.getElementById('avatarError'); e.textContent=m; e.classList.add('show'); }
+        function hideAvatarError() { var e=document.getElementById('avatarError'); e.classList.remove('show'); }
+        function openSettingsModal(e) { if(e)e.stopPropagation(); closeUserPanel(); loadSettingsFromStorage(); document.getElementById('settingsModal').classList.add('show'); document.getElementById('settingOldPwd').value=''; document.getElementById('settingNewPwd').value=''; document.getElementById('settingConfirmPwd').value=''; }
+        function closeSettingsModal() { document.getElementById('settingsModal').classList.remove('show'); }
+        function loadSettingsFromStorage() { try { var saved=localStorage.getItem('userSettings'); if(saved){var s=JSON.parse(saved); if(s.name)document.getElementById('settingName').value=s.name; if(s.phone)document.getElementById('settingPhone').value=s.phone; if(s.email)document.getElementById('settingEmail').value=s.email; if(s.role)document.getElementById('settingRole').value=s.role; if(s.diaryRemind!==undefined)document.getElementById('settingDiaryRemind').checked=s.diaryRemind; if(s.noticeRemind!==undefined)document.getElementById('settingNoticeRemind').checked=s.noticeRemind; if(s.approvalNotify!==undefined)document.getElementById('settingApprovalNotify').checked=s.approvalNotify; if(s.systemNotify!==undefined)document.getElementById('settingSystemNotify').checked=s.systemNotify; if(s.lang)document.getElementById('settingLang').value=s.lang; if(s.dateFormat)document.getElementById('settingDateFormat').value=s.dateFormat; if(s.pageSize)document.getElementById('settingPageSize').value=s.pageSize;} }catch(e){} }
+        function saveSettings() { var btn=document.getElementById('settingsSaveBtn'); var name=document.getElementById('settingName').value.trim(); if(!name){showNotifToast('姓名不能为空','warning');return;} var email=document.getElementById('settingEmail').value.trim(); if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showNotifToast('邮箱格式不正确','warning');return;} var newPwd=document.getElementById('settingNewPwd').value; var confirmPwd=document.getElementById('settingConfirmPwd').value; if(newPwd||confirmPwd){var oldPwd=document.getElementById('settingOldPwd').value; if(!oldPwd){showNotifToast('请输入当前密码','warning');return;} if(newPwd.length<6){showNotifToast('新密码长度不能少于6位','warning');return;} if(newPwd!==confirmPwd){showNotifToast('两次输入的新密码不一致','warning');return;}} btn.disabled=true; btn.innerHTML='<span class="spinner"></span>保存中...'; var settings={name:name,phone:document.getElementById('settingPhone').value.trim(),email:email,role:document.getElementById('settingRole').value,diaryRemind:document.getElementById('settingDiaryRemind').checked,noticeRemind:document.getElementById('settingNoticeRemind').checked,approvalNotify:document.getElementById('settingApprovalNotify').checked,systemNotify:document.getElementById('settingSystemNotify').checked,lang:document.getElementById('settingLang').value,dateFormat:document.getElementById('settingDateFormat').value,pageSize:document.getElementById('settingPageSize').value}; try{localStorage.setItem('userSettings',JSON.stringify(settings))}catch(e){} setTimeout(function(){btn.disabled=false;btn.innerHTML='保存设置';closeSettingsModal();showNotifToast('设置已保存','success')},600); }
+        function togglePwdVisibility(inputId,btn) { var input=document.getElementById(inputId); if(input.type==='password'){input.type='text';btn.textContent='🔒'}else{input.type='password';btn.textContent='👁'} }
+        loadSavedAvatar();
+        if (window.App) { App.requireAuth(); App.initTopbar(); loadMessages(); }
+        document.addEventListener('keydown', function(e) { if(e.key==='Escape'){var sm=document.getElementById('settingsModal');if(sm&&sm.classList.contains('show')){closeSettingsModal();return;}var am=document.getElementById('avatarModal');if(am&&am.classList.contains('show')){closeAvatarModal();return;}} });
+    </script>
+
+    <div class="avatar-modal" id="avatarModal">
+        <div class="avatar-modal-content">
+            <div class="avatar-modal-header"><h3>更换头像</h3><button class="avatar-modal-close" onclick="closeAvatarModal()">✕</button></div>
+            <div class="avatar-modal-body">
+                <div class="avatar-error" id="avatarError"></div>
+                <div id="avatarStep1">
+                    <div class="avatar-upload-zone" id="avatarUploadZone" onclick="document.getElementById('avatarFileInput').click()">
+                        <div class="avatar-upload-placeholder"><div class="upload-icon">📷</div><div class="upload-text">点击或拖拽上传图片</div><div class="upload-hint">支持 JPG、PNG，最大 5MB</div></div>
+                    </div>
+                    <input type="file" id="avatarFileInput" accept="image/jpeg,image/png,image/gif,image/webp" style="display:none" onchange="handleAvatarFileSelect(event)">
+                </div>
+                <div id="avatarStep2" style="display:none">
+                    <div class="avatar-crop-area" id="avatarCropArea"><img id="avatarCropImg" src="" alt=""></div>
+                    <div class="avatar-crop-controls"><label>缩放</label><input type="range" id="avatarZoomRange" min="50" max="300" value="100" oninput="updateAvatarCrop()"><label>调整位置</label></div>
+                    <div class="avatar-preview-row">
+                        <div class="avatar-preview-item"><div class="preview-label">预览</div><div class="avatar-preview-circle large"><canvas id="previewLarge" width="72" height="72"></canvas></div></div>
+                        <div class="avatar-preview-item"><div class="preview-label">导航栏</div><div class="avatar-preview-circle medium"><canvas id="previewMedium" width="40" height="40"></canvas></div></div>
+                        <div class="avatar-preview-item"><div class="preview-label">小图标</div><div class="avatar-preview-circle small"><canvas id="previewSmall" width="28" height="28"></canvas></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="avatar-modal-footer"><button class="btn btn-cancel" onclick="closeAvatarModal()">取消</button><button class="btn btn-save" id="avatarSaveBtn" onclick="saveAvatar()" disabled>保存</button></div>
+        </div>
+    </div>
+
+    <div class="settings-modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+        <div class="settings-modal-content">
+            <div class="settings-modal-header"><h3 id="settingsModalTitle">个人设置</h3><button class="avatar-modal-close" onclick="closeSettingsModal()" aria-label="关闭">✕</button></div>
+            <div class="settings-modal-body">
+                <div class="settings-section"><div class="settings-section-title">基本信息</div>
+                    <div class="settings-row"><div><div class="settings-label">姓名</div></div><div class="settings-control"><input class="settings-input" id="settingName" type="text" value="张监理" aria-label="姓名"></div></div>
+                    <div class="settings-row"><div><div class="settings-label">手机号</div></div><div class="settings-control"><input class="settings-input" id="settingPhone" type="tel" value="138****6789" aria-label="手机号"></div></div>
+                    <div class="settings-row"><div><div class="settings-label">邮箱</div></div><div class="settings-control"><input class="settings-input" id="settingEmail" type="email" value="zhangjl@supervision.com" aria-label="邮箱"></div></div>
+                    <div class="settings-row"><div><div class="settings-label">职务</div></div><div class="settings-control"><select class="settings-select" id="settingRole" aria-label="职务"><option value="总监理工程师" selected>总监理工程师</option><option value="专业监理工程师">专业监理工程师</option><option value="监理员">监理员</option></select></div></div>
+                </div>
+                <div class="settings-section"><div class="settings-section-title">通知偏好</div>
+                    <div class="settings-row"><div><div class="settings-label">日记提交提醒</div><div class="settings-desc">每日16:30提醒未提交的监理日记</div></div><div class="settings-control"><label class="toggle-switch" aria-label="日记提交提醒开关"><input type="checkbox" id="settingDiaryRemind" checked><span class="toggle-slider"></span></label></div></div>
+                    <div class="settings-row"><div><div class="settings-label">通知单回复催办</div><div class="settings-desc">超过回复期限自动催办提醒</div></div><div class="settings-control"><label class="toggle-switch" aria-label="通知单回复催办开关"><input type="checkbox" id="settingNoticeRemind" checked><span class="toggle-slider"></span></label></div></div>
+                    <div class="settings-row"><div><div class="settings-label">审批结果通知</div><div class="settings-desc">日记/日志审批通过或驳回时通知</div></div><div class="settings-control"><label class="toggle-switch" aria-label="审批结果通知开关"><input type="checkbox" id="settingApprovalNotify" checked><span class="toggle-slider"></span></label></div></div>
+                    <div class="settings-row"><div><div class="settings-label">系统公告通知</div><div class="settings-desc">系统维护、更新等公告信息</div></div><div class="settings-control"><label class="toggle-switch" aria-label="系统公告通知开关"><input type="checkbox" id="settingSystemNotify"><span class="toggle-slider"></span></label></div></div>
+                </div>
+                <div class="settings-section"><div class="settings-section-title">显示设置</div>
+                    <div class="settings-row"><div><div class="settings-label">语言</div></div><div class="settings-control"><select class="settings-select" id="settingLang" aria-label="语言"><option value="zh-CN" selected>简体中文</option><option value="zh-TW">繁體中文</option><option value="en">English</option></select></div></div>
+                    <div class="settings-row"><div><div class="settings-label">日期格式</div></div><div class="settings-control"><select class="settings-select" id="settingDateFormat" aria-label="日期格式"><option value="YYYY-MM-DD" selected>2026-05-30</option><option value="DD/MM/YYYY">30/05/2026</option><option value="MM/DD/YYYY">05/30/2026</option></select></div></div>
+                    <div class="settings-row"><div><div class="settings-label">每页显示条数</div></div><div class="settings-control"><select class="settings-select" id="settingPageSize" aria-label="每页显示条数"><option value="10">10条</option><option value="20" selected>20条</option><option value="50">50条</option></select></div></div>
+                </div>
+                <div class="settings-section"><div class="settings-section-title">安全设置</div>
+                    <div class="settings-row"><div><div class="settings-label">当前密码</div></div><div class="settings-control"><div class="settings-pwd-row"><input class="settings-input" id="settingOldPwd" type="password" placeholder="输入当前密码" aria-label="当前密码"><button class="settings-pwd-toggle" onclick="togglePwdVisibility('settingOldPwd',this)" aria-label="显示/隐藏密码">👁</button></div></div></div>
+                    <div class="settings-row"><div><div class="settings-label">新密码</div></div><div class="settings-control"><div class="settings-pwd-row"><input class="settings-input" id="settingNewPwd" type="password" placeholder="输入新密码" aria-label="新密码"><button class="settings-pwd-toggle" onclick="togglePwdVisibility('settingNewPwd',this)" aria-label="显示/隐藏密码">👁</button></div></div></div>
+                    <div class="settings-row"><div><div class="settings-label">确认新密码</div></div><div class="settings-control"><div class="settings-pwd-row"><input class="settings-input" id="settingConfirmPwd" type="password" placeholder="再次输入新密码" aria-label="确认新密码"><button class="settings-pwd-toggle" onclick="togglePwdVisibility('settingConfirmPwd',this)" aria-label="显示/隐藏密码">👁</button></div></div></div>
+                </div>
+            </div>
+            <div class="settings-modal-footer"><button class="btn btn-cancel" onclick="closeSettingsModal()">取消</button><button class="btn btn-save" id="settingsSaveBtn" onclick="saveSettings()">保存设置</button></div>
+        </div>
+    </div>
+</body>
+</html>

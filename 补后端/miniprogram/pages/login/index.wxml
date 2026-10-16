@@ -1,0 +1,12 @@
+<view class="container">
+  <view class="hero"><view class="title">监理现场工作台</view><view>现场记录一次填写，两端同步办理</view></view>
+  <view class="card">
+    <view class="label">系统账号</view><input value="{{username}}" data-field="username" bindinput="input" placeholder="姓名或手机号" />
+    <view class="label" style="margin-top:24rpx">密码</view><input password value="{{password}}" data-field="password" bindinput="input" />
+    <view class="muted" style="margin-top:24rpx">账号与 PC 端相同。仅为现场记录使用照片和语音，不采集持续位置；语音识别内容须本人校对。未同步草稿只保存在本机，清理微信数据可能丢失。</view>
+    <button class="small" bindtap="privacy">阅读隐私保护指引</button>
+    <checkbox-group bindchange="consent"><label><checkbox value="yes" checked="{{consent}}" />我已阅读并同意隐私说明</label></checkbox-group>
+    <button class="primary" loading="{{busy}}" disabled="{{busy}}" bindtap="login">登录</button>
+    <view class="error" wx:if="{{error}}">{{error}}</view>
+  </view>
+</view>

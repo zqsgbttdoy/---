@@ -1,0 +1,613 @@
+{
+  "api": [
+    {
+      "id": "T052",
+      "module": "工程资料目录与上传",
+      "title": "其他项目用户不能读取资料目录",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 6,
+          "createTime": "2026-09-23T13:27:12.622714",
+          "updateTime": "2026-09-23T13:27:12.622714",
+          "projectId": 3,
+          "name": "钢筋分项工程",
+          "parentId": 5,
+          "sortOrder": 1,
+          "status": "active"
+        }
+      }
+    },
+    {
+      "id": "T165",
+      "module": "权限设置",
+      "title": "仅查看权限角色不应能创建/编辑日记",
+      "result": "失败",
+      "expected": "模块权限矩阵应参与服务端授权",
+      "actual": {
+        "created": 5,
+        "assignedPermissions": [
+          "QA22-20260923052710:diary:read"
+        ]
+      }
+    },
+    {
+      "id": "T179",
+      "module": "统计报表",
+      "title": "正式周报自动生成/定版/导出",
+      "result": "功能尚未实现",
+      "actual": "未发现独立周报生成端点；周范围查询与测试器汇总不能冒充正式周报。"
+    },
+    {
+      "id": "T185",
+      "module": "安全日志",
+      "title": "表单提交应进入待审核",
+      "result": "失败",
+      "expected": "submitted",
+      "actual": "draft"
+    },
+    {
+      "id": "T186",
+      "module": "安全日志",
+      "title": "项目授权总监无需管理员也应可审核",
+      "result": "失败",
+      "expected": "HTTP200",
+      "actual": {
+        "http": 403,
+        "code": 403,
+        "message": "权限不足"
+      }
+    },
+    {
+      "id": "T187",
+      "module": "安全日志",
+      "title": "不应跳过提交直接审核草稿",
+      "result": "失败",
+      "expected": "拒绝草稿直接审核",
+      "actual": {
+        "id": 3,
+        "createTime": "2026-09-23T13:27:14.475123",
+        "updateTime": "2026-09-23T13:27:14.5682117",
+        "code": "QA22-20260923052710-safety",
+        "projectId": 3,
+        "logDate": "2026-09-23",
+        "authorId": 6,
+        "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。",
+        "inspection": "临边防护完整",
+        "safety": "未发生安全事故（模拟）",
+        "status": "approved",
+        "version": 1,
+        "photos": "[{\"url\":\"/api/uploads/20260923/ee9b7ebd8fee41ffa5a70dc5a4ff776e.png\",\"description\":\"模拟图\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/0755f7f4eee24725b05cfe31e4ace849.txt\"}]",
+        "weather": "晴"
+      }
+    },
+    {
+      "id": "T188",
+      "module": "安全日志",
+      "title": "已审核正文不可直接覆盖",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "id": 3,
+        "createTime": "2026-09-23T13:27:14.475123",
+        "updateTime": "2026-09-23T13:27:14.5844032",
+        "code": "QA22-20260923052710-safety",
+        "projectId": 3,
+        "logDate": "2026-09-23",
+        "authorId": 6,
+        "content": "测试：审核后尝试覆盖正文",
+        "inspection": "临边防护完整",
+        "safety": "未发生安全事故（模拟）",
+        "status": "approved",
+        "version": 1,
+        "photos": "[{\"url\":\"/api/uploads/20260923/ee9b7ebd8fee41ffa5a70dc5a4ff776e.png\",\"description\":\"模拟图\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/0755f7f4eee24725b05cfe31e4ace849.txt\"}]",
+        "weather": "晴"
+      }
+    },
+    {
+      "id": "T191",
+      "module": "安全日志",
+      "title": "退回修改后应可再提交",
+      "result": "失败",
+      "expected": "",
+      "actual": "rejected"
+    },
+    {
+      "id": "T192",
+      "module": "安全日志",
+      "title": "历史快照接口",
+      "result": "功能尚未实现",
+      "actual": "仅普通version字段；控制器未暴露历史快照/修订入口。"
+    },
+    {
+      "id": "T203",
+      "module": "监理月报",
+      "title": "从确认记录自动生成月报",
+      "result": "功能尚未实现",
+      "actual": "当前仅人工正文CRUD；本轮已录入模拟月报，不能视为自动生成。"
+    },
+    {
+      "id": "T209",
+      "module": "监理通知单",
+      "title": "草稿通过页面更新转为下发/发送",
+      "result": "失败",
+      "expected": "issued",
+      "actual": "draft"
+    },
+    {
+      "id": "T212",
+      "module": "监理通知单",
+      "title": "回复后验证闭环状态应持久化",
+      "result": "失败",
+      "expected": "verified",
+      "actual": "responded"
+    },
+    {
+      "id": "T213",
+      "module": "监理通知单",
+      "title": "不能创建即伪造已验证状态",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "id": 6,
+        "createTime": "2026-09-23T13:27:14.9137397",
+        "updateTime": "2026-09-23T13:27:14.9137397",
+        "code": "QA22-20260923052710-superv-skip",
+        "projectId": 3,
+        "noticeDate": "2026-09-23",
+        "authorId": 6,
+        "title": "QA22-20260923052710监理通知单模拟记录",
+        "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。",
+        "deadline": "2026-09-25",
+        "status": "verified",
+        "photos": "[{\"url\":\"/api/uploads/20260923/ee9b7ebd8fee41ffa5a70dc5a4ff776e.png\",\"description\":\"模拟图\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/0755f7f4eee24725b05cfe31e4ace849.txt\"}]"
+      }
+    },
+    {
+      "id": "T214",
+      "module": "监理通知单",
+      "title": "已下发/回复记录应锁定原正文",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "id": 5,
+        "createTime": "2026-09-23T13:27:14.882717",
+        "updateTime": "2026-09-23T13:27:14.9237297",
+        "code": "QA22-20260923052710-superv-sent",
+        "projectId": 3,
+        "noticeDate": "2026-09-23",
+        "authorId": 6,
+        "title": "QA22-20260923052710监理通知单模拟记录",
+        "content": "已回复后覆盖原通知内容",
+        "deadline": "2026-09-25",
+        "replyContent": "已增设垫块，复查符合要求（模拟回复）",
+        "replyDate": "2026-09-23",
+        "status": "responded",
+        "photos": "[{\"url\":\"/api/uploads/20260923/ee9b7ebd8fee41ffa5a70dc5a4ff776e.png\",\"description\":\"模拟图\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/0755f7f4eee24725b05cfe31e4ace849.txt\"}]"
+      }
+    },
+    {
+      "id": "T221",
+      "module": "工作联系单",
+      "title": "草稿通过页面更新转为下发/发送",
+      "result": "失败",
+      "expected": "sent",
+      "actual": "draft"
+    },
+    {
+      "id": "T224",
+      "module": "工作联系单",
+      "title": "回复后验证闭环状态应持久化",
+      "result": "失败",
+      "expected": "verified",
+      "actual": "replied"
+    },
+    {
+      "id": "T225",
+      "module": "工作联系单",
+      "title": "不能创建即伪造已验证状态",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "id": 6,
+        "createTime": "2026-09-23T13:27:15.1049877",
+        "updateTime": "2026-09-23T13:27:15.1049877",
+        "code": "QA22-20260923052710-work-c-skip",
+        "projectId": 3,
+        "contactDate": "2026-09-23",
+        "authorId": 6,
+        "title": "QA22-20260923052710工作联系单模拟记录",
+        "content": "模拟工程：完成钢筋隐蔽检查1次；问题1项，要求补设垫块并复查。",
+        "status": "verified",
+        "photos": "[{\"url\":\"/api/uploads/20260923/ee9b7ebd8fee41ffa5a70dc5a4ff776e.png\",\"description\":\"模拟图\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/0755f7f4eee24725b05cfe31e4ace849.txt\"}]"
+      }
+    },
+    {
+      "id": "T226",
+      "module": "工作联系单",
+      "title": "已下发/回复记录应锁定原正文",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "id": 5,
+        "createTime": "2026-09-23T13:27:15.039021",
+        "updateTime": "2026-09-23T13:27:15.1233636",
+        "code": "QA22-20260923052710-work-c-sent",
+        "projectId": 3,
+        "contactDate": "2026-09-23",
+        "authorId": 6,
+        "title": "QA22-20260923052710工作联系单模拟记录",
+        "content": "已回复后覆盖原通知内容",
+        "replyContent": "已增设垫块，复查符合要求（模拟回复）",
+        "replyDate": "2026-09-23",
+        "status": "replied",
+        "photos": "[{\"url\":\"/api/uploads/20260923/ee9b7ebd8fee41ffa5a70dc5a4ff776e.png\",\"description\":\"模拟图\"}]",
+        "attachments": "[{\"url\":\"/api/uploads/20260923/0755f7f4eee24725b05cfe31e4ace849.txt\"}]"
+      }
+    },
+    {
+      "id": "T231",
+      "module": "消息中心",
+      "title": "非收件人禁止查看消息",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 2,
+          "createTime": "2026-09-23T13:27:15.136905",
+          "updateTime": "2026-09-23T13:27:15.136905",
+          "senderId": 7,
+          "receiverId": 6,
+          "title": "QA22-20260923052710待复查通知",
+          "content": "请于9月25日前复查垫块布设（模拟）",
+          "type": "notice",
+          "isRead": "0"
+        }
+      }
+    },
+    {
+      "id": "T232",
+      "module": "消息中心",
+      "title": "不能指定他人receiverId读取消息",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "list": [
+          {
+            "id": 2,
+            "createTime": "2026-09-23T13:27:15.136905",
+            "updateTime": "2026-09-23T13:27:15.136905",
+            "senderId": 7,
+            "receiverId": 6,
+            "title": "QA22-20260923052710待复查通知",
+            "content": "请于9月25日前复查垫块布设（模拟）",
+            "type": "notice",
+            "isRead": "0"
+          }
+        ],
+        "total": 1,
+        "pageNum": 1,
+        "pageSize": 10
+      }
+    },
+    {
+      "id": "T233",
+      "module": "消息中心",
+      "title": "非收件人不能代标已读",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功"
+      }
+    },
+    {
+      "id": "T239",
+      "module": "工作标准配置",
+      "title": "普通用户不能更改全局标准",
+      "result": "失败",
+      "expected": "",
+      "actual": {
+        "id": 2,
+        "createTime": "2026-09-23T13:27:15.1907",
+        "updateTime": "2026-09-23T13:27:15.2137464",
+        "name": "QA22-20260923052710日记提交截止",
+        "module": "supervision-diary",
+        "standard": "16:00",
+        "description": "仅模拟配置，不代表定时提醒已启用",
+        "status": "active"
+      }
+    },
+    {
+      "id": "T240",
+      "module": "工作标准配置",
+      "title": "定时催办/工作日调度效果",
+      "result": "功能尚未实现",
+      "actual": "当前为普通配置记录，未发现相应定时执行器；配置成功不能证明提醒生效。"
+    },
+    {
+      "id": "T242",
+      "module": "操作日志",
+      "title": "本轮作者创建/提交应写入全局审计日志",
+      "result": "失败",
+      "expected": "应存在测试作者业务操作，而不只有管理员成员授权事件",
+      "actual": {
+        "total": 0,
+        "existingAuthorizationLogs": 6,
+        "sample": [
+          {
+            "id": 6,
+            "createTime": "2026-09-23T13:27:14.311075",
+            "updateTime": "2026-09-23T13:27:14.311075",
+            "userId": 1,
+            "action": "成员授权变更",
+            "module": "项目授权",
+            "detail": "projectId=3, userId=7, enabled=true, canReview=true"
+          },
+          {
+            "id": 5,
+            "createTime": "2026-09-23T13:27:14.289613",
+            "updateTime": "2026-09-23T13:27:14.289613",
+            "userId": 1,
+            "action": "成员授权变更",
+            "module": "项目授权",
+            "detail": "projectId=3, userId=7, enabled=false, canReview=false"
+          }
+        ]
+      }
+    },
+    {
+      "id": "T245",
+      "module": "监理日记",
+      "title": "四个并发同键创建只生成一张单",
+      "result": "失败",
+      "expected": "",
+      "actual": [
+        {
+          "http": 200,
+          "id": 11
+        },
+        {
+          "http": 409
+        },
+        {
+          "http": 409
+        },
+        {
+          "http": 409
+        }
+      ]
+    },
+    {
+      "id": "T255",
+      "module": "个人资料与设置",
+      "title": "浏览器个人设置保存及头像裁剪",
+      "result": "受阻",
+      "actual": "遵循本轮不进入凭据/个人设置表单限制，未操作。"
+    },
+    {
+      "id": "T257",
+      "module": "登录与认证",
+      "title": "服务端主动撤销退出后的JWT",
+      "result": "功能尚未实现",
+      "actual": {
+        "http": 200,
+        "oldTokenStillValid": true,
+        "explanation": "当前为无状态JWT设计；退出只清客户端，不代表服务端令牌撤销。"
+      }
+    },
+    {
+      "id": "T258",
+      "module": "流程管理",
+      "title": "配置真实审批节点并驱动业务",
+      "result": "功能尚未实现",
+      "actual": "process-management.html仅本地演示，saveFlow显示alert，无控制器或持久化端点；未伪造成功样本。"
+    }
+  ],
+  "pages": [
+    {
+      "id": "P030",
+      "page": "log-statistics",
+      "title": "当日只有草稿不得显示已提交",
+      "result": "失败",
+      "actual": [
+        {
+          "name": "项目#1",
+          "totalDays": 1,
+          "passed": 0,
+          "todaySubmitted": true,
+          "submittedBy": "",
+          "submittedAt": ""
+        }
+      ]
+    },
+    {
+      "id": "P031",
+      "page": "log-statistics",
+      "title": "同一天两条记录不能当作两个应写工作日",
+      "result": "失败",
+      "actual": [
+        {
+          "name": "项目#1",
+          "totalDays": 2,
+          "passed": 2,
+          "todaySubmitted": true,
+          "submittedBy": "",
+          "submittedAt": ""
+        }
+      ]
+    },
+    {
+      "id": "P032",
+      "page": "log-statistics",
+      "title": "渲染后的草稿行应显示未提交",
+      "result": "失败",
+      "actual": "<tr><td>项目#1</td><td>1</td><td>0</td><td><div style=\"display:flex;align-items:center;gap:8px;\"><div class=\"progress-bar\"><div class=\"progress-fill red\" style=\"width:0%\"></div></div><span style=\"font-size:12px;\">0%</span></div></td><td><span class=\"submit-status submitted\">✓ 已提交</span></td><td></td><td></td><td><button class=\"btn btn-outline btn-sm\" onclick=\"viewSubmitDetail(0)\">查看详情</button></td></tr>"
+    },
+    {
+      "id": "P033",
+      "page": "log-statistics",
+      "title": "无记录项目应纳入未提交统计",
+      "result": "失败",
+      "actual": []
+    },
+    {
+      "id": "P034",
+      "page": "log-statistics",
+      "title": "总数超过第一页时不能静默少计",
+      "result": "失败",
+      "actual": {
+        "requests": [
+          {
+            "route": "/supervision-logs",
+            "params": {
+              "pageNum": 1,
+              "pageSize": 2000
+            }
+          }
+        ],
+        "displayedRows": 1,
+        "totalFromApi": 2001,
+        "errors": []
+      }
+    },
+    {
+      "id": "P035",
+      "page": "safety-log-statistics",
+      "title": "当日只有草稿不得显示已提交",
+      "result": "失败",
+      "actual": [
+        {
+          "name": "项目#1",
+          "totalDays": 1,
+          "passed": 0,
+          "todaySubmitted": true,
+          "submittedBy": "",
+          "submittedAt": ""
+        }
+      ]
+    },
+    {
+      "id": "P036",
+      "page": "safety-log-statistics",
+      "title": "同一天两条记录不能当作两个应写工作日",
+      "result": "失败",
+      "actual": [
+        {
+          "name": "项目#1",
+          "totalDays": 2,
+          "passed": 2,
+          "todaySubmitted": true,
+          "submittedBy": "",
+          "submittedAt": ""
+        }
+      ]
+    },
+    {
+      "id": "P037",
+      "page": "safety-log-statistics",
+      "title": "渲染后的草稿行应显示未提交",
+      "result": "失败",
+      "actual": "<tr><td>项目#1</td><td>1</td><td>0</td><td><div style=\"display:flex;align-items:center;gap:8px;\"><div class=\"progress-bar\"><div class=\"progress-fill red\" style=\"width:0%\"></div></div><span style=\"font-size:12px;\">0%</span></div></td><td><span class=\"submit-status submitted\">✓ 已提交</span></td><td></td><td></td><td><button class=\"btn btn-outline btn-sm\" onclick=\"viewSubmitDetail(0)\">查看详情</button></td></tr>"
+    },
+    {
+      "id": "P038",
+      "page": "safety-log-statistics",
+      "title": "无记录项目应纳入未提交统计",
+      "result": "失败",
+      "actual": []
+    },
+    {
+      "id": "P039",
+      "page": "safety-log-statistics",
+      "title": "总数超过第一页时不能静默少计",
+      "result": "失败",
+      "actual": {
+        "requests": [
+          {
+            "route": "/safety-logs",
+            "params": {
+              "pageNum": 1,
+              "pageSize": 2000
+            }
+          }
+        ],
+        "displayedRows": 1,
+        "totalFromApi": 2001,
+        "errors": []
+      }
+    },
+    {
+      "id": "P041",
+      "page": "diary-statistics",
+      "title": "同人同日多记录不能直接当作应写天数",
+      "result": "失败",
+      "actual": "<tr><td>模拟监理甲</td><td>模拟项目A</td><td>2</td><td>1</td><td><div style=\"display:flex;align-items:center;gap:8px;\"><div class=\"progress-bar\"><div class=\"progress-fill red\" style=\"width:50%\"></div></div><span style=\"font-size:12px;\">50%</span></div></td><td style=\"color:#10B981;\">0</td><td><a href=\"diary-report.html\" style=\"color:#2563EB;text-decoration:none;font-size:12px;\">查看详情</a></td></tr>"
+    },
+    {
+      "id": "P042",
+      "page": "diary-statistics",
+      "title": "超过1000条应继续取数或显式报错",
+      "result": "失败",
+      "actual": {
+        "calls": [
+          {
+            "route": "/supervision-diaries",
+            "params": {
+              "pageNum": 1,
+              "pageSize": 1000
+            }
+          }
+        ],
+        "shown": "1",
+        "actualTotal": 1001
+      }
+    },
+    {
+      "id": "P044",
+      "page": "diary-report",
+      "title": "查看日记链接应携带该条记录ID",
+      "result": "失败",
+      "actual": "<tr data-status=\"approved\"><td>2026-09-23</td><td>周三</td><td>晴</td><td><span class=\"status-tag status-approved\">通过</span></td><td>1</td><td><a href=\"supervision-diary.html?readonly=true\" style=\"color:#2563EB;text-decoration:none;font-size:12px;\">查看日记</a></td></tr>"
+    },
+    {
+      "id": "P045",
+      "page": "diary-report",
+      "title": "报表不能忽略超过1000条的后续记录",
+      "result": "失败",
+      "actual": {
+        "calls": [
+          {
+            "route": "/supervision-diaries",
+            "params": {
+              "pageNum": 1,
+              "pageSize": 1000
+            }
+          }
+        ],
+        "displayed": 1,
+        "actualTotal": 1001
+      }
+    },
+    {
+      "id": "P047",
+      "page": "diary-report",
+      "title": "CSV逗号字段应加引号以防列错位",
+      "result": "失败",
+      "actual": "日期,星期,天气,日记状态,关联资料数\n2026-09-23,周三,晴,间多云,通过,1\n"
+    }
+  ]
+}

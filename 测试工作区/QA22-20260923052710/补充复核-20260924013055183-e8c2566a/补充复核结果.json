@@ -1,0 +1,57 @@
+{
+  "batch": "QA22-20260923052710",
+  "time": "2026-09-24T01:31:26.869Z",
+  "mode": "源码隔离回归",
+  "note": "与原258项分开统计；MVC+H2不等于真实网络或MySQL验收；未改动旧批次JSON和旧服务数据。",
+  "counts": {
+    "通过": 5
+  },
+  "results": [
+    {
+      "id": "S001",
+      "title": "当前源码后端全量回归",
+      "result": "通过",
+      "actual": {
+        "exitCode": 0,
+        "reports": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924013055183-e8c2566a\\surefire"
+      }
+    },
+    {
+      "id": "S002",
+      "title": "专项MVC+H2：qa22ConcurrentExplicitAndAutomaticCodes",
+      "result": "通过",
+      "actual": {
+        "test": "qa22ConcurrentExplicitAndAutomaticCodes",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924013055183-e8c2566a\\surefire\\TEST-com.supervision.FieldWorkflowIntegrationTest.xml"
+      }
+    },
+    {
+      "id": "S003",
+      "title": "专项MVC+H2：qa22WorkStandardsRequireCurrentAdministrator",
+      "result": "通过",
+      "actual": {
+        "test": "qa22WorkStandardsRequireCurrentAdministrator",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924013055183-e8c2566a\\surefire\\TEST-com.supervision.FieldWorkflowIntegrationTest.xml"
+      }
+    },
+    {
+      "id": "S004",
+      "title": "专项MVC+H2：qa22MessagesArePrivateToRecipient",
+      "result": "通过",
+      "actual": {
+        "test": "qa22MessagesArePrivateToRecipient",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924013055183-e8c2566a\\surefire\\TEST-com.supervision.FieldWorkflowIntegrationTest.xml"
+      }
+    },
+    {
+      "id": "S005",
+      "title": "工作标准原页面脚本专项与全页语法",
+      "result": "通过",
+      "actual": {
+        "exitCode": 0
+      }
+    }
+  ],
+  "created": [],
+  "requests": []
+}

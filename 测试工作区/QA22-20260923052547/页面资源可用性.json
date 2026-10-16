@@ -1,0 +1,158 @@
+[
+  {
+    "page": "index.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "welcome.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "project-ledger.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "daily-inspection.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "sideline-inspection.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "supervision-notice.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "work-contact.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "supervision-diary.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "supervision-log.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "safety-log.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "meeting-minutes.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "supervision-monthly-report.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "sub-item-database.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "project-data-upload.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "diary-statistics.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "log-statistics.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "safety-log-statistics.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "diary-report.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "message-center.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "department-management.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "personnel-management.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "permission-settings.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "process-management.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "operation-log.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "work-standard-config.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  },
+  {
+    "page": "login.html",
+    "http": 200,
+    "html": true,
+    "note": "仅HTTP静态资源可用性；非浏览器功能验收"
+  }
+]

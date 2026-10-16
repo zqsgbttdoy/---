@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监理现场管理系统 · 系统导览</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --deep1: #1E3A5F; --deep2: #0F2440; --brand: #2563EB; --brand-l: #3B82F6;
+            --bg: #F0F5FF; --card: #ffffff; --text: #1F2937; --muted: #6B7280; --line: #E5E7EB;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
+
+        /* ===== 顶部导航 ===== */
+        .topbar { position: fixed; top: 0; left: 0; right: 0; height: 60px; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; background: rgba(15,36,64,0.85); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.08); transition: background 0.3s; }
+        .topbar .brand { display: flex; align-items: center; gap: 10px; color: #fff; }
+        .topbar .brand .logo-badge { width: 34px; height: 34px; border-radius: 9px; background: linear-gradient(135deg, var(--brand-l), var(--brand)); display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 4px 12px rgba(37,99,235,0.4); }
+        .topbar .brand b { font-size: 16px; letter-spacing: 1px; font-weight: 600; }
+        .topbar .brand span { font-size: 11px; color: rgba(255,255,255,0.55); display: block; margin-top: 1px; }
+        .topbar .nav-links { display: flex; align-items: center; gap: 6px; }
+        .topbar .nav-links a { color: rgba(255,255,255,0.75); font-size: 13px; padding: 8px 14px; border-radius: 8px; transition: all 0.2s; }
+        .topbar .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.1); }
+        .topbar .nav-links a.cta { background: var(--brand); color: #fff; font-weight: 500; }
+        .topbar .nav-links a.cta:hover { background: var(--brand-l); box-shadow: 0 4px 14px rgba(37,99,235,0.5); }
+        @media (max-width: 768px) { .topbar .nav-links a.hide-sm { display: none; } .topbar { padding: 0 16px; } }
+
+        /* ===== Hero ===== */
+        .hero { position: relative; padding: 150px 32px 110px; background: linear-gradient(150deg, var(--deep1) 0%, var(--deep2) 70%, #08192e 100%); color: #fff; overflow: hidden; text-align: center; }
+        .hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 20% 30%, rgba(37,99,235,0.35), transparent 45%), radial-gradient(circle at 80% 20%, rgba(59,130,246,0.25), transparent 40%); }
+        .hero .grid-bg { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 44px 44px; mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%); }
+        .hero-inner { position: relative; max-width: 900px; margin: 0 auto; }
+        .hero .tag { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 30px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18); font-size: 12px; color: rgba(255,255,255,0.85); margin-bottom: 26px; }
+        .hero .tag .dot { width: 7px; height: 7px; border-radius: 50%; background: #34D399; box-shadow: 0 0 8px #34D399; }
+        .hero h1 { font-size: 46px; font-weight: 700; line-height: 1.2; letter-spacing: 1px; margin-bottom: 20px; }
+        .hero h1 .grad { background: linear-gradient(90deg, #60A5FA, #A5B4FC); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p.sub { font-size: 17px; color: rgba(255,255,255,0.7); line-height: 1.8; max-width: 680px; margin: 0 auto 38px; }
+        .hero .actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 30px; border-radius: 10px; font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.25s; border: none; }
+        .btn-primary { background: var(--brand); color: #fff; box-shadow: 0 8px 24px rgba(37,99,235,0.45); }
+        .btn-primary:hover { transform: translateY(-2px); background: var(--brand-l); box-shadow: 0 12px 30px rgba(37,99,235,0.55); }
+        .btn-ghost { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.25); }
+        .btn-ghost:hover { background: rgba(255,255,255,0.16); transform: translateY(-2px); }
+        @media (max-width: 640px) { .hero h1 { font-size: 32px; } .hero { padding: 120px 20px 80px; } }
+
+        /* ===== 统计条 ===== */
+        .stats-bar { position: relative; max-width: 1000px; margin: -52px auto 0; padding: 0 24px; z-index: 5; }
+        .stats-inner { background: var(--card); border-radius: 16px; box-shadow: 0 12px 40px rgba(15,36,64,0.12); display: grid; grid-template-columns: repeat(4, 1fr); overflow: hidden; }
+        .stat-cell { padding: 26px 20px; text-align: center; border-right: 1px solid var(--line); }
+        .stat-cell:last-child { border-right: none; }
+        .stat-cell .num { font-size: 34px; font-weight: 700; color: var(--brand); line-height: 1; }
+        .stat-cell .num small { font-size: 15px; }
+        .stat-cell .label { font-size: 13px; color: var(--muted); margin-top: 8px; }
+        @media (max-width: 720px) { .stats-inner { grid-template-columns: repeat(2, 1fr); } .stat-cell:nth-child(2) { border-right: none; } .stat-cell:nth-child(1), .stat-cell:nth-child(2) { border-bottom: 1px solid var(--line); } }
+
+        /* ===== 通用区块 ===== */
+        .section { max-width: 1120px; margin: 0 auto; padding: 70px 24px 10px; }
+        .section-head { text-align: center; margin-bottom: 46px; }
+        .section-head .eyebrow { font-size: 13px; color: var(--brand); font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
+        .section-head h2 { font-size: 30px; font-weight: 700; color: var(--deep1); margin: 10px 0 12px; }
+        .section-head p { font-size: 15px; color: var(--muted); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+        /* ===== 特性卡 ===== */
+        .features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .feature { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 28px 22px; transition: all 0.25s; }
+        .feature:hover { transform: translateY(-5px); box-shadow: 0 14px 34px rgba(15,36,64,0.1); border-color: transparent; }
+        .feature .fico { width: 52px; height: 52px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 16px; }
+        .feature h3 { font-size: 16px; color: var(--deep1); margin-bottom: 8px; }
+        .feature p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+        @media (max-width: 900px) { .features { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 520px) { .features { grid-template-columns: 1fr; } }
+
+        /* ===== 模块导航 ===== */
+        .module-group { margin-bottom: 40px; }
+        .module-group .mg-title { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+        .module-group .mg-title .bar { width: 4px; height: 20px; border-radius: 3px; background: linear-gradient(var(--brand-l), var(--brand)); }
+        .module-group .mg-title h3 { font-size: 19px; color: var(--deep1); font-weight: 600; }
+        .module-group .mg-title .count { font-size: 12px; color: var(--muted); background: #EEF2FF; padding: 3px 10px; border-radius: 20px; }
+        .module-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .mcard { display: flex; align-items: center; gap: 14px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; transition: all 0.22s; position: relative; overflow: hidden; }
+        .mcard::after { content: '→'; position: absolute; right: 16px; color: var(--brand); opacity: 0; transform: translateX(-6px); transition: all 0.22s; font-size: 15px; }
+        .mcard:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(15,36,64,0.12); border-color: rgba(37,99,235,0.3); }
+        .mcard:hover::after { opacity: 1; transform: translateX(0); }
+        .mcard .mico { width: 44px; height: 44px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+        .mcard .minfo b { display: block; font-size: 14px; color: var(--text); font-weight: 600; }
+        .mcard .minfo span { font-size: 11px; color: var(--muted); margin-top: 2px; display: block; }
+        @media (max-width: 980px) { .module-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 720px) { .module-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 460px) { .module-grid { grid-template-columns: 1fr; } }
+
+        /* 图标底色 */
+        .c-blue { background: #DBEAFE; color: #2563EB; } .c-green { background: #D1FAE5; color: #059669; }
+        .c-amber { background: #FEF3C7; color: #D97706; } .c-purple { background: #EDE9FE; color: #7C3AED; }
+        .c-pink { background: #FCE7F3; color: #DB2777; } .c-cyan { background: #CFFAFE; color: #0891B2; }
+        .c-red { background: #FEE2E2; color: #DC2626; } .c-indigo { background: #E0E7FF; color: #4F46E5; }
+        .c-teal { background: #CCFBF1; color: #0D9488; }
+
+        /* ===== CTA 收尾 ===== */
+        .cta-band { max-width: 1120px; margin: 60px auto 0; padding: 0 24px; }
+        .cta-inner { background: linear-gradient(135deg, var(--deep1), var(--deep2)); border-radius: 20px; padding: 54px 40px; text-align: center; color: #fff; position: relative; overflow: hidden; }
+        .cta-inner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 75% 30%, rgba(37,99,235,0.4), transparent 50%); }
+        .cta-inner h2 { position: relative; font-size: 28px; margin-bottom: 12px; }
+        .cta-inner p { position: relative; font-size: 15px; color: rgba(255,255,255,0.7); margin-bottom: 28px; }
+        .cta-inner .actions { position: relative; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+        /* ===== 页脚 ===== */
+        footer { margin-top: 70px; background: var(--deep2); color: rgba(255,255,255,0.6); padding: 40px 24px 30px; text-align: center; }
+        footer .f-brand { font-size: 15px; color: #fff; font-weight: 600; margin-bottom: 10px; }
+        footer .f-tech { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 16px 0; }
+        footer .f-tech span { font-size: 11px; padding: 4px 12px; border-radius: 20px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); }
+        footer .f-copy { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 14px; }
+
+        /* 进场动画 */
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal.in { opacity: 1; transform: translateY(0); }
+
+        /* 回顶 */
+        .to-top { position: fixed; right: 24px; bottom: 24px; width: 44px; height: 44px; border-radius: 12px; background: var(--brand); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; box-shadow: 0 8px 22px rgba(37,99,235,0.4); opacity: 0; pointer-events: none; transition: all 0.3s; z-index: 90; }
+        .to-top.show { opacity: 1; pointer-events: auto; }
+        .to-top:hover { background: var(--brand-l); transform: translateY(-3px); }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <div class="topbar" id="topbar">
+        <a class="brand" href="welcome.html">
+            <div class="logo-badge">🏗️</div>
+            <div><b>监理现场管理系统</b><span>Supervision Site Management</span></div>
+        </a>
+        <div class="nav-links">
+            <a href="#features" class="hide-sm">核心能力</a>
+            <a href="#modules" class="hide-sm">功能模块</a>
+            <a href="index.html" class="hide-sm">仪表盘</a>
+            <a href="login.html" class="cta">进入系统 →</a>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="grid-bg"></div>
+        <div class="hero-inner">
+            <div class="tag"><span class="dot"></span> 全量前端已接入真实接口 · 生产试运行版本</div>
+            <h1>数字化<span class="grad">监理现场管理</span>一体化平台</h1>
+            <p class="sub">面向工程监理全流程的现场管理解决方案，覆盖巡检旁站、日志日记、资料归档、数据统计与团队协同，帮助监理团队规范作业、留痕可查、高效协作。</p>
+            <div class="actions">
+                <a href="login.html" class="btn btn-primary">🔐 登录进入系统</a>
+                <a href="#modules" class="btn btn-ghost">📖 浏览功能模块</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 统计条 -->
+    <div class="stats-bar reveal">
+        <div class="stats-inner">
+            <div class="stat-cell"><div class="num">6<small> 大</small></div><div class="label">业务板块</div></div>
+            <div class="stat-cell"><div class="num">23<small> +</small></div><div class="label">功能页面</div></div>
+            <div class="stat-cell"><div class="num">80<small> +</small></div><div class="label">后端接口</div></div>
+            <div class="stat-cell"><div class="num">100<small> %</small></div><div class="label">真实数据接入</div></div>
+        </div>
+    </div>
+
+    <!-- 核心能力 -->
+    <section class="section" id="features">
+        <div class="section-head reveal">
+            <div class="eyebrow">Core Capabilities</div>
+            <h2>核心能力一览</h2>
+            <p>从现场作业到数据决策，全链路数字化留痕，让每一项监理工作有据可依、有迹可循。</p>
+        </div>
+        <div class="features">
+            <div class="feature reveal"><div class="fico c-blue">🔍</div><h3>现场作业管理</h3><p>日常巡检、旁站、监理通知单、工作联系单在线填报与流转，问题闭环跟踪。</p></div>
+            <div class="feature reveal"><div class="fico c-green">📄</div><h3>日志日记归档</h3><p>监理日记、日志、安全日志与会议纪要标准化记录，支持审核与版本留痕。</p></div>
+            <div class="feature reveal"><div class="fico c-amber">🗄️</div><h3>资料目录归集</h3><p>工程资料按子目录树归类上传，附件在线预览，构建规范的项目资料库。</p></div>
+            <div class="feature reveal"><div class="fico c-purple">📊</div><h3>统计分析报表</h3><p>日记/日志提交率、安全日志等多维统计聚合，直观呈现现场履职情况。</p></div>
+            <div class="feature reveal"><div class="fico c-pink">👥</div><h3>团队与权限</h3><p>部门树、人员档案、角色权限精细化管理，保障系统访问安全可控。</p></div>
+            <div class="feature reveal"><div class="fico c-cyan">🔔</div><h3>消息与协同</h3><p>系统通知、审批提醒实时触达，消息中心统一管理，协作不遗漏。</p></div>
+            <div class="feature reveal"><div class="fico c-indigo">🛡️</div><h3>安全与留痕</h3><p>JWT 令牌鉴权、操作日志全程记录，登录态过期自动跳转，安全合规。</p></div>
+            <div class="feature reveal"><div class="fico c-teal">⚙️</div><h3>灵活可配置</h3><p>工作标准配置、流程管理等支持按需调整，适配不同项目的监理规范。</p></div>
+        </div>
+    </section>
+
+    <!-- 功能模块导航 -->
+    <section class="section" id="modules">
+        <div class="section-head reveal">
+            <div class="eyebrow">Modules Navigation</div>
+            <h2>功能模块导航</h2>
+            <p>点击任意模块卡片即可进入对应页面（需先登录获取访问令牌）。</p>
+        </div>
+        <div id="moduleContainer"></div>
+    </section>
+
+    <!-- CTA -->
+    <div class="cta-band reveal">
+        <div class="cta-inner">
+            <h2>准备好开始体验了吗？</h2>
+            <p>使用演示账号登录，即可查看仪表盘与各业务模块的真实数据交互。</p>
+            <div class="actions">
+                <a href="login.html" class="btn btn-primary">立即登录</a>
+                <a href="index.html" class="btn btn-ghost">查看仪表盘</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="f-brand">🏗️ 监理现场管理系统</div>
+        <div>面向工程监理全流程的现场数字化管理平台</div>
+        <div class="f-tech">
+            <span>Spring Boot 3</span><span>Java 17</span><span>MySQL 8</span>
+            <span>JWT 鉴权</span><span>原生 HTML / CSS / JS</span><span>响应式设计</span>
+        </div>
+        <div class="f-copy">© 2026 监理现场管理系统 · 仅供项目展示与演示使用</div>
+    </footer>
+
+    <div class="to-top" id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+    <script>
+        // 模块数据（与系统侧边栏分组一致）
+        var GROUPS = [
+            { title: '项目管理', items: [
+                { icon: '📁', c: 'c-blue', name: '项目台账', desc: '项目信息与状态', href: 'project-ledger.html' }
+            ]},
+            { title: '监理现场工作', items: [
+                { icon: '🔍', c: 'c-blue', name: '日常巡检', desc: '现场巡检记录', href: 'daily-inspection.html' },
+                { icon: '👁️', c: 'c-cyan', name: '旁站', desc: '关键工序旁站', href: 'sideline-inspection.html' },
+                { icon: '📋', c: 'c-amber', name: '监理通知单', desc: '通知签发流转', href: 'supervision-notice.html' },
+                { icon: '✉️', c: 'c-green', name: '工作联系单', desc: '沟通联系记录', href: 'work-contact.html' },
+                { icon: '📝', c: 'c-purple', name: '监理日记', desc: '每日工作日记', href: 'supervision-diary.html' },
+                { icon: '📄', c: 'c-indigo', name: '监理日志', desc: '监理工作日志', href: 'supervision-log.html' },
+                { icon: '🛡️', c: 'c-red', name: '监理安全日志', desc: '安全巡查记录', href: 'safety-log.html' },
+                { icon: '📅', c: 'c-teal', name: '会议纪要', desc: '会议记录归档', href: 'meeting-minutes.html' },
+                { icon: '📊', c: 'c-pink', name: '监理月报', desc: '月度汇总报告', href: 'supervision-monthly-report.html' }
+            ]},
+            { title: '项目资料', items: [
+                { icon: '🗄️', c: 'c-amber', name: '工程资料目录设置', desc: '资料目录树维护', href: 'sub-item-database.html' },
+                { icon: '📤', c: 'c-green', name: '工程资料上传', desc: '附件上传归类', href: 'project-data-upload.html' }
+            ]},
+            { title: '数据统计', items: [
+                { icon: '📈', c: 'c-blue', name: '日记统计', desc: '日记提交统计', href: 'diary-statistics.html' },
+                { icon: '📑', c: 'c-indigo', name: '日记报表', desc: '日记明细报表', href: 'diary-report.html' },
+                { icon: '📊', c: 'c-purple', name: '日志统计', desc: '日志汇总分析', href: 'log-statistics.html' },
+                { icon: '🛡️', c: 'c-red', name: '安全日志统计', desc: '安全数据聚合', href: 'safety-log-statistics.html' }
+            ]},
+            { title: '团队管理', items: [
+                { icon: '🏢', c: 'c-blue', name: '部门管理', desc: '组织架构树', href: 'department-management.html' },
+                { icon: '👥', c: 'c-green', name: '人员管理', desc: '人员档案维护', href: 'personnel-management.html' },
+                { icon: '🔐', c: 'c-amber', name: '权限设置', desc: '角色权限分配', href: 'permission-settings.html' },
+                { icon: '🔄', c: 'c-cyan', name: '流程管理', desc: '审批流程配置', href: 'process-management.html' }
+            ]},
+            { title: '系统设置', items: [
+                { icon: '📜', c: 'c-indigo', name: '操作日志', desc: '系统操作留痕', href: 'operation-log.html' },
+                { icon: '🔔', c: 'c-pink', name: '消息中心', desc: '通知消息管理', href: 'message-center.html' },
+                { icon: '⚙️', c: 'c-teal', name: '工作标准配置', desc: '业务参数配置', href: 'work-standard-config.html' }
+            ]}
+        ];
+
+        (function renderModules() {
+            var html = '';
+            GROUPS.forEach(function (g) {
+                html += '<div class="module-group reveal">';
+                html += '<div class="mg-title"><span class="bar"></span><h3>' + g.title + '</h3><span class="count">' + g.items.length + ' 项</span></div>';
+                html += '<div class="module-grid">';
+                g.items.forEach(function (it) {
+                    html += '<a class="mcard" href="' + it.href + '">' +
+                        '<div class="mico ' + it.c + '">' + it.icon + '</div>' +
+                        '<div class="minfo"><b>' + it.name + '</b><span>' + it.desc + '</span></div>' +
+                        '</a>';
+                });
+                html += '</div></div>';
+            });
+            document.getElementById('moduleContainer').innerHTML = html;
+            bindReveal();
+        })();
+
+        // 滚动进场动画
+        function bindReveal() {
+            var els = document.querySelectorAll('.reveal:not(.in)');
+            if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+            }, { threshold: 0.12 });
+            els.forEach(function (e) { io.observe(e); });
+        }
+        bindReveal();
+
+        // 顶栏透明度 + 回顶按钮
+        window.addEventListener('scroll', function () {
+            var y = window.scrollY || document.documentElement.scrollTop;
+            document.getElementById('topbar').style.background = y > 30 ? 'rgba(15,36,64,0.95)' : 'rgba(15,36,64,0.85)';
+            document.getElementById('toTop').classList.toggle('show', y > 400);
+        });
+    </script>
+</body>
+</html>

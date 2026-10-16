@@ -1,0 +1,589 @@
+{
+  "note": "原页面内联JS+DOM桩/接口桩，不是浏览器渲染/点击测试，也不是真实大量数据负载测试。",
+  "counts": {
+    "通过": 47,
+    "失败": 17
+  },
+  "results": [
+    {
+      "id": "P001",
+      "page": "index",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P002",
+      "page": "welcome",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P003",
+      "page": "project-ledger",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P004",
+      "page": "daily-inspection",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 0
+      }
+    },
+    {
+      "id": "P005",
+      "page": "sideline-inspection",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 0
+      }
+    },
+    {
+      "id": "P006",
+      "page": "supervision-notice",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P007",
+      "page": "work-contact",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P008",
+      "page": "supervision-diary",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 0
+      }
+    },
+    {
+      "id": "P009",
+      "page": "supervision-log",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 0
+      }
+    },
+    {
+      "id": "P010",
+      "page": "safety-log",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P011",
+      "page": "meeting-minutes",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P012",
+      "page": "supervision-monthly-report",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P013",
+      "page": "sub-item-database",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P014",
+      "page": "project-data-upload",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P015",
+      "page": "diary-statistics",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P016",
+      "page": "log-statistics",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P017",
+      "page": "safety-log-statistics",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P018",
+      "page": "diary-report",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P019",
+      "page": "message-center",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P020",
+      "page": "department-management",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P021",
+      "page": "personnel-management",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P022",
+      "page": "permission-settings",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P023",
+      "page": "process-management",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P024",
+      "page": "operation-log",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P025",
+      "page": "work-standard-config",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P026",
+      "page": "login",
+      "title": "内联JavaScript语法检查",
+      "result": "通过",
+      "actual": {
+        "scripts": 1
+      }
+    },
+    {
+      "id": "P027",
+      "page": "assets/app.js",
+      "title": "共享脚本语法检查",
+      "result": "通过"
+    },
+    {
+      "id": "P028",
+      "page": "assets/field-records.js",
+      "title": "共享脚本语法检查",
+      "result": "通过"
+    },
+    {
+      "id": "P029",
+      "page": "miniprogram/utils/schema.js",
+      "title": "共享脚本语法检查",
+      "result": "通过"
+    },
+    {
+      "id": "P030",
+      "page": "log-statistics",
+      "title": "当日只有草稿不得显示已提交",
+      "result": "失败",
+      "actual": [
+        {
+          "name": "项目#1",
+          "totalDays": 1,
+          "passed": 0,
+          "todaySubmitted": true,
+          "submittedBy": "",
+          "submittedAt": ""
+        }
+      ]
+    },
+    {
+      "id": "P031",
+      "page": "log-statistics",
+      "title": "同一天两条记录不能当作两个应写工作日",
+      "result": "失败",
+      "actual": [
+        {
+          "name": "项目#1",
+          "totalDays": 2,
+          "passed": 2,
+          "todaySubmitted": true,
+          "submittedBy": "",
+          "submittedAt": ""
+        }
+      ]
+    },
+    {
+      "id": "P032",
+      "page": "log-statistics",
+      "title": "渲染后的草稿行应显示未提交",
+      "result": "失败",
+      "actual": "<tr><td>项目#1</td><td>1</td><td>0</td><td><div style=\"display:flex;align-items:center;gap:8px;\"><div class=\"progress-bar\"><div class=\"progress-fill red\" style=\"width:0%\"></div></div><span style=\"font-size:12px;\">0%</span></div></td><td><span class=\"submit-status submitted\">✓ 已提交</span></td><td></td><td></td><td><button class=\"btn btn-outline btn-sm\" onclick=\"viewSubmitDetail(0)\">查看详情</button></td></tr>"
+    },
+    {
+      "id": "P033",
+      "page": "log-statistics",
+      "title": "无记录项目应纳入未提交统计",
+      "result": "失败",
+      "actual": []
+    },
+    {
+      "id": "P034",
+      "page": "log-statistics",
+      "title": "总数超过第一页时不能静默少计",
+      "result": "失败",
+      "actual": {
+        "requests": [
+          {
+            "route": "/supervision-logs",
+            "params": {
+              "pageNum": 1,
+              "pageSize": 2000
+            }
+          }
+        ],
+        "displayedRows": 1,
+        "totalFromApi": 2001,
+        "errors": []
+      }
+    },
+    {
+      "id": "P035",
+      "page": "safety-log-statistics",
+      "title": "当日只有草稿不得显示已提交",
+      "result": "失败",
+      "actual": [
+        {
+          "name": "项目#1",
+          "totalDays": 1,
+          "passed": 0,
+          "todaySubmitted": true,
+          "submittedBy": "",
+          "submittedAt": ""
+        }
+      ]
+    },
+    {
+      "id": "P036",
+      "page": "safety-log-statistics",
+      "title": "同一天两条记录不能当作两个应写工作日",
+      "result": "失败",
+      "actual": [
+        {
+          "name": "项目#1",
+          "totalDays": 2,
+          "passed": 2,
+          "todaySubmitted": true,
+          "submittedBy": "",
+          "submittedAt": ""
+        }
+      ]
+    },
+    {
+      "id": "P037",
+      "page": "safety-log-statistics",
+      "title": "渲染后的草稿行应显示未提交",
+      "result": "失败",
+      "actual": "<tr><td>项目#1</td><td>1</td><td>0</td><td><div style=\"display:flex;align-items:center;gap:8px;\"><div class=\"progress-bar\"><div class=\"progress-fill red\" style=\"width:0%\"></div></div><span style=\"font-size:12px;\">0%</span></div></td><td><span class=\"submit-status submitted\">✓ 已提交</span></td><td></td><td></td><td><button class=\"btn btn-outline btn-sm\" onclick=\"viewSubmitDetail(0)\">查看详情</button></td></tr>"
+    },
+    {
+      "id": "P038",
+      "page": "safety-log-statistics",
+      "title": "无记录项目应纳入未提交统计",
+      "result": "失败",
+      "actual": []
+    },
+    {
+      "id": "P039",
+      "page": "safety-log-statistics",
+      "title": "总数超过第一页时不能静默少计",
+      "result": "失败",
+      "actual": {
+        "requests": [
+          {
+            "route": "/safety-logs",
+            "params": {
+              "pageNum": 1,
+              "pageSize": 2000
+            }
+          }
+        ],
+        "displayedRows": 1,
+        "totalFromApi": 2001,
+        "errors": []
+      }
+    },
+    {
+      "id": "P040",
+      "page": "diary-statistics",
+      "title": "已通过和草稿数量分别展示",
+      "result": "通过",
+      "actual": {
+        "approved": "1",
+        "draft": "1"
+      }
+    },
+    {
+      "id": "P041",
+      "page": "diary-statistics",
+      "title": "同人同日多记录不能直接当作应写天数",
+      "result": "失败",
+      "actual": "<tr><td>模拟监理甲</td><td>模拟项目A</td><td>2</td><td>1</td><td><div style=\"display:flex;align-items:center;gap:8px;\"><div class=\"progress-bar\"><div class=\"progress-fill red\" style=\"width:50%\"></div></div><span style=\"font-size:12px;\">50%</span></div></td><td style=\"color:#10B981;\">0</td><td><a href=\"diary-report.html\" style=\"color:#2563EB;text-decoration:none;font-size:12px;\">查看详情</a></td></tr>"
+    },
+    {
+      "id": "P042",
+      "page": "diary-statistics",
+      "title": "超过1000条应继续取数或显式报错",
+      "result": "失败",
+      "actual": {
+        "calls": [
+          {
+            "route": "/supervision-diaries",
+            "params": {
+              "pageNum": 1,
+              "pageSize": 1000
+            }
+          }
+        ],
+        "shown": "1",
+        "actualTotal": 1001
+      }
+    },
+    {
+      "id": "P043",
+      "page": "diary-report",
+      "title": "状态与附件数量正确渲染",
+      "result": "通过",
+      "actual": "<tr data-status=\"approved\"><td>2026-09-23</td><td>周三</td><td>晴</td><td><span class=\"status-tag status-approved\">通过</span></td><td>1</td><td><a href=\"supervision-diary.html?readonly=true\" style=\"color:#2563EB;text-decoration:none;font-size:12px;\">查看日记</a></td></tr>"
+    },
+    {
+      "id": "P044",
+      "page": "diary-report",
+      "title": "查看日记链接应携带该条记录ID",
+      "result": "失败",
+      "actual": "<tr data-status=\"approved\"><td>2026-09-23</td><td>周三</td><td>晴</td><td><span class=\"status-tag status-approved\">通过</span></td><td>1</td><td><a href=\"supervision-diary.html?readonly=true\" style=\"color:#2563EB;text-decoration:none;font-size:12px;\">查看日记</a></td></tr>"
+    },
+    {
+      "id": "P045",
+      "page": "diary-report",
+      "title": "报表不能忽略超过1000条的后续记录",
+      "result": "失败",
+      "actual": {
+        "calls": [
+          {
+            "route": "/supervision-diaries",
+            "params": {
+              "pageNum": 1,
+              "pageSize": 1000
+            }
+          }
+        ],
+        "displayed": 1,
+        "actualTotal": 1001
+      }
+    },
+    {
+      "id": "P046",
+      "page": "diary-report",
+      "title": "可生成包含真实渲染记录的CSV文本",
+      "result": "通过",
+      "actual": "日期,星期,天气,日记状态,关联资料数\n2026-09-23,周三,晴,通过,1\n"
+    },
+    {
+      "id": "P047",
+      "page": "diary-report",
+      "title": "CSV逗号字段应加引号以防列错位",
+      "result": "失败",
+      "actual": "日期,星期,天气,日记状态,关联资料数\n2026-09-23,周三,晴,间多云,通过,1\n"
+    },
+    {
+      "id": "P048",
+      "page": "work-standard-config",
+      "title": "已存截止时间同步到控件和预览",
+      "result": "通过"
+    },
+    {
+      "id": "P049",
+      "page": "work-standard-config",
+      "title": "提前提醒按真实配置计算",
+      "result": "通过"
+    },
+    {
+      "id": "P050",
+      "page": "work-standard-config",
+      "title": "缺失预览与选项一致",
+      "result": "通过"
+    },
+    {
+      "id": "P051",
+      "page": "work-standard-config",
+      "title": "更新时间来自接口",
+      "result": "通过"
+    },
+    {
+      "id": "P052",
+      "page": "work-standard-config",
+      "title": "编辑配置后预览联动",
+      "result": "通过"
+    },
+    {
+      "id": "P053",
+      "page": "work-standard-config",
+      "title": "保存成功更新元数据且重复点击不重复发起",
+      "result": "通过",
+      "actual": {
+        "writes": 11
+      }
+    },
+    {
+      "id": "P054",
+      "page": "work-standard-config",
+      "title": "权限失败不显示保存成功",
+      "result": "通过"
+    },
+    {
+      "id": "P055",
+      "page": "work-standard-config",
+      "title": "接口缺失不伪报保存成功",
+      "result": "通过"
+    },
+    {
+      "id": "P056",
+      "page": "work-standard-config",
+      "title": "读取失败禁止保存而非当作默认值",
+      "result": "通过"
+    },
+    {
+      "id": "P057",
+      "page": "work-standard-config",
+      "title": "未完整加载时禁止保存",
+      "result": "通过"
+    },
+    {
+      "id": "P058",
+      "page": "work-standard-config",
+      "title": "同名配置冲突显式拒绝保存",
+      "result": "通过"
+    },
+    {
+      "id": "P059",
+      "page": "work-standard-config",
+      "title": "重置同步预览且不自动保存",
+      "result": "通过"
+    },
+    {
+      "id": "P060",
+      "page": "work-standard-config",
+      "title": "未实现调度明确告知且无立即生效承诺",
+      "result": "通过"
+    },
+    {
+      "id": "P061",
+      "page": "work-standard-config",
+      "title": "预览和元数据拥有真实DOM锚点",
+      "result": "通过"
+    },
+    {
+      "id": "P062",
+      "page": "assets/app.js",
+      "title": "实际App.escape编码HTML特殊字符",
+      "result": "通过"
+    },
+    {
+      "id": "P063",
+      "page": "safety-log",
+      "title": "日志编号以文本输出不得进入可执行HTML",
+      "result": "失败",
+      "actual": {
+        "rawMarkupObserved": true,
+        "note": "原渲染函数输出检查，未打开浏览器或发送攻击请求"
+      }
+    },
+    {
+      "id": "P064",
+      "page": "project-ledger",
+      "title": "项目名不得突破onclick的JavaScript字符串上下文",
+      "result": "失败",
+      "actual": {
+        "markerExecutedInSandbox": true,
+        "note": "模拟HTML实体解码后，仅在隔离VM执行标记赋值；不访问真实页面或令牌"
+      }
+    }
+  ]
+}

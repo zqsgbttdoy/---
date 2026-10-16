@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监理现场管理系统 - 权限设置</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background: #F0F5FF; color: #1F2937; display: flex; min-height: 100vh; }
+        .sidebar { width: 240px; background: linear-gradient(180deg, #1E3A5F 0%, #0F2440 100%); color: #fff; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; overflow-y: auto; }
+        .sidebar-logo { padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo h2 { font-size: 16px; font-weight: 600; letter-spacing: 1px; }
+        .sidebar-logo p { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+        .menu-group { padding: 8px 0; }
+        .menu-group-title { padding: 10px 20px 6px; font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
+        .menu-item { display: flex; align-items: center; padding: 10px 20px; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; transition: all 0.2s; cursor: pointer; }
+        .menu-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+        .menu-item.active { background: rgba(37,99,235,0.3); color: #fff; border-right: 3px solid #2563EB; }
+        .menu-item .icon { width: 20px; margin-right: 10px; text-align: center; font-size: 14px; }
+        .main { margin-left: 240px; flex: 1; }
+        .header { background: #fff; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 50; }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .header-left h3 { font-size: 15px; font-weight: 600; color: #1E3A5F; }
+        .breadcrumb { font-size: 12px; color: #6B7280; }
+        .breadcrumb a { color: #2563EB; text-decoration: none; }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .notification { position: relative; cursor: pointer; font-size: 18px; }
+        .badge { position: absolute; top: -6px; right: -6px; background: #EF4444; color: #fff; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .user-info { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #2563EB; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; }
+        .user-name { font-size: 13px; color: #374151; }
+        .content { padding: 24px; }
+        .toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; border: none; transition: all 0.2s; }
+        .btn-primary { background: #2563EB; color: #fff; }
+        .btn-primary:hover { background: #1D4ED8; }
+        .btn-danger { background: #EF4444; color: #fff; }
+        .btn-outline { background: #fff; color: #374151; border: 1px solid #E5E7EB; }
+        .btn-outline:hover { background: #F9FAFB; }
+        .btn-sm { padding: 4px 10px; font-size: 12px; }
+        .btn-success { background: #10B981; color: #fff; }
+        .layout { display: grid; grid-template-columns: 280px 1fr; gap: 16px; }
+        .role-panel { background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; }
+        .role-header { padding: 16px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: space-between; }
+        .role-header h4 { font-size: 14px; font-weight: 600; color: #1E3A5F; }
+        .role-body { padding: 8px; }
+        .role-item { padding: 12px; border-radius: 6px; cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: space-between; transition: background 0.2s; }
+        .role-item:hover { background: #F0F5FF; }
+        .role-item.active { background: #DBEAFE; color: #1D4ED8; font-weight: 500; }
+        .role-item .role-count { font-size: 11px; color: #9CA3AF; }
+        .perm-panel { background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; }
+        .perm-header { padding: 16px 20px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: space-between; }
+        .perm-header h4 { font-size: 14px; font-weight: 600; color: #1E3A5F; }
+        .perm-body { padding: 20px; }
+        .perm-group { margin-bottom: 20px; }
+        .perm-group-title { font-size: 13px; font-weight: 600; color: #1E3A5F; padding: 8px 0; border-bottom: 1px solid #F3F4F6; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; }
+        .perm-group-title .check-all { font-size: 12px; color: #2563EB; cursor: pointer; font-weight: 400; }
+        .perm-row { display: flex; align-items: center; padding: 6px 0; }
+        .perm-row .perm-name { flex: 1; font-size: 13px; color: #374151; }
+        .perm-row .perm-actions { display: flex; gap: 16px; }
+        .perm-check { display: flex; align-items: center; gap: 4px; font-size: 12px; color: #6B7280; cursor: pointer; }
+        .perm-check input[type="checkbox"] { accent-color: #2563EB; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+        .modal-overlay.show { display: flex; }
+        .modal { background: #fff; border-radius: 12px; width: 450px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: space-between; }
+        .modal-header h3 { font-size: 16px; font-weight: 600; color: #1E3A5F; }
+        .modal-close { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer; font-size: 18px; color: #6B7280; border: none; background: none; }
+        .modal-close:hover { background: #F3F4F6; }
+        .modal-body { padding: 24px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid #E5E7EB; display: flex; justify-content: flex-end; gap: 12px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px; }
+        .form-group label .required { color: #EF4444; }
+        .form-control { width: 100%; height: 36px; border: 1px solid #E5E7EB; border-radius: 6px; padding: 0 12px; font-size: 13px; outline: none; }
+        .form-control:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .confirm-modal .modal { width: 400px; }
+        .confirm-icon { text-align: center; font-size: 48px; margin-bottom: 16px; }
+        .confirm-text { text-align: center; font-size: 14px; color: #374151; margin-bottom: 8px; }
+        .confirm-sub { text-align: center; font-size: 12px; color: #9CA3AF; }
+    </style>
+    <script src="assets/app.js"></script>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/responsive.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-logo"><h2>监理现场管理系统</h2><p>Supervision Site Management</p></div>
+        <div class="menu-group"><a class="menu-item" href="index.html"><span class="icon">📊</span> 仪表盘</a></div>
+        <div class="menu-group"><div class="menu-group-title">项目管理</div><a class="menu-item" href="project-ledger.html"><span class="icon">📁</span> 项目台账</a></div>
+        <div class="menu-group"><div class="menu-group-title">监理现场工作</div><a class="menu-item" href="daily-inspection.html"><span class="icon">🔍</span> 日常巡检</a><a class="menu-item" href="sideline-inspection.html"><span class="icon">👁️</span> 旁站</a><a class="menu-item" href="supervision-notice.html"><span class="icon">📋</span> 监理通知单</a><a class="menu-item" href="work-contact.html"><span class="icon">✉️</span> 工作联系单</a><a class="menu-item" href="supervision-diary.html"><span class="icon">📝</span> 监理日记</a><a class="menu-item" href="supervision-log.html"><span class="icon">📄</span> 监理日志</a><a class="menu-item" href="safety-log.html"><span class="icon">🛡️</span> 监理安全日志</a><a class="menu-item" href="meeting-minutes.html"><span class="icon">📅</span> 会议纪要</a><a class="menu-item" href="supervision-monthly-report.html"><span class="icon">📊</span> 监理月报</a></div>
+        <div class="menu-group"><div class="menu-group-title">项目资料</div><a class="menu-item" href="sub-item-database.html"><span class="icon">🗄️</span> 工程资料目录设置</a><a class="menu-item" href="project-data-upload.html"><span class="icon">📤</span> 工程资料上传</a></div>
+        <div class="menu-group"><div class="menu-group-title">数据统计</div><a class="menu-item" href="diary-statistics.html"><span class="icon">📈</span> 日记统计</a><a class="menu-item" href="diary-report.html"><span class="icon">📑</span> 日记报表</a><a class="menu-item" href="log-statistics.html"><span class="icon">📊</span> 日志统计</a><a class="menu-item" href="safety-log-statistics.html"><span class="icon">🛡️</span> 安全日志统计</a></div>
+        <div class="menu-group"><div class="menu-group-title">团队管理</div><a class="menu-item" href="department-management.html"><span class="icon">🏢</span> 部门管理</a><a class="menu-item" href="personnel-management.html"><span class="icon">👥</span> 人员管理</a><a class="menu-item active" href="permission-settings.html"><span class="icon">🔐</span> 权限设置</a><a class="menu-item" href="process-management.html"><span class="icon">🔄</span> 流程管理</a></div>
+        <div class="menu-group"><div class="menu-group-title">系统设置</div><a class="menu-item" href="operation-log.html"><span class="icon">📜</span> 操作日志</a><a class="menu-item" href="message-center.html"><span class="icon">🔔</span> 消息中心</a><a class="menu-item" href="work-standard-config.html"><span class="icon">⚙️</span> 工作标准配置</a></div>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <div class="header-left"><h3>权限设置</h3><span class="breadcrumb"><a href="index.html">首页</a> / 团队管理 / 权限设置</span></div>
+            <div class="header-right"><div class="notification">🔔<span class="badge" id="notifBadge" style="display:none;">0</span></div><div class="user-info"><div class="user-avatar">张</div><span class="user-name">张监理</span></div></div>
+        </div>
+
+        <div class="content">
+            <div class="layout">
+                <div class="role-panel">
+                    <div class="role-header"><h4>角色列表</h4><button class="btn btn-primary btn-sm" onclick="openCreateModal()">＋ 新建角色</button></div>
+                    <div class="role-body">
+                        <div class="role-item active" onclick="selectRole(this,'系统管理员')"><span>🔑 系统管理员</span><span class="role-count">2人</span></div>
+                        <div class="role-item" onclick="selectRole(this,'总监理工程师')"><span>👨‍💼 总监理工程师</span><span class="role-count">3人</span></div>
+                        <div class="role-item" onclick="selectRole(this,'专业监理工程师')"><span>👷 专业监理工程师</span><span class="role-count">8人</span></div>
+                        <div class="role-item" onclick="selectRole(this,'监理员')"><span>👷‍♂️ 监理员</span><span class="role-count">15人</span></div>
+                        <div class="role-item" onclick="selectRole(this,'资料员')"><span>📋 资料员</span><span class="role-count">4人</span></div>
+                    </div>
+                </div>
+
+                <div class="perm-panel">
+                    <div class="perm-header">
+                        <h4 id="permTitle">系统管理员 - 权限配置</h4>
+                        <div style="display:flex;gap:8px;">
+                            <button class="btn btn-outline btn-sm" onclick="openEditModal()">编辑角色</button>
+                            <button class="btn btn-danger btn-sm" onclick="confirmDelete()">删除角色</button>
+                        </div>
+                    </div>
+                    <div class="perm-body">
+                        <div class="perm-group">
+                            <div class="perm-group-title">📊 仪表盘 <span class="check-all" onclick="toggleGroup(this)">全选/取消</span></div>
+                            <div class="perm-row"><span class="perm-name">查看仪表盘</span><div class="perm-actions"><label class="perm-check"><input type="checkbox" checked> 查看</label></div></div>
+                        </div>
+                        <div class="perm-group">
+                            <div class="perm-group-title">📁 项目管理 <span class="check-all" onclick="toggleGroup(this)">全选/取消</span></div>
+                            <div class="perm-row"><span class="perm-name">项目台账</span><div class="perm-actions"><label class="perm-check"><input type="checkbox" checked> 查看</label><label class="perm-check"><input type="checkbox" checked> 新建</label><label class="perm-check"><input type="checkbox" checked> 编辑</label><label class="perm-check"><input type="checkbox" checked> 删除</label></div></div>
+                        </div>
+                        <div class="perm-group">
+                            <div class="perm-group-title">🔍 监理现场工作 <span class="check-all" onclick="toggleGroup(this)">全选/取消</span></div>
+                            <div class="perm-row"><span class="perm-name">日常巡检</span><div class="perm-actions"><label class="perm-check"><input type="checkbox" checked> 查看</label><label class="perm-check"><input type="checkbox" checked> 新建</label><label class="perm-check"><input type="checkbox" checked> 编辑</label><label class="perm-check"><input type="checkbox" checked> 删除</label></div></div>
+                            <div class="perm-row"><span class="perm-name">监理通知单</span><div class="perm-actions"><label class="perm-check"><input type="checkbox" checked> 查看</label><label class="perm-check"><input type="checkbox" checked> 新建</label><label class="perm-check"><input type="checkbox" checked> 编辑</label><label class="perm-check"><input type="checkbox" checked> 删除</label></div></div>
+                            <div class="perm-row"><span class="perm-name">工作联系单</span><div class="perm-actions"><label class="perm-check"><input type="checkbox" checked> 查看</label><label class="perm-check"><input type="checkbox" checked> 新建</label><label class="perm-check"><input type="checkbox" checked> 编辑</label><label class="perm-check"><input type="checkbox" checked> 删除</label></div></div>
+                            <div class="perm-row"><span class="perm-name">监理日记</span><div class="perm-actions"><label class="perm-check"><input type="checkbox" checked> 查看</label><label class="perm-check"><input type="checkbox" checked> 新建</label><label class="perm-check"><input type="checkbox" checked> 编辑</label><label class="perm-check"><input type="checkbox" checked> 删除</label></div></div>
+                            <div class="perm-row"><span class="perm-name">监理日志</span><div class="perm-actions"><label class="perm-check"><input type="checkbox" checked> 查看</label><label class="perm-check"><input type="checkbox" checked> 新建</label><label class="perm-check"><input type="checkbox" checked> 审核</label><label class="perm-check"><input type="checkbox" checked> 删除</label></div></div>
+                            <div class="perm-row"><span class="perm-name">会议纪要</span><div class="perm-actions"><label class="perm-check"><input type="checkbox" checked> 查看</label><label class="perm-check"><input type="checkbox" checked> 新建</label><label class="perm-check"><input type="checkbox" checked> 编辑</label><label class="perm-check"><input type="checkbox" checked> 删除</label></div></div>
+                        </div>
+                        <div class="perm-group">
+                            <div class="perm-group-title">🗄️ 项目资料 <span class="check-all" onclick="toggleGroup(this)">全选/取消</span></div>
+                            <div class="perm-row"><span class="perm-name">工程资料目录设置</span><div class="perm-actions"><label class="perm-check"><input type="checkbox" checked> 查看</label><label class="perm-check"><input type="checkbox" checked> 编辑</label></div></div>
+                            <div class="perm-row"><span class="perm-name">工程资料上传</span><div class="perm-actions"><label class="perm-check"><input type="checkbox" checked> 查看</label><label class="perm-check"><input type="checkbox" checked> 上传</label><label class="perm-check"><input type="checkbox" checked> 下载</label><label class="perm-check"><input type="checkbox" checked> 删除</label></div></div>
+                        </div>
+                        <div class="perm-group">
+                            <div class="perm-group-title">📈 数据统计 <span class="check-all" onclick="toggleGroup(this)">全选/取消</span></div>
+                            <div class="perm-row"><span class="perm-name">日记统计</span><div class="perm-actions"><label class="perm-check"><input type="checkbox" checked> 查看</label><label class="perm-check"><input type="checkbox" checked> 导出</label></div></div>
+                            <div class="perm-row"><span class="perm-name">日记报表</span><div class="perm-actions"><label class="perm-check"><input type="checkbox" checked> 查看</label><label class="perm-check"><input type="checkbox" checked> 导出</label><label class="perm-check"><input type="checkbox" checked> 打印</label></div></div>
+                        </div>
+                        <div class="perm-group">
+                            <div class="perm-group-title">👥 团队管理 <span class="check-all" onclick="toggleGroup(this)">全选/取消</span></div>
+                            <div class="perm-row"><span class="perm-name">部门管理</span><div class="perm-actions"><label class="perm-check"><input type="checkbox" checked> 查看</label><label class="perm-check"><input type="checkbox" checked> 编辑</label></div></div>
+                            <div class="perm-row"><span class="perm-name">人员管理</span><div class="perm-actions"><label class="perm-check"><input type="checkbox" checked> 查看</label><label class="perm-check"><input type="checkbox" checked> 编辑</label></div></div>
+                            <div class="perm-row"><span class="perm-name">权限设置</span><div class="perm-actions"><label class="perm-check"><input type="checkbox" checked> 查看</label><label class="perm-check"><input type="checkbox" checked> 编辑</label></div></div>
+                            <div class="perm-row"><span class="perm-name">流程管理</span><div class="perm-actions"><label class="perm-check"><input type="checkbox" checked> 查看</label><label class="perm-check"><input type="checkbox" checked> 编辑</label></div></div>
+                        </div>
+                        <div class="perm-group">
+                            <div class="perm-group-title">⚙️ 系统设置 <span class="check-all" onclick="toggleGroup(this)">全选/取消</span></div>
+                            <div class="perm-row"><span class="perm-name">操作日志</span><div class="perm-actions"><label class="perm-check"><input type="checkbox" checked> 查看</label><label class="perm-check"><input type="checkbox" checked> 导出</label></div></div>
+                            <div class="perm-row"><span class="perm-name">消息中心</span><div class="perm-actions"><label class="perm-check"><input type="checkbox" checked> 查看</label><label class="perm-check"><input type="checkbox" checked> 删除</label></div></div>
+                            <div class="perm-row"><span class="perm-name">工作标准配置</span><div class="perm-actions"><label class="perm-check"><input type="checkbox" checked> 查看</label><label class="perm-check"><input type="checkbox" checked> 编辑</label></div></div>
+                        </div>
+                        <div style="text-align:right;margin-top:16px;"><button class="btn btn-primary" onclick="savePermissions()">保存权限配置</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="createModal">
+        <div class="modal">
+            <div class="modal-header"><h3 id="modalTitle">新建角色</h3><button class="modal-close" onclick="closeModal('createModal')">✕</button></div>
+            <div class="modal-body">
+                <div class="form-group"><label>角色名称 <span class="required">*</span></label><input type="text" class="form-control" id="roleName" placeholder="请输入角色名称"></div>
+                <div class="form-group"><label>角色编码 <span class="required">*</span></label><input type="text" class="form-control" id="roleCode" placeholder="如 ROLE_ADMIN"></div>
+                <div class="form-group"><label>角色描述</label><textarea class="form-control" id="roleDesc" placeholder="请输入角色描述" style="height:80px;padding:8px 12px;resize:vertical;"></textarea></div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('createModal')">取消</button><button class="btn btn-primary" onclick="saveRole()">保存</button></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay confirm-modal" id="deleteModal">
+        <div class="modal" style="width:400px;">
+            <div class="modal-header"><h3>确认删除</h3><button class="modal-close" onclick="closeModal('deleteModal')">✕</button></div>
+            <div class="modal-body" style="padding:32px 24px;">
+                <div class="confirm-icon">⚠️</div>
+                <div class="confirm-text">确定要删除该角色吗？</div>
+                <div class="confirm-sub">已有用户分配的角色不可删除，请先解除用户关联</div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('deleteModal')">取消</button><button class="btn btn-danger" onclick="executeDelete()">确认删除</button></div>
+        </div>
+    </div>
+
+    <script>
+        var roles = [];
+        var permTree = [];
+        var selectedRoleId = null;
+        var editingId = null;
+        var permissionsLoaded = false;
+
+        function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+        function roleById(id) { for (var i = 0; i < roles.length; i++) { if (roles[i].id === id) return roles[i]; } return null; }
+
+        function loadRoles() {
+            return apiGetPage('/roles', { pageNum: 1, pageSize: 200 }).then(function(page) {
+                roles = page.list || [];
+                renderRoles();
+                if (roles.length) {
+                    var adminRole = roles.find(function(r) { return r.code === 'admin'; });
+                    var initialRole = App.getUser().roles.indexOf('admin') >= 0 && adminRole ? adminRole : roles[0];
+                    var keep = (selectedRoleId && roleById(selectedRoleId)) ? selectedRoleId : initialRole.id;
+                    selectRole(keep);
+                } else {
+                    document.getElementById('permTitle').textContent = '权限配置';
+                }
+            }).catch(function() {
+                document.querySelector('.role-body').innerHTML = '<div style="text-align:center;color:#9CA3AF;padding:20px;">加载失败</div>';
+            });
+        }
+
+        function renderRoles() {
+            var html = '';
+            for (var i = 0; i < roles.length; i++) {
+                var r = roles[i];
+                var active = r.id === selectedRoleId ? ' active' : '';
+                html += '<div class="role-item' + active + '" onclick="selectRole(' + r.id + ')"><span>🔑 ' + esc(r.name) + '</span><span class="role-count">' + esc(r.code || '') + '</span></div>';
+            }
+            document.querySelector('.role-body').innerHTML = html || '<div style="text-align:center;color:#9CA3AF;padding:20px;">暂无角色</div>';
+        }
+
+        function loadPermTree() {
+            return apiFetch('/permissions/tree').then(function(tree) {
+                permTree = tree || [];
+                renderPermTree();
+            }).catch(function() {
+                permTree = [];
+                renderPermTree();
+            });
+        }
+
+        function permRowsHtml(nodes, depth) {
+            var html = '';
+            for (var i = 0; i < nodes.length; i++) {
+                var node = nodes[i];
+                var pad = depth > 0 ? 'padding-left:' + (depth * 16) + 'px;' : '';
+                html += '<div class="perm-row"><span class="perm-name" style="' + pad + '">' + esc(node.name) + '</span><div class="perm-actions"><label class="perm-check"><input type="checkbox" data-pid="' + node.id + '"> 授权</label></div></div>';
+                if (node.children && node.children.length) html += permRowsHtml(node.children, depth + 1);
+            }
+            return html;
+        }
+
+        function renderPermTree() {
+            var permBody = document.querySelector('.perm-body');
+            var html = '<div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#92400E;">ℹ️ 勾选状态为该角色当前已分配的权限，保存将以本次勾选覆盖。系统管理员（admin）角色在后端始终拥有全部功能与数据权限。</div>';
+            if (!permTree.length) {
+                html += '<div style="text-align:center;color:#9CA3AF;padding:20px;">暂无权限数据</div>';
+            } else {
+                for (var i = 0; i < permTree.length; i++) {
+                    var root = permTree[i];
+                    html += '<div class="perm-group"><div class="perm-group-title">' + esc(root.name) + ' <span class="check-all" onclick="toggleGroup(this)">全选/取消</span></div>';
+                    var kids = (root.children && root.children.length) ? root.children : [root];
+                    html += permRowsHtml(kids, 0);
+                    html += '</div>';
+                }
+            }
+            html += '<div style="text-align:right;margin-top:16px;"><button class="btn btn-primary" onclick="savePermissions()">保存权限配置</button></div>';
+            permBody.innerHTML = html;
+        }
+
+        function selectRole(id) {
+            selectedRoleId = id;
+            var r = roleById(id);
+            renderRoles();
+            document.getElementById('permTitle').textContent = (r ? r.name : '') + ' - 权限配置';
+            var boxes = document.querySelectorAll('.perm-body input[type="checkbox"]');
+            // 管理员不可被削弱，但勾选状态必须来自真实绑定，不能用全勾选掩盖初始化失败。
+            permissionsLoaded = false;
+            var locked = !!(r && r.code === 'admin');
+            for (var i = 0; i < boxes.length; i++) { boxes[i].checked = false; boxes[i].disabled = true; }
+            apiFetch('/roles/' + id + '/permissions').then(function(ids) {
+                if (selectedRoleId !== id) return;
+                var owned = {};
+                (ids || []).forEach(function(p) { owned[String(p)] = true; });
+                for (var j = 0; j < boxes.length; j++) {
+                    boxes[j].checked = !!owned[boxes[j].getAttribute('data-pid')];
+                    boxes[j].disabled = locked;
+                }
+                permissionsLoaded = true;
+                if (locked && Array.from(boxes).some(function(box) { return !box.checked; })) {
+                    App.toast('管理员权限绑定不完整，请停止服务后重新启动并检查自检日志', 'error');
+                }
+            }).catch(function() {
+                if (selectedRoleId === id) App.toast('权限读取失败，禁止保存，请刷新重试', 'error');
+            });
+        }
+
+        function savePermissions() {
+            if (!selectedRoleId) { App.toast('请先选择角色'); return; }
+            if (!permissionsLoaded) { App.toast('权限尚未读取完成，禁止保存'); return; }
+            var ids = [];
+            var checked = document.querySelectorAll('.perm-body input[type="checkbox"]:checked');
+            for (var i = 0; i < checked.length; i++) {
+                var p = checked[i].getAttribute('data-pid');
+                if (p) ids.push(Number(p));
+            }
+            // 分组节点本身不渲染勾选框：组内有任一子项被勾选时一并保留分组权限
+            for (var g = 0; g < permTree.length; g++) {
+                var grp = permTree[g];
+                if (!grp.children || !grp.children.length) continue;
+                var anyChild = grp.children.some(function(c) { return ids.indexOf(Number(c.id)) >= 0; });
+                if (anyChild && ids.indexOf(Number(grp.id)) < 0) ids.push(Number(grp.id));
+            }
+            apiFetch('/roles/' + selectedRoleId + '/permissions', { method: 'POST', body: ids }).then(function() {
+                App.toast('权限配置已保存');
+            }).catch(function(e) { App.toast(e && e.message ? e.message : '保存失败'); });
+        }
+
+        function openCreateModal() {
+            editingId = null;
+            document.getElementById('modalTitle').textContent = '新建角色';
+            document.getElementById('roleName').value = '';
+            document.getElementById('roleCode').value = '';
+            document.getElementById('roleDesc').value = '';
+            document.getElementById('createModal').classList.add('show');
+        }
+
+        function openEditModal() {
+            if (!selectedRoleId) { App.toast('请先选择角色'); return; }
+            var r = roleById(selectedRoleId);
+            if (!r) return;
+            editingId = selectedRoleId;
+            document.getElementById('modalTitle').textContent = '编辑角色';
+            document.getElementById('roleName').value = r.name || '';
+            document.getElementById('roleCode').value = r.code || '';
+            document.getElementById('roleDesc').value = r.description || '';
+            document.getElementById('createModal').classList.add('show');
+        }
+
+        function saveRole() {
+            var name = document.getElementById('roleName').value.trim();
+            var code = document.getElementById('roleCode').value.trim();
+            if (!name) { App.toast('请输入角色名称'); return; }
+            if (!code) { App.toast('请输入角色编码'); return; }
+            var body = { name: name, code: code, description: document.getElementById('roleDesc').value.trim(), status: 'active' };
+            var req = editingId
+                ? apiFetch('/roles/' + editingId, { method: 'PUT', body: body })
+                : apiFetch('/roles', { method: 'POST', body: body });
+            req.then(function() {
+                App.toast(editingId ? '修改成功' : '创建成功');
+                closeModal('createModal');
+                loadRoles();
+            }).catch(function(e) { App.toast(e && e.message ? e.message : '保存失败'); });
+        }
+
+        function confirmDelete() {
+            if (!selectedRoleId) { App.toast('请先选择角色'); return; }
+            document.getElementById('deleteModal').classList.add('show');
+        }
+
+        function executeDelete() {
+            if (!selectedRoleId) { closeModal('deleteModal'); return; }
+            apiFetch('/roles/' + selectedRoleId, { method: 'DELETE' }).then(function() {
+                App.toast('已删除');
+                closeModal('deleteModal');
+                selectedRoleId = null;
+                loadRoles();
+            }).catch(function(e) { App.toast(e && e.message ? e.message : '删除失败'); });
+        }
+
+        function toggleGroup(el) { var checkboxes = el.closest('.perm-group').querySelectorAll('input[type="checkbox"]:not(:disabled)'); var allChecked = true; checkboxes.forEach(function(c){if(!c.checked) allChecked=false;}); checkboxes.forEach(function(c){c.checked = !allChecked;}); }
+        function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+        if (window.App) {
+            App.requireAuth();
+            App.initTopbar();
+            loadPermTree().then(loadRoles);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监理现场管理系统 - 日记报表</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background: #F0F5FF; color: #1F2937; display: flex; min-height: 100vh; }
+        .sidebar { width: 240px; background: linear-gradient(180deg, #1E3A5F 0%, #0F2440 100%); color: #fff; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; overflow-y: auto; }
+        .sidebar-logo { padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo h2 { font-size: 16px; font-weight: 600; letter-spacing: 1px; }
+        .sidebar-logo p { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+        .menu-group { padding: 8px 0; }
+        .menu-group-title { padding: 10px 20px 6px; font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
+        .menu-item { display: flex; align-items: center; padding: 10px 20px; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; transition: all 0.2s; cursor: pointer; }
+        .menu-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+        .menu-item.active { background: rgba(37,99,235,0.3); color: #fff; border-right: 3px solid #2563EB; }
+        .menu-item .icon { width: 20px; margin-right: 10px; text-align: center; font-size: 14px; }
+        .main { margin-left: 240px; flex: 1; }
+        .header { background: #fff; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 50; }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .header-left h3 { font-size: 15px; font-weight: 600; color: #1E3A5F; }
+        .breadcrumb { font-size: 12px; color: #6B7280; }
+        .breadcrumb a { color: #2563EB; text-decoration: none; }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .notification { position: relative; cursor: pointer; font-size: 18px; }
+        .badge { position: absolute; top: -6px; right: -6px; background: #EF4444; color: #fff; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .user-info { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #2563EB; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; }
+        .user-name { font-size: 13px; color: #374151; }
+        .content { padding: 24px; }
+        .filter-bar { background: #fff; border-radius: 10px; padding: 16px 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .filter-bar label { font-size: 13px; color: #6B7280; white-space: nowrap; }
+        .filter-select { height: 36px; border: 1px solid #E5E7EB; border-radius: 6px; padding: 0 12px; font-size: 13px; color: #374151; background: #fff; outline: none; cursor: pointer; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; border: none; transition: all 0.2s; }
+        .btn-primary { background: #2563EB; color: #fff; }
+        .btn-primary:hover { background: #1D4ED8; }
+        .btn-outline { background: #fff; color: #374151; border: 1px solid #E5E7EB; }
+        .btn-outline:hover { background: #F9FAFB; }
+        .btn-sm { padding: 4px 10px; font-size: 12px; }
+        .panel { background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        .panel-header { padding: 16px 20px; border-bottom: 1px solid #F3F4F6; display: flex; align-items: center; justify-content: space-between; }
+        .panel-header h4 { font-size: 14px; font-weight: 600; color: #1E3A5F; }
+        .panel-body { padding: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        thead { background: #F8FAFC; }
+        th { padding: 12px 16px; text-align: left; font-size: 12px; font-weight: 600; color: #6B7280; border-bottom: 1px solid #E5E7EB; white-space: nowrap; }
+        td { padding: 12px 16px; font-size: 13px; color: #374151; border-bottom: 1px solid #F3F4F6; }
+        tr:hover td { background: #F8FAFC; }
+        .status-tag { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; }
+        .status-draft { background: #F3F4F6; color: #6B7280; }
+        .status-pending { background: #DBEAFE; color: #2563EB; }
+        .status-approved { background: #D1FAE5; color: #059669; }
+        .status-rejected { background: #FEE2E2; color: #DC2626; }
+        .status-unsubmitted { background: #FEF3C7; color: #D97706; }
+        .pagination { display: flex; align-items: center; justify-content: space-between; padding: 16px; }
+        .pagination-info { font-size: 12px; color: #6B7280; }
+        .pagination-btns { display: flex; gap: 4px; }
+        .page-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 1px solid #E5E7EB; border-radius: 6px; font-size: 12px; cursor: pointer; background: #fff; color: #374151; }
+        .page-btn.active { background: #2563EB; color: #fff; border-color: #2563EB; }
+    </style>
+    <script src="assets/app.js"></script>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/responsive.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-logo"><h2>监理现场管理系统</h2><p>Supervision Site Management</p></div>
+        <div class="menu-group"><a class="menu-item" href="index.html"><span class="icon">📊</span> 仪表盘</a></div>
+        <div class="menu-group"><div class="menu-group-title">项目管理</div><a class="menu-item" href="project-ledger.html"><span class="icon">📁</span> 项目台账</a></div>
+        <div class="menu-group"><div class="menu-group-title">监理现场工作</div><a class="menu-item" href="daily-inspection.html"><span class="icon">🔍</span> 日常巡检</a><a class="menu-item" href="sideline-inspection.html"><span class="icon">👁️</span> 旁站</a><a class="menu-item" href="supervision-notice.html"><span class="icon">📋</span> 监理通知单</a><a class="menu-item" href="work-contact.html"><span class="icon">✉️</span> 工作联系单</a><a class="menu-item" href="supervision-diary.html"><span class="icon">📝</span> 监理日记</a><a class="menu-item" href="supervision-log.html"><span class="icon">📄</span> 监理日志</a><a class="menu-item" href="safety-log.html"><span class="icon">🛡️</span> 监理安全日志</a><a class="menu-item" href="meeting-minutes.html"><span class="icon">📅</span> 会议纪要</a><a class="menu-item" href="supervision-monthly-report.html"><span class="icon">📊</span> 监理月报</a></div>
+        <div class="menu-group"><div class="menu-group-title">项目资料</div><a class="menu-item" href="sub-item-database.html"><span class="icon">🗄️</span> 工程资料目录设置</a><a class="menu-item" href="project-data-upload.html"><span class="icon">📤</span> 工程资料上传</a></div>
+        <div class="menu-group"><div class="menu-group-title">数据统计</div><a class="menu-item" href="diary-statistics.html"><span class="icon">📈</span> 日记统计</a><a class="menu-item active" href="diary-report.html"><span class="icon">📑</span> 日记报表</a><a class="menu-item" href="log-statistics.html"><span class="icon">📊</span> 日志统计</a><a class="menu-item" href="safety-log-statistics.html"><span class="icon">🛡️</span> 安全日志统计</a></div>
+        <div class="menu-group"><div class="menu-group-title">团队管理</div><a class="menu-item" href="department-management.html"><span class="icon">🏢</span> 部门管理</a><a class="menu-item" href="personnel-management.html"><span class="icon">👥</span> 人员管理</a><a class="menu-item" href="permission-settings.html"><span class="icon">🔐</span> 权限设置</a><a class="menu-item" href="process-management.html"><span class="icon">🔄</span> 流程管理</a></div>
+        <div class="menu-group"><div class="menu-group-title">系统设置</div><a class="menu-item" href="operation-log.html"><span class="icon">📜</span> 操作日志</a><a class="menu-item" href="message-center.html"><span class="icon">🔔</span> 消息中心</a><a class="menu-item" href="work-standard-config.html"><span class="icon">⚙️</span> 工作标准配置</a></div>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <div class="header-left"><h3>日记报表</h3><span class="breadcrumb"><a href="index.html">首页</a> / 数据统计 / 日记报表</span></div>
+            <div class="header-right"><div class="notification">🔔<span class="badge" id="notifBadge" style="display:none;">0</span></div><div class="user-info"><div class="user-avatar">张</div><span class="user-name">张监理</span></div></div>
+        </div>
+
+        <div class="content">
+            <div style="background:#FEF3C7;border:1px solid #F59E0B;border-radius:8px;padding:10px 16px;margin-bottom:16px;display:flex;align-items:center;gap:8px;">
+                <span style="font-size:16px;">🔒</span>
+                <span style="font-size:13px;color:#92400E;">当前页面为只读模式，数据统计模块仅支持查看操作，不支持修改、编辑、删除或添加。</span>
+            </div>
+            <div class="filter-bar">
+                <label>人员：</label>
+                <select class="filter-select" id="personFilter"><option value="">全部人员</option></select>
+                <label>项目：</label>
+                <select class="filter-select" id="projectFilter"><option value="">全部项目</option></select>
+                <label>月份：</label>
+                <input type="month" class="filter-select" id="monthFilter" value="2026-04">
+                <label>状态：</label>
+                <select class="filter-select" id="statusFilter" onchange="filterByStatus()">
+                    <option value="">全部状态</option>
+                    <option value="draft">草稿</option>
+                    <option value="pending">待审核</option>
+                    <option value="approved">通过</option>
+                    <option value="rejected">被驳回</option>
+                    <option value="unsubmitted">未提交</option>
+                </select>
+                <button class="btn btn-primary" onclick="queryData()">查询</button><button class="btn btn-outline" onclick="resetFilters()">重置</button>
+                <div style="margin-left:auto;display:flex;gap:8px;">
+                    <button class="btn btn-outline" onclick="exportExcel()">📥 导出Excel</button>
+                    <button class="btn btn-outline" onclick="printReport()">🖨️ 打印</button>
+                </div>
+            </div>
+
+            <div id="tableView">
+                <div class="panel">
+                    <div class="panel-header"><h4>张监理 - 4月日记报表</h4><span style="font-size:12px;color:#6B7280;">城东综合体项目 | 完成率：95%</span></div>
+                    <div class="panel-body" style="padding:0;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>日期</th>
+                                    <th>星期</th>
+                                    <th>天气</th>
+                                    <th>日记状态</th>
+                                    <th>关联资料数</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reportTableBody">
+                                <tr data-status="approved">
+                                    <td>2026-04-28</td><td>周一</td><td>晴</td>
+                                    <td><span class="status-tag status-approved">通过</span></td>
+                                    <td>4</td>
+                                    <td><a href="supervision-diary.html?readonly=true" style="color:#2563EB;text-decoration:none;font-size:12px;">查看日记</a></td>
+                                </tr>
+                                <tr data-status="draft">
+                                    <td>2026-04-27</td><td>周日</td><td>晴</td>
+                                    <td><span class="status-tag status-draft">草稿</span></td>
+                                    <td>2</td>
+                                    <td><a href="supervision-diary.html?readonly=true" style="color:#2563EB;text-decoration:none;font-size:12px;">查看</a></td>
+                                </tr>
+                                <tr data-status="approved">
+                                    <td>2026-04-26</td><td>周六</td><td>小雨</td>
+                                    <td><span class="status-tag status-approved">通过</span></td>
+                                    <td>2</td>
+                                    <td><a href="supervision-diary.html?readonly=true" style="color:#2563EB;text-decoration:none;font-size:12px;">查看日记</a></td>
+                                </tr>
+                                <tr data-status="approved">
+                                    <td>2026-04-25</td><td>周五</td><td>多云</td>
+                                    <td><span class="status-tag status-approved">通过</span></td>
+                                    <td>3</td>
+                                    <td><a href="supervision-diary.html?readonly=true" style="color:#2563EB;text-decoration:none;font-size:12px;">查看日记</a></td>
+                                </tr>
+                                <tr data-status="pending">
+                                    <td>2026-04-24</td><td>周四</td><td>晴</td>
+                                    <td><span class="status-tag status-pending">待审核</span></td>
+                                    <td>5</td>
+                                    <td><a href="supervision-diary.html?readonly=true" style="color:#2563EB;text-decoration:none;font-size:12px;">查看日记</a></td>
+                                </tr>
+                                <tr data-status="rejected">
+                                    <td>2026-04-23</td><td>周三</td><td>晴</td>
+                                    <td><span class="status-tag status-rejected">被驳回</span></td>
+                                    <td>3</td>
+                                    <td><a href="supervision-diary.html?readonly=true" style="color:#2563EB;text-decoration:none;font-size:12px;">查看</a></td>
+                                </tr>
+                                <tr data-status="unsubmitted">
+                                    <td>2026-04-22</td><td>周二</td><td>☁️ 阴</td>
+                                    <td><span class="status-tag status-unsubmitted">未提交</span></td>
+                                    <td>0</td>
+                                    <td><a href="supervision-diary.html?readonly=true" style="color:#2563EB;text-decoration:none;font-size:12px;">查看</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="pagination">
+                            <div class="pagination-info">共 22 条记录，第 1/3 页</div>
+                            <div class="pagination-btns"><button class="page-btn">‹</button><button class="page-btn active">1</button><button class="page-btn">2</button><button class="page-btn">3</button><button class="page-btn">›</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var allData = [];
+        var filteredData = [];
+        var projectsMap = {};
+        var usersMap = {};
+        var WEEKDAYS = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+
+        function weekdayOf(dateStr) {
+            if (!dateStr) return '';
+            var dt = new Date(dateStr);
+            return isNaN(dt.getTime()) ? '' : WEEKDAYS[dt.getDay()];
+        }
+
+        function countAtt(d) {
+            var n = 0;
+            ['attachments', 'photos'].forEach(function(k) {
+                var v = d[k];
+                if (!v) return;
+                try { var arr = JSON.parse(v); if (Array.isArray(arr)) { n += arr.length; return; } } catch (e) {}
+                n += String(v).split(',').filter(function(s) { return s.trim(); }).length;
+            });
+            return n;
+        }
+
+        function recorderName(d) {
+            return d.submittedBy || usersMap[d.authorId] || (d.authorId ? ('用户#' + d.authorId) : '—');
+        }
+
+        function loadProjects() {
+            return apiGetPage('/projects', { pageNum: 1, pageSize: 500 }).then(function(res) {
+                var sel = document.getElementById('projectFilter');
+                sel.innerHTML = '<option value="">全部项目</option>';
+                (res.list || []).forEach(function(p) {
+                    projectsMap[p.id] = p.name;
+                    var opt = document.createElement('option');
+                    opt.value = p.id; opt.textContent = p.name;
+                    sel.appendChild(opt);
+                });
+            });
+        }
+
+        function loadUsers() {
+            return apiGetPage('/users', { pageNum: 1, pageSize: 500 }).then(function(res) {
+                var sel = document.getElementById('personFilter');
+                sel.innerHTML = '<option value="">全部人员</option>';
+                (res.list || []).forEach(function(u) {
+                    var nm = u.name || u.userName || u.realName;
+                    usersMap[u.id] = nm;
+                    var opt = document.createElement('option');
+                    opt.value = nm; opt.textContent = nm;
+                    sel.appendChild(opt);
+                });
+            }).catch(function() {});
+        }
+
+        function loadData() {
+            var projectVal = document.getElementById('projectFilter').value;
+            var params = { pageNum: 1, pageSize: 1000 };
+            if (projectVal) params.projectId = projectVal;
+            return apiGetPage('/supervision-diaries', params).then(function(res) {
+                allData = (res.list || []).map(function(d) {
+                    return {
+                        date: d.diaryDate || '',
+                        weekday: weekdayOf(d.diaryDate),
+                        weather: d.weather || '—',
+                        diaryStatus: d.status || 'draft',
+                        relatedCount: countAtt(d),
+                        person: recorderName(d)
+                    };
+                });
+                queryData();
+            });
+        }
+
+        function renderTable() {
+            try {
+                var tbody = document.getElementById('reportTableBody');
+                if (!filteredData.length) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#9CA3AF;padding:40px;">暂无匹配数据</td></tr>';
+                } else {
+                    var html = '';
+                    var statusMap = { draft: ['status-draft', '草稿'], pending: ['status-pending', '待审核'], submitted: ['status-pending', '待审核'], approved: ['status-approved', '通过'], rejected: ['status-rejected', '被驳回'], unsubmitted: ['status-unsubmitted', '未提交'] };
+                    for (var i = 0; i < filteredData.length; i++) {
+                        var d = filteredData[i];
+                        var s = statusMap[d.diaryStatus] || ['status-draft', d.diaryStatus];
+                        html += '<tr data-status="' + d.diaryStatus + '"><td>' + d.date + '</td><td>' + d.weekday + '</td><td>' + escapeHtml(d.weather) + '</td><td><span class="status-tag ' + s[0] + '">' + s[1] + '</span></td><td>' + d.relatedCount + '</td><td><a href="supervision-diary.html?readonly=true" style="color:#2563EB;text-decoration:none;font-size:12px;">查看日记</a></td></tr>';
+                    }
+                    tbody.innerHTML = html;
+                }
+                var info = document.querySelector('.pagination-info');
+                if (info) info.textContent = '共 ' + filteredData.length + ' 条记录';
+                var btns = document.querySelector('.pagination-btns');
+                if (btns) btns.innerHTML = '';
+            } catch (e) { console.error('渲染表格失败：', e); }
+        }
+
+        function escapeHtml(t) { var d = document.createElement('div'); d.textContent = t == null ? '' : t; return d.innerHTML; }
+
+        function filterByStatus() {
+            try { queryData(); } catch (e) { console.error('状态筛选失败：', e); }
+        }
+
+        function queryData() {
+            try {
+                var status = document.getElementById('statusFilter').value;
+                var month = document.getElementById('monthFilter').value;
+                var person = document.getElementById('personFilter').value;
+                filteredData = allData.filter(function(d) {
+                    if (status && d.diaryStatus !== status) return false;
+                    if (month && d.date && d.date.substring(0, 7) !== month) return false;
+                    if (person && d.person !== person) return false;
+                    return true;
+                });
+                renderTable();
+            } catch (e) { console.error('查询数据失败：', e); }
+        }
+
+        function resetFilters() {
+            try {
+                document.getElementById('personFilter').selectedIndex = 0;
+                document.getElementById('projectFilter').selectedIndex = 0;
+                document.getElementById('monthFilter').value = '';
+                document.getElementById('statusFilter').value = '';
+                loadData();
+            } catch (e) { console.error('重置筛选失败：', e); }
+        }
+
+        function exportExcel() {
+            try {
+                var headers = ['日期', '星期', '天气', '日记状态', '关联资料数'];
+                var statusMap = { draft: '草稿', pending: '待审核', submitted: '待审核', approved: '通过', rejected: '被驳回', unsubmitted: '未提交' };
+                var csvContent = '\uFEFF' + headers.join(',') + '\n';
+                for (var i = 0; i < filteredData.length; i++) {
+                    var d = filteredData[i];
+                    csvContent += [d.date, d.weekday, d.weather, statusMap[d.diaryStatus] || d.diaryStatus, d.relatedCount].join(',') + '\n';
+                }
+                var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                var link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = '日记报表.csv';
+                link.click();
+                URL.revokeObjectURL(link.href);
+            } catch (e) { console.error('导出报表失败：', e); alert('导出失败：' + e.message); }
+        }
+
+        function printReport() { window.print(); }
+
+        if (window.App) {
+            App.requireAuth();
+            App.initTopbar();
+            var params = new URLSearchParams(window.location.search);
+            var status = params.get('status') || '';
+            if (status) document.getElementById('statusFilter').value = status;
+            Promise.all([loadProjects(), loadUsers()]).then(loadData);
+        }
+    </script>
+</body>
+</html>

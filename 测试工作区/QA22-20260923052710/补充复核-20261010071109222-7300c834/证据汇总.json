@@ -1,0 +1,287 @@
+{
+  "batch": "QA22-20260923052710",
+  "recordedAt": "2026-10-10T07:11:40.623Z",
+  "api": {
+    "counts": {
+      "通过": 230,
+      "失败": 21,
+      "功能尚未实现": 6,
+      "受阻": 1
+    },
+    "assertions": 258,
+    "requests": 252,
+    "modules": {
+      "登录与认证": {
+        "通过": 12,
+        "功能尚未实现": 1
+      },
+      "部门管理": {
+        "通过": 10
+      },
+      "人员管理": {
+        "通过": 7
+      },
+      "权限设置": {
+        "通过": 13,
+        "失败": 1
+      },
+      "项目台账": {
+        "通过": 7
+      },
+      "工程资料目录与上传": {
+        "通过": 18,
+        "失败": 1
+      },
+      "监理日记": {
+        "通过": 30,
+        "失败": 1
+      },
+      "监理日志": {
+        "通过": 30
+      },
+      "日常巡检": {
+        "通过": 27
+      },
+      "旁站检查": {
+        "通过": 27
+      },
+      "统计报表": {
+        "通过": 4,
+        "功能尚未实现": 1
+      },
+      "安全日志": {
+        "通过": 7,
+        "失败": 5,
+        "功能尚未实现": 1
+      },
+      "会议纪要": {
+        "通过": 5
+      },
+      "监理月报": {
+        "通过": 5,
+        "功能尚未实现": 1
+      },
+      "监理通知单": {
+        "通过": 8,
+        "失败": 4
+      },
+      "工作联系单": {
+        "通过": 8,
+        "失败": 4
+      },
+      "消息中心": {
+        "通过": 5,
+        "失败": 3
+      },
+      "工作标准配置": {
+        "通过": 3,
+        "失败": 1,
+        "功能尚未实现": 1
+      },
+      "操作日志": {
+        "通过": 1,
+        "失败": 1
+      },
+      "仪表盘": {
+        "通过": 2
+      },
+      "个人资料与设置": {
+        "通过": 1,
+        "受阻": 1
+      },
+      "流程管理": {
+        "功能尚未实现": 1
+      }
+    },
+    "note": "历史主批次统计，保持原结果，不与本次修复回归混算"
+  },
+  "pages": {
+    "通过": 32,
+    "失败": 15
+  },
+  "resources": 26,
+  "fixtureEntries": 48,
+  "regression": {
+    "totals": {
+      "tests": 246,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "suites": [
+      {
+        "file": "com.supervision.AuthServiceTest.txt",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "updatedAt": "2026-10-10T07:11:17.459Z"
+      },
+      {
+        "file": "com.supervision.DailyInspectionServiceTest.txt",
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "updatedAt": "2026-10-10T07:11:17.903Z"
+      },
+      {
+        "file": "com.supervision.FieldWorkflowIntegrationTest.txt",
+        "tests": 30,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "updatedAt": "2026-10-10T07:11:36.897Z"
+      },
+      {
+        "file": "com.supervision.FileUploadControllerTest.txt",
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "updatedAt": "2026-10-10T07:11:37.163Z"
+      },
+      {
+        "file": "com.supervision.GlobalExceptionHandlerTest.txt",
+        "tests": 7,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "updatedAt": "2026-10-10T07:11:37.254Z"
+      },
+      {
+        "file": "com.supervision.MeetingMinutesServiceTest.txt",
+        "tests": 11,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "updatedAt": "2026-10-10T07:11:37.466Z"
+      },
+      {
+        "file": "com.supervision.PageResultTest.txt",
+        "tests": 10,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "updatedAt": "2026-10-10T07:11:37.510Z"
+      },
+      {
+        "file": "com.supervision.PageUtilsTest.txt",
+        "tests": 10,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "updatedAt": "2026-10-10T07:11:37.522Z"
+      },
+      {
+        "file": "com.supervision.ProductionSafetyValidatorTest.txt",
+        "tests": 20,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "updatedAt": "2026-10-10T07:11:37.857Z"
+      },
+      {
+        "file": "com.supervision.RoleCheckInterceptorTest.txt",
+        "tests": 9,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "updatedAt": "2026-10-10T07:11:37.962Z"
+      },
+      {
+        "file": "com.supervision.SafetyLogServiceTest.txt",
+        "tests": 21,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "updatedAt": "2026-10-10T07:11:37.974Z"
+      },
+      {
+        "file": "com.supervision.SidelineInspectionServiceTest.txt",
+        "tests": 12,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "updatedAt": "2026-10-10T07:11:38.097Z"
+      },
+      {
+        "file": "com.supervision.SupervisionDiaryServiceTest.txt",
+        "tests": 11,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "updatedAt": "2026-10-10T07:11:38.265Z"
+      },
+      {
+        "file": "com.supervision.SupervisionLogServiceTest.txt",
+        "tests": 16,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "updatedAt": "2026-10-10T07:11:38.529Z"
+      },
+      {
+        "file": "com.supervision.SupervisionMonthlyReportServiceTest.txt",
+        "tests": 11,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "updatedAt": "2026-10-10T07:11:38.713Z"
+      },
+      {
+        "file": "com.supervision.SupervisionNoticeServiceTest.txt",
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "updatedAt": "2026-10-10T07:11:38.897Z"
+      },
+      {
+        "file": "com.supervision.UserControllerRoleCheckTest.txt",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "updatedAt": "2026-10-10T07:11:39.158Z"
+      },
+      {
+        "file": "com.supervision.UserServiceTest.txt",
+        "tests": 11,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "updatedAt": "2026-10-10T07:11:39.231Z"
+      },
+      {
+        "file": "com.supervision.WorkContactServiceTest.txt",
+        "tests": 16,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "updatedAt": "2026-10-10T07:11:39.429Z"
+      },
+      {
+        "file": "com.supervision.WorkStandardConfigServiceTest.txt",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "updatedAt": "2026-10-10T07:11:39.697Z"
+      }
+    ],
+    "execution": "本次独立进程全量回归，不连接旧HTTP服务",
+    "reportDirectory": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20261010071109222-7300c834\\surefire"
+  },
+  "currentPages": {
+    "通过": 43
+  },
+  "currentBackendGroups": {
+    "既有回归": {
+      "通过": 231
+    },
+    "新增上线契约": {
+      "通过": 15
+    }
+  }
+}

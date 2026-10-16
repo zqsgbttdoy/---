@@ -1,0 +1,11 @@
+{
+  "pages": ["pages/login/index", "pages/home/index", "pages/record/index", "pages/personnel/index", "pages/departments/index", "pages/reports/index"],
+  "window": {
+    "navigationBarTitleText": "监理现场工作台",
+    "navigationBarBackgroundColor": "#1E3A5F",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F0F5FF"
+  },
+  "style": "v2",
+  "__usePrivacyCheck__": true
+}

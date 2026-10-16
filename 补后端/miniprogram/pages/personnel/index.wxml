@@ -1,0 +1,33 @@
+<view class="container">
+  <view class="hero"><view class="title">人员管理</view><view>共 {{total}} 人{{isAdmin ? ' · 管理员可调整状态与重置密码' : ' · 仅管理员可编辑'}}</view></view>
+  <view class="card">
+    <view class="row">
+      <input style="flex:1" value="{{keyword}}" bindinput="input" confirm-type="search" bindconfirm="reset" placeholder="按姓名搜索" />
+      <button class="small" bindtap="reset">搜索</button>
+    </view>
+    <view class="row" style="margin-top:14rpx">
+      <button class="small" data-status="" bindtap="pickStatus">全部状态</button>
+      <button class="small" data-status="active" bindtap="pickStatus">在职</button>
+      <button class="small" data-status="inactive" bindtap="pickStatus">离职</button>
+      <button class="small" data-status="leave" bindtap="pickStatus">休假</button>
+      <view wx:if="{{status}}" class="badge">筛选：{{status === 'active' ? '在职' : status === 'inactive' ? '离职' : '休假'}}</view>
+    </view>
+    <view class="error" wx:if="{{error}}">{{error}}</view>
+  </view>
+  <view wx:for="{{rows}}" wx:key="id" class="card" data-id="{{item.id}}" bindtap="expand">
+    <view class="row"><view class="label">{{item.name}}</view><view class="badge">{{item.statusLabel}}</view></view>
+    <view class="muted">{{item.position || '未登记岗位'}}{{item.deptName ? ' · ' + item.deptName : ''}} · {{item.genderText}}</view>
+    <view wx:if="{{expandedId === item.id}}">
+      <view class="muted">联系电话：{{item.phone || '未登记'}}</view>
+      <view class="muted">入职日期：{{item.hireText}}</view>
+      <view class="muted" wx:if="{{isAdmin}}">证件号：{{item.certNo || '未登记'}}</view>
+      <view wx:if="{{isAdmin}}">
+        <button class="small" data-id="{{item.id}}" catchtap="toggleStatus">调整状态</button>
+        <button class="small" data-id="{{item.id}}" catchtap="resetPassword">重置密码</button>
+      </view>
+    </view>
+    <view class="muted" wx:else>点击卡片查看详情</view>
+  </view>
+  <view class="muted" wx:if="{{!rows.length && !loading}}">没有符合条件的人员。</view>
+  <button wx:if="{{more}}" loading="{{loading}}" bindtap="more">加载更多</button>
+</view>

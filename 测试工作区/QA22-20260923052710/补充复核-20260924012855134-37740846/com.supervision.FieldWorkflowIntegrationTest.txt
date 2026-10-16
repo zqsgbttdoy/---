@@ -1,0 +1,50 @@
+-------------------------------------------------------------------------------
+Test set: com.supervision.FieldWorkflowIntegrationTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 2, Errors: 1, Skipped: 0, Time elapsed: 18.29 s <<< FAILURE! -- in com.supervision.FieldWorkflowIntegrationTest
+com.supervision.FieldWorkflowIntegrationTest.qa22ConcurrentExplicitAndAutomaticCodes -- Time elapsed: 1.850 s <<< ERROR!
+java.util.concurrent.ExecutionException: java.lang.AssertionError: Response status expected:<200> but was:<409>
+	at java.base/java.util.concurrent.FutureTask.report(Unknown Source)
+	at java.base/java.util.concurrent.FutureTask.get(Unknown Source)
+	at com.supervision.FieldWorkflowIntegrationTest.qa22ConcurrentExplicitAndAutomaticCodes(FieldWorkflowIntegrationTest.java:279)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+Caused by: java.lang.AssertionError: Response status expected:<200> but was:<409>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$is$1(StatusResultMatchers.java:64)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.supervision.FieldWorkflowIntegrationTest.call(FieldWorkflowIntegrationTest.java:57)
+	at com.supervision.FieldWorkflowIntegrationTest.create(FieldWorkflowIntegrationTest.java:74)
+	at com.supervision.FieldWorkflowIntegrationTest.lambda$1(FieldWorkflowIntegrationTest.java:278)
+	at java.base/java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+com.supervision.FieldWorkflowIntegrationTest.qa22WorkStandardsRequireCurrentAdministrator -- Time elapsed: 0.131 s <<< FAILURE!
+java.lang.AssertionError: Response status expected:<403> but was:<200>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$is$1(StatusResultMatchers.java:64)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.supervision.FieldWorkflowIntegrationTest.call(FieldWorkflowIntegrationTest.java:57)
+	at com.supervision.FieldWorkflowIntegrationTest.qa22WorkStandardsRequireCurrentAdministrator(FieldWorkflowIntegrationTest.java:324)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+
+com.supervision.FieldWorkflowIntegrationTest.qa22MessagesArePrivateToRecipient -- Time elapsed: 0.141 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <0> but was: <1>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:531)
+	at com.supervision.FieldWorkflowIntegrationTest.qa22MessagesArePrivateToRecipient(FieldWorkflowIntegrationTest.java:301)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+

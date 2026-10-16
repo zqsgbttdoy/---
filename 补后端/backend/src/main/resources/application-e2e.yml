@@ -1,0 +1,47 @@
+# ==============================================================================
+# 仅本地 E2E 验证使用（SPRING_PROFILES_ACTIVE=e2e）。
+# 使用 H2 内存库（MySQL 兼容模式），不依赖本机 MySQL；生产/开发配置不受影响。
+# ==============================================================================
+
+spring:
+  # 排除 Druid 自动装配，回退 Spring Boot 默认 HikariCP（避免 Druid 对 H2 的兼容问题）
+  autoconfigure:
+    exclude: com.alibaba.druid.spring.boot3.autoconfigure.DruidDataSourceAutoConfigure
+
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:supervision;MODE=MySQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ''
+
+  jpa:
+    hibernate:
+      # 由 Hibernate 按 JPA 实体在 H2 中自动建表（不执行 MySQL 专用 schema.sql）
+      ddl-auto: create
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+    # 先由 Hibernate 建表，再执行 data-e2e.sql 种子脚本
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always
+      # 显式置空 schema 脚本，防止默认拾取 MySQL 专用的 schema.sql
+      schema-locations: []
+      # 种子数据 + admin 全量权限初始化（后者与生产 MySQL 使用同一份幂等脚本）
+      data-locations: classpath:data-e2e.sql,classpath:admin-full-permissions.sql
+      encoding: UTF-8
+
+app:
+  jwt:
+    # H2 重启会复用用户 ID，旧浏览器令牌必须随本次演示实例一起失效。
+    invalidate-on-restart: true
+
+logging:
+  level:
+    com.supervision: info
+    org.hibernate.SQL: warn

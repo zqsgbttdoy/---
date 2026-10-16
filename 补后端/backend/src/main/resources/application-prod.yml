@@ -1,0 +1,72 @@
+# ==============================================================================
+# 生产环境配置（通过环境变量 SPRING_PROFILES_ACTIVE=prod 激活）
+# 本文件中标记【生产必改】的配置项均无默认值，必须通过环境变量注入，
+# 缺失时应用将启动失败（由 ProductionSafetyValidator 快速失败校验）。
+# ==============================================================================
+
+spring:
+  # ---------------- 数据源配置（生产）----------------
+  datasource:
+    # 数据库连接地址：可通过环境变量 SPRING_DATASOURCE_URL 覆盖；
+    # 默认串启用 useSSL=true（生产要求加密传输，已去掉 allowPublicKeyRetrieval）
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/supervision_db?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai}
+    # 【生产必改】数据库用户名：必须通过环境变量 SPRING_DATASOURCE_USERNAME 注入，无默认值
+    username: ${SPRING_DATASOURCE_USERNAME}
+    # 【生产必改】数据库密码：必须通过环境变量 SPRING_DATASOURCE_PASSWORD 注入，无默认值，
+    # 且不得使用弱密码（root/123456 会被启动校验拦截）
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    druid:
+      # Druid 生产连接池参数：更高的初始/最小连接数与最大活跃数，更短的获取等待时间
+      initial-size: 10
+      min-idle: 10
+      max-active: 50
+      max-wait: 30000
+
+  # ---------------- JPA / Hibernate 配置（生产）----------------
+  jpa:
+    hibernate:
+      # 生产禁止自动改表结构，仅校验实体与表结构一致性
+      ddl-auto: validate
+    # 生产关闭 SQL 打印
+    show-sql: false
+    properties:
+      hibernate:
+        # 生产关闭 SQL 格式化输出
+        format_sql: false
+        # JDBC 批处理：配合 saveAll 将多条 INSERT/UPDATE 合并批量提交，提升批量写入性能
+        jdbc:
+          batch_size: 50
+        order_inserts: true
+        order_updates: true
+
+# ---------------- 日志级别（生产）----------------
+logging:
+  level:
+    # 业务日志收敛为 info，避免调试日志泄露敏感信息
+    com.supervision: info
+    # 关闭 Hibernate SQL 语句日志
+    org.hibernate.SQL: warn
+
+# ---------------- 应用自定义配置（生产）----------------
+app:
+  jwt:
+    # 【生产必改】JWT 签名密钥：必须通过环境变量 APP_JWT_SECRET 注入（≥32 字符），
+    # 无默认值，且不得等于代码中的开发默认密钥
+    secret: ${APP_JWT_SECRET}
+  cors:
+    # 【生产必改】允许跨域来源（逗号分隔的明确域名列表）：
+    # 必须通过环境变量 APP_CORS_ALLOWED_ORIGINS 注入，无默认值，禁止使用 "*"
+    allowed-origins: ${APP_CORS_ALLOWED_ORIGINS}
+  security:
+    # 【生产必改】管理员重置用户密码时使用的默认密码：
+    # 必须通过环境变量 APP_DEFAULT_RESET_PASSWORD 注入，无默认值，禁止使用 "123456"
+    default-reset-password: ${APP_DEFAULT_RESET_PASSWORD}
+  upload:
+    # 【生产必改】附件短时链接签名密钥，多实例必须相同且独立于 JWT 密钥
+    signing-secret: ${APP_UPLOAD_SIGNING_SECRET}
+    # 【建议修改】上传文件物理根目录：生产建议通过环境变量 APP_UPLOAD_DIR
+    # 指定独立数据盘绝对路径（如 /opt/supervision/uploads），默认为工作目录下的 uploads
+    dir: ${APP_UPLOAD_DIR:uploads}
+    # 【建议修改】允许上传的扩展名白名单（逗号分隔）：
+    # 可通过环境变量 APP_UPLOAD_ALLOWED_EXTENSIONS 按业务需要收紧
+    allowed-extensions: ${APP_UPLOAD_ALLOWED_EXTENSIONS:jpg,jpeg,png,gif,bmp,pdf,doc,docx,xls,xlsx,ppt,pptx,txt,zip,rar}

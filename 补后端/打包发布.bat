@@ -1,0 +1,100 @@
+@echo off
+setlocal
+chcp 936 >nul
+
+rem ============================================================
+rem  监理现场管理系统 一键打包发布脚本
+rem  产物: dist\supervision-release-1.0.0.zip
+rem  用法: 双击运行或在命令行执行本脚本
+rem ============================================================
+
+rem 注意: 下面的 JAVA_HOME 需按本机实际安装的 JDK 17+ 路径调整
+rem 常见示例: set "JAVA_HOME=C:\Program Files\Java\jdk-17"
+set "JAVA_HOME=C:\Users\Administrator\.jdks\temurin-24"
+set "PATH=%JAVA_HOME%\bin;%PATH%"
+
+set "ROOT=%~dp0"
+set "VERSION=1.0.0"
+set "DIST=%ROOT%dist"
+set "STAGING=%DIST%\staging"
+set "ZIPFILE=%DIST%\supervision-release-%VERSION%.zip"
+
+if not exist "%ROOT%backend\mvnw.cmd" (
+    echo [错误] 未找到 backend\mvnw.cmd, 请确认脚本位于 补后端 目录下。
+    exit /b 1
+)
+
+echo [1/5] 构建后端 jar (默认跳过测试以加快打包)...
+pushd "%ROOT%backend"
+rem 默认使用 -DskipTests 跳过测试。如需开启测试, 请将下一条 call 命令替换为:
+rem     call mvnw.cmd clean package -Dnet.bytebuddy.experimental=true
+rem 注意: 本机为 JDK 24, 运行测试必须追加 -Dnet.bytebuddy.experimental=true
+call mvnw.cmd clean package -DskipTests
+if errorlevel 1 (
+    popd
+    echo.
+    echo [错误] 后端 Maven 构建失败, 请检查上方构建日志后重试。
+    exit /b 2
+)
+popd
+
+rem 定位构建产物 jar (排除 .jar.original)
+set "JARFILE="
+for %%F in ("%ROOT%backend\target\*.jar") do (
+    if /i "%%~xF"==".jar" set "JARFILE=%%~fF"
+)
+if not defined JARFILE (
+    echo [错误] 未在 backend\target 目录下找到 jar 构建产物。
+    exit /b 3
+)
+echo 构建产物: %JARFILE%
+
+echo [2/5] 组装发布目录结构...
+if exist "%STAGING%" rmdir /s /q "%STAGING%"
+mkdir "%STAGING%\backend"
+mkdir "%STAGING%\sql"
+mkdir "%STAGING%\frontend"
+mkdir "%STAGING%\deploy"
+mkdir "%STAGING%\docs"
+
+copy /y "%JARFILE%" "%STAGING%\backend\" >nul
+
+copy /y "%ROOT%backend\src\main\resources\schema.sql" "%STAGING%\sql\" >nul
+copy /y "%ROOT%backend\src\main\resources\schema-indexes.sql" "%STAGING%\sql\" >nul
+copy /y "%ROOT%backend\src\main\resources\admin-full-permissions.sql" "%STAGING%\sql\" >nul
+
+copy /y "%ROOT%*.html" "%STAGING%\frontend\" >nul
+xcopy /e /i /y "%ROOT%assets" "%STAGING%\frontend\assets" >nul
+
+copy /y "%ROOT%deploy\*" "%STAGING%\deploy\" >nul
+
+copy /y "%ROOT%ALIYUN_DEPLOYMENT.md" "%STAGING%\docs\" >nul
+copy /y "%ROOT%WECHAT_MINIPROGRAM_GUIDE.md" "%STAGING%\docs\" >nul
+copy /y "%ROOT%OPS_HANDOVER.md" "%STAGING%\docs\" >nul
+copy /y "%ROOT%DEPLOYMENT.md" "%STAGING%\docs\" >nul
+copy /y "%ROOT%PRODUCTION_CHECKLIST.md" "%STAGING%\docs\" >nul
+
+echo [3/5] 生成压缩包...
+if exist "%ZIPFILE%" del /f /q "%ZIPFILE%"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Compress-Archive -Path '%STAGING%\*' -DestinationPath '%ZIPFILE%' -Force"
+if errorlevel 1 (
+    echo [错误] 压缩发布包失败。
+    exit /b 4
+)
+
+echo [4/5] 清理临时 staging 目录...
+rmdir /s /q "%STAGING%"
+
+echo [5/5] 打包完成!
+echo ============================================================
+echo 发布包路径: %ZIPFILE%
+for %%A in ("%ZIPFILE%") do echo 文件大小: %%~zA 字节
+echo 内含清单概览:
+echo   backend\  - 后端可执行 jar 包
+echo   sql\      - schema.sql + schema-indexes.sql + admin-full-permissions.sql
+echo   frontend\ - 26 个静态 HTML 页面 + assets 静态资源目录
+echo   deploy\   - 8 个部署运维脚本与配置
+echo   docs\     - 5 份部署与运维文档
+echo ============================================================
+endlocal
+exit /b 0

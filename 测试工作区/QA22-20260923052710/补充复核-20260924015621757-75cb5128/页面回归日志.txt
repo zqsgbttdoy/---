@@ -1,0 +1,78 @@
+P001 通过 index 内联JavaScript语法检查
+P002 通过 welcome 内联JavaScript语法检查
+P003 通过 project-ledger 内联JavaScript语法检查
+P004 通过 daily-inspection 内联JavaScript语法检查
+P005 通过 sideline-inspection 内联JavaScript语法检查
+P006 通过 supervision-notice 内联JavaScript语法检查
+P007 通过 work-contact 内联JavaScript语法检查
+P008 通过 supervision-diary 内联JavaScript语法检查
+P009 通过 supervision-log 内联JavaScript语法检查
+P010 通过 safety-log 内联JavaScript语法检查
+P011 通过 meeting-minutes 内联JavaScript语法检查
+P012 通过 supervision-monthly-report 内联JavaScript语法检查
+P013 通过 sub-item-database 内联JavaScript语法检查
+P014 通过 project-data-upload 内联JavaScript语法检查
+P015 通过 diary-statistics 内联JavaScript语法检查
+P016 通过 log-statistics 内联JavaScript语法检查
+P017 通过 safety-log-statistics 内联JavaScript语法检查
+P018 通过 diary-report 内联JavaScript语法检查
+P019 通过 message-center 内联JavaScript语法检查
+P020 通过 department-management 内联JavaScript语法检查
+P021 通过 personnel-management 内联JavaScript语法检查
+P022 通过 permission-settings 内联JavaScript语法检查
+P023 通过 process-management 内联JavaScript语法检查
+P024 通过 operation-log 内联JavaScript语法检查
+P025 通过 work-standard-config 内联JavaScript语法检查
+P026 通过 login 内联JavaScript语法检查
+P027 通过 assets/app.js 共享脚本语法检查
+P028 通过 assets/field-records.js 共享脚本语法检查
+P029 通过 miniprogram/utils/schema.js 共享脚本语法检查
+P030 失败 log-statistics 当日只有草稿不得显示已提交
+P031 失败 log-statistics 同一天两条记录不能当作两个应写工作日
+P032 失败 log-statistics 渲染后的草稿行应显示未提交
+P033 失败 log-statistics 无记录项目应纳入未提交统计
+P034 失败 log-statistics 总数超过第一页时不能静默少计
+P035 失败 safety-log-statistics 当日只有草稿不得显示已提交
+P036 失败 safety-log-statistics 同一天两条记录不能当作两个应写工作日
+P037 失败 safety-log-statistics 渲染后的草稿行应显示未提交
+P038 失败 safety-log-statistics 无记录项目应纳入未提交统计
+P039 失败 safety-log-statistics 总数超过第一页时不能静默少计
+P040 通过 diary-statistics 已通过和草稿数量分别展示
+P041 失败 diary-statistics 同人同日多记录不能直接当作应写天数
+P042 失败 diary-statistics 超过1000条应继续取数或显式报错
+P043 通过 diary-report 状态与附件数量正确渲染
+P044 失败 diary-report 查看日记链接应携带该条记录ID
+P045 失败 diary-report 报表不能忽略超过1000条的后续记录
+P046 通过 diary-report 可生成包含真实渲染记录的CSV文本
+P047 失败 diary-report CSV逗号字段应加引号以防列错位
+P048 通过 work-standard-config 已存截止时间同步到控件和预览
+P049 通过 work-standard-config 提前提醒按真实配置计算
+P050 通过 work-standard-config 缺失预览与选项一致
+P051 通过 work-standard-config 更新时间来自接口
+P052 通过 work-standard-config 编辑配置后预览联动
+P053 通过 work-standard-config 保存成功更新元数据且重复点击不重复发起
+P054 通过 work-standard-config 权限失败不显示保存成功
+P055 通过 work-standard-config 接口缺失不伪报保存成功
+P056 通过 work-standard-config 读取失败禁止保存而非当作默认值
+P057 通过 work-standard-config 未完整加载时禁止保存
+P058 通过 work-standard-config 同名配置冲突显式拒绝保存
+P059 通过 work-standard-config 重置同步预览且不自动保存
+P060 通过 work-standard-config 未实现调度明确告知且无立即生效承诺
+P061 通过 work-standard-config 预览和元数据拥有真实DOM锚点
+P062 通过 assets/app.js 实际App.escape编码HTML特殊字符
+{"通过":47,"失败":15,"受阻":1}
+evalmachine.<anonymous>:969
+            var nodes = container.querySelectorAll('.dir-tree-node');
+                                  ^
+
+TypeError: container.querySelectorAll is not a function
+    at initDirCheckboxes (evalmachine.<anonymous>:969:35)
+    at evalmachine.<anonymous>:996:9
+    at Script.runInContext (node:vm:149:12)
+    at Object.runInContext (node:vm:301:6)
+    at E:\希地工作\trae 文件保存\完整版-监理 - qoder\测试工作区\qa22-page-checks.cjs:27:59
+    at Array.forEach (<anonymous>)
+    at environment (E:\希地工作\trae 文件保存\完整版-监理 - qoder\测试工作区\qa22-page-checks.cjs:27:43)
+    at securityChecks (E:\希地工作\trae 文件保存\完整版-监理 - qoder\测试工作区\qa22-page-checks.cjs:74:18)
+    at main (E:\希地工作\trae 文件保存\完整版-监理 - qoder\测试工作区\qa22-page-checks.cjs:138:44)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)

@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监理现场管理系统 - 工作联系单</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background: #F0F5FF; color: #1F2937; display: flex; min-height: 100vh; }
+        .sidebar { width: 240px; background: linear-gradient(180deg, #1E3A5F 0%, #0F2440 100%); color: #fff; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; overflow-y: auto; }
+        .sidebar-logo { padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo h2 { font-size: 16px; font-weight: 600; letter-spacing: 1px; }
+        .sidebar-logo p { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+        .menu-group { padding: 8px 0; }
+        .menu-group-title { padding: 10px 20px 6px; font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
+        .menu-item { display: flex; align-items: center; padding: 10px 20px; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; transition: all 0.2s; cursor: pointer; }
+        .menu-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+        .menu-item.active { background: rgba(37,99,235,0.3); color: #fff; border-right: 3px solid #2563EB; }
+        .menu-item .icon { width: 20px; margin-right: 10px; text-align: center; font-size: 14px; }
+        .main { margin-left: 240px; flex: 1; }
+        .header { background: #fff; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 50; }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .header-left h3 { font-size: 15px; font-weight: 600; color: #1E3A5F; }
+        .breadcrumb { font-size: 12px; color: #6B7280; }
+        .breadcrumb a { color: #2563EB; text-decoration: none; }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .notification { position: relative; cursor: pointer; font-size: 18px; }
+        .badge { position: absolute; top: -6px; right: -6px; background: #EF4444; color: #fff; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .user-info { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #2563EB; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; }
+        .user-name { font-size: 13px; color: #374151; }
+        .content { padding: 24px; }
+        .toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+        .toolbar-left { display: flex; align-items: center; gap: 12px; }
+        .search-box { display: flex; align-items: center; background: #fff; border: 1px solid #E5E7EB; border-radius: 6px; padding: 0 12px; height: 36px; }
+        .search-box input { border: none; outline: none; font-size: 13px; width: 200px; background: transparent; }
+        .search-box .search-icon { color: #9CA3AF; margin-right: 8px; }
+        .filter-select { height: 36px; border: 1px solid #E5E7EB; border-radius: 6px; padding: 0 12px; font-size: 13px; color: #374151; background: #fff; outline: none; cursor: pointer; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; border: none; transition: all 0.2s; }
+        .btn-primary { background: #2563EB; color: #fff; }
+        .btn-primary:hover { background: #1D4ED8; }
+        .btn-danger { background: #EF4444; color: #fff; }
+        .btn-danger:hover { background: #DC2626; }
+        .btn-outline { background: #fff; color: #374151; border: 1px solid #E5E7EB; }
+        .btn-outline:hover { background: #F9FAFB; }
+        .btn-sm { padding: 4px 10px; font-size: 12px; }
+        .btn-success { background: #10B981; color: #fff; }
+        .btn-success:hover { background: #059669; }
+        .table-container { background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; }
+        thead { background: #F8FAFC; }
+        th { padding: 12px 16px; text-align: left; font-size: 12px; font-weight: 600; color: #6B7280; border-bottom: 1px solid #E5E7EB; white-space: nowrap; }
+        td { padding: 12px 16px; font-size: 13px; color: #374151; border-bottom: 1px solid #F3F4F6; }
+        tr:hover td { background: #F8FAFC; }
+        .status-tag { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; }
+        .status-draft { background: #F3F4F6; color: #6B7280; }
+        .status-sent { background: #DBEAFE; color: #2563EB; }
+        .status-replied { background: #E0E7FF; color: #4F46E5; }
+        .status-verified { background: #D1FAE5; color: #059669; }
+        .status-overdue { background: #FEE2E2; color: #DC2626; }
+        .priority-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; }
+        .priority-urgent { background: #FEE2E2; color: #DC2626; }
+        .priority-normal { background: #DBEAFE; color: #2563EB; }
+        .priority-low { background: #D1FAE5; color: #059669; }
+        .actions { display: flex; gap: 8px; }
+        .pagination { display: flex; align-items: center; justify-content: space-between; padding: 16px; }
+        .pagination-info { font-size: 12px; color: #6B7280; }
+        .pagination-btns { display: flex; gap: 4px; }
+        .page-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 1px solid #E5E7EB; border-radius: 6px; font-size: 12px; cursor: pointer; background: #fff; color: #374151; }
+        .page-btn.active { background: #2563EB; color: #fff; border-color: #2563EB; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+        .modal-overlay.show { display: flex; }
+        .modal { background: #fff; border-radius: 12px; width: 750px; max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: space-between; }
+        .modal-header h3 { font-size: 16px; font-weight: 600; color: #1E3A5F; }
+        .modal-close { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer; font-size: 18px; color: #6B7280; border: none; background: none; }
+        .modal-close:hover { background: #F3F4F6; }
+        .modal-body { padding: 24px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid #E5E7EB; display: flex; justify-content: flex-end; gap: 12px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px; }
+        .form-group label .required { color: #EF4444; }
+        .form-control { width: 100%; height: 36px; border: 1px solid #E5E7EB; border-radius: 6px; padding: 0 12px; font-size: 13px; outline: none; transition: border-color 0.2s; }
+        .form-control:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .form-control[readonly] { background: #F9FAFB; color: #6B7280; cursor: default; }
+        textarea.form-control { height: 80px; padding: 8px 12px; resize: vertical; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .confirm-modal .modal { width: 400px; }
+        .confirm-icon { text-align: center; font-size: 48px; margin-bottom: 16px; }
+        .confirm-text { text-align: center; font-size: 14px; color: #374151; margin-bottom: 8px; }
+        .confirm-sub { text-align: center; font-size: 12px; color: #9CA3AF; }
+        .flow-steps { display: flex; align-items: center; gap: 4px; margin-bottom: 16px; padding: 12px; background: #F8FAFC; border-radius: 8px; }
+        .flow-step { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #9CA3AF; }
+        .flow-step.active { color: #2563EB; font-weight: 600; }
+        .flow-step.done { color: #10B981; }
+        .flow-step .step-dot { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; background: #E5E7EB; color: #9CA3AF; }
+        .flow-step.active .step-dot { background: #2563EB; color: #fff; }
+        .flow-step.done .step-dot { background: #10B981; color: #fff; }
+        .flow-arrow { color: #D1D5DB; font-size: 12px; }
+        .doc-section { background: #F0F5FF; border: 1px solid #BFDBFE; border-radius: 8px; padding: 16px; margin-top: 16px; }
+        .doc-section h5 { font-size: 13px; font-weight: 600; color: #1E40AF; margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between; }
+        .doc-section .doc-desc { font-size: 11px; color: #6B7280; margin-bottom: 12px; }
+        .doc-tree { background: #fff; border: 1px solid #E5E7EB; border-radius: 6px; padding: 8px; max-height: 240px; overflow-y: auto; }
+        .doc-tree-node { padding: 6px 8px; border-radius: 4px; font-size: 13px; display: flex; align-items: center; gap: 6px; cursor: pointer; transition: background 0.15s; }
+        .doc-tree-node:hover { background: #F0F5FF; }
+        .doc-tree-node .expand-icon { font-size: 10px; color: #9CA3AF; width: 16px; text-align: center; flex-shrink: 0; }
+        .doc-tree-node .node-icon { font-size: 13px; flex-shrink: 0; }
+        .doc-tree-node .node-label { flex: 1; }
+        .doc-tree-node input[type="checkbox"] { accent-color: #2563EB; width: 15px; height: 15px; cursor: pointer; flex-shrink: 0; }
+        .doc-tree-children { padding-left: 24px; }
+        .doc-tree-children.collapsed { display: none; }
+        .selected-docs { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; min-height: 28px; }
+        .selected-doc-tag { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 12px; font-size: 11px; background: #DBEAFE; color: #1D4ED8; }
+        .selected-doc-tag .remove-tag { cursor: pointer; font-size: 12px; color: #6B7280; margin-left: 2px; }
+        .selected-doc-tag .remove-tag:hover { color: #DC2626; }
+        .selected-doc-empty { font-size: 12px; color: #9CA3AF; }
+        .upload-section { margin-top: 4px; }
+        .upload-section h5 { font-size: 13px; font-weight: 600; color: #1E3A5F; margin-bottom: 8px; }
+        .photo-grid { display: flex; gap: 8px; flex-wrap: wrap; }
+        .photo-item { width: 80px; height: 80px; border: 1px dashed #D1D5DB; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #9CA3AF; font-size: 24px; cursor: pointer; position: relative; overflow: hidden; }
+        .photo-item:hover { border-color: #2563EB; color: #2563EB; }
+        .photo-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 5px; }
+        .photo-item .remove-photo { position: absolute; top: 2px; right: 2px; width: 18px; height: 18px; border-radius: 50%; background: rgba(239,68,68,0.9); color: #fff; font-size: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .attachment-list { margin-top: 8px; }
+        .attachment-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: #F8FAFC; border-radius: 6px; margin-bottom: 6px; }
+        .attachment-item .file-icon { width: 28px; height: 28px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; }
+        .attachment-item .file-icon.pdf { background: #FEE2E2; color: #DC2626; }
+        .attachment-item .file-icon.doc { background: #DBEAFE; color: #2563EB; }
+        .attachment-item .file-icon.xls { background: #D1FAE5; color: #059669; }
+        .attachment-item .file-name { flex: 1; font-size: 12px; color: #374151; }
+        .attachment-item .remove-att { cursor: pointer; color: #9CA3AF; font-size: 14px; }
+        .attachment-item .remove-att:hover { color: #EF4444; }
+        .upload-btn { display: inline-flex; align-items: center; gap: 4px; padding: 6px 14px; border: 1px dashed #D1D5DB; border-radius: 6px; font-size: 12px; color: #6B7280; cursor: pointer; transition: all 0.2s; background: transparent; }
+        .upload-btn:hover { border-color: #2563EB; color: #2563EB; }
+        .filter-tip { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: #FEF3C7; border: 1px solid #FCD34D; border-radius: 6px; margin-bottom: 12px; font-size: 13px; color: #92400E; }
+        .filter-tip .close-tip { cursor: pointer; color: #92400E; font-size: 16px; }
+        .toast { position: fixed; top: 20px; right: 20px; padding: 12px 24px; border-radius: 8px; color: #fff; font-size: 14px; z-index: 9999; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+        .toast.show { opacity: 1; }
+        .toast.success { background: #10B981; }
+        .toast.error { background: #EF4444; }
+        .toast.warning { background: #F59E0B; }
+    </style>
+    <script src="assets/app.js"></script>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/responsive.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-logo"><h2>监理现场管理系统</h2><p>Supervision Site Management</p></div>
+        <div class="menu-group"><a class="menu-item" href="index.html"><span class="icon">📊</span> 仪表盘</a></div>
+        <div class="menu-group"><div class="menu-group-title">项目管理</div><a class="menu-item" href="project-ledger.html"><span class="icon">📁</span> 项目台账</a></div>
+        <div class="menu-group">
+            <div class="menu-group-title">监理现场工作</div>
+            <a class="menu-item" href="daily-inspection.html"><span class="icon">🔍</span> 日常巡检</a>
+            <a class="menu-item" href="sideline-inspection.html"><span class="icon">👁️</span> 旁站</a>
+            <a class="menu-item" href="supervision-notice.html"><span class="icon">📋</span> 监理通知单</a>
+            <a class="menu-item active" href="work-contact.html"><span class="icon">✉️</span> 工作联系单</a>
+            <a class="menu-item" href="supervision-diary.html"><span class="icon">📝</span> 监理日记</a>
+            <a class="menu-item" href="supervision-log.html"><span class="icon">📄</span> 监理日志</a>
+            <a class="menu-item" href="safety-log.html"><span class="icon">🛡️</span> 监理安全日志</a>
+            <a class="menu-item" href="meeting-minutes.html"><span class="icon">📅</span> 会议纪要</a>
+            <a class="menu-item" href="supervision-monthly-report.html"><span class="icon">📊</span> 监理月报</a>
+        </div>
+        <div class="menu-group"><div class="menu-group-title">项目资料</div><a class="menu-item" href="sub-item-database.html"><span class="icon">🗄️</span> 工程资料目录设置</a><a class="menu-item" href="project-data-upload.html"><span class="icon">📤</span> 工程资料上传</a></div>
+        <div class="menu-group"><div class="menu-group-title">数据统计</div><a class="menu-item" href="diary-statistics.html"><span class="icon">📈</span> 日记统计</a><a class="menu-item" href="diary-report.html"><span class="icon">📑</span> 日记报表</a><a class="menu-item" href="log-statistics.html"><span class="icon">📊</span> 日志统计</a><a class="menu-item" href="safety-log-statistics.html"><span class="icon">🛡️</span> 安全日志统计</a></div>
+        <div class="menu-group"><div class="menu-group-title">团队管理</div><a class="menu-item" href="department-management.html"><span class="icon">🏢</span> 部门管理</a><a class="menu-item" href="personnel-management.html"><span class="icon">👥</span> 人员管理</a><a class="menu-item" href="permission-settings.html"><span class="icon">🔐</span> 权限设置</a><a class="menu-item" href="process-management.html"><span class="icon">🔄</span> 流程管理</a></div>
+        <div class="menu-group"><div class="menu-group-title">系统设置</div><a class="menu-item" href="operation-log.html"><span class="icon">📜</span> 操作日志</a><a class="menu-item" href="message-center.html"><span class="icon">🔔</span> 消息中心</a><a class="menu-item" href="work-standard-config.html"><span class="icon">⚙️</span> 工作标准配置</a></div>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <div class="header-left"><h3>工作联系单</h3><span class="breadcrumb"><a href="index.html">首页</a> / 监理现场工作 / 工作联系单</span></div>
+            <div class="header-right"><div class="notification">🔔<span class="badge">3</span></div><div class="user-info"><div class="user-avatar">张</div><span class="user-name">张监理</span></div></div>
+        </div>
+
+        <div class="content">
+            <div class="toolbar">
+                <div class="toolbar-left">
+                    <div class="search-box"><span class="search-icon">🔍</span><input type="text" placeholder="搜索联系单编号/内容..." id="searchInput"><button class="btn btn-primary btn-sm" onclick="searchData()" style="margin-left:8px;height:32px;">搜索</button></div>
+                    <select class="filter-select" id="projectFilter"><option value="">全部项目</option><option>城东综合体项目</option><option>滨河路改造工程</option><option>科技产业园二期</option></select>
+                    <select class="filter-select" id="statusFilter"><option value="">全部状态</option><option value="draft">草稿</option><option value="sent">已发送</option><option value="replied">已回复</option><option value="verified">已验证</option><option value="overdue">已逾期</option></select>
+                    <button class="btn btn-primary btn-sm" onclick="filterData()" style="height:36px;">确认</button>
+                    <button class="btn btn-outline btn-sm" onclick="resetFilters()" style="height:36px;">重置</button>
+                    <button class="btn btn-outline btn-sm" onclick="exportData()" style="height:36px;">📥 导出</button>
+                </div>
+                <div style="display:flex;gap:8px;">
+                    <button class="btn btn-primary" onclick="openCreateModal()">＋ 新建联系单</button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>联系单编号</th>
+                            <th>所属项目</th>
+                            <th>发送方</th>
+                            <th>接收单位</th>
+                            <th>发送日期</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-status="overdue">
+                            <td style="color:#2563EB;font-weight:500;">LX-2026-008</td>
+                            <td>城东综合体项目</td>
+                            <td>张监理</td>
+                            <td>施工单位</td>
+                            <td>2026-04-27</td>
+                            <td><span class="status-tag status-overdue">已逾期</span></td>
+                            <td><div class="actions"><button class="btn btn-outline btn-sm" onclick="viewDetail(1)">查看</button><button class="btn btn-outline btn-sm" onclick="reply(1)">回复</button></div></td>
+                        </tr>
+                        <tr data-status="replied">
+                            <td style="color:#2563EB;font-weight:500;">LX-2026-007</td>
+                            <td>滨河路改造工程</td>
+                            <td>张监理</td>
+                            <td>建设单位</td>
+                            <td>2026-04-25</td>
+                            <td><span class="status-tag status-replied">已回复</span></td>
+                            <td><div class="actions"><button class="btn btn-outline btn-sm" onclick="viewDetail(2)">查看</button><button class="btn btn-success btn-sm" onclick="verify(2)">验证</button></div></td>
+                        </tr>
+                        <tr data-status="verified">
+                            <td style="color:#2563EB;font-weight:500;">LX-2026-006</td>
+                            <td>科技产业园二期</td>
+                            <td>张监理</td>
+                            <td>设计单位</td>
+                            <td>2026-04-22</td>
+                            <td><span class="status-tag status-verified">已验证</span></td>
+                            <td><div class="actions"><button class="btn btn-outline btn-sm" onclick="viewDetail(3)">查看</button></div></td>
+                        </tr>
+                        <tr data-status="draft">
+                            <td style="color:#9CA3AF;">LX-2026-D01</td>
+                            <td>城东综合体项目</td>
+                            <td>张监理</td>
+                            <td>施工单位</td>
+                            <td>—</td>
+                            <td><span class="status-tag status-draft">草稿</span></td>
+                            <td><div class="actions"><button class="btn btn-outline btn-sm" onclick="openEditModal(4)">编辑</button><button class="btn btn-danger btn-sm" onclick="confirmDelete(4)">删除</button></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pagination">
+                    <div class="pagination-info">共 4 条记录，第 1/1 页</div>
+                    <div class="pagination-btns"><button class="page-btn">‹</button><button class="page-btn active">1</button><button class="page-btn">›</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="createModal">
+        <div class="modal">
+            <div class="modal-header"><h3 id="modalTitle">新建工作联系单</h3><button class="modal-close" onclick="closeModal('createModal')">✕</button></div>
+            <div class="modal-body">
+                <div class="flow-steps">
+                    <div class="flow-step active"><span class="step-dot">1</span> 填写</div><span class="flow-arrow">→</span>
+                    <div class="flow-step"><span class="step-dot">2</span> 发送</div><span class="flow-arrow">→</span>
+                    <div class="flow-step"><span class="step-dot">3</span> 回复</div><span class="flow-arrow">→</span>
+                    <div class="flow-step"><span class="step-dot">4</span> 验证</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>联系单编号 <span class="required">*</span></label><input type="text" class="form-control" id="contactCode" placeholder="请输入联系单编号"></div>
+                    <div class="form-group"><label>所属项目 <span class="required">*</span></label><select class="form-control" id="projectSelect" onchange="onProjectChange()"><option value="">请选择项目</option><option>城东综合体项目</option><option>滨河路改造工程</option><option>科技产业园二期</option></select></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>发送方</label><input type="text" class="form-control" id="senderInput" value="张监理" readonly></div>
+                    <div class="form-group"><label>发送日期 <span class="required">*</span></label><input type="date" class="form-control" id="sendDate" value="2026-04-29"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>回复截止日期 <span class="required">*</span></label><input type="date" class="form-control" id="deadlineDate"></div>
+                    <div class="form-group"><label>接收单位名称 <span class="required">*</span></label><input type="text" class="form-control" id="receiverUnit" placeholder="请输入接收单位名称"></div>
+                </div>
+                <div class="form-group"><label>联系内容</label><textarea class="form-control" placeholder="请详细描述联系内容" style="height:120px;"></textarea></div>
+                <div class="form-group"><label>关联巡检记录</label><select class="form-control"><option value="">不关联</option><option>XJ-2026-0428-01 A区基础施工</option><option>XJ-2026-0428-02 桥梁桩基</option></select></div>
+
+                <div class="doc-section">
+                    <h5>
+                        <span>📂 所属工程资料 <span class="required">*</span></span>
+                        <span style="font-size:11px;font-weight:400;color:#6B7280;" id="selectedDocCount">已选 0 项</span>
+                    </h5>
+                    <div class="doc-desc">根据工程资料目录设置绑定，一个联系单可对应多个目录</div>
+                    <div class="doc-tree" id="docTree">
+                        <div class="doc-tree-node" onclick="toggleDocTreeNode(this)">
+                            <span class="expand-icon">▼</span>
+                            <span class="node-icon">🏗️</span>
+                            <span class="node-label" style="font-weight:500;">城东综合体项目</span>
+                            <input type="checkbox" onclick="event.stopPropagation(); toggleParentCheck(this)" data-id="proj-1">
+                        </div>
+                        <div class="doc-tree-children">
+                            <div class="doc-tree-node" onclick="toggleDocTreeNode(this)">
+                                <span class="expand-icon">▼</span>
+                                <span class="node-icon">📁</span>
+                                <span class="node-label">单位工程：主楼</span>
+                                <input type="checkbox" onclick="event.stopPropagation(); toggleParentCheck(this)" data-id="unit-1">
+                            </div>
+                            <div class="doc-tree-children">
+                                <div class="doc-tree-node" onclick="toggleDocTreeNode(this)">
+                                    <span class="expand-icon">▼</span>
+                                    <span class="node-icon">📂</span>
+                                    <span class="node-label">分部工程：地基基础</span>
+                                    <input type="checkbox" onclick="event.stopPropagation(); toggleParentCheck(this)" data-id="fb-1-1">
+                                </div>
+                                <div class="doc-tree-children">
+                                    <div class="doc-tree-node">
+                                        <span class="expand-icon" style="visibility:hidden;">▶</span>
+                                        <span class="node-icon">📄</span>
+                                        <span class="node-label">分项：土方工程</span>
+                                        <input type="checkbox" onclick="event.stopPropagation(); toggleLeafCheck(this)" data-id="fx-1-1-1" data-label="土方工程">
+                                    </div>
+                                    <div class="doc-tree-node">
+                                        <span class="expand-icon" style="visibility:hidden;">▶</span>
+                                        <span class="node-icon">📄</span>
+                                        <span class="node-label">分项：地基处理</span>
+                                        <input type="checkbox" onclick="event.stopPropagation(); toggleLeafCheck(this)" data-id="fx-1-1-2" data-label="地基处理">
+                                    </div>
+                                    <div class="doc-tree-node">
+                                        <span class="expand-icon" style="visibility:hidden;">▶</span>
+                                        <span class="node-icon">📄</span>
+                                        <span class="node-label">分项：桩基工程</span>
+                                        <input type="checkbox" onclick="event.stopPropagation(); toggleLeafCheck(this)" data-id="fx-1-1-3" data-label="桩基工程">
+                                    </div>
+                                </div>
+                                <div class="doc-tree-node" onclick="toggleDocTreeNode(this)">
+                                    <span class="expand-icon">▶</span>
+                                    <span class="node-icon">📂</span>
+                                    <span class="node-label">分部工程：主体结构</span>
+                                    <input type="checkbox" onclick="event.stopPropagation(); toggleParentCheck(this)" data-id="fb-1-2">
+                                </div>
+                                <div class="doc-tree-children collapsed">
+                                    <div class="doc-tree-node">
+                                        <span class="expand-icon" style="visibility:hidden;">▶</span>
+                                        <span class="node-icon">📄</span>
+                                        <span class="node-label">分项：钢筋工程</span>
+                                        <input type="checkbox" onclick="event.stopPropagation(); toggleLeafCheck(this)" data-id="fx-1-2-1" data-label="钢筋工程">
+                                    </div>
+                                    <div class="doc-tree-node">
+                                        <span class="expand-icon" style="visibility:hidden;">▶</span>
+                                        <span class="node-icon">📄</span>
+                                        <span class="node-label">分项：混凝土工程</span>
+                                        <input type="checkbox" onclick="event.stopPropagation(); toggleLeafCheck(this)" data-id="fx-1-2-2" data-label="混凝土工程">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="doc-tree-node" onclick="toggleDocTreeNode(this)">
+                                <span class="expand-icon">▶</span>
+                                <span class="node-icon">📁</span>
+                                <span class="node-label">单位工程：裙楼</span>
+                                <input type="checkbox" onclick="event.stopPropagation(); toggleParentCheck(this)" data-id="unit-2">
+                            </div>
+                            <div class="doc-tree-children collapsed">
+                                <div class="doc-tree-node">
+                                    <span class="expand-icon" style="visibility:hidden;">▶</span>
+                                    <span class="node-icon">📄</span>
+                                    <span class="node-label">分项：基础工程</span>
+                                    <input type="checkbox" onclick="event.stopPropagation(); toggleLeafCheck(this)" data-id="fx-2-1-1" data-label="裙楼-基础工程">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="doc-tree-node" onclick="toggleDocTreeNode(this)">
+                            <span class="expand-icon">▶</span>
+                            <span class="node-icon">🏗️</span>
+                            <span class="node-label" style="font-weight:500;">滨河路改造工程</span>
+                            <input type="checkbox" onclick="event.stopPropagation(); toggleParentCheck(this)" data-id="proj-2">
+                        </div>
+                        <div class="doc-tree-children collapsed">
+                            <div class="doc-tree-node">
+                                <span class="expand-icon" style="visibility:hidden;">▶</span>
+                                <span class="node-icon">📄</span>
+                                <span class="node-label">分项：路基工程</span>
+                                <input type="checkbox" onclick="event.stopPropagation(); toggleLeafCheck(this)" data-id="fx-bh-1" data-label="路基工程">
+                            </div>
+                            <div class="doc-tree-node">
+                                <span class="expand-icon" style="visibility:hidden;">▶</span>
+                                <span class="node-icon">📄</span>
+                                <span class="node-label">分项：桥梁工程</span>
+                                <input type="checkbox" onclick="event.stopPropagation(); toggleLeafCheck(this)" data-id="fx-bh-2" data-label="桥梁工程">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="selected-docs" id="selectedDocs">
+                        <span class="selected-doc-empty">未选择工程资料目录</span>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top:16px;"><label>附件</label><div style="display:flex;gap:8px;"><div style="width:80px;height:80px;border:1px dashed #D1D5DB;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#9CA3AF;font-size:24px;cursor:pointer;">＋</div></div></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('createModal')">取消</button>
+                <button class="btn btn-outline" onclick="saveDraft()">保存草稿</button>
+                <button class="btn btn-primary" onclick="sendContact()">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay confirm-modal" id="deleteModal">
+        <div class="modal" style="width:400px;">
+            <div class="modal-header"><h3>确认删除</h3><button class="modal-close" onclick="closeModal('deleteModal')">✕</button></div>
+            <div class="modal-body" style="padding:32px 24px;">
+                <div class="confirm-icon">⚠️</div>
+                <div class="confirm-text">确定要删除该联系单吗？</div>
+                <div class="confirm-sub">仅草稿状态可删除</div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('deleteModal')">取消</button><button class="btn btn-danger" onclick="executeDelete()">确认删除</button></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="replyModal">
+        <div class="modal" style="width:500px;">
+            <div class="modal-header"><h3>回复联系单</h3><button class="modal-close" onclick="closeModal('replyModal')">✕</button></div>
+            <div class="modal-body">
+                <div style="background:#F8FAFC;padding:12px;border-radius:6px;margin-bottom:16px;">
+                    <div style="font-size:12px;color:#6B7280;">联系单编号</div>
+                    <div style="font-size:14px;font-weight:500;">LX-2026-008</div>
+                </div>
+                <div class="form-group"><label>回复内容</label><textarea class="form-control" placeholder="请输入回复内容"></textarea></div>
+                <div class="upload-section">
+                    <h5>📷 回复照片</h5>
+                    <div class="photo-grid" id="replyPhotoGrid">
+                        <div class="photo-item" onclick="document.getElementById('replyPhotoInput').click()">+</div>
+                    </div>
+                    <input type="file" id="replyPhotoInput" accept="image/*" multiple style="display:none" onchange="handleReplyPhoto(this)">
+                </div>
+                <div class="upload-section" style="margin-top:16px;">
+                    <h5>📎 回复附件 <span class="required">*</span></h5>
+                    <div class="attachment-list" id="replyAttachmentList">
+                        <div style="font-size:12px;color:#9CA3AF;margin-bottom:8px;" id="replyAttTip">暂无附件</div>
+                    </div>
+                    <button class="upload-btn" onclick="document.getElementById('replyFileInput').click()">+ 添加附件</button>
+                    <input type="file" id="replyFileInput" multiple style="display:none" onchange="handleReplyFile(this)">
+                </div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('replyModal')">取消</button><button class="btn btn-primary" onclick="submitReply()">提交回复</button></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="viewModal">
+        <div class="modal" style="width:700px;">
+            <div class="modal-header">
+                <h3>工作联系单详情</h3>
+                <button class="modal-close" onclick="closeModal('viewModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                    <div><span style="font-size:12px;color:#9CA3AF;">联系单编号</span><div style="font-size:14px;margin-top:4px;color:#2563EB;font-weight:500;">LX-2026-008</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">所属项目</span><div style="font-size:14px;margin-top:4px;">城东综合体项目</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">发送方</span><div style="font-size:14px;margin-top:4px;">张监理</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">接收单位</span><div style="font-size:14px;margin-top:4px;">施工单位</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">发送日期</span><div style="font-size:14px;margin-top:4px;">2026-04-27</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">回复截止日期</span><div style="font-size:14px;margin-top:4px;color:#D97706;">2026-04-30</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">状态</span><div style="margin-top:4px;"><span class="status-tag status-overdue">已逾期</span></div></div>
+                </div>
+                <div style="margin-top:20px;padding-top:16px;border-top:1px solid #F3F4F6;">
+                    <h4 style="font-size:14px;font-weight:600;color:#1E3A5F;margin-bottom:8px;">联系内容</h4>
+                    <div style="font-size:13px;color:#374151;line-height:1.8;background:#F8FAFC;padding:12px;border-radius:6px;">鉴于A区地下室施工进度调整，需对原施工方案中土方开挖顺序进行变更，请施工单位于3日内提交调整后的施工方案，经监理审核后方可实施。</div>
+                </div>
+                <div style="margin-top:16px;padding-top:16px;border-top:1px solid #F3F4F6;">
+                    <h4 style="font-size:14px;font-weight:600;color:#1E3A5F;margin-bottom:8px;">新建时附件</h4>
+                    <div style="display:flex;flex-direction:column;gap:6px;">
+                        <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#F8FAFC;border-radius:6px;cursor:pointer;" onclick="alert('下载文件：现场照片.jpg')" title="点击下载">
+                            <div style="width:28px;height:28px;border-radius:4px;background:#FEF3C7;color:#D97706;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">IMG</div>
+                            <span style="flex:1;font-size:12px;color:#374151;">现场照片.jpg</span>
+                            <span style="font-size:12px;color:#2563EB;">📥 下载</span>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#F8FAFC;border-radius:6px;cursor:pointer;" onclick="alert('下载文件：施工方案调整说明.pdf')" title="点击下载">
+                            <div style="width:28px;height:28px;border-radius:4px;background:#FEE2E2;color:#DC2626;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">PDF</div>
+                            <span style="flex:1;font-size:12px;color:#374151;">施工方案调整说明.pdf</span>
+                            <span style="font-size:12px;color:#2563EB;">📥 下载</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top:16px;padding-top:16px;border-top:1px solid #F3F4F6;">
+                    <h4 style="font-size:14px;font-weight:600;color:#1E3A5F;margin-bottom:8px;">回复时附件</h4>
+                    <div style="display:flex;flex-direction:column;gap:6px;">
+                        <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#F8FAFC;border-radius:6px;cursor:pointer;" onclick="alert('下载文件：回复照片1.jpg')" title="点击下载">
+                            <div style="width:28px;height:28px;border-radius:4px;background:#FEF3C7;color:#D97706;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">IMG</div>
+                            <span style="flex:1;font-size:12px;color:#374151;">回复照片1.jpg</span>
+                            <span style="font-size:12px;color:#2563EB;">📥 下载</span>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#F8FAFC;border-radius:6px;cursor:pointer;" onclick="alert('下载文件：回复照片2.jpg')" title="点击下载">
+                            <div style="width:28px;height:28px;border-radius:4px;background:#FEF3C7;color:#D97706;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">IMG</div>
+                            <span style="flex:1;font-size:12px;color:#374151;">回复照片2.jpg</span>
+                            <span style="font-size:12px;color:#2563EB;">📥 下载</span>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#F8FAFC;border-radius:6px;cursor:pointer;" onclick="alert('下载文件：调整后施工方案.pdf')" title="点击下载">
+                            <div style="width:28px;height:28px;border-radius:4px;background:#FEE2E2;color:#DC2626;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">PDF</div>
+                            <span style="flex:1;font-size:12px;color:#374151;">调整后施工方案.pdf</span>
+                            <span style="font-size:12px;color:#2563EB;">📥 下载</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('viewModal')">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== API工具函数 ==========
+        var API_BASE = '/work-contacts';
+        if (window.App) { App.requireAuth(); }
+        function showToast(msg, type) {
+            if (window.App && App.toast) { App.toast(msg, type); return; }
+            var el = document.createElement('div'); el.className = 'toast ' + (type||'success'); el.textContent = msg; document.body.appendChild(el);
+            setTimeout(function(){ el.classList.add('show'); }, 10);
+            setTimeout(function(){ el.classList.remove('show'); setTimeout(function(){ el.remove(); }, 300); }, 2500);
+        }
+
+        var currentUser = '张监理';
+        var allData = [];
+        var filteredData = [];
+        var currentPage = 1, pageSize = 10, totalRecords = 0;
+
+        // ========== 加载列表 ==========
+        function loadData(page) {
+            if (!page) page = currentPage;
+            var search = (document.getElementById('searchInput').value||'').trim();
+            var status = document.getElementById('statusFilter').value||'';
+            App.apiGetPage(API_BASE, { pageNum: page, pageSize: pageSize, code: search || undefined, status: status || undefined })
+                .then(function(pageData){
+                    allData = pageData.list || [];
+                    filteredData = allData.slice();
+                    totalRecords = pageData.total || 0;
+                    currentPage = pageData.pageNum || page;
+                    renderTable();
+                })
+                .catch(function(){ allData = []; filteredData = []; renderTable(); });
+        }
+
+        function esc(s){ return (window.App && App.escape) ? App.escape(s) : String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
+        function renderTable() {
+            try {
+                var tbody = document.querySelector('.table-container tbody');
+                if (!tbody) return;
+                var statusMap = {
+                    draft: { text: '草稿', cls: 'status-draft' },
+                    sent: { text: '已发送', cls: 'status-sent' },
+                    replied: { text: '已回复', cls: 'status-replied' },
+                    verified: { text: '已验证', cls: 'status-verified' },
+                    overdue: { text: '已逾期', cls: 'status-overdue' }
+                };
+                var html = '';
+                for (var i = 0; i < filteredData.length; i++) {
+                    var item = filteredData[i];
+                    var s = statusMap[item.status] || { text: item.status, cls: '' };
+                    var codeStyle = item.status === 'draft' ? 'color:#9CA3AF;' : 'color:#2563EB;font-weight:500;';
+                    var sendDateText = item.sendDate || '—';
+                    var actionsHtml = '';
+                    if (item.status === 'draft') {
+                        actionsHtml = '<button class="btn btn-outline btn-sm" onclick="openEditModal(' + item.id + ')">编辑</button><button class="btn btn-danger btn-sm" onclick="confirmDelete(' + item.id + ')">删除</button>';
+                    } else if (item.status === 'overdue') {
+                        actionsHtml = '<button class="btn btn-outline btn-sm" onclick="viewDetail(' + item.id + ')">查看</button><button class="btn btn-outline btn-sm" onclick="reply(' + item.id + ')">回复</button>';
+                    } else if (item.status === 'replied') {
+                        actionsHtml = '<button class="btn btn-outline btn-sm" onclick="viewDetail(' + item.id + ')">查看</button><button class="btn btn-success btn-sm" onclick="verify(' + item.id + ')">验证</button>';
+                    } else {
+                        actionsHtml = '<button class="btn btn-outline btn-sm" onclick="viewDetail(' + item.id + ')">查看</button>';
+                    }
+                    html += '<tr data-status="' + item.status + '">' +
+                        '<td style="' + codeStyle + '">' + esc(item.code) + '</td>' +
+                        '<td>' + esc(item.project) + '</td>' +
+                        '<td>' + esc(item.sender) + '</td>' +
+                        '<td>' + esc(item.receiver) + '</td>' +
+                        '<td>' + sendDateText + '</td>' +
+                        '<td><span class="status-tag ' + s.cls + '">' + s.text + '</span></td>' +
+                        '<td><div class="actions">' + actionsHtml + '</div></td>' +
+                        '</tr>';
+                }
+                tbody.innerHTML = html;
+                var totalPages = Math.ceil(totalRecords / pageSize) || 1;
+                var paginationInfo = document.querySelector('.pagination-info');
+                if (paginationInfo) {
+                    paginationInfo.textContent = '共 ' + totalRecords + ' 条记录，第 ' + currentPage + '/' + totalPages + ' 页';
+                }
+                var btnsEl = document.querySelector('.pagination-btns');
+                if (btnsEl) {
+                    var ph = '<button class="page-btn" onclick="loadData(' + (currentPage-1) + ')"' + (currentPage<=1?' disabled':'') + '>‹</button>';
+                    for (var p = 1; p <= totalPages && p <= 7; p++) { ph += '<button class="page-btn' + (p===currentPage?' active':'') + '" onclick="loadData(' + p + ')">' + p + '</button>'; }
+                    ph += '<button class="page-btn" onclick="loadData(' + (currentPage+1) + ')"' + (currentPage>=totalPages?' disabled':'') + '>›</button>';
+                    btnsEl.innerHTML = ph;
+                }
+            } catch(e) {
+                console.error('渲染表格出错：', e);
+            }
+        }
+
+        function applyFilters() { currentPage = 1; loadData(1); }
+
+        loadData(1);
+
+        function openCreateModal() {
+            document.getElementById('modalTitle').textContent = '新建工作联系单';
+            document.getElementById('senderInput').value = currentUser;
+            document.getElementById('sendDate').value = new Date().toISOString().split('T')[0];
+            clearDocSelection();
+            document.getElementById('createModal').classList.add('show');
+        }
+        function openEditModal(id) {
+            document.getElementById('modalTitle').textContent = '编辑联系单';
+            document.getElementById('senderInput').value = currentUser;
+            document.getElementById('createModal').classList.add('show');
+        }
+        function viewDetail(id) { document.getElementById('viewModal').classList.add('show'); }
+        var replyTargetId = null;
+        function reply(id) { replyTargetId = id; document.getElementById('replyModal').classList.add('show'); }
+        function verify(id) {
+            App.apiFetch(API_BASE + '/' + id, { method: 'PUT', body: {status: 'verified'} })
+                .then(function(){ showToast('验证通过', 'success'); loadData(); })
+                .catch(function(){ });
+        }
+        var deleteTargetId = null;
+        function confirmDelete(id) { deleteTargetId = id; document.getElementById('deleteModal').classList.add('show'); }
+        function executeDelete() {
+            if (!deleteTargetId) return;
+            App.apiFetch(API_BASE + '/' + deleteTargetId, { method: 'DELETE' })
+                .then(function(){ showToast('已删除', 'success'); closeModal('deleteModal'); deleteTargetId = null; loadData(); })
+                .catch(function(){ });
+        }
+        function saveDraft() {
+            var title = document.getElementById('contactTitle') ? document.getElementById('contactTitle').value.trim() : '';
+            var payload = { code: 'LX-' + Date.now(), projectId: 1, contactDate: new Date().toISOString().slice(0,10), authorId: 1, title: title || '联系单草稿', content: '', status: 'draft' };
+            App.apiFetch(API_BASE, { method: 'POST', body: payload })
+                .then(function(){ showToast('草稿已保存', 'success'); closeModal('createModal'); loadData(); })
+                .catch(function(){ });
+        }
+        function sendContact() {
+            var receiver = document.getElementById('receiverUnit').value.trim();
+            if (!receiver) { showToast('请填写接收单位名称', 'warning'); return; }
+            var title = document.getElementById('contactTitle') ? document.getElementById('contactTitle').value.trim() : '';
+            var payload = { code: 'LX-' + Date.now(), projectId: 1, contactDate: new Date().toISOString().slice(0,10), authorId: 1, title: title || '工作联系单', content: receiver, status: 'sent' };
+            var url, method;
+            if (editingId !== null) {
+                url = API_BASE + '/' + editingId; method = 'PUT'; delete payload.code; delete payload.status;
+            } else {
+                url = API_BASE; method = 'POST';
+            }
+            App.apiFetch(url, { method: method, body: payload })
+                .then(function(){ showToast('联系单已发送', 'success'); closeModal('createModal'); loadData(); })
+                .catch(function(){ });
+        }
+        function submitReply() {
+            if (!replyTargetId) return;
+            var replyContent = document.getElementById('replyContent') ? document.getElementById('replyContent').value.trim() : '';
+            if (!replyContent) { showToast('请填写回复内容', 'warning'); return; }
+            App.apiFetch(API_BASE + '/' + replyTargetId + '/reply', { method: 'POST', body: {replyContent: replyContent} })
+                .then(function(){ showToast('回复已提交', 'success'); closeModal('replyModal'); replyTargetId = null; loadData(); })
+                .catch(function(){ });
+        }
+        function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+        function searchData() {
+            try {
+                applyFilters();
+            } catch(e) {
+                console.error('搜索出错：', e);
+            }
+        }
+        function filterData() { currentPage = 1; loadData(1); }
+        function resetFilters() {
+            try {
+                document.getElementById('searchInput').value = '';
+                document.getElementById('projectFilter').value = '';
+                document.getElementById('statusFilter').value = '';
+                currentPage = 1; loadData(1);
+                var tip = document.querySelector('.filter-tip');
+                if (tip) tip.remove();
+            } catch(e) {
+                console.error('重置出错：', e);
+            }
+        }
+        function exportData() {
+            try {
+                if (filteredData.length === 0) {
+                    alert('当前没有可导出的数据');
+                    return;
+                }
+                var statusMap = { draft: '草稿', sent: '已发送', replied: '已回复', verified: '已验证', overdue: '已逾期' };
+                var headers = ['联系单编号', '所属项目', '发送方', '接收单位', '发送日期', '状态'];
+                var csvContent = '\uFEFF' + headers.join(',') + '\n';
+                for (var i = 0; i < filteredData.length; i++) {
+                    var item = filteredData[i];
+                    csvContent += [item.code, item.project, item.sender, item.receiver, item.sendDate || '', statusMap[item.status] || item.status].join(',') + '\n';
+                }
+                var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                var link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = '工作联系单_' + new Date().toISOString().split('T')[0] + '.csv';
+                link.click();
+                URL.revokeObjectURL(link.href);
+            } catch(e) {
+                console.error('导出错：', e);
+                alert('导出失败，请重试');
+            }
+        }
+        function handleReplyPhoto(input) {
+            var grid = document.getElementById('replyPhotoGrid');
+            var files = input.files;
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var reader = new FileReader();
+                reader.onload = (function(f) {
+                    return function(e) {
+                        var item = document.createElement('div');
+                        item.className = 'photo-item';
+                        item.innerHTML = '<img src="' + e.target.result + '"><span class="remove-photo" onclick="this.parentElement.remove()">✕</span>';
+                        grid.insertBefore(item, grid.lastElementChild);
+                    };
+                })(file);
+                reader.readAsDataURL(file);
+            }
+            input.value = '';
+        }
+        function handleReplyFile(input) {
+            var list = document.getElementById('replyAttachmentList');
+            var emptyTip = document.getElementById('replyAttTip');
+            if (emptyTip) emptyTip.remove();
+            var files = input.files;
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var ext = file.name.split('.').pop().toLowerCase();
+                var iconClass = 'doc';
+                var iconText = ext.toUpperCase().substring(0,3);
+                if (ext === 'pdf') { iconClass = 'pdf'; iconText = 'PDF'; }
+                else if (['xls','xlsx'].indexOf(ext) > -1) { iconClass = 'xls'; iconText = 'XLS'; }
+                var item = document.createElement('div');
+                item.className = 'attachment-item';
+                item.innerHTML = '<div class="file-icon ' + iconClass + '">' + iconText + '</div><div class="file-name">' + file.name + '</div><span class="remove-att" onclick="this.parentElement.remove()">✕</span>';
+                list.appendChild(item);
+            }
+            input.value = '';
+        }
+
+        function toggleDocTreeNode(nodeEl) {
+            var children = nodeEl.nextElementSibling;
+            if (children && children.classList.contains('doc-tree-children')) {
+                children.classList.toggle('collapsed');
+                var icon = nodeEl.querySelector('.expand-icon');
+                if (icon && icon.style.visibility !== 'hidden') {
+                    icon.textContent = children.classList.contains('collapsed') ? '▶' : '▼';
+                }
+            }
+        }
+
+        function toggleParentCheck(checkbox) {
+            var checked = checkbox.checked;
+            var parent = checkbox.closest('.doc-tree-node');
+            var childrenContainer = parent.nextElementSibling;
+            if (childrenContainer && childrenContainer.classList.contains('doc-tree-children')) {
+                var childBoxes = childrenContainer.querySelectorAll('input[type="checkbox"]');
+                for (var i = 0; i < childBoxes.length; i++) {
+                    childBoxes[i].checked = checked;
+                }
+            }
+            updateSelectedDocs();
+        }
+
+        function toggleLeafCheck(checkbox) {
+            updateSelectedDocs();
+        }
+
+        function updateSelectedDocs() {
+            var tree = document.getElementById('docTree');
+            var allLeafChecks = tree.querySelectorAll('.doc-tree-node input[type="checkbox"][data-label]');
+            var selected = [];
+            for (var i = 0; i < allLeafChecks.length; i++) {
+                if (allLeafChecks[i].checked) {
+                    selected.push({ id: allLeafChecks[i].getAttribute('data-id'), label: allLeafChecks[i].getAttribute('data-label') });
+                }
+            }
+
+            var container = document.getElementById('selectedDocs');
+            var countLabel = document.getElementById('selectedDocCount');
+            countLabel.textContent = '已选 ' + selected.length + ' 项';
+
+            if (selected.length === 0) {
+                container.innerHTML = '<span class="selected-doc-empty">未选择工程资料目录</span>';
+            } else {
+                var html = '';
+                for (var j = 0; j < selected.length; j++) {
+                    html += '<span class="selected-doc-tag" data-id="' + selected[j].id + '">' +
+                        selected[j].label +
+                        '<span class="remove-tag" onclick="removeDocTag(\'' + selected[j].id + '\')">✕</span>' +
+                    '</span>';
+                }
+                container.innerHTML = html;
+            }
+
+            syncParentCheckboxes();
+        }
+
+        function removeDocTag(id) {
+            var checkbox = document.querySelector('#docTree input[data-id="' + id + '"]');
+            if (checkbox) {
+                checkbox.checked = false;
+            }
+            updateSelectedDocs();
+        }
+
+        function syncParentCheckboxes() {
+            var tree = document.getElementById('docTree');
+            var parentNodes = tree.querySelectorAll('.doc-tree-node');
+            for (var i = parentNodes.length - 1; i >= 0; i--) {
+                var checkbox = parentNodes[i].querySelector('input[type="checkbox"]');
+                if (!checkbox) continue;
+                var childrenContainer = parentNodes[i].nextElementSibling;
+                if (childrenContainer && childrenContainer.classList.contains('doc-tree-children')) {
+                    var directChildBoxes = childrenContainer.querySelectorAll(':scope > .doc-tree-node input[type="checkbox"]');
+                    if (directChildBoxes.length > 0) {
+                        var allChecked = true;
+                        var anyChecked = false;
+                        for (var j = 0; j < directChildBoxes.length; j++) {
+                            if (directChildBoxes[j].checked) anyChecked = true;
+                            else allChecked = false;
+                        }
+                        checkbox.checked = allChecked;
+                        checkbox.indeterminate = !allChecked && anyChecked;
+                    }
+                }
+            }
+        }
+
+        function clearDocSelection() {
+            var tree = document.getElementById('docTree');
+            var allBoxes = tree.querySelectorAll('input[type="checkbox"]');
+            for (var i = 0; i < allBoxes.length; i++) {
+                allBoxes[i].checked = false;
+                allBoxes[i].indeterminate = false;
+            }
+            updateSelectedDocs();
+        }
+
+        function onProjectChange() {
+            clearDocSelection();
+        }
+
+        (function() {
+            var params = new URLSearchParams(window.location.search);
+            var status = params.get('status');
+            if (!status) return;
+
+            var statusFilter = document.getElementById('statusFilter');
+            var statusMap = { overdue: '已逾期', replied: '已回复', verified: '已验证', draft: '草稿', sent: '已发送' };
+            var statusLabel = statusMap[status];
+            if (!statusLabel) return;
+
+            if (statusFilter) {
+                statusFilter.value = status;
+            }
+
+            applyFilters();
+
+            var toolbar = document.querySelector('.toolbar');
+            if (toolbar) {
+                var tip = document.createElement('div');
+                tip.className = 'filter-tip';
+                tip.innerHTML = '<span>当前仅显示' + statusLabel + '的联系单</span><span class="close-tip">✕</span>';
+                toolbar.parentNode.insertBefore(tip, toolbar.nextSibling);
+
+                tip.querySelector('.close-tip').addEventListener('click', function() {
+                    resetFilters();
+                });
+            }
+        })();
+    </script>
+</body>
+</html>

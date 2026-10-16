@@ -1,0 +1,385 @@
+{
+  "run": "QA22-20260923052710",
+  "note": "有效数据与负向测试探针分开判断。随机测试密码/JWT未落盘；重跑使用新批次。H2服务停止后业务数据丢失。",
+  "fixtures": [
+    {
+      "module": "部门管理",
+      "endpoint": "/departments",
+      "id": 7,
+      "name": "QA22-20260923052710模拟总公司",
+      "initialStatus": "active"
+    },
+    {
+      "module": "部门管理",
+      "endpoint": "/departments",
+      "id": 8,
+      "name": "QA22-20260923052710监理一部",
+      "initialStatus": "active"
+    },
+    {
+      "module": "部门管理",
+      "endpoint": "/departments",
+      "id": 9,
+      "name": "QA22-20260923052710项目监理组",
+      "initialStatus": "active"
+    },
+    {
+      "module": "部门管理",
+      "endpoint": "/departments",
+      "id": 10,
+      "name": "QA22-20260923052710资料档案部",
+      "initialStatus": "active"
+    },
+    {
+      "module": "人员管理",
+      "endpoint": "/users",
+      "id": 6,
+      "name": "QA22-20260923052710现场监理",
+      "initialStatus": "active"
+    },
+    {
+      "module": "人员管理",
+      "endpoint": "/users",
+      "id": 7,
+      "name": "QA22-20260923052710项目总监",
+      "initialStatus": "active"
+    },
+    {
+      "module": "人员管理",
+      "endpoint": "/users",
+      "id": 8,
+      "name": "QA22-20260923052710乙项目监理",
+      "initialStatus": "active"
+    },
+    {
+      "module": "权限设置",
+      "endpoint": "/roles",
+      "id": 4,
+      "name": "QA22-20260923052710只读角色",
+      "code": "QA22-20260923052710-read",
+      "initialStatus": "active"
+    },
+    {
+      "module": "权限设置",
+      "endpoint": "/roles",
+      "id": 5,
+      "name": "QA22-20260923052710总监角色",
+      "code": "QA22-20260923052710-review",
+      "initialStatus": "active"
+    },
+    {
+      "module": "权限设置",
+      "endpoint": "/permissions",
+      "id": 2,
+      "name": "QA22-20260923052710日记查看",
+      "code": "QA22-20260923052710:diary:read"
+    },
+    {
+      "module": "项目台账",
+      "endpoint": "/projects",
+      "id": 3,
+      "name": "QA22-20260923052710示范楼A项目",
+      "code": "QA22-20260923052710-A",
+      "initialStatus": "active"
+    },
+    {
+      "module": "项目台账",
+      "endpoint": "/projects",
+      "id": 4,
+      "name": "QA22-20260923052710配套道路B项目",
+      "code": "QA22-20260923052710-B",
+      "initialStatus": "active"
+    },
+    {
+      "module": "工程资料目录与上传",
+      "endpoint": "/sub-item-databases",
+      "id": 4,
+      "name": "QA22-20260923052710A楼单位工程",
+      "projectId": 3,
+      "initialStatus": "active"
+    },
+    {
+      "module": "工程资料目录与上传",
+      "endpoint": "/sub-item-databases",
+      "id": 5,
+      "name": "主体结构分部工程",
+      "projectId": 3,
+      "initialStatus": "active"
+    },
+    {
+      "module": "工程资料目录与上传",
+      "endpoint": "/sub-item-databases",
+      "id": 6,
+      "name": "钢筋分项工程",
+      "projectId": 3,
+      "initialStatus": "active"
+    },
+    {
+      "module": "工程资料目录与上传",
+      "endpoint": "/project-documents",
+      "id": 3,
+      "name": "QA22-20260923052710隐蔽验收说明",
+      "projectId": 3
+    },
+    {
+      "module": "监理日记",
+      "endpoint": "/supervision-diaries",
+      "id": 6,
+      "code": "QA22-20260923052710-sup-flow",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "监理日记",
+      "endpoint": "/supervision-diaries",
+      "id": 7,
+      "code": "QA22-20260923052710-sup-rev",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "监理日记",
+      "endpoint": "/supervision-diaries",
+      "id": 8,
+      "code": "QA22-20260923052710-sup-draft",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "监理日记",
+      "endpoint": "/supervision-diaries",
+      "id": 9,
+      "code": "QA22-20260923052710-sup-submitted",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "监理日记",
+      "endpoint": "/supervision-diaries",
+      "id": 10,
+      "code": "QA22-20260923052710-sup-rejected",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "监理日志",
+      "endpoint": "/supervision-logs",
+      "id": 7,
+      "code": "QA22-20260923052710-sup-flow",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "监理日志",
+      "endpoint": "/supervision-logs",
+      "id": 8,
+      "code": "QA22-20260923052710-sup-rev",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "监理日志",
+      "endpoint": "/supervision-logs",
+      "id": 9,
+      "code": "QA22-20260923052710-sup-draft",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "监理日志",
+      "endpoint": "/supervision-logs",
+      "id": 10,
+      "code": "QA22-20260923052710-sup-submitted",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "监理日志",
+      "endpoint": "/supervision-logs",
+      "id": 11,
+      "code": "QA22-20260923052710-sup-rejected",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "日常巡检",
+      "endpoint": "/daily-inspections",
+      "id": 6,
+      "code": "QA22-20260923052710-dai-flow",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "日常巡检",
+      "endpoint": "/daily-inspections",
+      "id": 7,
+      "code": "QA22-20260923052710-dai-rev",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "日常巡检",
+      "endpoint": "/daily-inspections",
+      "id": 8,
+      "code": "QA22-20260923052710-dai-draft",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "日常巡检",
+      "endpoint": "/daily-inspections",
+      "id": 9,
+      "code": "QA22-20260923052710-dai-submitted",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "日常巡检",
+      "endpoint": "/daily-inspections",
+      "id": 10,
+      "code": "QA22-20260923052710-dai-rejected",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "旁站检查",
+      "endpoint": "/sideline-inspections",
+      "id": 6,
+      "code": "QA22-20260923052710-sid-flow",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "旁站检查",
+      "endpoint": "/sideline-inspections",
+      "id": 7,
+      "code": "QA22-20260923052710-sid-rev",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "旁站检查",
+      "endpoint": "/sideline-inspections",
+      "id": 8,
+      "code": "QA22-20260923052710-sid-draft",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "旁站检查",
+      "endpoint": "/sideline-inspections",
+      "id": 9,
+      "code": "QA22-20260923052710-sid-submitted",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "旁站检查",
+      "endpoint": "/sideline-inspections",
+      "id": 10,
+      "code": "QA22-20260923052710-sid-rejected",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "监理日志",
+      "endpoint": "/supervision-logs",
+      "id": 12,
+      "code": "QA22-20260923052710-sup-source",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "安全日志",
+      "endpoint": "/safety-logs",
+      "id": 3,
+      "name": "QA22-20260923052710安全日志模拟记录",
+      "code": "QA22-20260923052710-safety",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "安全日志",
+      "endpoint": "/safety-logs",
+      "id": 4,
+      "name": "QA22-20260923052710安全日志模拟记录",
+      "code": "QA22-20260923052710-safety-reject",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "会议纪要",
+      "endpoint": "/meeting-minutes",
+      "id": 2,
+      "name": "QA22-20260923052710会议纪要模拟记录",
+      "code": "QA22-20260923052710-meetin",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "监理月报",
+      "endpoint": "/supervision-monthly-reports",
+      "id": 2,
+      "name": "QA22-20260923052710监理月报模拟记录",
+      "code": "QA22-20260923052710-superv",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "监理通知单",
+      "endpoint": "/supervision-notices",
+      "id": 4,
+      "name": "QA22-20260923052710监理通知单模拟记录",
+      "code": "QA22-20260923052710-superv",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "监理通知单",
+      "endpoint": "/supervision-notices",
+      "id": 5,
+      "name": "QA22-20260923052710监理通知单模拟记录",
+      "code": "QA22-20260923052710-superv-sent",
+      "projectId": 3,
+      "initialStatus": "issued"
+    },
+    {
+      "module": "工作联系单",
+      "endpoint": "/work-contacts",
+      "id": 4,
+      "name": "QA22-20260923052710工作联系单模拟记录",
+      "code": "QA22-20260923052710-work-c",
+      "projectId": 3,
+      "initialStatus": "draft"
+    },
+    {
+      "module": "工作联系单",
+      "endpoint": "/work-contacts",
+      "id": 5,
+      "name": "QA22-20260923052710工作联系单模拟记录",
+      "code": "QA22-20260923052710-work-c-sent",
+      "projectId": 3,
+      "initialStatus": "sent"
+    },
+    {
+      "module": "消息中心",
+      "endpoint": "/messages",
+      "id": 2,
+      "name": "QA22-20260923052710待复查通知"
+    },
+    {
+      "module": "工作标准配置",
+      "endpoint": "/work-standard-configs",
+      "id": 2,
+      "name": "QA22-20260923052710日记提交截止",
+      "initialStatus": "active"
+    },
+    {
+      "module": "部门管理",
+      "endpoint": "/departments",
+      "id": 11,
+      "name": "QA22-20260923052710临时空部门",
+      "initialStatus": "active"
+    }
+  ]
+}

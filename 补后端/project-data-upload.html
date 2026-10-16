@@ -1,0 +1,595 @@
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监理现场管理系统 - 工程资料上传</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background: #F0F5FF; color: #1F2937; display: flex; min-height: 100vh; }
+        .sidebar { width: 240px; background: linear-gradient(180deg, #1E3A5F 0%, #0F2440 100%); color: #fff; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; overflow-y: auto; }
+        .sidebar-logo { padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo h2 { font-size: 16px; font-weight: 600; letter-spacing: 1px; }
+        .sidebar-logo p { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+        .menu-group { padding: 8px 0; }
+        .menu-group-title { padding: 10px 20px 6px; font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
+        .menu-item { display: flex; align-items: center; padding: 10px 20px; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; transition: all 0.2s; cursor: pointer; }
+        .menu-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+        .menu-item.active { background: rgba(37,99,235,0.3); color: #fff; border-right: 3px solid #2563EB; }
+        .menu-item .icon { width: 20px; margin-right: 10px; text-align: center; font-size: 14px; }
+        .main { margin-left: 240px; flex: 1; }
+        .header { background: #fff; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 50; }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .header-left h3 { font-size: 15px; font-weight: 600; color: #1E3A5F; }
+        .breadcrumb { font-size: 12px; color: #6B7280; }
+        .breadcrumb a { color: #2563EB; text-decoration: none; }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .notification { position: relative; cursor: pointer; font-size: 18px; }
+        .badge { position: absolute; top: -6px; right: -6px; background: #EF4444; color: #fff; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .user-info { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #2563EB; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; }
+        .user-name { font-size: 13px; color: #374151; }
+        .content { padding: 24px; }
+        .layout { display: grid; grid-template-columns: 300px 1fr; gap: 16px; }
+        .tree-panel { background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; display: flex; flex-direction: column; }
+        .tree-header { padding: 16px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: space-between; }
+        .tree-header h4 { font-size: 14px; font-weight: 600; color: #1E3A5F; }
+        .tree-body { padding: 8px; overflow-y: auto; flex: 1; }
+        .tree-node { padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 6px; transition: background 0.2s; }
+        .tree-node:hover { background: #F0F5FF; }
+        .tree-node.active { background: #DBEAFE; color: #1D4ED8; font-weight: 500; }
+        .tree-node .expand { font-size: 10px; color: #9CA3AF; width: 16px; cursor: pointer; flex-shrink: 0; }
+        .tree-node .expand:hover { color: #2563EB; }
+        .tree-node .node-icon { font-size: 14px; }
+        .tree-node .node-name { flex: 1; min-width: 0; }
+        .tree-node .node-count { font-size: 10px; color: #6B7280; background: #F3F4F6; padding: 1px 6px; border-radius: 8px; margin-left: auto; white-space: nowrap; }
+        .tree-node .node-count.has-files { color: #2563EB; background: #DBEAFE; font-weight: 500; }
+        
+        .tree-children { padding-left: 20px; }
+        .tree-children.collapsed { display: none; }
+        .upload-panel { background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; }
+        .upload-header { padding: 16px 20px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: space-between; }
+        .upload-header h4 { font-size: 14px; font-weight: 600; color: #1E3A5F; }
+        .upload-body { padding: 20px; }
+        .current-path { background: #F0F5FF; border: 1px solid #DBEAFE; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #1E3A5F; }
+        .current-path .path-label { color: #6B7280; white-space: nowrap; }
+        .current-path .path-value { font-weight: 500; }
+        .upload-zone { border: 2px dashed #CBD5E1; border-radius: 12px; padding: 40px; text-align: center; margin-bottom: 20px; transition: all 0.3s; cursor: pointer; }
+        .upload-zone:hover { border-color: #2563EB; background: #F0F5FF; }
+        .upload-zone.dragover { border-color: #2563EB; background: #DBEAFE; }
+        .upload-zone .zone-icon { font-size: 48px; margin-bottom: 12px; }
+        .upload-zone .zone-title { font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px; }
+        .upload-zone .zone-desc { font-size: 12px; color: #9CA3AF; }
+        .upload-zone .zone-btn { display: inline-block; margin-top: 12px; padding: 8px 20px; background: #2563EB; color: #fff; border-radius: 6px; font-size: 13px; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; border: none; transition: all 0.2s; }
+        .btn-primary { background: #2563EB; color: #fff; }
+        .btn-primary:hover { background: #1D4ED8; }
+        .btn-danger { background: #EF4444; color: #fff; }
+        .btn-outline { background: #fff; color: #374151; border: 1px solid #E5E7EB; }
+        .btn-outline:hover { background: #F9FAFB; }
+        .btn-sm { padding: 4px 10px; font-size: 12px; }
+        .btn-success { background: #10B981; color: #fff; }
+        .file-list { margin-top: 16px; }
+        .file-list-title { font-size: 13px; font-weight: 600; color: #1E3A5F; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+        .file-item { display: flex; align-items: center; padding: 12px; border: 1px solid #E5E7EB; border-radius: 8px; margin-bottom: 8px; transition: background 0.2s; }
+        .file-item:hover { background: #F8FAFC; }
+        .file-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-right: 12px; flex-shrink: 0; }
+        .file-icon.pdf { background: #FEE2E2; color: #DC2626; }
+        .file-icon.doc { background: #DBEAFE; color: #2563EB; }
+        .file-icon.xls { background: #D1FAE5; color: #059669; }
+        .file-icon.img { background: #FCE7F3; color: #EC4899; }
+        .file-icon.other { background: #F3F4F6; color: #6B7280; }
+        .file-info { flex: 1; min-width: 0; }
+        .file-name { font-size: 13px; font-weight: 500; color: #1F2937; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .file-meta { font-size: 11px; color: #9CA3AF; margin-top: 2px; display: flex; gap: 12px; }
+        .file-actions { display: flex; gap: 8px; margin-left: 12px; }
+        .upload-progress { margin-top: 4px; }
+        .progress-bar { width: 100%; height: 4px; background: #E5E7EB; border-radius: 2px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 2px; background: #2563EB; transition: width 0.3s; }
+        .progress-text { font-size: 10px; color: #9CA3AF; margin-top: 2px; }
+        .existing-files { margin-top: 24px; }
+        .existing-files h5 { font-size: 13px; font-weight: 600; color: #1E3A5F; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+        .existing-file-item { display: flex; align-items: center; padding: 10px 12px; border-bottom: 1px solid #F3F4F6; }
+        .existing-file-item:last-child { border-bottom: none; }
+        .existing-file-item .file-icon { width: 32px; height: 32px; font-size: 16px; margin-right: 10px; }
+        .existing-file-item .file-info { flex: 1; }
+        .existing-file-item .file-name { font-size: 12px; }
+        .existing-file-item .file-meta { font-size: 10px; }
+        .existing-file-item .file-actions { margin-left: 8px; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+        .modal-overlay.show { display: flex; }
+        .modal { background: #fff; border-radius: 12px; width: 450px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: space-between; }
+        .modal-header h3 { font-size: 16px; font-weight: 600; color: #1E3A5F; }
+        .modal-close { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer; font-size: 18px; color: #6B7280; border: none; background: none; }
+        .modal-close:hover { background: #F3F4F6; }
+        .modal-body { padding: 24px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid #E5E7EB; display: flex; justify-content: flex-end; gap: 12px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px; }
+        .form-group label .required { color: #EF4444; }
+        .form-control { width: 100%; height: 36px; border: 1px solid #E5E7EB; border-radius: 6px; padding: 0 12px; font-size: 13px; outline: none; }
+        .form-control:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        textarea.form-control { height: 80px; padding: 8px 12px; resize: vertical; }
+        .confirm-modal .modal { width: 400px; }
+        .confirm-icon { text-align: center; font-size: 48px; margin-bottom: 16px; }
+        .confirm-text { text-align: center; font-size: 14px; color: #374151; margin-bottom: 8px; }
+        .confirm-sub { text-align: center; font-size: 12px; color: #9CA3AF; }
+        .empty-state { text-align: center; padding: 40px; color: #9CA3AF; }
+        .empty-state .empty-icon { font-size: 48px; margin-bottom: 12px; }
+        .empty-state .empty-text { font-size: 13px; }
+        .tree-tip { background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 6px; padding: 8px 12px; margin: 8px; font-size: 11px; color: #92400E; display: flex; align-items: flex-start; gap: 6px; }
+        .bound-meta { color: #1D4ED8; }
+        .bound-link { color: #2563EB; text-decoration: none; font-weight: 500; }
+        .bound-link:hover { text-decoration: underline; }
+        .project-selector { display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 16px; flex-wrap: wrap; }
+        .selector-label { font-size: 14px; font-weight: 600; color: #1F2937; white-space: nowrap; }
+        .selector-select { flex: 1; min-width: 240px; max-width: 400px; padding: 8px 12px; border: 1px solid #D1D5DB; border-radius: 6px; font-size: 13px; color: #374151; background: #fff; cursor: pointer; transition: border-color 0.2s; }
+        .selector-select:focus { outline: none; border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .selector-hint { font-size: 12px; color: #D97706; display: flex; align-items: center; gap: 4px; }
+        .selector-hint.hidden { display: none; }
+        .layout.disabled { opacity: 0.5; pointer-events: none; user-select: none; }
+        .layout.disabled .tree-tip { display: block; }
+        @media (max-width: 768px) {
+            .project-selector { flex-direction: column; align-items: stretch; gap: 8px; }
+            .selector-select { max-width: 100%; }
+        }
+    </style>
+    <script src="assets/app.js"></script>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/responsive.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-logo"><h2>监理现场管理系统</h2><p>Supervision Site Management</p></div>
+        <div class="menu-group"><a class="menu-item" href="index.html"><span class="icon">📊</span> 仪表盘</a></div>
+        <div class="menu-group"><div class="menu-group-title">项目管理</div><a class="menu-item" href="project-ledger.html"><span class="icon">📁</span> 项目台账</a></div>
+        <div class="menu-group"><div class="menu-group-title">监理现场工作</div><a class="menu-item" href="daily-inspection.html"><span class="icon">🔍</span> 日常巡检</a><a class="menu-item" href="sideline-inspection.html"><span class="icon">👁️</span> 旁站</a><a class="menu-item" href="supervision-notice.html"><span class="icon">📋</span> 监理通知单</a><a class="menu-item" href="work-contact.html"><span class="icon">✉️</span> 工作联系单</a><a class="menu-item" href="supervision-diary.html"><span class="icon">📝</span> 监理日记</a><a class="menu-item" href="supervision-log.html"><span class="icon">📄</span> 监理日志</a><a class="menu-item" href="safety-log.html"><span class="icon">🛡️</span> 监理安全日志</a><a class="menu-item" href="meeting-minutes.html"><span class="icon">📅</span> 会议纪要</a><a class="menu-item" href="supervision-monthly-report.html"><span class="icon">📊</span> 监理月报</a></div>
+        <div class="menu-group">
+            <div class="menu-group-title">项目资料</div>
+            <a class="menu-item" href="sub-item-database.html"><span class="icon">🗄️</span> 工程资料目录设置</a>
+            <a class="menu-item active" href="project-data-upload.html"><span class="icon">📤</span> 工程资料上传</a>
+        </div>
+        <div class="menu-group"><div class="menu-group-title">数据统计</div><a class="menu-item" href="diary-statistics.html"><span class="icon">📈</span> 日记统计</a><a class="menu-item" href="diary-report.html"><span class="icon">📑</span> 日记报表</a><a class="menu-item" href="log-statistics.html"><span class="icon">📊</span> 日志统计</a><a class="menu-item" href="safety-log-statistics.html"><span class="icon">🛡️</span> 安全日志统计</a></div>
+        <div class="menu-group"><div class="menu-group-title">团队管理</div><a class="menu-item" href="department-management.html"><span class="icon">🏢</span> 部门管理</a><a class="menu-item" href="personnel-management.html"><span class="icon">👥</span> 人员管理</a><a class="menu-item" href="permission-settings.html"><span class="icon">🔐</span> 权限设置</a><a class="menu-item" href="process-management.html"><span class="icon">🔄</span> 流程管理</a></div>
+        <div class="menu-group"><div class="menu-group-title">系统设置</div><a class="menu-item" href="operation-log.html"><span class="icon">📜</span> 操作日志</a><a class="menu-item" href="message-center.html"><span class="icon">🔔</span> 消息中心</a><a class="menu-item" href="work-standard-config.html"><span class="icon">⚙️</span> 工作标准配置</a></div>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <div class="header-left"><h3>工程资料上传</h3><span class="breadcrumb"><a href="index.html">首页</a> / 项目资料 / 工程资料上传</span></div>
+            <div class="header-right"><div class="notification">🔔<span class="badge" id="notifBadge" style="display:none;">0</span></div><div class="user-info"><div class="user-avatar">张</div><span class="user-name">张监理</span></div></div>
+        </div>
+
+        <div class="content">
+            <div class="project-selector">
+                <div class="selector-label">🏗️ 选择项目</div>
+                <select class="selector-select" id="projectSelect" onchange="onProjectChange()">
+                    <option value="">-- 请先选择项目 --</option>
+                </select>
+                <div class="selector-hint" id="projectHint">⚠️ 请先选择项目，再进行资料目录操作</div>
+            </div>
+            <div class="layout">
+                <div class="tree-panel">
+                    <div class="tree-header"><h4>资料目录</h4><a href="sub-item-database.html" style="font-size:12px;color:#2563EB;text-decoration:none;">设置目录 →</a></div>
+                    <div class="tree-tip">💡 目录结构来自"工程资料目录设置"，请先在那里配置目录</div>
+                    <div class="tree-body" id="treeBody">
+                        <div class="tree-node active" data-name="单位工程" onclick="selectNode(this,'单位工程')"><span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▼</span><span class="node-icon">📂</span><span class="node-name">单位工程</span><span class="node-count"></span></div>
+                        <div class="tree-children">
+                            <div class="tree-node" data-name="分部工程" onclick="selectNode(this,'分部工程')"><span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▼</span><span class="node-icon">📂</span><span class="node-name">分部工程</span><span class="node-count"></span></div>
+                            <div class="tree-children">
+                                <div class="tree-node" data-name="地基基础" onclick="selectNode(this,'地基基础')"><span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▼</span><span class="node-icon">📂</span><span class="node-name">地基基础</span><span class="node-count"></span></div>
+                                <div class="tree-children">
+                                    <div class="tree-node" data-name="土方工程" onclick="selectNode(this,'土方工程')"><span class="node-icon">📂</span><span class="node-name">土方工程</span><span class="node-count"></span></div>
+                                    <div class="tree-node" data-name="地基处理" onclick="selectNode(this,'地基处理')"><span class="node-icon">📂</span><span class="node-name">地基处理</span><span class="node-count"></span></div>
+                                    <div class="tree-node" data-name="桩基工程" onclick="selectNode(this,'桩基工程')"><span class="node-icon">📂</span><span class="node-name">桩基工程</span><span class="node-count"></span></div>
+                                </div>
+                                <div class="tree-node" data-name="主体结构" onclick="selectNode(this,'主体结构')"><span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▶</span><span class="node-icon">📂</span><span class="node-name">主体结构</span><span class="node-count"></span></div>
+                                <div class="tree-children collapsed">
+                                    <div class="tree-node" data-name="钢筋工程" onclick="selectNode(this,'钢筋工程')"><span class="node-icon">📂</span><span class="node-name">钢筋工程</span><span class="node-count"></span></div>
+                                    <div class="tree-node" data-name="混凝土工程" onclick="selectNode(this,'混凝土工程')"><span class="node-icon">📂</span><span class="node-name">混凝土工程</span><span class="node-count"></span></div>
+                                </div>
+                                <div class="tree-node" data-name="装饰装修" onclick="selectNode(this,'装饰装修')"><span class="node-icon">📂</span><span class="node-name">装饰装修</span><span class="node-count"></span></div>
+                                <div class="tree-node" data-name="屋面工程" onclick="selectNode(this,'屋面工程')"><span class="node-icon">📂</span><span class="node-name">屋面工程</span><span class="node-count"></span></div>
+                                <div class="tree-node" data-name="给排水及采暖" onclick="selectNode(this,'给排水及采暖')"><span class="node-icon">📂</span><span class="node-name">给排水及采暖</span><span class="node-count"></span></div>
+                                <div class="tree-node" data-name="电气工程" onclick="selectNode(this,'电气工程')"><span class="node-icon">📂</span><span class="node-name">电气工程</span><span class="node-count"></span></div>
+                            </div>
+                            <div class="tree-node" data-name="子分部工程" onclick="selectNode(this,'子分部工程')"><span class="node-icon">📂</span><span class="node-name">子分部工程</span><span class="node-count"></span></div>
+                            <div class="tree-node" data-name="分项工程" onclick="selectNode(this,'分项工程')"><span class="node-icon">📂</span><span class="node-name">分项工程</span><span class="node-count"></span></div>
+                        </div>
+                        <div class="tree-node" data-name="监理资料" onclick="selectNode(this,'监理资料')"><span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▶</span><span class="node-icon">📂</span><span class="node-name">监理资料</span><span class="node-count"></span></div>
+                        <div class="tree-children collapsed">
+                            <div class="tree-node" data-name="监理规划" onclick="selectNode(this,'监理规划')"><span class="node-icon">📂</span><span class="node-name">监理规划</span><span class="node-count"></span></div>
+                            <div class="tree-node" data-name="监理实施细则" onclick="selectNode(this,'监理实施细则')"><span class="node-icon">📂</span><span class="node-name">监理实施细则</span><span class="node-count"></span></div>
+                            <div class="tree-node" data-name="监理通知单" onclick="selectNode(this,'监理通知单')"><span class="node-icon">📂</span><span class="node-name">监理通知单</span><span class="node-count"></span></div>
+                            <div class="tree-node" data-name="会议纪要" onclick="selectNode(this,'会议纪要')"><span class="node-icon">📂</span><span class="node-name">会议纪要</span><span class="node-count"></span></div>
+                        </div>
+                        <div class="tree-node" data-name="施工资料" onclick="selectNode(this,'施工资料')"><span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▶</span><span class="node-icon">📂</span><span class="node-name">施工资料</span><span class="node-count"></span></div>
+                        <div class="tree-children collapsed">
+                            <div class="tree-node" data-name="施工组织设计" onclick="selectNode(this,'施工组织设计')"><span class="node-icon">📂</span><span class="node-name">施工组织设计</span><span class="node-count"></span></div>
+                            <div class="tree-node" data-name="施工方案" onclick="selectNode(this,'施工方案')"><span class="node-icon">📂</span><span class="node-name">施工方案</span><span class="node-count"></span></div>
+                        </div>
+                        <div class="tree-node" data-name="竣工图" onclick="selectNode(this,'竣工图')"><span class="node-icon">📂</span><span class="node-name">竣工图</span><span class="node-count"></span></div>
+                        <div class="tree-node" data-name="竣工验收资料" onclick="selectNode(this,'竣工验收资料')"><span class="node-icon">📂</span><span class="node-name">竣工验收资料</span><span class="node-count"></span></div>
+                    </div>
+                </div>
+
+                <div class="upload-panel">
+                    <div class="upload-header">
+                        <h4 id="uploadTitle">上传资料 - 请选择目录</h4>
+                    </div>
+                    <div class="upload-body">
+                        <div class="current-path">
+                            <span class="path-label">当前目录：</span>
+                            <span class="path-value" id="currentPath">单位工程</span>
+                        </div>
+
+                        <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+                            <div class="zone-icon">📤</div>
+                            <div class="zone-title">将文件拖拽到此处，或点击上传</div>
+                            <div class="zone-desc">支持 PDF、Word、Excel、图片等格式，单个文件不超过 50MB</div>
+                            <div class="zone-btn">选择文件</div>
+                            <input type="file" id="fileInput" multiple style="display:none;" onchange="handleFiles(this.files)">
+                        </div>
+
+                        <div class="file-list" id="fileList" style="display:none;">
+                            <div class="file-list-title">
+                                <span>待上传文件 (<span id="fileCount">0</span>个)</span>
+                                <button class="btn btn-danger btn-sm" onclick="clearFiles()">清空</button>
+                            </div>
+                            <div id="fileItems"></div>
+                            <div style="text-align:right;margin-top:12px;">
+                                <button class="btn btn-primary" onclick="uploadAll()">开始上传</button>
+                            </div>
+                        </div>
+
+                        <div class="existing-files">
+                            <h5>📂 已上传资料 (<span id="existingCount">0</span>个文件)</h5>
+                            <div id="existingFileList" style="border:1px solid #E5E7EB;border-radius:8px;overflow:hidden;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var currentProjectId = '';
+        var currentSubItemId = null;
+        var pendingFiles = [];
+        var nodeMap = {};
+
+        function escapeHtml(t) { var d = document.createElement('div'); d.textContent = t == null ? '' : t; return d.innerHTML; }
+
+        function formatSize(sz) {
+            if (sz == null || sz === '') return '';
+            if (typeof sz === 'number') {
+                if (sz > 1048576) return (sz / 1048576).toFixed(1) + ' MB';
+                if (sz > 1024) return (sz / 1024).toFixed(1) + ' KB';
+                return sz + ' B';
+            }
+            return sz;
+        }
+
+        function extFromName(name) {
+            var ext = (name || '').split('.').pop().toLowerCase();
+            if (ext === 'pdf') return 'pdf';
+            if (['doc', 'docx'].indexOf(ext) >= 0) return 'doc';
+            if (['xls', 'xlsx'].indexOf(ext) >= 0) return 'xls';
+            if (['jpg', 'jpeg', 'png', 'gif', 'bmp'].indexOf(ext) >= 0) return 'img';
+            return 'other';
+        }
+
+        var folderFiles = {
+            '单位工程': [
+                { id: 1, name: '单位工程质量验收记录.pdf', ext: 'pdf', size: '2.1 MB', uploader: '张监理', date: '2026-04-28' },
+                { id: 2, name: '单位工程开工报告.docx', ext: 'doc', size: '1.5 MB', uploader: '李监理', date: '2026-04-15' }
+            ],
+            '分部工程': [
+                { id: 3, name: '分部工程质量验收汇总表.pdf', ext: 'pdf', size: '3.2 MB', uploader: '张监理', date: '2026-04-26' }
+            ],
+            '地基基础': [
+                { id: 4, name: '地基基础分部工程质量验收记录.pdf', ext: 'pdf', size: '1.8 MB', uploader: '张监理', date: '2026-04-25' },
+                { id: 5, name: '地基承载力检测报告.pdf', ext: 'pdf', size: '5.6 MB', uploader: '王监理', date: '2026-04-20' }
+            ],
+            '土方工程': [
+                { id: 6, name: '土方开挖检验批质量验收记录.pdf', ext: 'pdf', size: '2.3 MB', uploader: '张监理', date: '2026-04-25' },
+                { id: 7, name: '土方回填施工方案.docx', ext: 'doc', size: '1.8 MB', uploader: '李监理', date: '2026-04-22' },
+                { id: 8, name: '现场土方施工照片_20260420.jpg', ext: 'img', size: '4.5 MB', uploader: '张监理', date: '2026-04-20' }
+            ],
+            '地基处理': [
+                { id: 9, name: '地基处理施工记录.pdf', ext: 'pdf', size: '1.2 MB', uploader: '张监理', date: '2026-04-18' },
+                { id: 10, name: '地基处理检测报告.pdf', ext: 'pdf', size: '3.8 MB', uploader: '王监理', date: '2026-04-16' }
+            ],
+            '桩基工程': [],
+            '主体结构': [
+                { id: 11, name: '主体结构分部工程质量验收记录.pdf', ext: 'pdf', size: '2.5 MB', uploader: '张监理', date: '2026-04-10' }
+            ],
+            '钢筋工程': [
+                { id: 12, name: '钢筋连接检验批质量验收记录.pdf', ext: 'pdf', size: '1.1 MB', uploader: '李监理', date: '2026-04-08' }
+            ],
+            '混凝土工程': [
+                { id: 13, name: '混凝土施工检验批质量验收记录.pdf', ext: 'pdf', size: '0.9 MB', uploader: '张监理', date: '2026-04-06' },
+                { id: 14, name: '混凝土抗压强度试验报告.pdf', ext: 'pdf', size: '2.0 MB', uploader: '王监理', date: '2026-04-05' }
+            ],
+            '装饰装修': [],
+            '屋面工程': [],
+            '给排水及采暖': [],
+            '电气工程': [],
+            '子分部工程': [],
+            '分项工程': [],
+            '监理资料': [
+                { id: 15, name: '监理规划.pdf', ext: 'pdf', size: '4.2 MB', uploader: '张监理', date: '2026-03-01' },
+                { id: 16, name: '监理实施细则_地基基础.pdf', ext: 'pdf', size: '3.5 MB', uploader: '张监理', date: '2026-03-05' },
+                { id: 17, name: '监理实施细则_主体结构.pdf', ext: 'pdf', size: '3.8 MB', uploader: '张监理', date: '2026-03-05' },
+                { id: 33, name: '安全生产专题会议纪要_HY-2026-001.pdf', ext: 'pdf', size: '1.2 MB', uploader: '张监理', date: '2026-04-28', boundDiary: 'RJ-2026-015' },
+                { id: 34, name: '施工进度协调会议纪要_HY-2026-002.pdf', ext: 'pdf', size: '0.9 MB', uploader: '李监理', date: '2026-04-25', boundDiary: 'RJ-2026-014' },
+                { id: 35, name: '质量整改专题会议纪要_HY-2026-003.pdf', ext: 'pdf', size: '1.1 MB', uploader: '张监理', date: '2026-04-20' }
+            ],
+            '监理规划': [
+                { id: 18, name: '城东综合体项目监理规划.pdf', ext: 'pdf', size: '4.2 MB', uploader: '张监理', date: '2026-03-01' }
+            ],
+            '监理实施细则': [
+                { id: 19, name: '地基基础监理实施细则.pdf', ext: 'pdf', size: '3.5 MB', uploader: '张监理', date: '2026-03-05' },
+                { id: 20, name: '主体结构监理实施细则.pdf', ext: 'pdf', size: '3.8 MB', uploader: '张监理', date: '2026-03-05' }
+            ],
+            '监理通知单': [
+                { id: 21, name: '监理通知单_2026-001.pdf', ext: 'pdf', size: '0.8 MB', uploader: '张监理', date: '2026-04-10', boundDiary: 'RJ-2026-015' },
+                { id: 22, name: '监理通知单_2026-002.pdf', ext: 'pdf', size: '0.6 MB', uploader: '李监理', date: '2026-04-15' },
+                { id: 23, name: '监理通知单_2026-003.pdf', ext: 'pdf', size: '0.7 MB', uploader: '张监理', date: '2026-04-20', boundDiary: 'RJ-2026-014' }
+            ],
+            '会议纪要': [
+                { id: 33, name: '安全生产专题会议纪要_HY-2026-001.pdf', ext: 'pdf', size: '1.2 MB', uploader: '张监理', date: '2026-04-28', boundDiary: 'RJ-2026-015' },
+                { id: 34, name: '施工进度协调会议纪要_HY-2026-002.pdf', ext: 'pdf', size: '0.9 MB', uploader: '李监理', date: '2026-04-25', boundDiary: 'RJ-2026-014' },
+                { id: 35, name: '质量整改专题会议纪要_HY-2026-003.pdf', ext: 'pdf', size: '1.1 MB', uploader: '张监理', date: '2026-04-20' }
+            ],
+            '施工资料': [
+                { id: 24, name: '施工组织设计审批表.pdf', ext: 'pdf', size: '1.5 MB', uploader: '张监理', date: '2026-03-10' },
+                { id: 25, name: '施工方案报审表.pdf', ext: 'pdf', size: '0.9 MB', uploader: '李监理', date: '2026-03-12' }
+            ],
+            '施工组织设计': [
+                { id: 26, name: '施工组织设计_城东综合体.pdf', ext: 'pdf', size: '8.5 MB', uploader: '张监理', date: '2026-03-10' },
+                { id: 27, name: '施工组织设计审批记录.pdf', ext: 'pdf', size: '1.2 MB', uploader: '张监理', date: '2026-03-11' }
+            ],
+            '施工方案': [
+                { id: 28, name: '深基坑施工方案.pdf', ext: 'pdf', size: '5.3 MB', uploader: '李监理', date: '2026-03-15' },
+                { id: 29, name: '高大模板施工方案.pdf', ext: 'pdf', size: '4.8 MB', uploader: '李监理', date: '2026-03-18' }
+            ],
+            '竣工图': [
+                { id: 30, name: '建筑竣工图_A区.pdf', ext: 'pdf', size: '12.5 MB', uploader: '张监理', date: '2026-04-28' },
+                { id: 31, name: '结构竣工图_A区.pdf', ext: 'pdf', size: '15.2 MB', uploader: '张监理', date: '2026-04-28' }
+            ],
+            '竣工验收资料': [
+                { id: 32, name: '竣工验收报告.pdf', ext: 'pdf', size: '2.8 MB', uploader: '张监理', date: '2026-04-30' }
+            ]
+        };
+
+        function onProjectChange() {
+            var select = document.getElementById('projectSelect');
+            var hint = document.getElementById('projectHint');
+            var layout = document.querySelector('.layout');
+            currentProjectId = select.value;
+            currentSubItemId = null;
+            pendingFiles = [];
+            renderFileList();
+            if (currentProjectId) {
+                layout.classList.remove('disabled');
+                hint.classList.add('hidden');
+                document.getElementById('uploadTitle').textContent = '上传资料 - 请选择目录';
+                document.getElementById('currentPath').textContent = '请选择目录';
+                document.getElementById('existingFileList').innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">请选择左侧目录查看已上传资料</div></div>';
+                document.getElementById('existingCount').textContent = '0';
+                loadTree();
+            } else {
+                layout.classList.add('disabled');
+                hint.classList.remove('hidden');
+                document.getElementById('treeBody').innerHTML = '';
+            }
+        }
+
+        function loadProjects() {
+            return apiGetPage('/projects', { pageNum: 1, pageSize: 500 }).then(function(res) {
+                var sel = document.getElementById('projectSelect');
+                sel.innerHTML = '<option value="">-- 请先选择项目 --</option>';
+                (res.list || []).forEach(function(p) {
+                    var opt = document.createElement('option');
+                    opt.value = p.id;
+                    opt.textContent = p.name;
+                    sel.appendChild(opt);
+                });
+            });
+        }
+
+        function loadTree() {
+            var treeBody = document.getElementById('treeBody');
+            treeBody.innerHTML = '<div style="padding:16px;color:#9CA3AF;font-size:12px;">加载目录中...</div>';
+            apiFetch('/sub-item-databases/tree?projectId=' + encodeURIComponent(currentProjectId)).then(function(tree) {
+                nodeMap = {};
+                treeBody.innerHTML = '';
+                if (!tree || !tree.length) {
+                    treeBody.innerHTML = '<div style="padding:16px;color:#9CA3AF;font-size:12px;">该项目暂无资料目录，请先在「工程资料目录设置」中配置</div>';
+                    return;
+                }
+                renderNodes(tree, treeBody);
+            }).catch(function() {
+                treeBody.innerHTML = '<div style="padding:16px;color:#EF4444;font-size:12px;">目录加载失败</div>';
+            });
+        }
+
+        function renderNodes(nodes, container) {
+            nodes.forEach(function(n) {
+                nodeMap[n.id] = { id: n.id, name: n.name, parentId: n.parentId };
+                var hasChildren = n.children && n.children.length;
+                var node = document.createElement('div');
+                node.className = 'tree-node';
+                node.setAttribute('data-id', n.id);
+                node.setAttribute('data-name', n.name);
+                node.addEventListener('click', (function(id, name) {
+                    return function() { selectNode(this, id, name); };
+                })(n.id, n.name));
+                var html = '';
+                if (hasChildren) html += '<span class="expand" onclick="event.stopPropagation();toggleExpand(this)">▼</span>';
+                html += '<span class="node-icon">📂</span><span class="node-name">' + escapeHtml(n.name) + '</span><span class="node-count"></span>';
+                node.innerHTML = html;
+                container.appendChild(node);
+                if (hasChildren) {
+                    var childrenDiv = document.createElement('div');
+                    childrenDiv.className = 'tree-children';
+                    container.appendChild(childrenDiv);
+                    renderNodes(n.children, childrenDiv);
+                }
+            });
+        }
+
+        function toggleExpand(el) {
+            var parent = el.parentElement;
+            var next = parent.nextElementSibling;
+            if (!next || !next.classList.contains('tree-children')) return;
+            if (next.classList.contains('collapsed')) {
+                next.classList.remove('collapsed');
+                el.textContent = '▼';
+            } else {
+                next.classList.add('collapsed');
+                el.textContent = '▶';
+            }
+        }
+
+        function selectNode(el, id, name) {
+            if (!currentProjectId) return;
+            document.querySelectorAll('.tree-node').forEach(function(n){n.classList.remove('active')});
+            el.classList.add('active');
+            currentSubItemId = id;
+            document.getElementById('uploadTitle').textContent = '上传资料 - ' + name;
+            var pathParts = [];
+            var cur = nodeMap[id];
+            while (cur) { pathParts.unshift(cur.name); cur = (cur.parentId != null) ? nodeMap[cur.parentId] : null; }
+            document.getElementById('currentPath').textContent = pathParts.join(' / ');
+            loadDocuments();
+        }
+
+        function loadDocuments() {
+            if (!currentProjectId || currentSubItemId == null) return;
+            var container = document.getElementById('existingFileList');
+            container.innerHTML = '<div class="empty-state"><div class="empty-text">加载中...</div></div>';
+            apiGetPage('/project-documents', { pageNum: 1, pageSize: 200, projectId: currentProjectId, subItemId: currentSubItemId }).then(function(res) {
+                renderExistingFiles(res.list || []);
+            }).catch(function() {
+                container.innerHTML = '<div class="empty-state"><div class="empty-text">加载失败</div></div>';
+            });
+        }
+
+        function renderExistingFiles(files) {
+            var container = document.getElementById('existingFileList');
+            document.getElementById('existingCount').textContent = files.length;
+            if (!files.length) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">该目录下暂无已上传资料</div></div>';
+                return;
+            }
+            var html = '';
+            files.forEach(function(f) {
+                var iconClass = extFromName(f.name);
+                var iconText = iconClass === 'other' ? 'FILE' : iconClass.toUpperCase();
+                var size = formatSize(f.fileSize);
+                var date = f.createTime ? String(f.createTime).slice(0, 10) : '';
+                html += '<div class="existing-file-item">' +
+                    '<div class="file-icon ' + iconClass + '">' + iconText + '</div>' +
+                    '<div class="file-info">' +
+                        '<div class="file-name">' + escapeHtml(f.name) + '</div>' +
+                        '<div class="file-meta"><span>' + size + '</span>' + (date ? '<span>' + date + '</span>' : '') + (f.description ? '<span>' + escapeHtml(f.description) + '</span>' : '') + '</div>' +
+                    '</div>' +
+                    '<div class="file-actions">' +
+                        (f.filePath ? '<a class="btn btn-outline btn-sm" href="' + f.filePath + '" target="_blank">📥 下载</a>' : '') +
+                        '<button class="btn btn-danger btn-sm" onclick="deleteDocument(' + f.id + ')">删除</button>' +
+                    '</div>' +
+                '</div>';
+            });
+            container.innerHTML = html;
+        }
+
+        function deleteDocument(id) {
+            App.confirm('确定删除该资料吗？', { danger: true, okText: '确认删除' }).then(function (ok) {
+                if (!ok) return;
+                apiFetch('/project-documents/' + id, { method: 'DELETE' }).then(function() {
+                    if (window.App) App.toast('删除成功');
+                    loadDocuments();
+                });
+            });
+        }
+
+        var uploadZone = document.getElementById('uploadZone');
+        uploadZone.addEventListener('dragover', function(e) { e.preventDefault(); uploadZone.classList.add('dragover'); });
+        uploadZone.addEventListener('dragleave', function(e) { e.preventDefault(); uploadZone.classList.remove('dragover'); });
+        uploadZone.addEventListener('drop', function(e) { e.preventDefault(); uploadZone.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
+
+        function handleFiles(files) {
+            if (!currentProjectId) { if (window.App) App.toast('请先选择项目'); return; }
+            if (currentSubItemId == null) { if (window.App) App.toast('请先选择目录'); return; }
+            for(var i = 0; i < files.length; i++) {
+                pendingFiles.push(files[i]);
+            }
+            renderFileList();
+        }
+
+        function renderFileList() {
+            var container = document.getElementById('fileItems');
+            var list = document.getElementById('fileList');
+            if(pendingFiles.length === 0) { list.style.display = 'none'; return; }
+            list.style.display = 'block';
+            document.getElementById('fileCount').textContent = pendingFiles.length;
+            var html = '';
+            for(var i = 0; i < pendingFiles.length; i++) {
+                var f = pendingFiles[i];
+                var ext = f.name.split('.').pop().toLowerCase();
+                var iconClass = 'other';
+                var iconText = ext.toUpperCase();
+                if(ext === 'pdf') { iconClass = 'pdf'; iconText = 'PDF'; }
+                else if(['doc','docx'].indexOf(ext) >= 0) { iconClass = 'doc'; iconText = 'DOC'; }
+                else if(['xls','xlsx'].indexOf(ext) >= 0) { iconClass = 'xls'; iconText = 'XLS'; }
+                else if(['jpg','jpeg','png','gif','bmp'].indexOf(ext) >= 0) { iconClass = 'img'; iconText = 'IMG'; }
+                var size = (f.size / 1024 / 1024).toFixed(1) + ' MB';
+                html += '<div class="file-item"><div class="file-icon ' + iconClass + '">' + iconText + '</div><div class="file-info"><div class="file-name">' + f.name + '</div><div class="file-meta"><span>' + size + '</span><span>待上传</span></div></div><div class="file-actions"><button class="btn btn-danger btn-sm" onclick="removeFile(' + i + ')">移除</button></div></div>';
+            }
+            container.innerHTML = html;
+        }
+
+        function removeFile(index) { pendingFiles.splice(index, 1); renderFileList(); }
+        function clearFiles() { pendingFiles = []; renderFileList(); }
+
+        function uploadAll() {
+            if (!currentProjectId) { if (window.App) App.toast('请先选择项目'); return; }
+            if (currentSubItemId == null) { if (window.App) App.toast('请先选择目录'); return; }
+            if (pendingFiles.length === 0) { if (window.App) App.toast('请先选择文件'); return; }
+            var total = pendingFiles.length;
+            var tasks = pendingFiles.map(function(f) {
+                return App.uploadFile(f).then(function(up) {
+                    up = up || {};
+                    return apiFetch('/project-documents', { method: 'POST', body: {
+                        projectId: Number(currentProjectId),
+                        subItemId: currentSubItemId,
+                        name: up.name || f.name,
+                        filePath: up.url || up.filePath || '',
+                        fileSize: (up.size != null ? up.size : f.size)
+                    }});
+                });
+            });
+            Promise.all(tasks).then(function() {
+                if (window.App) App.toast('成功上传 ' + total + ' 个文件', 'success');
+                pendingFiles = [];
+                renderFileList();
+                loadDocuments();
+            }).catch(function() { /* 单个失败已 Toast */ });
+        }
+
+        function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+        if (window.App) {
+            App.requireAuth();
+            App.initTopbar();
+            loadProjects();
+        }
+        document.querySelector('.layout').classList.add('disabled');
+        document.getElementById('treeBody').innerHTML = '';
+    </script>
+</body>
+</html>

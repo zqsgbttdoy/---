@@ -1,0 +1,20 @@
+/* ==========================================================
+ * 监理现场管理系统 - 全局共享样式
+ * 用途：放置跨断点（桌面/平板/手机）均需要可用的全局 CSS,
+ *       目前承载 @keyframes 动画定义,使 responsive.css 中
+ *       媒体查询内的 .mobile-open / .show 在任何 viewport
+ *       宽度切换路径下都能正确触发滑入/淡入动画。
+ * 引用顺序：必须早于 responsive.css（HTML <head> 中 link）。
+ * ========================================================== */
+
+/* 侧边栏移动菜单滑入动画（@media ≤768 时由 .sidebar.mobile-open 触发） */
+@keyframes sidebarSlideIn {
+    from { transform: translateX(-100%); }
+    to   { transform: translateX(0); }
+}
+
+/* 遮罩层淡入动画（@media ≤768 时由 .sidebar-backdrop.show 触发） */
+@keyframes backdropFade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}

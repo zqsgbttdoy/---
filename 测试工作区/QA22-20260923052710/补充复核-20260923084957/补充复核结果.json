@@ -1,0 +1,660 @@
+{
+  "batch": "QA22-20260923052710",
+  "time": "2026-09-23T08:50:09.707Z",
+  "note": "与原258项分开统计；并发测试是调度相关抽样，单条列表结果不是全表数据库审计。",
+  "counts": {
+    "失败": 3,
+    "通过": 18
+  },
+  "results": [
+    {
+      "id": "S001",
+      "title": "第1组（显式编号）并发同键请求均返回同一业务结果",
+      "result": "失败",
+      "actual": [
+        {
+          "http": 409,
+          "code": 409,
+          "message": "编号已存在，请使用新编号"
+        },
+        {
+          "http": 409,
+          "code": 409,
+          "message": "编号已存在，请使用新编号"
+        },
+        {
+          "http": 409,
+          "code": 409,
+          "message": "编号已存在，请使用新编号"
+        },
+        {
+          "http": 200,
+          "code": 200,
+          "message": "操作成功",
+          "id": 12,
+          "status": "draft"
+        }
+      ]
+    },
+    {
+      "id": "S002",
+      "title": "第1组（显式编号）随后顺序重放返回原记录",
+      "result": "通过",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "id": 12,
+        "status": "draft"
+      }
+    },
+    {
+      "id": "S003",
+      "title": "第1组（显式编号）列表仅存在一条相同编号记录",
+      "result": "通过",
+      "actual": {
+        "total": 1,
+        "ids": [
+          12
+        ]
+      }
+    },
+    {
+      "id": "S004",
+      "title": "第1组（显式编号）不同请求使用相同编号仍拒绝",
+      "result": "通过",
+      "actual": {
+        "http": 409,
+        "code": 409,
+        "message": "编号已存在，请使用新编号"
+      }
+    },
+    {
+      "id": "S005",
+      "title": "第1组（显式编号）仅清理本专项本人草稿",
+      "result": "通过",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功"
+      }
+    },
+    {
+      "id": "S006",
+      "title": "第2组（显式编号）并发同键请求均返回同一业务结果",
+      "result": "失败",
+      "actual": [
+        {
+          "http": 409,
+          "code": 409,
+          "message": "编号已存在，请使用新编号"
+        },
+        {
+          "http": 200,
+          "code": 200,
+          "message": "操作成功",
+          "id": 13,
+          "status": "draft"
+        },
+        {
+          "http": 409,
+          "code": 409,
+          "message": "编号已存在，请使用新编号"
+        },
+        {
+          "http": 200,
+          "code": 200,
+          "message": "操作成功",
+          "id": 13,
+          "status": "draft"
+        }
+      ]
+    },
+    {
+      "id": "S007",
+      "title": "第2组（显式编号）随后顺序重放返回原记录",
+      "result": "通过",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "id": 13,
+        "status": "draft"
+      }
+    },
+    {
+      "id": "S008",
+      "title": "第2组（显式编号）列表仅存在一条相同编号记录",
+      "result": "通过",
+      "actual": {
+        "total": 1,
+        "ids": [
+          13
+        ]
+      }
+    },
+    {
+      "id": "S009",
+      "title": "第2组（显式编号）不同请求使用相同编号仍拒绝",
+      "result": "通过",
+      "actual": {
+        "http": 409,
+        "code": 409,
+        "message": "编号已存在，请使用新编号"
+      }
+    },
+    {
+      "id": "S010",
+      "title": "第2组（显式编号）仅清理本专项本人草稿",
+      "result": "通过",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功"
+      }
+    },
+    {
+      "id": "S011",
+      "title": "第3组（显式编号）并发同键请求均返回同一业务结果",
+      "result": "失败",
+      "actual": [
+        {
+          "http": 200,
+          "code": 200,
+          "message": "操作成功",
+          "id": 14,
+          "status": "draft"
+        },
+        {
+          "http": 409,
+          "code": 409,
+          "message": "编号已存在，请使用新编号"
+        },
+        {
+          "http": 200,
+          "code": 200,
+          "message": "操作成功",
+          "id": 14,
+          "status": "draft"
+        },
+        {
+          "http": 200,
+          "code": 200,
+          "message": "操作成功",
+          "id": 14,
+          "status": "draft"
+        }
+      ]
+    },
+    {
+      "id": "S012",
+      "title": "第3组（显式编号）随后顺序重放返回原记录",
+      "result": "通过",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "id": 14,
+        "status": "draft"
+      }
+    },
+    {
+      "id": "S013",
+      "title": "第3组（显式编号）列表仅存在一条相同编号记录",
+      "result": "通过",
+      "actual": {
+        "total": 1,
+        "ids": [
+          14
+        ]
+      }
+    },
+    {
+      "id": "S014",
+      "title": "第3组（显式编号）不同请求使用相同编号仍拒绝",
+      "result": "通过",
+      "actual": {
+        "http": 409,
+        "code": 409,
+        "message": "编号已存在，请使用新编号"
+      }
+    },
+    {
+      "id": "S015",
+      "title": "第3组（显式编号）仅清理本专项本人草稿",
+      "result": "通过",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功"
+      }
+    },
+    {
+      "id": "S016",
+      "title": "第4组（自动编号）并发同键请求均返回同一业务结果",
+      "result": "通过",
+      "actual": [
+        {
+          "http": 200,
+          "code": 200,
+          "message": "操作成功",
+          "id": 15,
+          "status": "draft"
+        },
+        {
+          "http": 200,
+          "code": 200,
+          "message": "操作成功",
+          "id": 15,
+          "status": "draft"
+        },
+        {
+          "http": 200,
+          "code": 200,
+          "message": "操作成功",
+          "id": 15,
+          "status": "draft"
+        },
+        {
+          "http": 200,
+          "code": 200,
+          "message": "操作成功",
+          "id": 15,
+          "status": "draft"
+        }
+      ]
+    },
+    {
+      "id": "S017",
+      "title": "第4组（自动编号）随后顺序重放返回原记录",
+      "result": "通过",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "id": 15,
+        "status": "draft"
+      }
+    },
+    {
+      "id": "S018",
+      "title": "第4组（自动编号）列表仅存在一条相同编号记录",
+      "result": "通过",
+      "actual": {
+        "total": 1,
+        "ids": [
+          15
+        ]
+      }
+    },
+    {
+      "id": "S019",
+      "title": "第4组（自动编号）仅清理本专项本人草稿",
+      "result": "通过",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功"
+      }
+    },
+    {
+      "id": "S020",
+      "title": "新增符合页面模型的日记截止时间样本",
+      "result": "通过",
+      "actual": {
+        "http": 200,
+        "code": 200,
+        "message": "操作成功",
+        "id": 3,
+        "status": "active"
+      }
+    },
+    {
+      "id": "S021",
+      "title": "页面同款查询可读回17:30",
+      "result": "通过",
+      "actual": {
+        "id": 3,
+        "matching": [
+          {
+            "name": "diaryDeadline",
+            "standard": "17:30"
+          }
+        ]
+      }
+    }
+  ],
+  "created": [
+    {
+      "type": "模拟照片",
+      "url": "/api/uploads/20260923/afd1a54420a64529a35720aa4cbd90cd.png",
+      "note": "1×1有效PNG，仅传输测试，未删除上传文件"
+    },
+    {
+      "type": "专项草稿",
+      "id": 12,
+      "code": "QA22C-20260923084957-1",
+      "projectId": 3,
+      "softDeleted": true
+    },
+    {
+      "type": "专项草稿",
+      "id": 13,
+      "code": "QA22C-20260923084957-2",
+      "projectId": 3,
+      "softDeleted": true
+    },
+    {
+      "type": "专项草稿",
+      "id": 14,
+      "code": "QA22C-20260923084957-3",
+      "projectId": 3,
+      "softDeleted": true
+    },
+    {
+      "type": "专项草稿",
+      "id": 15,
+      "code": "DIARY-81f56912-bb8d-4020-b74c-6fbd9593a8f1",
+      "projectId": 3,
+      "softDeleted": true
+    },
+    {
+      "type": "页面模型标准",
+      "id": 3,
+      "name": "diaryDeadline",
+      "module": "work-standard",
+      "standard": "17:30"
+    }
+  ],
+  "requests": [
+    {
+      "method": "POST",
+      "route": "/auth/login",
+      "http": 200,
+      "code": 200,
+      "message": "登录成功"
+    },
+    {
+      "method": "GET",
+      "route": "/projects?code=QA22-20260923052710-A",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功"
+    },
+    {
+      "method": "POST",
+      "route": "/files/upload",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功",
+      "id": 12,
+      "status": "draft"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 409,
+      "code": 409,
+      "message": "编号已存在，请使用新编号"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 409,
+      "code": 409,
+      "message": "编号已存在，请使用新编号"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 409,
+      "code": 409,
+      "message": "编号已存在，请使用新编号"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功",
+      "id": 12,
+      "status": "draft"
+    },
+    {
+      "method": "GET",
+      "route": "/supervision-diaries?projectId=3&code=QA22C-20260923084957-1",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 409,
+      "code": 409,
+      "message": "编号已存在，请使用新编号"
+    },
+    {
+      "method": "DELETE",
+      "route": "/supervision-diaries/12",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功",
+      "id": 13,
+      "status": "draft"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 409,
+      "code": 409,
+      "message": "编号已存在，请使用新编号"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 409,
+      "code": 409,
+      "message": "编号已存在，请使用新编号"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功",
+      "id": 13,
+      "status": "draft"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功",
+      "id": 13,
+      "status": "draft"
+    },
+    {
+      "method": "GET",
+      "route": "/supervision-diaries?projectId=3&code=QA22C-20260923084957-2",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 409,
+      "code": 409,
+      "message": "编号已存在，请使用新编号"
+    },
+    {
+      "method": "DELETE",
+      "route": "/supervision-diaries/13",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功",
+      "id": 14,
+      "status": "draft"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功",
+      "id": 14,
+      "status": "draft"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 409,
+      "code": 409,
+      "message": "编号已存在，请使用新编号"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功",
+      "id": 14,
+      "status": "draft"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功",
+      "id": 14,
+      "status": "draft"
+    },
+    {
+      "method": "GET",
+      "route": "/supervision-diaries?projectId=3&code=QA22C-20260923084957-3",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 409,
+      "code": 409,
+      "message": "编号已存在，请使用新编号"
+    },
+    {
+      "method": "DELETE",
+      "route": "/supervision-diaries/14",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功",
+      "id": 15,
+      "status": "draft"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功",
+      "id": 15,
+      "status": "draft"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功",
+      "id": 15,
+      "status": "draft"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功",
+      "id": 15,
+      "status": "draft"
+    },
+    {
+      "method": "POST",
+      "route": "/supervision-diaries",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功",
+      "id": 15,
+      "status": "draft"
+    },
+    {
+      "method": "GET",
+      "route": "/supervision-diaries?projectId=3&code=DIARY-81f56912-bb8d-4020-b74c-6fbd9593a8f1",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功"
+    },
+    {
+      "method": "DELETE",
+      "route": "/supervision-diaries/15",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功"
+    },
+    {
+      "method": "GET",
+      "route": "/work-standard-configs?module=work-standard&pageSize=200",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功"
+    },
+    {
+      "method": "POST",
+      "route": "/work-standard-configs",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功",
+      "id": 3,
+      "status": "active"
+    },
+    {
+      "method": "GET",
+      "route": "/work-standard-configs?module=work-standard&pageSize=200",
+      "http": 200,
+      "code": 200,
+      "message": "操作成功"
+    }
+  ]
+}

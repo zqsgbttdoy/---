@@ -1,0 +1,1481 @@
+{
+  "note": "逐项来自本次Surefire XML，不与摘要重复相加；新增契约失败保留为上线阻塞证据。",
+  "cases": [
+    {
+      "suite": "TEST-com.supervision.AuthServiceTest.xml",
+      "name": "testLoginFiltersNullRoleCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.AuthServiceTest.xml",
+      "name": "testLoginUserNotFound",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.AuthServiceTest.xml",
+      "name": "testLoginWithNoRolesSkipsRoleQuery",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.AuthServiceTest.xml",
+      "name": "testLoginWrongPassword",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.AuthServiceTest.xml",
+      "name": "testLoginLoadsRolesInBatch",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.DailyInspectionServiceTest.xml",
+      "name": "testStatisticsExcludeInactive",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.DailyInspectionServiceTest.xml",
+      "name": "testGetByIdNotFound",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.DailyInspectionServiceTest.xml",
+      "name": "testCreateWithNullDTOStatus",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.DailyInspectionServiceTest.xml",
+      "name": "testStatisticsAllActive",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.DailyInspectionServiceTest.xml",
+      "name": "testDeleteDailyInspection",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.DailyInspectionServiceTest.xml",
+      "name": "testCreateDailyInspection",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.DailyInspectionServiceTest.xml",
+      "name": "testCreateWithDTOStatus",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.DailyInspectionServiceTest.xml",
+      "name": "testCreateWithInactiveCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.DailyInspectionServiceTest.xml",
+      "name": "testUpdateDailyInspection",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.DailyInspectionServiceTest.xml",
+      "name": "testUpdateNonExistent",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.DailyInspectionServiceTest.xml",
+      "name": "testCreateWithDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.DailyInspectionServiceTest.xml",
+      "name": "testUpdateWithInactiveDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.DailyInspectionServiceTest.xml",
+      "name": "testUpdateWithSameCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.DailyInspectionServiceTest.xml",
+      "name": "testUpdateWithDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "emptyCodeUpdateKeepsAssignedNumber",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "qaAcceptanceDraftIsPersistedAndApprovalIsScoped",
+      "result": "通过",
+      "group": "新增上线契约"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "qaAcceptanceDirectoryRejectsOtherProject",
+      "result": "通过",
+      "group": "新增上线契约"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "serverSideSingleDateSourceAndNoDraftCounting",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "rejectEditResubmitAndApprovedLock",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "qaAcceptanceNoticesAndContactsCannotSkipWorkflow",
+      "result": "通过",
+      "group": "新增上线契约"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "qaAcceptanceRevokedAdminCannotManageUsers",
+      "result": "通过",
+      "group": "新增上线契约"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "qaAcceptanceSafetyApprovedBodyIsImmutable",
+      "result": "通过",
+      "group": "新增上线契约"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "qa22ConcurrentExplicitAndAutomaticCodes",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "qaAcceptanceExplicitCorsPolicy",
+      "result": "通过",
+      "group": "新增上线契约"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "qa22MessageSenderAndAccountStatusAreServerControlled",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "qaAcceptanceUploadExtensionAndEmptyGuards",
+      "result": "通过",
+      "group": "新增上线契约"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "protectedAttachmentsAndRevokedMembership",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "qaAcceptanceExpiredAndTamperedJwt",
+      "result": "通过",
+      "group": "新增上线契约"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "staleVersionNeverOverwritesPcOrMobile",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "approvedRevisionDoesNotDuplicateDiarySource",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "legacyNonFieldReferencesSkipMalformedRows",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "qaAcceptanceSafetySubmissionPersists",
+      "result": "通过",
+      "group": "新增上线契约"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "legacyPhotoPathsRemainScopedAndExact",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "identityProjectScopeAndIdempotentReplay",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "legacyReferencesCannotLaunderProtectedPhotos",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "formalValidationAndAllFourTypes",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "qaAcceptanceSafetySubmittedManagerCanReview",
+      "result": "通过",
+      "group": "新增上线契约"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "concurrentCreateUsesDatabaseUniqueKey",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "qa22WorkStandardsRequireCurrentAdministrator",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "legacySnapshotAttachmentRequiresCurrentRecordVisibility",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "projectDocumentsAndManagerRevocation",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "qaAcceptanceSafetyDraftCannotBeApproved",
+      "result": "通过",
+      "group": "新增上线契约"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "qa22MessagesArePrivateToRecipient",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FieldWorkflowIntegrationTest.xml",
+      "name": "qaAcceptanceDisabledAdminCannotReactivateSelf",
+      "result": "通过",
+      "group": "新增上线契约"
+    },
+    {
+      "suite": "TEST-com.supervision.FileUploadControllerTest.xml",
+      "name": "testPathTraversalFilenameSanitized",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FileUploadControllerTest.xml",
+      "name": "testNoExtensionRejected",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FileUploadControllerTest.xml",
+      "name": "testFilenameContainingDotDotRejected",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FileUploadControllerTest.xml",
+      "name": "testRejectNotAllowedExtension",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FileUploadControllerTest.xml",
+      "name": "testNormalUploadContract",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FileUploadControllerTest.xml",
+      "name": "testEmptyFileRejected",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FileUploadControllerTest.xml",
+      "name": "testExtensionCaseInsensitive",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.FileUploadControllerTest.xml",
+      "name": "testCustomWhitelistOverride",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.GlobalExceptionHandlerTest.xml",
+      "name": "testHttpMessageNotReadable",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.GlobalExceptionHandlerTest.xml",
+      "name": "testDataIntegrityViolation",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.GlobalExceptionHandlerTest.xml",
+      "name": "testNoResourceFound",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.GlobalExceptionHandlerTest.xml",
+      "name": "testMaxUploadSizeExceeded",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.GlobalExceptionHandlerTest.xml",
+      "name": "testMethodArgumentTypeMismatch",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.GlobalExceptionHandlerTest.xml",
+      "name": "testDataAccessException",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.GlobalExceptionHandlerTest.xml",
+      "name": "testMissingServletRequestParameter",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.MeetingMinutesServiceTest.xml",
+      "name": "testDeleteMeetingMinutes",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.MeetingMinutesServiceTest.xml",
+      "name": "testGetByIdNotFound",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.MeetingMinutesServiceTest.xml",
+      "name": "deniedProjectCannotCreate",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.MeetingMinutesServiceTest.xml",
+      "name": "testCreateWithInactiveCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.MeetingMinutesServiceTest.xml",
+      "name": "testUpdateNonExistent",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.MeetingMinutesServiceTest.xml",
+      "name": "testUpdateMeetingMinutes",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.MeetingMinutesServiceTest.xml",
+      "name": "testCreateWithDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.MeetingMinutesServiceTest.xml",
+      "name": "testUpdateWithInactiveDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.MeetingMinutesServiceTest.xml",
+      "name": "testUpdateWithSameCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.MeetingMinutesServiceTest.xml",
+      "name": "testCreateMeetingMinutes",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.MeetingMinutesServiceTest.xml",
+      "name": "testUpdateWithDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.PageResultTest.xml",
+      "name": "testApiResponseError",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.PageResultTest.xml",
+      "name": "testPageResultSetters",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.PageResultTest.xml",
+      "name": "testApiResponseSuccessWithNullData",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.PageResultTest.xml",
+      "name": "testPageResultWithEmptyList",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.PageResultTest.xml",
+      "name": "testApiResponseErrorWithCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.PageResultTest.xml",
+      "name": "testPageResultWithSingleItem",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.PageResultTest.xml",
+      "name": "testPageResultConstructor",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.PageResultTest.xml",
+      "name": "testApiResponseSuccessWithMessage",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.PageResultTest.xml",
+      "name": "testPageResultWithZeroTotal",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.PageResultTest.xml",
+      "name": "testApiResponseSuccess",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.PageUtilsTest.xml",
+      "name": "testNormalizePageNumZero",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.PageUtilsTest.xml",
+      "name": "testNormalizePageSizeForStatsNormal",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.PageUtilsTest.xml",
+      "name": "testNormalizePageSizeNegative",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.PageUtilsTest.xml",
+      "name": "testNormalizePageSizeExceedingMax",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.PageUtilsTest.xml",
+      "name": "testNormalizePageSizeNormal",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.PageUtilsTest.xml",
+      "name": "testNormalizePageSizeForStatsInvalid",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.PageUtilsTest.xml",
+      "name": "testNormalizePageSizeForStatsExceedingMax",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.PageUtilsTest.xml",
+      "name": "testNormalizePageSizeZero",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.PageUtilsTest.xml",
+      "name": "testNormalizePageNumNegative",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.PageUtilsTest.xml",
+      "name": "testNormalizePageNumNormal",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.ProductionSafetyValidatorTest.xml",
+      "name": "testDatasourcePasswordTooShort",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.ProductionSafetyValidatorTest.xml",
+      "name": "qaAcceptanceProdEmptySecretFailsStartup",
+      "result": "通过",
+      "group": "新增上线契约"
+    },
+    {
+      "suite": "TEST-com.supervision.ProductionSafetyValidatorTest.xml",
+      "name": "testCorsOriginsListContainsWildcard",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.ProductionSafetyValidatorTest.xml",
+      "name": "uploadSecretMustBeIndependentAndConfigured",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.ProductionSafetyValidatorTest.xml",
+      "name": "testDefaultResetPasswordNoLetter",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.ProductionSafetyValidatorTest.xml",
+      "name": "qaAcceptanceProdProfileOverridesDevelopmentDefaults",
+      "result": "通过",
+      "group": "新增上线契约"
+    },
+    {
+      "suite": "TEST-com.supervision.ProductionSafetyValidatorTest.xml",
+      "name": "testValidateAllValid",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.ProductionSafetyValidatorTest.xml",
+      "name": "qaAcceptanceJwtTemplatePlaceholderMustFail",
+      "result": "通过",
+      "group": "新增上线契约"
+    },
+    {
+      "suite": "TEST-com.supervision.ProductionSafetyValidatorTest.xml",
+      "name": "testDatasourcePasswordNoDigit",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.ProductionSafetyValidatorTest.xml",
+      "name": "testJwtSecretIsDevDefault",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.ProductionSafetyValidatorTest.xml",
+      "name": "testDatasourcePasswordRoot",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.ProductionSafetyValidatorTest.xml",
+      "name": "testCorsOriginsWildcard",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.ProductionSafetyValidatorTest.xml",
+      "name": "testDefaultResetPasswordEmpty",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.ProductionSafetyValidatorTest.xml",
+      "name": "testDatasourcePassword123456",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.ProductionSafetyValidatorTest.xml",
+      "name": "testCorsOriginsEmpty",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.ProductionSafetyValidatorTest.xml",
+      "name": "testJwtSecretTooShort",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.ProductionSafetyValidatorTest.xml",
+      "name": "testDefaultResetPassword123456",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.ProductionSafetyValidatorTest.xml",
+      "name": "testDefaultResetPasswordTooShort",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.ProductionSafetyValidatorTest.xml",
+      "name": "testJwtSecretEmpty",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.ProductionSafetyValidatorTest.xml",
+      "name": "testDatasourcePasswordEmpty",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.RoleCheckInterceptorTest.xml",
+      "name": "testClassLevelAnnotation",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.RoleCheckInterceptorTest.xml",
+      "name": "testEmptyRolesForbidden",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.RoleCheckInterceptorTest.xml",
+      "name": "testNoAnnotationPass",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.RoleCheckInterceptorTest.xml",
+      "name": "testOptionsPass",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.RoleCheckInterceptorTest.xml",
+      "name": "testMethodOverridesClass",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.RoleCheckInterceptorTest.xml",
+      "name": "testNonHandlerMethodPass",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.RoleCheckInterceptorTest.xml",
+      "name": "testAdminPass",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.RoleCheckInterceptorTest.xml",
+      "name": "testNormalRoleForbidden",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.RoleCheckInterceptorTest.xml",
+      "name": "testNullRolesForbidden",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "testApproveWithNullStatus",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "testGetByIdNotFound",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "testUpdateApprovedIsImmutable",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "testDeleteSafetyLog",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "testUpdateSafetyLog",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "testUpdateStatusSubmittedPersists",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "testApproveSubmittedLog",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "testNewVersion",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "testApproveSafetyLog",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "deniedProjectCannotCreate",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "testCreateWithInactiveCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "testUpdateCannotApproveDirectly",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "testApproveDraftIsConflict",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "testUpdateNonExistent",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "testCreateSafetyLog",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "testRejectSafetyLog",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "testApproveAlreadyApproved",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "testCreateWithDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "testUpdateWithInactiveDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "testUpdateWithSameCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SafetyLogServiceTest.xml",
+      "name": "testUpdateWithDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SidelineInspectionServiceTest.xml",
+      "name": "testGetByIdNotFound",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SidelineInspectionServiceTest.xml",
+      "name": "testCreateSidelineInspection",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SidelineInspectionServiceTest.xml",
+      "name": "testDeleteSidelineInspection",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SidelineInspectionServiceTest.xml",
+      "name": "testCreateWithNullDTOStatus",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SidelineInspectionServiceTest.xml",
+      "name": "testCreateWithDTOStatus",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SidelineInspectionServiceTest.xml",
+      "name": "testCreateWithInactiveCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SidelineInspectionServiceTest.xml",
+      "name": "testUpdateNonExistent",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SidelineInspectionServiceTest.xml",
+      "name": "testCreateWithDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SidelineInspectionServiceTest.xml",
+      "name": "testUpdateWithInactiveDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SidelineInspectionServiceTest.xml",
+      "name": "testUpdateWithSameCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SidelineInspectionServiceTest.xml",
+      "name": "testUpdateSidelineInspection",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SidelineInspectionServiceTest.xml",
+      "name": "testUpdateWithDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionDiaryServiceTest.xml",
+      "name": "testApproveWithNullStatus",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionDiaryServiceTest.xml",
+      "name": "testApproveSubmittedDiary",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionDiaryServiceTest.xml",
+      "name": "testCreateDiary",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionDiaryServiceTest.xml",
+      "name": "testCreateDiaryWithInactiveCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionDiaryServiceTest.xml",
+      "name": "testRejectDiary",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionDiaryServiceTest.xml",
+      "name": "testCreateDiaryWithDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionDiaryServiceTest.xml",
+      "name": "testApproveDiary",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionDiaryServiceTest.xml",
+      "name": "testApproveAlreadyApproved",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionDiaryServiceTest.xml",
+      "name": "testUpdateWithInactiveDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionDiaryServiceTest.xml",
+      "name": "testUpdateWithSameCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionDiaryServiceTest.xml",
+      "name": "testUpdateWithDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionLogServiceTest.xml",
+      "name": "testApproveWithNullStatus",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionLogServiceTest.xml",
+      "name": "testGetByIdNotFound",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionLogServiceTest.xml",
+      "name": "testApproveSupervisionLog",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionLogServiceTest.xml",
+      "name": "testRejectSupervisionLog",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionLogServiceTest.xml",
+      "name": "testApproveSubmittedLog",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionLogServiceTest.xml",
+      "name": "testNewVersion",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionLogServiceTest.xml",
+      "name": "testUpdateSupervisionLog",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionLogServiceTest.xml",
+      "name": "testCreateSupervisionLog",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionLogServiceTest.xml",
+      "name": "testCreateWithInactiveCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionLogServiceTest.xml",
+      "name": "testDeleteSupervisionLog",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionLogServiceTest.xml",
+      "name": "testUpdateNonExistent",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionLogServiceTest.xml",
+      "name": "testApproveAlreadyApproved",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionLogServiceTest.xml",
+      "name": "testCreateWithDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionLogServiceTest.xml",
+      "name": "testUpdateWithInactiveDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionLogServiceTest.xml",
+      "name": "testUpdateWithSameCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionLogServiceTest.xml",
+      "name": "testUpdateWithDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionMonthlyReportServiceTest.xml",
+      "name": "testGetByIdNotFound",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionMonthlyReportServiceTest.xml",
+      "name": "testDeleteMonthlyReport",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionMonthlyReportServiceTest.xml",
+      "name": "testUpdateMonthlyReport",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionMonthlyReportServiceTest.xml",
+      "name": "testCreateMonthlyReport",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionMonthlyReportServiceTest.xml",
+      "name": "deniedProjectCannotCreate",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionMonthlyReportServiceTest.xml",
+      "name": "testCreateWithInactiveCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionMonthlyReportServiceTest.xml",
+      "name": "testUpdateNonExistent",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionMonthlyReportServiceTest.xml",
+      "name": "testCreateWithDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionMonthlyReportServiceTest.xml",
+      "name": "testUpdateWithInactiveDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionMonthlyReportServiceTest.xml",
+      "name": "testUpdateWithSameCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionMonthlyReportServiceTest.xml",
+      "name": "testUpdateWithDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionNoticeServiceTest.xml",
+      "name": "testCreateNotice",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionNoticeServiceTest.xml",
+      "name": "testGetByIdNotFound",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionNoticeServiceTest.xml",
+      "name": "testReplyNotice",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionNoticeServiceTest.xml",
+      "name": "testReplyOverdueNotice",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionNoticeServiceTest.xml",
+      "name": "testCreateNoticeWithInactiveCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionNoticeServiceTest.xml",
+      "name": "testReplyNonExistentNotice",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionNoticeServiceTest.xml",
+      "name": "testDeleteNotice",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionNoticeServiceTest.xml",
+      "name": "testCreateWithDTOStatus",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionNoticeServiceTest.xml",
+      "name": "testReplyDraftNotice",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionNoticeServiceTest.xml",
+      "name": "testCreateNoticeWithDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionNoticeServiceTest.xml",
+      "name": "deniedProjectCannotCreate",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionNoticeServiceTest.xml",
+      "name": "testUpdateWithInactiveDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionNoticeServiceTest.xml",
+      "name": "testUpdateWithSameCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.SupervisionNoticeServiceTest.xml",
+      "name": "testUpdateWithDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.UserControllerRoleCheckTest.xml",
+      "name": "testResetPasswordForbiddenForNormalRole",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.UserControllerRoleCheckTest.xml",
+      "name": "testResetPasswordForbiddenForNoRole",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.UserControllerRoleCheckTest.xml",
+      "name": "testResetPasswordAllowedForAdmin",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.UserControllerRoleCheckTest.xml",
+      "name": "testGetUserStillOpenForNormalRole",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.UserServiceTest.xml",
+      "name": "testListWithFilters",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.UserServiceTest.xml",
+      "name": "testGetByIdNotFound",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.UserServiceTest.xml",
+      "name": "testListWithExceedingPageSize",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.UserServiceTest.xml",
+      "name": "testGetById",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.UserServiceTest.xml",
+      "name": "testUpdateStatus",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.UserServiceTest.xml",
+      "name": "testCreateUserWithCustomPassword",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.UserServiceTest.xml",
+      "name": "testCreateUser",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.UserServiceTest.xml",
+      "name": "testDeleteUser",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.UserServiceTest.xml",
+      "name": "testListWithInvalidPageNum",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.UserServiceTest.xml",
+      "name": "testDeleteNonExistentUser",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.UserServiceTest.xml",
+      "name": "testCreateUserWithDuplicatePhone",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkContactServiceTest.xml",
+      "name": "testGetByIdNotFound",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkContactServiceTest.xml",
+      "name": "testDeleteWorkContact",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkContactServiceTest.xml",
+      "name": "testCreateWorkContact",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkContactServiceTest.xml",
+      "name": "testReplyNonExistentContact",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkContactServiceTest.xml",
+      "name": "testCreateWithDTOStatus",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkContactServiceTest.xml",
+      "name": "deniedProjectCannotCreate",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkContactServiceTest.xml",
+      "name": "testCreateWithInactiveCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkContactServiceTest.xml",
+      "name": "testReplyWorkContact",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkContactServiceTest.xml",
+      "name": "testUpdateNonExistent",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkContactServiceTest.xml",
+      "name": "testCreateWithDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkContactServiceTest.xml",
+      "name": "testReplyDraftContact",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkContactServiceTest.xml",
+      "name": "testUpdateWorkContact",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkContactServiceTest.xml",
+      "name": "testUpdateWithInactiveDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkContactServiceTest.xml",
+      "name": "testUpdateWithSameCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkContactServiceTest.xml",
+      "name": "testReplyOverdueContact",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkContactServiceTest.xml",
+      "name": "testUpdateWithDuplicateCode",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkStandardConfigServiceTest.xml",
+      "name": "testGetByIdNotFound",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkStandardConfigServiceTest.xml",
+      "name": "testUpdateWorkStandardConfig",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkStandardConfigServiceTest.xml",
+      "name": "testWritesRejectNonAdministrator",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkStandardConfigServiceTest.xml",
+      "name": "testUpdateNonExistent",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkStandardConfigServiceTest.xml",
+      "name": "testCreateWorkStandardConfig",
+      "result": "通过",
+      "group": "既有回归"
+    },
+    {
+      "suite": "TEST-com.supervision.WorkStandardConfigServiceTest.xml",
+      "name": "testDeleteWorkStandardConfig",
+      "result": "通过",
+      "group": "既有回归"
+    }
+  ]
+}

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监理现场管理系统 - 项目台账</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background: #F0F5FF; color: #1F2937; display: flex; min-height: 100vh; }
+        .sidebar { width: 240px; background: linear-gradient(180deg, #1E3A5F 0%, #0F2440 100%); color: #fff; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; overflow-y: auto; }
+        .sidebar-logo { padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo h2 { font-size: 16px; font-weight: 600; letter-spacing: 1px; }
+        .sidebar-logo p { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+        .menu-group { padding: 8px 0; }
+        .menu-group-title { padding: 10px 20px 6px; font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
+        .menu-item { display: flex; align-items: center; padding: 10px 20px; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; transition: all 0.2s; cursor: pointer; }
+        .menu-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+        .menu-item.active { background: rgba(37,99,235,0.3); color: #fff; border-right: 3px solid #2563EB; }
+        .menu-item .icon { width: 20px; margin-right: 10px; text-align: center; font-size: 14px; }
+        .main { margin-left: 240px; flex: 1; }
+        .header { background: #fff; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 50; }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .header-left h3 { font-size: 15px; font-weight: 600; color: #1E3A5F; }
+        .breadcrumb { font-size: 12px; color: #6B7280; }
+        .breadcrumb a { color: #2563EB; text-decoration: none; }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .notification { position: relative; cursor: pointer; font-size: 18px; }
+        .badge { position: absolute; top: -6px; right: -6px; background: #EF4444; color: #fff; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .user-info { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #2563EB; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; }
+        .user-name { font-size: 13px; color: #374151; }
+        .content { padding: 24px; }
+        .toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+        .toolbar-left { display: flex; align-items: center; gap: 12px; }
+        .search-box { display: flex; align-items: center; background: #fff; border: 1px solid #E5E7EB; border-radius: 6px; padding: 0 12px; height: 36px; }
+        .search-box input { border: none; outline: none; font-size: 13px; width: 200px; background: transparent; }
+        .search-box .search-icon { color: #9CA3AF; margin-right: 8px; }
+        .filter-select { height: 36px; border: 1px solid #E5E7EB; border-radius: 6px; padding: 0 12px; font-size: 13px; color: #374151; background: #fff; outline: none; cursor: pointer; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; border: none; transition: all 0.2s; }
+        .btn-primary { background: #2563EB; color: #fff; }
+        .btn-primary:hover { background: #1D4ED8; }
+        .btn-success { background: #10B981; color: #fff; }
+        .btn-success:hover { background: #059669; }
+        .btn-danger { background: #EF4444; color: #fff; }
+        .btn-danger:hover { background: #DC2626; }
+        .btn-outline { background: #fff; color: #374151; border: 1px solid #E5E7EB; }
+        .btn-outline:hover { background: #F9FAFB; }
+        .btn-sm { padding: 4px 10px; font-size: 12px; }
+        .table-container { background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; }
+        thead { background: #F8FAFC; }
+        th { padding: 12px 16px; text-align: left; font-size: 12px; font-weight: 600; color: #6B7280; border-bottom: 1px solid #E5E7EB; white-space: nowrap; }
+        td { padding: 12px 16px; font-size: 13px; color: #374151; border-bottom: 1px solid #F3F4F6; }
+        tr:hover td { background: #F8FAFC; }
+        .status-tag { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; }
+        .status-active { background: #DBEAFE; color: #2563EB; }
+        .status-completed { background: #D1FAE5; color: #059669; }
+        .status-paused { background: #FEF3C7; color: #D97706; }
+        .status-planning { background: #E0E7FF; color: #4F46E5; }
+        .actions { display: flex; gap: 8px; }
+        .pagination { display: flex; align-items: center; justify-content: space-between; padding: 16px; }
+        .pagination-info { font-size: 12px; color: #6B7280; }
+        .pagination-btns { display: flex; gap: 4px; }
+        .page-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 1px solid #E5E7EB; border-radius: 6px; font-size: 12px; cursor: pointer; background: #fff; color: #374151; }
+        .page-btn.active { background: #2563EB; color: #fff; border-color: #2563EB; }
+        .page-btn:hover:not(.active) { background: #F3F4F6; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+        .modal-overlay.show { display: flex; }
+        .modal { background: #fff; border-radius: 12px; width: 600px; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: space-between; }
+        .modal-header h3 { font-size: 16px; font-weight: 600; color: #1E3A5F; }
+        .modal-close { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer; font-size: 18px; color: #6B7280; border: none; background: none; }
+        .modal-close:hover { background: #F3F4F6; }
+        .modal-body { padding: 24px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid #E5E7EB; display: flex; justify-content: flex-end; gap: 12px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px; }
+        .form-group label .required { color: #EF4444; }
+        .form-control { width: 100%; height: 36px; border: 1px solid #E5E7EB; border-radius: 6px; padding: 0 12px; font-size: 13px; outline: none; transition: border-color 0.2s; }
+        .form-control:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        textarea.form-control { height: 80px; padding: 8px 12px; resize: vertical; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .confirm-modal .modal { width: 400px; }
+        .confirm-modal .confirm-icon { text-align: center; font-size: 48px; margin-bottom: 16px; }
+        .confirm-modal .confirm-text { text-align: center; font-size: 14px; color: #374151; margin-bottom: 8px; }
+        .confirm-modal .confirm-sub { text-align: center; font-size: 12px; color: #9CA3AF; }
+    </style>
+    <script src="assets/app.js"></script>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/responsive.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <h2>监理现场管理系统</h2>
+            <p>Supervision Site Management</p>
+        </div>
+        <div class="menu-group">
+            <a class="menu-item" href="index.html"><span class="icon">📊</span> 仪表盘</a>
+        </div>
+        <div class="menu-group">
+            <div class="menu-group-title">项目管理</div>
+            <a class="menu-item active" href="project-ledger.html"><span class="icon">📁</span> 项目台账</a>
+        </div>
+        <div class="menu-group">
+            <div class="menu-group-title">监理现场工作</div>
+            <a class="menu-item" href="daily-inspection.html"><span class="icon">🔍</span> 日常巡检</a>
+            <a class="menu-item" href="sideline-inspection.html"><span class="icon">👁️</span> 旁站</a>
+            <a class="menu-item" href="supervision-notice.html"><span class="icon">📋</span> 监理通知单</a>
+            <a class="menu-item" href="work-contact.html"><span class="icon">✉️</span> 工作联系单</a>
+            <a class="menu-item" href="supervision-diary.html"><span class="icon">📝</span> 监理日记</a>
+            <a class="menu-item" href="supervision-log.html"><span class="icon">📄</span> 监理日志</a>
+            <a class="menu-item" href="safety-log.html"><span class="icon">🛡️</span> 监理安全日志</a>
+            <a class="menu-item" href="meeting-minutes.html"><span class="icon">📅</span> 会议纪要</a>
+            <a class="menu-item" href="supervision-monthly-report.html"><span class="icon">📊</span> 监理月报</a>
+        </div>
+        <div class="menu-group">
+            <div class="menu-group-title">项目资料</div>
+            <a class="menu-item" href="sub-item-database.html"><span class="icon">🗄️</span> 工程资料目录设置</a>
+            <a class="menu-item" href="project-data-upload.html"><span class="icon">📤</span> 工程资料上传</a>
+        </div>
+        <div class="menu-group">
+            <div class="menu-group-title">数据统计</div>
+            <a class="menu-item" href="diary-statistics.html"><span class="icon">📈</span> 日记统计</a>
+            <a class="menu-item" href="diary-report.html"><span class="icon">📑</span> 日记报表</a>
+            <a class="menu-item" href="log-statistics.html"><span class="icon">📊</span> 日志统计</a>
+            <a class="menu-item" href="safety-log-statistics.html"><span class="icon">🛡️</span> 安全日志统计</a>
+        </div>
+        <div class="menu-group">
+            <div class="menu-group-title">团队管理</div>
+            <a class="menu-item" href="department-management.html"><span class="icon">🏢</span> 部门管理</a>
+            <a class="menu-item" href="personnel-management.html"><span class="icon">👥</span> 人员管理</a>
+            <a class="menu-item" href="permission-settings.html"><span class="icon">🔐</span> 权限设置</a>
+            <a class="menu-item" href="process-management.html"><span class="icon">🔄</span> 流程管理</a>
+        </div>
+        <div class="menu-group">
+            <div class="menu-group-title">系统设置</div>
+            <a class="menu-item" href="operation-log.html"><span class="icon">📜</span> 操作日志</a>
+            <a class="menu-item" href="message-center.html"><span class="icon">🔔</span> 消息中心</a>
+            <a class="menu-item" href="work-standard-config.html"><span class="icon">⚙️</span> 工作标准配置</a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <div class="header-left">
+                <h3>项目台账</h3>
+                <span class="breadcrumb"><a href="index.html">首页</a> / 项目管理 / 项目台账</span>
+            </div>
+            <div class="header-right">
+                <div class="notification">🔔<span class="badge" id="notifBadge" style="display:none;">3</span></div>
+                <div class="user-info"><div class="user-avatar">张</div><span class="user-name">张监理</span></div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="toolbar">
+                <div class="toolbar-left">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="搜索项目名称/编号..." id="searchInput">
+                    </div>
+                    <select class="filter-select" id="statusFilter">
+                        <option value="">全部状态</option>
+                        <option value="planning">筹备中</option>
+                        <option value="active">进行中</option>
+                        <option value="paused">已暂停</option>
+                        <option value="completed">已完成</option>
+                    </select>
+                    <button class="btn btn-primary btn-sm" onclick="filterData()" style="height:36px;">确认</button><button class="btn btn-outline btn-sm" onclick="resetFilters()" style="height:36px;">重置</button>
+                </div>
+                <div style="display:flex;gap:8px;">
+                    <button class="btn btn-primary" onclick="openCreateModal()">＋ 新建项目</button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>项目编号</th>
+                            <th>项目名称</th>
+                            <th>建设单位</th>
+                            <th>总监理师</th>
+                            <th>开始日期</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr><td colspan="7" style="text-align:center;color:#9CA3AF;padding:40px;">数据加载中...</td></tr>
+                    </tbody>
+                </table>
+                <div class="pagination">
+                    <div class="pagination-info">共 6 条记录，第 1/1 页</div>
+                    <div class="pagination-btns">
+                        <button class="page-btn">‹</button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">›</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="createModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalTitle">新建项目</h3>
+                <button class="modal-close" onclick="closeModal('createModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>项目编号 <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="projectCode" placeholder="请输入项目编号">
+                    </div>
+                    <div class="form-group">
+                        <label>项目名称 <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="projectName" placeholder="请输入项目名称">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>项目状态 <span class="required">*</span></label>
+                        <select class="form-control" id="projectStatus">
+                            <option value="">请选择</option>
+                            <option value="planning">筹备中</option>
+                            <option value="active">进行中</option>
+                            <option value="paused">已暂停</option>
+                            <option value="completed">已完成</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>建设单位 <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="buildUnit" placeholder="请输入建设单位">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>总监理师 <span class="required">*</span></label>
+                        <select class="form-control" id="chiefEngineer">
+                            <option value="">请选择</option>
+                            <option value="1">张监理</option>
+                            <option value="2">李监理</option>
+                            <option value="3">王监理</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>开始日期 <span class="required">*</span></label>
+                        <input type="date" class="form-control" id="startDate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>计划结束日期 <span class="required">*</span></label>
+                    <input type="date" class="form-control" id="endDate">
+                </div>
+                <div class="form-group">
+                    <label>项目地址</label>
+                    <input type="text" class="form-control" id="projectAddress" placeholder="请输入项目地址">
+                </div>
+                <div class="form-group">
+                    <label>项目描述</label>
+                    <textarea class="form-control" id="projectDesc" placeholder="请输入项目描述"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('createModal')">取消</button>
+                <button class="btn btn-primary" onclick="saveProject()">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay confirm-modal" id="deleteModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>确认删除</h3>
+                <button class="modal-close" onclick="closeModal('deleteModal')">✕</button>
+            </div>
+            <div class="modal-body" style="padding:32px 24px;">
+                <div class="confirm-icon">⚠️</div>
+                <div class="confirm-text" id="deleteConfirmText">确定要删除该项目吗？</div>
+                <div class="confirm-sub">删除后数据将无法恢复，请谨慎操作</div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('deleteModal')">取消</button>
+                <button class="btn btn-danger" onclick="executeDelete()">确认删除</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="viewModal">
+        <div class="modal" style="width:700px;">
+            <div class="modal-header">
+                <h3>项目详情</h3>
+                <button class="modal-close" onclick="closeModal('viewModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                    <div><span style="font-size:12px;color:#9CA3AF;">项目编号</span><div style="font-size:14px;margin-top:4px;" id="view_code">—</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">项目名称</span><div style="font-size:14px;margin-top:4px;" id="view_name">—</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">项目状态</span><div style="margin-top:4px;" id="view_status">—</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">建设单位</span><div style="font-size:14px;margin-top:4px;" id="view_buildUnit">—</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">总监理师</span><div style="font-size:14px;margin-top:4px;" id="view_chief">—</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">开始日期</span><div style="font-size:14px;margin-top:4px;" id="view_startDate">—</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">计划结束</span><div style="font-size:14px;margin-top:4px;" id="view_endDate">—</div></div>
+                    <div style="grid-column:span 2;"><span style="font-size:12px;color:#9CA3AF;">项目地址</span><div style="font-size:14px;margin-top:4px;" id="view_address">—</div></div>
+                    <div style="grid-column:span 2;"><span style="font-size:12px;color:#9CA3AF;">项目描述</span><div style="font-size:14px;margin-top:4px;" id="view_description">—</div></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('viewModal')">关闭</button>
+                <button class="btn btn-primary" onclick="editFromView()">编辑</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var deleteTargetId = null;
+        var editingId = null;
+        var managerMap = {};
+
+        function recById(id) { for (var i = 0; i < allData.length; i++) { if (String(allData[i].id) === String(id)) return allData[i]; } return null; }
+
+        function openCreateModal() {
+            editingId = null;
+            document.getElementById('modalTitle').textContent = '新建项目';
+            document.getElementById('projectCode').value = '';
+            document.getElementById('projectName').value = '';
+            document.getElementById('projectStatus').value = '';
+            document.getElementById('buildUnit').value = '';
+            document.getElementById('chiefEngineer').value = '';
+            document.getElementById('startDate').value = '';
+            document.getElementById('endDate').value = '';
+            document.getElementById('projectAddress').value = '';
+            document.getElementById('projectDesc').value = '';
+            document.getElementById('createModal').classList.add('show');
+        }
+
+        function openEditModal(id) {
+            editingId = id;
+            document.getElementById('modalTitle').textContent = '编辑项目';
+            var rec = recById(id);
+            var set = function (fid, v) { var el = document.getElementById(fid); if (el) el.value = (v == null ? '' : v); };
+            if (rec) {
+                set('projectCode', rec.code);
+                set('projectName', rec.name);
+                set('projectStatus', rec.status);
+                set('buildUnit', rec.buildUnit === '—' ? '' : rec.buildUnit);
+                set('startDate', rec.startDate);
+                set('endDate', rec.endDate);
+                set('projectAddress', rec.address);
+                set('projectDesc', rec.description);
+                var ce = document.getElementById('chiefEngineer'); if (ce) ce.value = rec.managerId || '';
+            }
+            document.getElementById('createModal').classList.add('show');
+        }
+
+        var viewTargetId = null;
+        function setView(fieldId, text) { var el = document.getElementById(fieldId); if (el) el.textContent = (text == null || text === '') ? '—' : text; }
+        function viewProject(id) {
+            viewTargetId = id;
+            var statusMap = { active: ['status-active', '进行中'], completed: ['status-completed', '已完成'], paused: ['status-paused', '已暂停'], planning: ['status-planning', '筹备中'] };
+            App.apiFetch('/projects/' + id).then(function (resp) {
+                // App.apiFetch 已自动解包，成功时 resp 即为项目对象本身（无 .data 包裹）
+                var d = resp || {};
+                setView('view_code', d.code); setView('view_name', d.name);
+                setView('view_buildUnit', d.buildUnit);
+                setView('view_chief', d.managerId ? (managerMap[d.managerId] || ('用户#' + d.managerId)) : '待分配');
+                setView('view_startDate', d.startDate); setView('view_endDate', d.endDate);
+                setView('view_address', d.address); setView('view_description', d.description);
+                var s = statusMap[d.status] || ['status-active', d.status || '进行中'];
+                var sel = document.getElementById('view_status');
+                if (sel) sel.innerHTML = '<span class="status-tag ' + s[0] + '">' + App.escape(s[1]) + '</span>';
+                document.getElementById('viewModal').classList.add('show');
+            }).catch(function () { });
+        }
+
+        function editFromView() {
+            var id = viewTargetId;
+            closeModal('viewModal');
+            if (id != null) openEditModal(id);
+        }
+
+        function confirmDelete(id, name) {
+            deleteTargetId = id;
+            document.getElementById('deleteConfirmText').textContent = '确定要删除项目"' + name + '"吗？';
+            document.getElementById('deleteModal').classList.add('show');
+        }
+
+        function executeDelete() {
+            if (!deleteTargetId) return;
+            App.apiFetch('/projects/' + deleteTargetId, { method: 'DELETE' })
+                .then(function () { App.toast('项目已删除', 'success'); closeModal('deleteModal'); deleteTargetId = null; loadData(); })
+                .catch(function () { });
+        }
+
+        function saveProject() {
+            var code = document.getElementById('projectCode').value.trim();
+            var name = document.getElementById('projectName').value.trim();
+            var status = document.getElementById('projectStatus').value;
+            var buildUnit = document.getElementById('buildUnit').value.trim();
+            var engineer = document.getElementById('chiefEngineer').value;
+            var startDate = document.getElementById('startDate').value;
+            var endDate = document.getElementById('endDate').value;
+            var missing = [];
+            if (!code) missing.push('项目编号');
+            if (!name) missing.push('项目名称');
+            if (!status) missing.push('项目状态');
+            if (!buildUnit) missing.push('建设单位');
+            if (!startDate) missing.push('开始日期');
+            if (!endDate) missing.push('计划结束日期');
+            if (missing.length > 0) {
+                App.toast('请填写以下必填项：' + missing.join('、'), 'error');
+                return;
+            }
+            var dto = {
+                code: code, name: name, status: status, buildUnit: buildUnit,
+                startDate: startDate, endDate: endDate,
+                address: document.getElementById('projectAddress').value.trim(),
+                description: document.getElementById('projectDesc').value.trim(),
+                managerId: engineer ? Number(engineer) : null
+            };
+            var p = editingId ? App.apiFetch('/projects/' + editingId, { method: 'PUT', body: dto }) : App.apiFetch('/projects', { method: 'POST', body: dto });
+            p.then(function () { App.toast('保存成功', 'success'); closeModal('createModal'); editingId = null; loadData(); }).catch(function () { });
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('show');
+        }
+        var allData = [
+            { id: 1, code: 'PRJ-2026-001', name: '城东综合体项目', buildUnit: '城东建设集团', chief: '张监理', startDate: '2026-01-15', status: 'active' },
+            { id: 2, code: 'PRJ-2026-002', name: '滨河路改造工程', buildUnit: '市政建设公司', chief: '李监理', startDate: '2026-02-01', status: 'active' },
+            { id: 3, code: 'PRJ-2026-003', name: '科技产业园二期', buildUnit: '科技城开发公司', chief: '王监理', startDate: '2026-03-10', status: 'active' },
+            { id: 4, code: 'PRJ-2025-015', name: '西湖景观提升工程', buildUnit: '园林建设集团', chief: '赵监理', startDate: '2025-06-01', status: 'completed' },
+            { id: 5, code: 'PRJ-2026-004', name: '新城水厂扩建项目', buildUnit: '水务集团', chief: '陈监理', startDate: '2026-04-01', status: 'paused' },
+            { id: 6, code: 'PRJ-2026-005', name: '开发区学校建设项目', buildUnit: '教育建设公司', chief: '待分配', startDate: '2026-05-01', status: 'planning' }
+        ];
+        var filteredData = allData.slice();
+
+        function mapRow(r) {
+            return {
+                id: r.id,
+                code: r.code || '',
+                name: r.name || '',
+                buildUnit: r.buildUnit || '—',
+                chief: r.managerId ? (managerMap[r.managerId] || ('用户#' + r.managerId)) : '—',
+                managerId: r.managerId || '',
+                startDate: r.startDate || '',
+                endDate: r.endDate || '',
+                address: r.address || '',
+                description: r.description || '',
+                status: r.status || 'active'
+            };
+        }
+        function loadUsers() {
+            if (!window.App) return Promise.resolve();
+            return App.apiGetPage('/users', { pageNum: 1, pageSize: 500 }).then(function (page) {
+                var list = page.list || [];
+                list.forEach(function (u) { managerMap[u.id] = u.name; });
+                var ce = document.getElementById('chiefEngineer');
+                if (ce) ce.innerHTML = '<option value="">请选择</option>' + list.map(function (u) { return '<option value="' + u.id + '">' + App.escape(u.name) + '</option>'; }).join('');
+            }).catch(function () { });
+        }
+        function loadData() {
+            if (!window.App) return Promise.resolve();
+            var params = { pageNum: 1, pageSize: 200 };
+            var sf = document.getElementById('statusFilter'); if (sf && sf.value) params.status = sf.value;
+            var si = document.getElementById('searchInput'); if (si && si.value.trim()) params.name = si.value.trim();
+            return App.apiGetPage('/projects', params).then(function (page) {
+                allData = (page.list || []).map(mapRow);
+                filteredData = allData.slice();
+                renderTable();
+            }).catch(function () { allData = []; filteredData = []; renderTable(); });
+        }
+
+        function renderTable() {
+            try {
+                var tbody = document.getElementById('tableBody');
+                if (!filteredData.length) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#9CA3AF;padding:40px;">暂无匹配数据</td></tr>';
+                } else {
+                    var html = '';
+                    for (var i = 0; i < filteredData.length; i++) {
+                        var d = filteredData[i];
+                        var statusMap = { active: ['status-active', '进行中'], completed: ['status-completed', '已完成'], paused: ['status-paused', '已暂停'], planning: ['status-planning', '筹备中'] };
+                        var s = statusMap[d.status] || ['status-active', '进行中'];
+                        html += '<tr><td>' + App.escape(d.code) + '</td><td>' + App.escape(d.name) + '</td><td>' + App.escape(d.buildUnit) + '</td><td>' + App.escape(d.chief) + '</td><td>' + App.escape(d.startDate) + '</td><td><span class="status-tag ' + s[0] + '">' + s[1] + '</span></td><td><div class="actions"><button class="btn btn-outline btn-sm" onclick="viewProject(' + d.id + ')">查看</button><button class="btn btn-outline btn-sm" onclick="openEditModal(' + d.id + ')">编辑</button><button class="btn btn-danger btn-sm" onclick="confirmDelete(' + d.id + ',\'' + App.escape(d.name) + '\')">删除</button></div></td></tr>';
+                    }
+                    tbody.innerHTML = html;
+                }
+                var info = document.querySelector('.pagination-info');
+                if (info) info.textContent = '共 ' + filteredData.length + ' 条记录，第 1/1 页';
+            } catch (e) { console.error('渲染表格失败：', e); }
+        }
+
+        function filterData() { loadData(); }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('statusFilter').value = '';
+            loadData();
+        }
+
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            filterData();
+        });
+
+        document.getElementById('statusFilter').addEventListener('change', function(e) {
+            filterData();
+        });
+
+        if (window.App) {
+            App.requireAuth();
+            App.initTopbar();
+            loadUsers().then(loadData);
+        }
+    </script>
+</body>
+</html>

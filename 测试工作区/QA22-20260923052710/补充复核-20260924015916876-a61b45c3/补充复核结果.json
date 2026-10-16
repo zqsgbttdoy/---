@@ -1,0 +1,264 @@
+{
+  "batch": "QA22-20260923052710",
+  "time": "2026-09-24T01:59:40.178Z",
+  "mode": "生产前隔离验收",
+  "note": "与原258项分开统计；MVC+H2不等于真实网络或MySQL验收；未改动旧批次JSON和旧服务数据。",
+  "counts": {
+    "失败": 11,
+    "通过": 15
+  },
+  "results": [
+    {
+      "id": "S001",
+      "title": "当前源码后端全量回归",
+      "result": "失败",
+      "actual": {
+        "exitCode": 1,
+        "reports": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924015916876-a61b45c3\\surefire"
+      }
+    },
+    {
+      "id": "S002",
+      "title": "后端专项：qaAcceptanceDraftIsPersistedAndApprovalIsScoped",
+      "result": "通过",
+      "actual": {
+        "test": "qaAcceptanceDraftIsPersistedAndApprovalIsScoped",
+        "result": "通过",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924015916876-a61b45c3\\surefire\\TEST-com.supervision.FieldWorkflowIntegrationTest.xml"
+      }
+    },
+    {
+      "id": "S003",
+      "title": "后端专项：qaAcceptanceDirectoryRejectsOtherProject",
+      "result": "失败",
+      "actual": {
+        "test": "qaAcceptanceDirectoryRejectsOtherProject",
+        "result": "失败",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924015916876-a61b45c3\\surefire\\TEST-com.supervision.FieldWorkflowIntegrationTest.xml"
+      }
+    },
+    {
+      "id": "S004",
+      "title": "后端专项：qaAcceptanceNoticesAndContactsCannotSkipWorkflow",
+      "result": "失败",
+      "actual": {
+        "test": "qaAcceptanceNoticesAndContactsCannotSkipWorkflow",
+        "result": "失败",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924015916876-a61b45c3\\surefire\\TEST-com.supervision.FieldWorkflowIntegrationTest.xml"
+      }
+    },
+    {
+      "id": "S005",
+      "title": "后端专项：qaAcceptanceRevokedAdminCannotManageUsers",
+      "result": "失败",
+      "actual": {
+        "test": "qaAcceptanceRevokedAdminCannotManageUsers",
+        "result": "失败",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924015916876-a61b45c3\\surefire\\TEST-com.supervision.FieldWorkflowIntegrationTest.xml"
+      }
+    },
+    {
+      "id": "S006",
+      "title": "后端专项：qaAcceptanceSafetyApprovedBodyIsImmutable",
+      "result": "失败",
+      "actual": {
+        "test": "qaAcceptanceSafetyApprovedBodyIsImmutable",
+        "result": "失败",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924015916876-a61b45c3\\surefire\\TEST-com.supervision.FieldWorkflowIntegrationTest.xml"
+      }
+    },
+    {
+      "id": "S007",
+      "title": "后端专项：qa22ConcurrentExplicitAndAutomaticCodes",
+      "result": "通过",
+      "actual": {
+        "test": "qa22ConcurrentExplicitAndAutomaticCodes",
+        "result": "通过",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924015916876-a61b45c3\\surefire\\TEST-com.supervision.FieldWorkflowIntegrationTest.xml"
+      }
+    },
+    {
+      "id": "S008",
+      "title": "后端专项：qaAcceptanceExplicitCorsPolicy",
+      "result": "通过",
+      "actual": {
+        "test": "qaAcceptanceExplicitCorsPolicy",
+        "result": "通过",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924015916876-a61b45c3\\surefire\\TEST-com.supervision.FieldWorkflowIntegrationTest.xml"
+      }
+    },
+    {
+      "id": "S009",
+      "title": "后端专项：qa22MessageSenderAndAccountStatusAreServerControlled",
+      "result": "通过",
+      "actual": {
+        "test": "qa22MessageSenderAndAccountStatusAreServerControlled",
+        "result": "通过",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924015916876-a61b45c3\\surefire\\TEST-com.supervision.FieldWorkflowIntegrationTest.xml"
+      }
+    },
+    {
+      "id": "S010",
+      "title": "后端专项：qaAcceptanceUploadExtensionAndEmptyGuards",
+      "result": "通过",
+      "actual": {
+        "test": "qaAcceptanceUploadExtensionAndEmptyGuards",
+        "result": "通过",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924015916876-a61b45c3\\surefire\\TEST-com.supervision.FieldWorkflowIntegrationTest.xml"
+      }
+    },
+    {
+      "id": "S011",
+      "title": "后端专项：qaAcceptanceExpiredAndTamperedJwt",
+      "result": "通过",
+      "actual": {
+        "test": "qaAcceptanceExpiredAndTamperedJwt",
+        "result": "通过",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924015916876-a61b45c3\\surefire\\TEST-com.supervision.FieldWorkflowIntegrationTest.xml"
+      }
+    },
+    {
+      "id": "S012",
+      "title": "后端专项：qaAcceptanceSafetySubmissionPersists",
+      "result": "失败",
+      "actual": {
+        "test": "qaAcceptanceSafetySubmissionPersists",
+        "result": "失败",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924015916876-a61b45c3\\surefire\\TEST-com.supervision.FieldWorkflowIntegrationTest.xml"
+      }
+    },
+    {
+      "id": "S013",
+      "title": "后端专项：qaAcceptanceSafetySubmittedManagerCanReview",
+      "result": "失败",
+      "actual": {
+        "test": "qaAcceptanceSafetySubmittedManagerCanReview",
+        "result": "失败",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924015916876-a61b45c3\\surefire\\TEST-com.supervision.FieldWorkflowIntegrationTest.xml"
+      }
+    },
+    {
+      "id": "S014",
+      "title": "后端专项：qa22WorkStandardsRequireCurrentAdministrator",
+      "result": "通过",
+      "actual": {
+        "test": "qa22WorkStandardsRequireCurrentAdministrator",
+        "result": "通过",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924015916876-a61b45c3\\surefire\\TEST-com.supervision.FieldWorkflowIntegrationTest.xml"
+      }
+    },
+    {
+      "id": "S015",
+      "title": "后端专项：qaAcceptanceSafetyDraftCannotBeApproved",
+      "result": "失败",
+      "actual": {
+        "test": "qaAcceptanceSafetyDraftCannotBeApproved",
+        "result": "失败",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924015916876-a61b45c3\\surefire\\TEST-com.supervision.FieldWorkflowIntegrationTest.xml"
+      }
+    },
+    {
+      "id": "S016",
+      "title": "后端专项：qa22MessagesArePrivateToRecipient",
+      "result": "通过",
+      "actual": {
+        "test": "qa22MessagesArePrivateToRecipient",
+        "result": "通过",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924015916876-a61b45c3\\surefire\\TEST-com.supervision.FieldWorkflowIntegrationTest.xml"
+      }
+    },
+    {
+      "id": "S017",
+      "title": "后端专项：qaAcceptanceDisabledAdminCannotReactivateSelf",
+      "result": "失败",
+      "actual": {
+        "test": "qaAcceptanceDisabledAdminCannotReactivateSelf",
+        "result": "失败",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924015916876-a61b45c3\\surefire\\TEST-com.supervision.FieldWorkflowIntegrationTest.xml"
+      }
+    },
+    {
+      "id": "S018",
+      "title": "后端专项：qaAcceptanceProdEmptySecretFailsStartup",
+      "result": "通过",
+      "actual": {
+        "test": "qaAcceptanceProdEmptySecretFailsStartup",
+        "result": "通过",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924015916876-a61b45c3\\surefire\\TEST-com.supervision.ProductionSafetyValidatorTest.xml"
+      }
+    },
+    {
+      "id": "S019",
+      "title": "后端专项：qaAcceptanceProdProfileOverridesDevelopmentDefaults",
+      "result": "通过",
+      "actual": {
+        "test": "qaAcceptanceProdProfileOverridesDevelopmentDefaults",
+        "result": "通过",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924015916876-a61b45c3\\surefire\\TEST-com.supervision.ProductionSafetyValidatorTest.xml"
+      }
+    },
+    {
+      "id": "S020",
+      "title": "后端专项：qaAcceptanceJwtTemplatePlaceholderMustFail",
+      "result": "失败",
+      "actual": {
+        "test": "qaAcceptanceJwtTemplatePlaceholderMustFail",
+        "result": "失败",
+        "evidence": "E:\\希地工作\\trae 文件保存\\完整版-监理 - qoder\\测试工作区\\QA22-20260923052710\\补充复核-20260924015916876-a61b45c3\\surefire\\TEST-com.supervision.ProductionSafetyValidatorTest.xml"
+      }
+    },
+    {
+      "id": "S021",
+      "title": "全部页面逻辑、工作标准、XSS专项与全页语法",
+      "result": "失败",
+      "actual": {
+        "exitCode": 1
+      }
+    },
+    {
+      "id": "S022",
+      "title": "小程序草稿及接口模拟测试（非真机）",
+      "result": "通过",
+      "actual": {
+        "exitCode": 0
+      }
+    },
+    {
+      "id": "S023",
+      "title": "测试器语法：qa22-followup.cjs",
+      "result": "通过",
+      "actual": {
+        "exitCode": 0,
+        "error": ""
+      }
+    },
+    {
+      "id": "S024",
+      "title": "测试器语法：qa22-page-checks.cjs",
+      "result": "通过",
+      "actual": {
+        "exitCode": 0,
+        "error": ""
+      }
+    },
+    {
+      "id": "S025",
+      "title": "测试器语法：qa22-system-tests.cjs",
+      "result": "通过",
+      "actual": {
+        "exitCode": 0,
+        "error": ""
+      }
+    },
+    {
+      "id": "S026",
+      "title": "原批次及既有补充证据SHA-256保持不变",
+      "result": "通过",
+      "actual": {
+        "files": 161
+      }
+    }
+  ],
+  "created": [],
+  "requests": []
+}

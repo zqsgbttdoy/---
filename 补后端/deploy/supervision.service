@@ -1,0 +1,48 @@
+# ==============================================================================
+# supervision.service - 监理现场管理系统 systemd 服务单元
+#
+# 安装方法：
+#   sudo cp supervision.service /etc/systemd/system/supervision.service
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable supervision
+#   sudo systemctl start supervision
+#
+# 常用命令：
+#   systemctl status supervision      查看状态
+#   journalctl -u supervision -f      跟踪日志（应用日志另见 /opt/supervision/backend/logs/app.log）
+# ==============================================================================
+
+[Unit]
+Description=Supervision Site Management Backend (Spring Boot)
+# 依赖网络与本机 MySQL 就绪后再启动
+After=network.target mysql.service
+Wants=mysql.service
+
+[Service]
+Type=simple
+User=supervision
+Group=supervision
+WorkingDirectory=/opt/supervision/backend
+# 环境变量文件（含数据库密码/JWT 密钥，务必 chmod 600）
+EnvironmentFile=/opt/supervision/backend/supervision.env
+
+# JVM 参数说明（当前为 2核4G 服务器推荐值）：
+#   -Xms1G -Xmx2G            堆内存初始/最大
+#   -XX:+UseG1GC             G1 垃圾回收器
+#   -XX:MaxGCPauseMillis=200 目标最大 GC 停顿 200ms
+#   -Dfile.encoding=UTF-8    统一文件编码，避免中文乱码
+# 若服务器为 4核8G，建议改为： -Xms2G -Xmx4G
+ExecStart=/usr/bin/java -Xms1G -Xmx2G -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -Dfile.encoding=UTF-8 -jar /opt/supervision/backend/supervision-site-management-1.0.0.jar
+
+# 异常退出时自动重启，间隔 10 秒
+Restart=on-failure
+RestartSec=10
+# 停止时给予 30 秒优雅关闭时间，超时后强杀
+TimeoutStopSec=30
+
+# 输出交由 journald 管理
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

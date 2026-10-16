@@ -1,0 +1,43 @@
+{
+  "note": "由测试器根据真实接口生成的对账资料，不是系统已实现周报生成能力",
+  "daily": {
+    "supervision-diaries": {
+      "draft": 2,
+      "submitted": 1,
+      "approved": 1,
+      "rejected": 1,
+      "recorded": 0
+    },
+    "supervision-logs": {
+      "draft": 2,
+      "submitted": 1,
+      "approved": 1,
+      "rejected": 1,
+      "recorded": 0
+    },
+    "daily-inspections": {
+      "draft": 2,
+      "submitted": 1,
+      "approved": 1,
+      "rejected": 1,
+      "recorded": 0
+    },
+    "sideline-inspections": {
+      "draft": 2,
+      "submitted": 1,
+      "approved": 1,
+      "rejected": 1,
+      "recorded": 0
+    },
+    "date": "2026-09-23",
+    "canReview": false
+  },
+  "weekly": {
+    "from": "2026-09-21",
+    "to": "2026-09-27",
+    "approvedDiaries": 1,
+    "sourceIds": [
+      1
+    ]
+  }
+}

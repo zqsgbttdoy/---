@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监理现场管理系统 - 部门管理</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background: #F0F5FF; color: #1F2937; display: flex; min-height: 100vh; }
+        .sidebar { width: 240px; background: linear-gradient(180deg, #1E3A5F 0%, #0F2440 100%); color: #fff; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; overflow-y: auto; }
+        .sidebar-logo { padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo h2 { font-size: 16px; font-weight: 600; letter-spacing: 1px; }
+        .sidebar-logo p { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+        .menu-group { padding: 8px 0; }
+        .menu-group-title { padding: 10px 20px 6px; font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
+        .menu-item { display: flex; align-items: center; padding: 10px 20px; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; transition: all 0.2s; cursor: pointer; }
+        .menu-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+        .menu-item.active { background: rgba(37,99,235,0.3); color: #fff; border-right: 3px solid #2563EB; }
+        .menu-item .icon { width: 20px; margin-right: 10px; text-align: center; font-size: 14px; }
+        .main { margin-left: 240px; flex: 1; }
+        .header { background: #fff; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 50; }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .header-left h3 { font-size: 15px; font-weight: 600; color: #1E3A5F; }
+        .breadcrumb { font-size: 12px; color: #6B7280; }
+        .breadcrumb a { color: #2563EB; text-decoration: none; }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .notification { position: relative; cursor: pointer; font-size: 18px; }
+        .badge { position: absolute; top: -6px; right: -6px; background: #EF4444; color: #fff; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .user-info { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #2563EB; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; }
+        .user-name { font-size: 13px; color: #374151; }
+        .content { padding: 24px; }
+        .toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+        .search-box { display: flex; align-items: center; background: #fff; border: 1px solid #E5E7EB; border-radius: 6px; padding: 0 12px; height: 36px; }
+        .search-box input { border: none; outline: none; font-size: 13px; width: 200px; background: transparent; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; border: none; transition: all 0.2s; }
+        .btn-primary { background: #2563EB; color: #fff; }
+        .btn-primary:hover { background: #1D4ED8; }
+        .btn-danger { background: #EF4444; color: #fff; }
+        .btn-outline { background: #fff; color: #374151; border: 1px solid #E5E7EB; }
+        .btn-outline:hover { background: #F9FAFB; }
+        .btn-sm { padding: 4px 10px; font-size: 12px; }
+        .layout { display: grid; grid-template-columns: 320px 1fr; gap: 16px; }
+        .tree-panel { background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; }
+        .tree-header { padding: 16px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: space-between; }
+        .tree-header h4 { font-size: 14px; font-weight: 600; color: #1E3A5F; }
+        .tree-body { padding: 8px; }
+        .tree-node { padding: 10px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 8px; transition: background 0.2s; }
+        .tree-node:hover { background: #F0F5FF; }
+        .tree-node.active { background: #DBEAFE; color: #1D4ED8; font-weight: 500; }
+        .tree-node .node-icon { font-size: 16px; }
+        .tree-node .node-count { margin-left: auto; font-size: 11px; color: #9CA3AF; background: #F3F4F6; padding: 1px 8px; border-radius: 10px; }
+        .tree-children { padding-left: 24px; }
+        .detail-panel { background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; }
+        .detail-header { padding: 16px 20px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: space-between; }
+        .detail-header h4 { font-size: 14px; font-weight: 600; color: #1E3A5F; }
+        .detail-body { padding: 20px; }
+        .dept-info { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; padding: 16px; background: #F8FAFC; border-radius: 8px; }
+        .info-label { font-size: 12px; color: #9CA3AF; margin-bottom: 4px; }
+        .info-value { font-size: 14px; color: #1F2937; }
+        table { width: 100%; border-collapse: collapse; }
+        thead { background: #F8FAFC; }
+        th { padding: 10px 12px; text-align: left; font-size: 12px; font-weight: 600; color: #6B7280; border-bottom: 1px solid #E5E7EB; }
+        td { padding: 10px 12px; font-size: 13px; color: #374151; border-bottom: 1px solid #F3F4F6; }
+        tr:hover td { background: #F8FAFC; }
+        .actions { display: flex; gap: 8px; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+        .modal-overlay.show { display: flex; }
+        .modal { background: #fff; border-radius: 12px; width: 500px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: space-between; }
+        .modal-header h3 { font-size: 16px; font-weight: 600; color: #1E3A5F; }
+        .modal-close { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer; font-size: 18px; color: #6B7280; border: none; background: none; }
+        .modal-close:hover { background: #F3F4F6; }
+        .modal-body { padding: 24px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid #E5E7EB; display: flex; justify-content: flex-end; gap: 12px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px; }
+        .form-group label .required { color: #EF4444; }
+        .form-control { width: 100%; height: 36px; border: 1px solid #E5E7EB; border-radius: 6px; padding: 0 12px; font-size: 13px; outline: none; }
+        .form-control:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        textarea.form-control { height: 80px; padding: 8px 12px; resize: vertical; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .confirm-modal .modal { width: 400px; }
+        .confirm-icon { text-align: center; font-size: 48px; margin-bottom: 16px; }
+        .confirm-text { text-align: center; font-size: 14px; color: #374151; margin-bottom: 8px; }
+        .confirm-sub { text-align: center; font-size: 12px; color: #9CA3AF; }
+    </style>
+    <script src="assets/app.js"></script>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/responsive.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-logo"><h2>监理现场管理系统</h2><p>Supervision Site Management</p></div>
+        <div class="menu-group"><a class="menu-item" href="index.html"><span class="icon">📊</span> 仪表盘</a></div>
+        <div class="menu-group"><div class="menu-group-title">项目管理</div><a class="menu-item" href="project-ledger.html"><span class="icon">📁</span> 项目台账</a></div>
+        <div class="menu-group"><div class="menu-group-title">监理现场工作</div><a class="menu-item" href="daily-inspection.html"><span class="icon">🔍</span> 日常巡检</a><a class="menu-item" href="sideline-inspection.html"><span class="icon">👁️</span> 旁站</a><a class="menu-item" href="supervision-notice.html"><span class="icon">📋</span> 监理通知单</a><a class="menu-item" href="work-contact.html"><span class="icon">✉️</span> 工作联系单</a><a class="menu-item" href="supervision-diary.html"><span class="icon">📝</span> 监理日记</a><a class="menu-item" href="supervision-log.html"><span class="icon">📄</span> 监理日志</a><a class="menu-item" href="safety-log.html"><span class="icon">🛡️</span> 监理安全日志</a><a class="menu-item" href="meeting-minutes.html"><span class="icon">📅</span> 会议纪要</a><a class="menu-item" href="supervision-monthly-report.html"><span class="icon">📊</span> 监理月报</a></div>
+        <div class="menu-group"><div class="menu-group-title">项目资料</div><a class="menu-item" href="sub-item-database.html"><span class="icon">🗄️</span> 工程资料目录设置</a><a class="menu-item" href="project-data-upload.html"><span class="icon">📤</span> 工程资料上传</a></div>
+        <div class="menu-group"><div class="menu-group-title">数据统计</div><a class="menu-item" href="diary-statistics.html"><span class="icon">📈</span> 日记统计</a><a class="menu-item" href="diary-report.html"><span class="icon">📑</span> 日记报表</a><a class="menu-item" href="log-statistics.html"><span class="icon">📊</span> 日志统计</a><a class="menu-item" href="safety-log-statistics.html"><span class="icon">🛡️</span> 安全日志统计</a></div>
+        <div class="menu-group"><div class="menu-group-title">团队管理</div><a class="menu-item active" href="department-management.html"><span class="icon">🏢</span> 部门管理</a><a class="menu-item" href="personnel-management.html"><span class="icon">👥</span> 人员管理</a><a class="menu-item" href="permission-settings.html"><span class="icon">🔐</span> 权限设置</a><a class="menu-item" href="process-management.html"><span class="icon">🔄</span> 流程管理</a></div>
+        <div class="menu-group"><div class="menu-group-title">系统设置</div><a class="menu-item" href="operation-log.html"><span class="icon">📜</span> 操作日志</a><a class="menu-item" href="message-center.html"><span class="icon">🔔</span> 消息中心</a><a class="menu-item" href="work-standard-config.html"><span class="icon">⚙️</span> 工作标准配置</a></div>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <div class="header-left"><h3>部门管理</h3><span class="breadcrumb"><a href="index.html">首页</a> / 团队管理 / 部门管理</span></div>
+            <div class="header-right"><div class="notification">🔔<span class="badge" id="notifBadge" style="display:none;">0</span></div><div class="user-info"><div class="user-avatar">张</div><span class="user-name">张监理</span></div></div>
+        </div>
+
+        <div class="content">
+            <div class="layout">
+                <div class="tree-panel">
+                    <div class="tree-header"><h4>部门架构</h4><button class="btn btn-primary btn-sm" onclick="openCreateModal()">＋ 新建</button></div>
+                    <div style="padding:12px 12px 0;">
+                        <div class="search-box"><span class="search-icon" style="color:#9CA3AF;margin-right:8px;">🔍</span><input type="text" id="deptSearch" placeholder="搜索部门名称..." oninput="renderTree()"></div>
+                    </div>
+                    <div class="tree-body" id="treeBody">
+                        <div style="text-align:center;color:#9CA3AF;padding:20px;">加载中...</div>
+                    </div>
+                </div>
+
+                <div class="detail-panel">
+                    <div class="detail-header">
+                        <h4 id="deptTitle">总公司</h4>
+                        <div style="display:flex;gap:8px;">
+                            <button class="btn btn-outline btn-sm" onclick="openEditModal()">编辑</button>
+                            <button class="btn btn-primary btn-sm" onclick="openCreateModal()">＋ 添加子部门</button>
+                            <button class="btn btn-danger btn-sm" onclick="confirmDelete()">删除</button>
+                        </div>
+                    </div>
+                    <div class="detail-body">
+                        <div class="dept-info" id="deptInfo"></div>
+
+                        <h5 style="font-size:14px;font-weight:600;color:#1E3A5F;margin-bottom:12px;">部门成员</h5>
+                        <table>
+                            <thead><tr><th>姓名</th><th>职位</th><th>联系电话</th><th>状态</th><th>操作</th></tr></thead>
+                            <tbody id="memberBody">
+                                <tr><td colspan="5" style="text-align:center;color:#9CA3AF;padding:20px;">加载中...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="createModal">
+        <div class="modal">
+            <div class="modal-header"><h3 id="modalTitle">新建部门</h3><button class="modal-close" onclick="closeModal('createModal')">✕</button></div>
+            <div class="modal-body">
+                <div class="form-group"><label>上级部门</label><select class="form-control" id="deptParent"><option value="">无（顶级部门）</option></select></div>
+                <div class="form-row">
+                    <div class="form-group"><label>部门名称 <span class="required">*</span></label><input type="text" class="form-control" id="deptName" placeholder="请输入部门名称"></div>
+                    <div class="form-group"><label>部门负责人</label><input type="text" class="form-control" id="deptLeader" placeholder="请输入负责人"></div>
+                </div>
+                <div class="form-group"><label>部门描述</label><textarea class="form-control" id="deptDesc" placeholder="请输入部门描述"></textarea></div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('createModal')">取消</button><button class="btn btn-primary" onclick="saveDept()">保存</button></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay confirm-modal" id="deleteModal">
+        <div class="modal" style="width:400px;">
+            <div class="modal-header"><h3>确认删除</h3><button class="modal-close" onclick="closeModal('deleteModal')">✕</button></div>
+            <div class="modal-body" style="padding:32px 24px;">
+                <div class="confirm-icon">⚠️</div>
+                <div class="confirm-text">确定要删除该部门吗？</div>
+                <div class="confirm-sub">含有子部门或人员的部门不可删除</div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('deleteModal')">取消</button><button class="btn btn-danger" onclick="executeDelete()">确认删除</button></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="viewModal">
+        <div class="modal" style="width:600px;">
+            <div class="modal-header">
+                <h3>人员详情</h3>
+                <button class="modal-close" onclick="closeModal('viewModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #F3F4F6;">
+                    <div class="user-avatar" style="width:56px;height:56px;font-size:20px;">赵</div>
+                    <div>
+                        <div style="font-size:18px;font-weight:600;color:#1F2937;">赵总监</div>
+                        <div style="font-size:13px;color:#6B7280;margin-top:4px;">总监理工程师 · 总公司</div>
+                    </div>
+                    <div style="margin-left:auto;"><span style="padding:2px 8px;border-radius:12px;font-size:11px;background:#D1FAE5;color:#059669;">在职</span></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                    <div><span style="font-size:12px;color:#9CA3AF;">资格证号</span><div style="font-size:14px;margin-top:4px;">ZJL-2019-001</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">联系电话</span><div style="font-size:14px;margin-top:4px;">138****1234</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">所属部门</span><div style="font-size:14px;margin-top:4px;">总公司</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">分配项目</span><div style="font-size:14px;margin-top:4px;">城东综合体</div></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('viewModal')">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var allDepts = [];
+        var deptsById = {};
+        var memberCount = {};
+        var selectedDeptId = null;
+        var editingId = null;
+        var currentMembers = [];
+
+        function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+        function loadDepartments() {
+            return apiGetPage('/departments', { pageNum: 1, pageSize: 500 }).then(function(page) {
+                allDepts = page.list || [];
+                deptsById = {};
+                for (var i = 0; i < allDepts.length; i++) deptsById[allDepts[i].id] = allDepts[i];
+                renderTree();
+                fillParentSelect();
+                if (allDepts.length) {
+                    var keep = selectedDeptId && deptsById[selectedDeptId] ? selectedDeptId : allDepts[0].id;
+                    selectDept(keep);
+                } else {
+                    document.getElementById('deptInfo').innerHTML = '<div style="grid-column:span 2;text-align:center;color:#9CA3AF;">暂无部门</div>';
+                    document.getElementById('memberBody').innerHTML = '<tr><td colspan="5" style="text-align:center;color:#9CA3AF;padding:20px;">—</td></tr>';
+                }
+            }).catch(function(e) {
+                document.getElementById('treeBody').innerHTML = '<div style="text-align:center;color:#9CA3AF;padding:20px;">加载失败</div>';
+            });
+        }
+
+        function buildForest() {
+            var childrenOf = {};
+            for (var i = 0; i < allDepts.length; i++) {
+                var pid = allDepts[i].parentId || 0;
+                (childrenOf[pid] = childrenOf[pid] || []).push(allDepts[i]);
+            }
+            return childrenOf;
+        }
+
+        function renderTree() {
+            var childrenOf = buildForest();
+            var kwEl = document.getElementById('deptSearch');
+            var kw = kwEl ? kwEl.value.trim().toLowerCase() : '';
+            // 搜索时：先算出命中节点及其全部祖先，仅保留这些节点构树
+            var keep = null;
+            if (kw) {
+                keep = {};
+                for (var i = 0; i < allDepts.length; i++) {
+                    var d = allDepts[i];
+                    if (d.name && String(d.name).toLowerCase().indexOf(kw) >= 0) {
+                        var cur = d;
+                        while (cur) {
+                            keep[cur.id] = true;
+                            cur = cur.parentId ? deptsById[cur.parentId] : null;
+                        }
+                    }
+                }
+            }
+            function nodeHtml(d, depth) {
+                var kids = (childrenOf[d.id] || []).filter(function(k){ return !keep || keep[k.id]; });
+                var icon = depth === 0 ? '🏢' : (kids.length ? '📁' : '👥');
+                var cnt = memberCount[d.id] != null ? (memberCount[d.id] + '人') : '';
+                var active = d.id === selectedDeptId ? ' active' : '';
+                var html = '<div class="tree-node' + active + '" onclick="selectDept(' + d.id + ')"><span class="node-icon">' + icon + '</span> ' + esc(d.name) + ' <span class="node-count">' + cnt + '</span></div>';
+                if (kids.length) {
+                    html += '<div class="tree-children">';
+                    for (var i = 0; i < kids.length; i++) html += nodeHtml(kids[i], depth + 1);
+                    html += '</div>';
+                }
+                return html;
+            }
+            var roots = (childrenOf[0] || []).filter(function(k){ return !keep || keep[k.id]; });
+            var out = '';
+            for (var i = 0; i < roots.length; i++) out += nodeHtml(roots[i], 0);
+            var emptyMsg = kw ? '未找到匹配部门' : '暂无部门';
+            document.getElementById('treeBody').innerHTML = out || '<div style="text-align:center;color:#9CA3AF;padding:20px;">' + emptyMsg + '</div>';
+        }
+
+        function fillParentSelect() {
+            var sel = document.getElementById('deptParent');
+            var opts = '<option value="">无（顶级部门）</option>';
+            for (var i = 0; i < allDepts.length; i++) {
+                if (editingId && allDepts[i].id === editingId) continue;
+                opts += '<option value="' + allDepts[i].id + '">' + esc(allDepts[i].name) + '</option>';
+            }
+            sel.innerHTML = opts;
+        }
+
+        function selectDept(id) {
+            selectedDeptId = id;
+            var d = deptsById[id];
+            if (!d) return;
+            document.getElementById('deptTitle').textContent = d.name;
+            renderTree();
+            var created = d.createTime ? String(d.createTime).replace('T', ' ').slice(0, 10) : '—';
+            document.getElementById('deptInfo').innerHTML =
+                '<div><div class="info-label">部门名称</div><div class="info-value">' + esc(d.name) + '</div></div>' +
+                '<div><div class="info-label">部门负责人</div><div class="info-value">' + esc(d.leader || '—') + '</div></div>' +
+                '<div><div class="info-label">上级部门</div><div class="info-value">' + esc(d.parentId && deptsById[d.parentId] ? deptsById[d.parentId].name : '—') + '</div></div>' +
+                '<div><div class="info-label">创建时间</div><div class="info-value">' + created + '</div></div>' +
+                '<div style="grid-column:span 2;"><div class="info-label">部门描述</div><div class="info-value">' + esc(d.description || '—') + '</div></div>';
+            loadMembers(id);
+        }
+
+        function loadMembers(deptId) {
+            var body = document.getElementById('memberBody');
+            body.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#9CA3AF;padding:20px;">加载中...</td></tr>';
+            return apiGetPage('/users', { pageNum: 1, pageSize: 500, deptId: deptId }).then(function(page) {
+                currentMembers = page.list || [];
+                memberCount[deptId] = currentMembers.length;
+                var statusMap = { active: ['#D1FAE5', '#059669', '在职'], inactive: ['#F3F4F6', '#6B7280', '离职'], leave: ['#FEF3C7', '#D97706', '休假'] };
+                if (!currentMembers.length) {
+                    body.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#9CA3AF;padding:20px;">暂无成员</td></tr>';
+                } else {
+                    var html = '';
+                    for (var i = 0; i < currentMembers.length; i++) {
+                        var u = currentMembers[i];
+                        var s = statusMap[u.status] || statusMap.active;
+                        html += '<tr><td>' + esc(u.name) + '</td><td>' + esc(u.position || '—') + '</td><td>' + esc(u.phone || '—') + '</td><td><span style="padding:2px 8px;border-radius:12px;font-size:11px;background:' + s[0] + ';color:' + s[1] + ';">' + s[2] + '</span></td><td><button class="btn btn-outline btn-sm" onclick="viewDetail(' + u.id + ')">查看</button></td></tr>';
+                    }
+                    body.innerHTML = html;
+                }
+                renderTree();
+            }).catch(function() {
+                body.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#9CA3AF;padding:20px;">加载失败</td></tr>';
+            });
+        }
+
+        function clearForm() {
+            document.getElementById('deptParent').value = '';
+            document.getElementById('deptName').value = '';
+            document.getElementById('deptLeader').value = '';
+            document.getElementById('deptDesc').value = '';
+        }
+
+        function openCreateModal() {
+            editingId = null;
+            document.getElementById('modalTitle').textContent = '新建部门';
+            fillParentSelect();
+            clearForm();
+            if (selectedDeptId) document.getElementById('deptParent').value = selectedDeptId;
+            document.getElementById('createModal').classList.add('show');
+        }
+
+        function openEditModal() {
+            if (!selectedDeptId) { App.toast('请先选择部门'); return; }
+            var d = deptsById[selectedDeptId];
+            editingId = selectedDeptId;
+            document.getElementById('modalTitle').textContent = '编辑部门';
+            fillParentSelect();
+            document.getElementById('deptParent').value = d.parentId || '';
+            document.getElementById('deptName').value = d.name || '';
+            document.getElementById('deptLeader').value = d.leader || '';
+            document.getElementById('deptDesc').value = d.description || '';
+            document.getElementById('createModal').classList.add('show');
+        }
+
+        function saveDept() {
+            var name = document.getElementById('deptName').value.trim();
+            if (!name) { App.toast('请输入部门名称'); return; }
+            var parent = document.getElementById('deptParent').value;
+            var dto = {
+                name: name,
+                parentId: parent ? Number(parent) : null,
+                leader: document.getElementById('deptLeader').value.trim(),
+                description: document.getElementById('deptDesc').value.trim(),
+                status: 'active'
+            };
+            var req = editingId
+                ? apiFetch('/departments/' + editingId, { method: 'PUT', body: dto })
+                : apiFetch('/departments', { method: 'POST', body: dto });
+            req.then(function() {
+                App.toast(editingId ? '修改成功' : '创建成功');
+                closeModal('createModal');
+                loadDepartments();
+            }).catch(function(e) { App.toast(e && e.message ? e.message : '保存失败'); });
+        }
+
+        function confirmDelete() {
+            if (!selectedDeptId) { App.toast('请先选择部门'); return; }
+            document.getElementById('deleteModal').classList.add('show');
+        }
+
+        function executeDelete() {
+            if (!selectedDeptId) { closeModal('deleteModal'); return; }
+            apiFetch('/departments/' + selectedDeptId, { method: 'DELETE' }).then(function() {
+                App.toast('已删除');
+                closeModal('deleteModal');
+                selectedDeptId = null;
+                loadDepartments();
+            }).catch(function(e) { App.toast(e && e.message ? e.message : '删除失败'); });
+        }
+
+        function viewDetail(userId) {
+            var u = null;
+            for (var i = 0; i < currentMembers.length; i++) { if (currentMembers[i].id === userId) { u = currentMembers[i]; break; } }
+            if (!u) return;
+            var statusMap = { active: ['#D1FAE5', '#059669', '在职'], inactive: ['#F3F4F6', '#6B7280', '离职'], leave: ['#FEF3C7', '#D97706', '休假'] };
+            var s = statusMap[u.status] || statusMap.active;
+            var deptName = deptsById[u.deptId] ? deptsById[u.deptId].name : '—';
+            var body = document.querySelector('#viewModal .modal-body');
+            body.innerHTML =
+                '<div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #F3F4F6;">' +
+                '<div class="user-avatar" style="width:56px;height:56px;font-size:20px;">' + esc((u.name || '?').charAt(0)) + '</div>' +
+                '<div><div style="font-size:18px;font-weight:600;color:#1F2937;">' + esc(u.name) + '</div>' +
+                '<div style="font-size:13px;color:#6B7280;margin-top:4px;">' + esc(u.position || '—') + ' · ' + esc(deptName) + '</div></div>' +
+                '<div style="margin-left:auto;"><span style="padding:2px 8px;border-radius:12px;font-size:11px;background:' + s[0] + ';color:' + s[1] + ';">' + s[2] + '</span></div></div>' +
+                '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">' +
+                '<div><span style="font-size:12px;color:#9CA3AF;">资格证号</span><div style="font-size:14px;margin-top:4px;">' + esc(u.certNo || '—') + '</div></div>' +
+                '<div><span style="font-size:12px;color:#9CA3AF;">联系电话</span><div style="font-size:14px;margin-top:4px;">' + esc(u.phone || '—') + '</div></div>' +
+                '<div><span style="font-size:12px;color:#9CA3AF;">所属部门</span><div style="font-size:14px;margin-top:4px;">' + esc(deptName) + '</div></div>' +
+                '<div><span style="font-size:12px;color:#9CA3AF;">入职日期</span><div style="font-size:14px;margin-top:4px;">' + esc(u.hireDate || '—') + '</div></div>' +
+                '</div>';
+            document.getElementById('viewModal').classList.add('show');
+        }
+
+        function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+        if (window.App) {
+            App.requireAuth();
+            App.initTopbar();
+            loadDepartments();
+        }
+    </script>
+</body>
+</html>

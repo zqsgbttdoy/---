@@ -1,0 +1,474 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------< com.supervision:supervision-site-management >-------------
+[INFO] Building �����ֳ�����ϵͳ 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ supervision-site-management ---
+[INFO] Copying 3 resources from src\main\resources to target\classes
+[INFO] Copying 5 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ supervision-site-management ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ supervision-site-management ---
+[INFO] skip non existing resourceDirectory E:\ϣ�ع���\trae �ļ�����\������-���� - qoder\�����\backend\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ supervision-site-management ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.1.2:test (default-test) @ supervision-site-management ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.supervision.AuthServiceTest
+09:32:55.180 [main] INFO com.supervision.service.AuthService -- ��¼�ɹ���userId=1, userName=admin, roles=[admin]
+09:32:55.252 [main] INFO com.supervision.service.AuthService -- ��¼ʧ�ܣ��û������ڣ���¼��=nobody
+09:32:55.266 [main] INFO com.supervision.service.AuthService -- ��¼�ɹ���userId=1, userName=admin, roles=[]
+09:32:55.277 [main] INFO com.supervision.service.AuthService -- ��¼ʧ�ܣ��������userId=1, ��¼��=13800000000
+09:32:55.287 [main] INFO com.supervision.service.AuthService -- ��¼�ɹ���userId=1, userName=admin, roles=[admin, supervisor]
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.709 s -- in com.supervision.AuthServiceTest
+[INFO] Running com.supervision.DailyInspectionServiceTest
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.216 s -- in com.supervision.DailyInspectionServiceTest
+[INFO] Running com.supervision.FieldWorkflowIntegrationTest
+09:32:55.681 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.supervision.FieldWorkflowIntegrationTest]: FieldWorkflowIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+09:32:55.851 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.supervision.SupervisionApplication for test class com.supervision.FieldWorkflowIntegrationTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-09-24 09:32:56.543 [INFO ] [background-preinit] o.h.validator.internal.util.Version [] - HV000001: Hibernate Validator 8.0.1.Final
+2026-09-24 09:32:56.590 [INFO ] [main] c.s.FieldWorkflowIntegrationTest [] - Starting FieldWorkflowIntegrationTest using Java 21.0.12.1 with PID 4264 (started by Administrator in E:\ϣ�ع���\trae �ļ�����\������-���� - qoder\�����\backend)
+2026-09-24 09:32:56.591 [INFO ] [main] c.s.FieldWorkflowIntegrationTest [] - The following 1 profile is active: "e2e"
+2026-09-24 09:32:57.527 [INFO ] [main] o.s.d.r.c.RepositoryConfigurationDelegate [] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-09-24 09:32:57.675 [INFO ] [main] o.s.d.r.c.RepositoryConfigurationDelegate [] - Finished Spring Data repository scanning in 139 ms. Found 21 JPA repository interfaces.
+2026-09-24 09:32:58.264 [INFO ] [main] o.h.jpa.internal.util.LogHelper [] - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-09-24 09:32:58.358 [INFO ] [main] org.hibernate.Version [] - HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-09-24 09:32:58.402 [INFO ] [main] o.h.c.i.RegionFactoryInitiator [] - HHH000026: Second-level cache disabled
+2026-09-24 09:32:58.525 [INFO ] [main] o.s.o.j.p.SpringPersistenceUnitInfo [] - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-09-24 09:32:58.560 [INFO ] [main] com.zaxxer.hikari.HikariDataSource [] - HikariPool-1 - Starting...
+2026-09-24 09:32:58.873 [INFO ] [main] com.zaxxer.hikari.pool.HikariPool [] - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:fieldtests user=SA
+2026-09-24 09:32:58.875 [INFO ] [main] com.zaxxer.hikari.HikariDataSource [] - HikariPool-1 - Start completed.
+2026-09-24 09:32:58.901 [WARN ] [main] org.hibernate.orm.deprecation [] - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-09-24 09:33:00.409 [INFO ] [main] o.h.e.t.j.p.i.JtaPlatformInitiator [] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-09-24 09:33:00.477 [INFO ] [main] o.s.o.j.LocalContainerEntityManagerFactoryBean [] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-09-24 09:33:02.185 [INFO ] [main] o.s.b.t.m.w.SpringBootMockServletContext [] - Initializing Spring TestDispatcherServlet ''
+2026-09-24 09:33:02.185 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Initializing Servlet ''
+2026-09-24 09:33:02.187 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Completed initialization in 2 ms
+2026-09-24 09:33:02.205 [INFO ] [main] c.s.FieldWorkflowIntegrationTest [] - Started FieldWorkflowIntegrationTest in 6.201 seconds (process running for 9.336)
+2026-09-24 09:33:02.614 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7ac8dada] - �������: POST /files/upload status=200 ��ʱ=210ms
+2026-09-24 09:33:03.093 [INFO ] [main] c.s.i.RequestLoggingInterceptor [5dc4d6eb] - �������: POST /supervision-diaries status=200 ��ʱ=463ms
+2026-09-24 09:33:03.125 [INFO ] [main] c.s.i.RequestLoggingInterceptor [775845f3] - �������: PUT /supervision-diaries/1 status=200 ��ʱ=30ms
+2026-09-24 09:33:03.148 [INFO ] [main] c.s.i.RequestLoggingInterceptor [208b6573] - �������: POST /files/upload status=200 ��ʱ=8ms
+2026-09-24 09:33:03.173 [INFO ] [main] c.s.i.RequestLoggingInterceptor [24144dad] - �������: POST /supervision-diaries status=200 ��ʱ=23ms
+2026-09-24 09:33:03.258 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c3c624ac] - �������: GET /field/diary-source status=200 ��ʱ=83ms
+2026-09-24 09:33:03.275 [INFO ] [main] c.s.i.RequestLoggingInterceptor [bbecd378] - �������: POST /supervision-diaries/2/submit status=200 ��ʱ=14ms
+2026-09-24 09:33:03.303 [INFO ] [main] c.s.i.RequestLoggingInterceptor [50a78a42] - �������: POST /supervision-diaries/2/approve status=200 ��ʱ=26ms
+2026-09-24 09:33:03.312 [INFO ] [main] c.s.i.RequestLoggingInterceptor [cab7cdd6] - �������: GET /field/diary-source status=200 ��ʱ=7ms
+2026-09-24 09:33:03.319 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b3c2968f] - �������: GET /field/diary-source status=200 ��ʱ=5ms
+2026-09-24 09:33:03.355 [INFO ] [main] c.s.i.RequestLoggingInterceptor [89379f75] - �������: POST /supervision-logs status=200 ��ʱ=33ms
+2026-09-24 09:33:03.370 [WARN ] [main] c.s.exception.GlobalExceptionHandler [3e6bfb97] - ҵ���쳣: /supervision-logs - �ռ���Դ���Ǳ���Ŀ��������˰汾��������ȡ��
+2026-09-24 09:33:03.371 [INFO ] [main] c.s.i.RequestLoggingInterceptor [3e6bfb97] - �������: POST /supervision-logs status=409 ��ʱ=13ms
+2026-09-24 09:33:03.475 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e6b81875] - �������: GET /field/summary status=200 ��ʱ=102ms
+2026-09-24 09:33:03.491 [INFO ] [main] c.s.i.RequestLoggingInterceptor [0b4e8625] - �������: POST /files/upload status=200 ��ʱ=8ms
+2026-09-24 09:33:03.516 [INFO ] [main] c.s.i.RequestLoggingInterceptor [090e13ab] - �������: POST /supervision-diaries status=200 ��ʱ=23ms
+2026-09-24 09:33:03.521 [WARN ] [main] c.s.exception.GlobalExceptionHandler [e43723a1] - ҵ���쳣: /supervision-diaries/3 - ȱ�ټ�¼�汾�������´򿪼�¼�����
+2026-09-24 09:33:03.522 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e43723a1] - �������: PUT /supervision-diaries/3 status=428 ��ʱ=3ms
+2026-09-24 09:33:03.536 [INFO ] [main] c.s.i.RequestLoggingInterceptor [d52a197e] - �������: POST /supervision-diaries/3/submit status=200 ��ʱ=13ms
+2026-09-24 09:33:03.549 [WARN ] [main] c.s.exception.GlobalExceptionHandler [85119e8e] - ҵ���쳣: /supervision-diaries/3/approve - û�и���Ŀ�����Ȩ��
+2026-09-24 09:33:03.549 [INFO ] [main] c.s.i.RequestLoggingInterceptor [85119e8e] - �������: POST /supervision-diaries/3/approve status=403 ��ʱ=10ms
+2026-09-24 09:33:03.562 [WARN ] [main] c.s.exception.GlobalExceptionHandler [62452ff5] - ҵ���쳣: /supervision-diaries/3/approve - ����д�˻�ԭ��
+2026-09-24 09:33:03.563 [INFO ] [main] c.s.i.RequestLoggingInterceptor [62452ff5] - �������: POST /supervision-diaries/3/approve status=400 ��ʱ=12ms
+2026-09-24 09:33:03.578 [INFO ] [main] c.s.i.RequestLoggingInterceptor [737628fd] - �������: POST /supervision-diaries/3/approve status=200 ��ʱ=14ms
+2026-09-24 09:33:03.596 [INFO ] [main] c.s.i.RequestLoggingInterceptor [cf17270d] - �������: PUT /supervision-diaries/3 status=200 ��ʱ=17ms
+2026-09-24 09:33:03.613 [INFO ] [main] c.s.i.RequestLoggingInterceptor [59a9b7c0] - �������: POST /supervision-diaries/3/submit status=200 ��ʱ=15ms
+2026-09-24 09:33:03.628 [INFO ] [main] c.s.i.RequestLoggingInterceptor [65cd3843] - �������: POST /supervision-diaries/3/approve status=200 ��ʱ=14ms
+2026-09-24 09:33:03.635 [WARN ] [main] c.s.exception.GlobalExceptionHandler [02f70a9b] - ҵ���쳣: /supervision-diaries/3 - ��¼���ύ������ˣ�����ֱ���޸ģ�����˼�¼�뽨���޶���
+2026-09-24 09:33:03.636 [INFO ] [main] c.s.i.RequestLoggingInterceptor [02f70a9b] - �������: PUT /supervision-diaries/3 status=409 ��ʱ=7ms
+2026-09-24 09:33:03.651 [INFO ] [main] c.s.i.RequestLoggingInterceptor [41a84d05] - �������: GET /supervision-diaries/3/history status=200 ��ʱ=14ms
+2026-09-24 09:33:03.680 [INFO ] [main] c.s.i.RequestLoggingInterceptor [86b85949] - �������: POST /supervision-diaries status=200 ��ʱ=26ms
+2026-09-24 09:33:03.697 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a3be536f] - �������: POST /files/upload status=200 ��ʱ=5ms
+2026-09-24 09:33:03.750 [INFO ] [pool-3-thread-1] c.s.i.RequestLoggingInterceptor [7c4ce072] - �������: POST /supervision-diaries status=200 ��ʱ=48ms
+2026-09-24 09:33:03.762 [INFO ] [pool-3-thread-2] c.s.i.RequestLoggingInterceptor [032d206e] - �������: POST /supervision-diaries status=200 ��ʱ=60ms
+2026-09-24 09:33:03.775 [INFO ] [pool-3-thread-3] c.s.i.RequestLoggingInterceptor [7c7eb3db] - �������: POST /supervision-diaries status=200 ��ʱ=60ms
+2026-09-24 09:33:03.782 [INFO ] [pool-3-thread-4] c.s.i.RequestLoggingInterceptor [96391f98] - �������: POST /supervision-diaries status=200 ��ʱ=67ms
+2026-09-24 09:33:03.791 [INFO ] [main] c.s.i.RequestLoggingInterceptor [91ff8cf5] - �������: POST /supervision-diaries status=200 ��ʱ=7ms
+2026-09-24 09:33:03.809 [WARN ] [main] c.s.exception.GlobalExceptionHandler [766f41e3] - ҵ���쳣: /supervision-diaries - ����Ѵ��ڣ���ʹ���±��
+2026-09-24 09:33:03.810 [INFO ] [main] c.s.i.RequestLoggingInterceptor [766f41e3] - �������: POST /supervision-diaries status=409 ��ʱ=15ms
+2026-09-24 09:33:03.824 [WARN ] [main] c.s.exception.GlobalExceptionHandler [8ea0e49b] - ҵ���쳣: /supervision-diaries - ͬһ�����ʶ�����ύ��ͬ����
+2026-09-24 09:33:03.825 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8ea0e49b] - �������: POST /supervision-diaries status=409 ��ʱ=14ms
+2026-09-24 09:33:03.837 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8f4c1d33] - �������: POST /supervision-diaries/5/submit status=200 ��ʱ=10ms
+2026-09-24 09:33:03.872 [INFO ] [pool-4-thread-2] c.s.i.RequestLoggingInterceptor [500e53d6] - �������: POST /supervision-diaries status=200 ��ʱ=31ms
+2026-09-24 09:33:03.905 [INFO ] [pool-4-thread-3] c.s.i.RequestLoggingInterceptor [38697481] - �������: POST /supervision-diaries status=200 ��ʱ=63ms
+2026-09-24 09:33:03.906 [INFO ] [pool-4-thread-1] c.s.i.RequestLoggingInterceptor [6e5ed442] - �������: POST /supervision-diaries status=200 ��ʱ=56ms
+2026-09-24 09:33:03.913 [INFO ] [pool-4-thread-4] c.s.i.RequestLoggingInterceptor [56d9a1f6] - �������: POST /supervision-diaries status=200 ��ʱ=62ms
+2026-09-24 09:33:03.923 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7edcd269] - �������: POST /supervision-diaries status=200 ��ʱ=8ms
+2026-09-24 09:33:03.937 [WARN ] [main] c.s.exception.GlobalExceptionHandler [e005b027] - ҵ���쳣: /supervision-diaries - ����Ѵ��ڣ���ʹ���±��
+2026-09-24 09:33:03.938 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e005b027] - �������: POST /supervision-diaries status=409 ��ʱ=12ms
+2026-09-24 09:33:03.948 [WARN ] [main] c.s.exception.GlobalExceptionHandler [8d8fe49a] - ҵ���쳣: /supervision-diaries - ͬһ�����ʶ�����ύ��ͬ����
+2026-09-24 09:33:03.948 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8d8fe49a] - �������: POST /supervision-diaries status=409 ��ʱ=9ms
+2026-09-24 09:33:03.960 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7a9eecb7] - �������: POST /supervision-diaries/6/submit status=200 ��ʱ=10ms
+2026-09-24 09:33:04.000 [INFO ] [pool-5-thread-2] c.s.i.RequestLoggingInterceptor [97eb855d] - �������: POST /supervision-diaries status=200 ��ʱ=37ms
+2026-09-24 09:33:04.007 [INFO ] [pool-5-thread-3] c.s.i.RequestLoggingInterceptor [6b8a66be] - �������: POST /supervision-diaries status=200 ��ʱ=43ms
+2026-09-24 09:33:04.017 [INFO ] [pool-5-thread-4] c.s.i.RequestLoggingInterceptor [9a385f1e] - �������: POST /supervision-diaries status=200 ��ʱ=43ms
+2026-09-24 09:33:04.020 [INFO ] [pool-5-thread-1] c.s.i.RequestLoggingInterceptor [98ad1fac] - �������: POST /supervision-diaries status=200 ��ʱ=40ms
+2026-09-24 09:33:04.027 [INFO ] [main] c.s.i.RequestLoggingInterceptor [5e0d6a1f] - �������: POST /supervision-diaries status=200 ��ʱ=6ms
+2026-09-24 09:33:04.038 [WARN ] [main] c.s.exception.GlobalExceptionHandler [66644820] - ҵ���쳣: /supervision-diaries - ����Ѵ��ڣ���ʹ���±��
+2026-09-24 09:33:04.038 [INFO ] [main] c.s.i.RequestLoggingInterceptor [66644820] - �������: POST /supervision-diaries status=409 ��ʱ=9ms
+2026-09-24 09:33:04.047 [WARN ] [main] c.s.exception.GlobalExceptionHandler [d0bfb0db] - ҵ���쳣: /supervision-diaries - ͬһ�����ʶ�����ύ��ͬ����
+2026-09-24 09:33:04.048 [INFO ] [main] c.s.i.RequestLoggingInterceptor [d0bfb0db] - �������: POST /supervision-diaries status=409 ��ʱ=9ms
+2026-09-24 09:33:04.056 [INFO ] [main] c.s.i.RequestLoggingInterceptor [f51c3b47] - �������: POST /supervision-diaries/7/submit status=200 ��ʱ=7ms
+2026-09-24 09:33:04.087 [INFO ] [pool-6-thread-1] c.s.i.RequestLoggingInterceptor [e883244c] - �������: POST /supervision-diaries status=200 ��ʱ=28ms
+2026-09-24 09:33:04.092 [WARN ] [pool-6-thread-2] o.h.e.jdbc.spi.SqlExceptionHelper [87bb8514] - SQL Error: 23505, SQLState: 23505
+2026-09-24 09:33:04.093 [ERROR] [pool-6-thread-2] o.h.e.jdbc.spi.SqlExceptionHelper [87bb8514] - Unique index or primary key violation: "PUBLIC.CONSTRAINT_INDEX_4 ON PUBLIC.BIZ_SUPERVISION_DIARY(REQUEST_KEY NULLS FIRST) VALUES ( /* 8 */ 'f648a695813b36d65aa0fa6d12797a8595b522f01a666c94d1003f3c328abd6e' )"; SQL statement:
+insert into biz_supervision_diary (attachments,author_id,code,construction,create_time,diary_date,drawing_review,inspection,lock_version,management,morning_meeting,other_matters,photos,project_id,reject_reason,rejected_at,rejected_by,request_hash,request_key,reviewed_at,reviewer_id,source_record_id,status,submitted_at,submitted_by,temperature,update_time,version,weather,wind,id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default) [23505-224]
+2026-09-24 09:33:04.113 [WARN ] [pool-6-thread-3] o.h.e.jdbc.spi.SqlExceptionHelper [2cdf5f0c] - SQL Error: 23505, SQLState: 23505
+2026-09-24 09:33:04.114 [ERROR] [pool-6-thread-3] o.h.e.jdbc.spi.SqlExceptionHelper [2cdf5f0c] - Unique index or primary key violation: "PUBLIC.CONSTRAINT_INDEX_4 ON PUBLIC.BIZ_SUPERVISION_DIARY(REQUEST_KEY NULLS FIRST) VALUES ( /* 8 */ 'f648a695813b36d65aa0fa6d12797a8595b522f01a666c94d1003f3c328abd6e' )"; SQL statement:
+insert into biz_supervision_diary (attachments,author_id,code,construction,create_time,diary_date,drawing_review,inspection,lock_version,management,morning_meeting,other_matters,photos,project_id,reject_reason,rejected_at,rejected_by,request_hash,request_key,reviewed_at,reviewer_id,source_record_id,status,submitted_at,submitted_by,temperature,update_time,version,weather,wind,id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default) [23505-224]
+2026-09-24 09:33:04.122 [INFO ] [pool-6-thread-3] c.s.i.RequestLoggingInterceptor [2cdf5f0c] - �������: POST /supervision-diaries status=200 ��ʱ=62ms
+2026-09-24 09:33:04.123 [INFO ] [pool-6-thread-2] c.s.i.RequestLoggingInterceptor [87bb8514] - �������: POST /supervision-diaries status=200 ��ʱ=64ms
+2026-09-24 09:33:04.124 [WARN ] [pool-6-thread-4] o.h.e.jdbc.spi.SqlExceptionHelper [7e8c5e3f] - SQL Error: 23505, SQLState: 23505
+2026-09-24 09:33:04.124 [ERROR] [pool-6-thread-4] o.h.e.jdbc.spi.SqlExceptionHelper [7e8c5e3f] - Unique index or primary key violation: "PUBLIC.CONSTRAINT_INDEX_4 ON PUBLIC.BIZ_SUPERVISION_DIARY(REQUEST_KEY NULLS FIRST) VALUES ( /* 8 */ 'f648a695813b36d65aa0fa6d12797a8595b522f01a666c94d1003f3c328abd6e' )"; SQL statement:
+insert into biz_supervision_diary (attachments,author_id,code,construction,create_time,diary_date,drawing_review,inspection,lock_version,management,morning_meeting,other_matters,photos,project_id,reject_reason,rejected_at,rejected_by,request_hash,request_key,reviewed_at,reviewer_id,source_record_id,status,submitted_at,submitted_by,temperature,update_time,version,weather,wind,id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default) [23505-224]
+2026-09-24 09:33:04.129 [INFO ] [pool-6-thread-4] c.s.i.RequestLoggingInterceptor [7e8c5e3f] - �������: POST /supervision-diaries status=200 ��ʱ=62ms
+2026-09-24 09:33:04.137 [INFO ] [main] c.s.i.RequestLoggingInterceptor [2aae44b0] - �������: POST /supervision-diaries status=200 ��ʱ=7ms
+2026-09-24 09:33:04.147 [WARN ] [main] c.s.exception.GlobalExceptionHandler [79cb7171] - ҵ���쳣: /supervision-diaries - ͬһ�����ʶ�����ύ��ͬ����
+2026-09-24 09:33:04.148 [INFO ] [main] c.s.i.RequestLoggingInterceptor [79cb7171] - �������: POST /supervision-diaries status=409 ��ʱ=9ms
+2026-09-24 09:33:04.158 [INFO ] [main] c.s.i.RequestLoggingInterceptor [d52fff5b] - �������: POST /supervision-diaries/8/submit status=200 ��ʱ=9ms
+2026-09-24 09:33:04.172 [INFO ] [main] c.s.i.RequestLoggingInterceptor [0178e697] - �������: POST /files/upload status=200 ��ʱ=6ms
+2026-09-24 09:33:04.189 [INFO ] [main] c.s.i.RequestLoggingInterceptor [3a7618ad] - �������: POST /messages status=200 ��ʱ=16ms
+2026-09-24 09:33:04.205 [INFO ] [main] c.s.i.RequestLoggingInterceptor [37044257] - �������: GET /messages/1 status=200 ��ʱ=6ms
+2026-09-24 09:33:04.208 [WARN ] [main] c.s.exception.GlobalExceptionHandler [17ef6a86] - ҵ���쳣: /messages/1 - ֻ�ܷ��ʱ��˵���Ϣ
+2026-09-24 09:33:04.209 [INFO ] [main] c.s.i.RequestLoggingInterceptor [17ef6a86] - �������: GET /messages/1 status=403 ��ʱ=3ms
+2026-09-24 09:33:04.213 [WARN ] [main] c.s.exception.GlobalExceptionHandler [9fe6042a] - ҵ���쳣: /messages/1 - ֻ�ܷ��ʱ��˵���Ϣ
+2026-09-24 09:33:04.214 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9fe6042a] - �������: GET /messages/1 status=403 ��ʱ=3ms
+2026-09-24 09:33:04.219 [WARN ] [main] c.s.exception.GlobalExceptionHandler [b74934c3] - ҵ���쳣: /messages - �˺Ų����ã������µ�¼
+2026-09-24 09:33:04.220 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b74934c3] - �������: GET /messages status=401 ��ʱ=5ms
+2026-09-24 09:33:04.223 [WARN ] [main] c.s.exception.GlobalExceptionHandler [ab54e344] - ҵ���쳣: /messages/1/read - �˺Ų����ã������µ�¼
+2026-09-24 09:33:04.224 [INFO ] [main] c.s.i.RequestLoggingInterceptor [ab54e344] - �������: PUT /messages/1/read status=401 ��ʱ=2ms
+2026-09-24 09:33:04.236 [INFO ] [main] c.s.i.RequestLoggingInterceptor [22edc68d] - �������: POST /files/upload status=200 ��ʱ=5ms
+2026-09-24 09:33:04.255 [INFO ] [main] c.s.i.RequestLoggingInterceptor [4fe261e0] - �������: POST /supervision-diaries status=200 ��ʱ=17ms
+2026-09-24 09:33:04.264 [WARN ] [main] c.s.exception.GlobalExceptionHandler [1ef33006] - ҵ���쳣: /files/access - ��Ȩ���ʸ���Ŀ
+2026-09-24 09:33:04.265 [INFO ] [main] c.s.i.RequestLoggingInterceptor [1ef33006] - �������: GET /files/access status=403 ��ʱ=9ms
+2026-09-24 09:33:04.333 [WARN ] [main] c.s.exception.GlobalExceptionHandler [994ebe03] - ҵ���쳣: /files/access - û�и�������Ȩ��
+2026-09-24 09:33:04.334 [INFO ] [main] c.s.i.RequestLoggingInterceptor [994ebe03] - �������: GET /files/access status=403 ��ʱ=68ms
+2026-09-24 09:33:04.347 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9ab510fb] - �������: POST /supervision-diaries/12/submit status=200 ��ʱ=12ms
+2026-09-24 09:33:04.360 [INFO ] [main] c.s.i.RequestLoggingInterceptor [66e46bae] - �������: GET /files/access status=200 ��ʱ=12ms
+2026-09-24 09:33:04.378 [INFO ] [main] c.s.i.RequestLoggingInterceptor [84054ac7] - �������: GET /files/content status=200 ��ʱ=16ms
+2026-09-24 09:33:04.518 [INFO ] [main] c.s.i.RequestLoggingInterceptor [937f6cfd] - �������: GET /uploads/20260924/e476cc2eb5a945fdbf3a4a8d9c293e90.jpg status=401 ��ʱ=136ms
+2026-09-24 09:33:04.522 [WARN ] [main] c.s.exception.GlobalExceptionHandler [34919114] - ҵ���쳣: /files/content - ����������Ч���ѹ���
+2026-09-24 09:33:04.523 [INFO ] [main] c.s.i.RequestLoggingInterceptor [34919114] - �������: GET /files/content status=403 ��ʱ=3ms
+2026-09-24 09:33:04.540 [WARN ] [main] c.s.exception.GlobalExceptionHandler [a19903d0] - ҵ���쳣: /supervision-diaries/12 - ��Ȩ���ʸ���Ŀ
+2026-09-24 09:33:04.540 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a19903d0] - �������: GET /supervision-diaries/12 status=403 ��ʱ=12ms
+2026-09-24 09:33:04.546 [WARN ] [main] c.s.exception.GlobalExceptionHandler [2c5e36f9] - ҵ���쳣: /files/access - ��Ȩ���ʸ���Ŀ
+2026-09-24 09:33:04.547 [INFO ] [main] c.s.i.RequestLoggingInterceptor [2c5e36f9] - �������: GET /files/access status=403 ��ʱ=6ms
+2026-09-24 09:33:04.564 [INFO ] [main] c.s.i.RequestLoggingInterceptor [3d4aab65] - �������: POST /files/upload status=200 ��ʱ=7ms
+2026-09-24 09:33:04.587 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7ea60950] - �������: POST /supervision-diaries status=200 ��ʱ=21ms
+2026-09-24 09:33:04.641 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b2d46103] - �������: PUT /supervision-diaries/13 status=200 ��ʱ=36ms
+2026-09-24 09:33:04.659 [WARN ] [main] c.s.exception.GlobalExceptionHandler [4963738e] - ҵ���쳣: /supervision-diaries/13 - ��¼�ѱ��������޸ģ���������δ���ǣ��뱣���ݸ岢���´򿪺˶�
+2026-09-24 09:33:04.660 [INFO ] [main] c.s.i.RequestLoggingInterceptor [4963738e] - �������: PUT /supervision-diaries/13 status=409 ��ʱ=16ms
+2026-09-24 09:33:04.670 [INFO ] [main] c.s.i.RequestLoggingInterceptor [14a98441] - �������: GET /supervision-diaries/13 status=200 ��ʱ=7ms
+2026-09-24 09:33:04.691 [INFO ] [main] c.s.i.RequestLoggingInterceptor [d9fd71cd] - �������: POST /files/upload status=200 ��ʱ=9ms
+2026-09-24 09:33:04.712 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8c8bdc46] - �������: POST /supervision-diaries status=200 ��ʱ=18ms
+2026-09-24 09:33:04.721 [INFO ] [main] c.s.i.RequestLoggingInterceptor [98dc0576] - �������: POST /supervision-diaries/14/submit status=200 ��ʱ=8ms
+2026-09-24 09:33:04.734 [INFO ] [main] c.s.i.RequestLoggingInterceptor [d2c37106] - �������: POST /supervision-diaries/14/approve status=200 ��ʱ=11ms
+2026-09-24 09:33:04.761 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7945f165] - �������: POST /supervision-diaries status=200 ��ʱ=24ms
+2026-09-24 09:33:04.772 [INFO ] [main] c.s.i.RequestLoggingInterceptor [0c01c210] - �������: POST /supervision-diaries/15/submit status=200 ��ʱ=9ms
+2026-09-24 09:33:04.784 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b67d2ec8] - �������: POST /supervision-diaries/15/approve status=200 ��ʱ=10ms
+2026-09-24 09:33:04.792 [INFO ] [main] c.s.i.RequestLoggingInterceptor [d92afeb8] - �������: GET /field/diary-source status=200 ��ʱ=7ms
+2026-09-24 09:33:04.820 [INFO ] [main] c.s.i.RequestLoggingInterceptor [6f362c7e] - �������: POST /files/upload status=200 ��ʱ=19ms
+2026-09-24 09:33:04.848 [INFO ] [main] c.s.i.RequestLoggingInterceptor [23b6d98c] - �������: GET /files/access status=200 ��ʱ=26ms
+2026-09-24 09:33:04.874 [WARN ] [main] c.s.exception.GlobalExceptionHandler [8bc382c1] - ҵ���쳣: /files/access - û�и�������Ȩ��
+2026-09-24 09:33:04.875 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8bc382c1] - �������: GET /files/access status=403 ��ʱ=25ms
+2026-09-24 09:33:04.904 [WARN ] [main] c.s.exception.GlobalExceptionHandler [2b72bda9] - ҵ���쳣: /files/access - û�и�������Ȩ��
+2026-09-24 09:33:04.905 [INFO ] [main] c.s.i.RequestLoggingInterceptor [2b72bda9] - �������: GET /files/access status=403 ��ʱ=29ms
+2026-09-24 09:33:04.917 [INFO ] [main] c.s.i.RequestLoggingInterceptor [1cfcb6fc] - �������: POST /files/upload status=200 ��ʱ=6ms
+2026-09-24 09:33:04.930 [INFO ] [main] c.s.i.RequestLoggingInterceptor [4b892fde] - �������: POST /supervision-diaries status=200 ��ʱ=10ms
+2026-09-24 09:33:04.937 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a9a77f18] - �������: GET /files/access status=200 ��ʱ=5ms
+2026-09-24 09:33:04.953 [WARN ] [main] c.s.exception.GlobalExceptionHandler [32340559] - ҵ���쳣: /files/access - û�и�������Ȩ��
+2026-09-24 09:33:04.953 [INFO ] [main] c.s.i.RequestLoggingInterceptor [32340559] - �������: GET /files/access status=403 ��ʱ=15ms
+2026-09-24 09:33:04.974 [WARN ] [main] c.s.exception.GlobalExceptionHandler [ad2da8ac] - ҵ���쳣: /files/access - û�и�������Ȩ��
+2026-09-24 09:33:04.975 [INFO ] [main] c.s.i.RequestLoggingInterceptor [ad2da8ac] - �������: GET /files/access status=403 ��ʱ=20ms
+2026-09-24 09:33:04.993 [WARN ] [main] c.s.exception.GlobalExceptionHandler [ae1d1565] - ҵ���쳣: /files/access - û�и�������Ȩ��
+2026-09-24 09:33:04.993 [INFO ] [main] c.s.i.RequestLoggingInterceptor [ae1d1565] - �������: GET /files/access status=403 ��ʱ=18ms
+2026-09-24 09:33:05.001 [INFO ] [main] c.s.i.RequestLoggingInterceptor [73d582a7] - �������: GET /files/access status=200 ��ʱ=6ms
+2026-09-24 09:33:05.019 [WARN ] [main] c.s.exception.GlobalExceptionHandler [9d080d06] - ҵ���쳣: /files/access - û�и�������Ȩ��
+2026-09-24 09:33:05.020 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9d080d06] - �������: GET /files/access status=403 ��ʱ=18ms
+2026-09-24 09:33:05.039 [WARN ] [main] c.s.exception.GlobalExceptionHandler [c4d4aaa4] - ҵ���쳣: /files/access - û�и�������Ȩ��
+2026-09-24 09:33:05.040 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c4d4aaa4] - �������: GET /files/access status=403 ��ʱ=19ms
+2026-09-24 09:33:05.059 [WARN ] [main] c.s.exception.GlobalExceptionHandler [7ec1d90b] - ҵ���쳣: /files/access - û�и�������Ȩ��
+2026-09-24 09:33:05.060 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7ec1d90b] - �������: GET /files/access status=403 ��ʱ=20ms
+2026-09-24 09:33:05.071 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a6ab61dd] - �������: GET /files/access status=200 ��ʱ=9ms
+2026-09-24 09:33:05.088 [WARN ] [main] c.s.exception.GlobalExceptionHandler [8c3f15ed] - ҵ���쳣: /files/access - û�и�������Ȩ��
+2026-09-24 09:33:05.089 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8c3f15ed] - �������: GET /files/access status=403 ��ʱ=17ms
+2026-09-24 09:33:05.107 [WARN ] [main] c.s.exception.GlobalExceptionHandler [c74a6097] - ҵ���쳣: /files/access - û�и�������Ȩ��
+2026-09-24 09:33:05.107 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c74a6097] - �������: GET /files/access status=403 ��ʱ=17ms
+2026-09-24 09:33:05.129 [WARN ] [main] c.s.exception.GlobalExceptionHandler [5f61dfec] - ҵ���쳣: /files/access - û�и�������Ȩ��
+2026-09-24 09:33:05.130 [INFO ] [main] c.s.i.RequestLoggingInterceptor [5f61dfec] - �������: GET /files/access status=403 ��ʱ=21ms
+2026-09-24 09:33:05.138 [INFO ] [main] c.s.i.RequestLoggingInterceptor [5ead7611] - �������: GET /files/access status=200 ��ʱ=7ms
+2026-09-24 09:33:05.154 [WARN ] [main] c.s.exception.GlobalExceptionHandler [33ecde7c] - ҵ���쳣: /files/access - û�и�������Ȩ��
+2026-09-24 09:33:05.154 [INFO ] [main] c.s.i.RequestLoggingInterceptor [33ecde7c] - �������: GET /files/access status=403 ��ʱ=15ms
+2026-09-24 09:33:05.168 [WARN ] [main] c.s.exception.GlobalExceptionHandler [59bbef41] - ҵ���쳣: /files/access - û�и�������Ȩ��
+2026-09-24 09:33:05.168 [INFO ] [main] c.s.i.RequestLoggingInterceptor [59bbef41] - �������: GET /files/access status=403 ��ʱ=13ms
+2026-09-24 09:33:05.186 [WARN ] [main] c.s.exception.GlobalExceptionHandler [5d92fe07] - ҵ���쳣: /files/access - û�и�������Ȩ��
+2026-09-24 09:33:05.186 [INFO ] [main] c.s.i.RequestLoggingInterceptor [5d92fe07] - �������: GET /files/access status=403 ��ʱ=17ms
+2026-09-24 09:33:05.196 [INFO ] [main] c.s.i.RequestLoggingInterceptor [f37f23fc] - �������: GET /files/access status=200 ��ʱ=8ms
+2026-09-24 09:33:05.210 [WARN ] [main] c.s.exception.GlobalExceptionHandler [f6126822] - ҵ���쳣: /files/access - û�и�������Ȩ��
+2026-09-24 09:33:05.211 [INFO ] [main] c.s.i.RequestLoggingInterceptor [f6126822] - �������: GET /files/access status=403 ��ʱ=14ms
+2026-09-24 09:33:05.225 [INFO ] [main] c.s.i.RequestLoggingInterceptor [738825d8] - �������: POST /files/upload status=200 ��ʱ=5ms
+2026-09-24 09:33:05.240 [INFO ] [main] c.s.i.RequestLoggingInterceptor [f0d6f595] - �������: POST /supervision-diaries status=200 ��ʱ=13ms
+2026-09-24 09:33:05.247 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a84ca760] - �������: POST /supervision-diaries status=200 ��ʱ=6ms
+2026-09-24 09:33:05.255 [WARN ] [main] c.s.exception.GlobalExceptionHandler [c26a2e8e] - ҵ���쳣: /supervision-diaries - ͬһ�����ʶ�����ύ��ͬ����
+2026-09-24 09:33:05.256 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c26a2e8e] - �������: POST /supervision-diaries status=409 ��ʱ=8ms
+2026-09-24 09:33:05.261 [WARN ] [main] c.s.exception.GlobalExceptionHandler [3eba84aa] - ҵ���쳣: /supervision-diaries/17 - ��Ȩ���ʸ���Ŀ
+2026-09-24 09:33:05.261 [INFO ] [main] c.s.i.RequestLoggingInterceptor [3eba84aa] - �������: GET /supervision-diaries/17 status=403 ��ʱ=4ms
+2026-09-24 09:33:05.266 [WARN ] [main] c.s.exception.GlobalExceptionHandler [abda32d9] - ҵ���쳣: /supervision-diaries/17 - ��Ȩ�鿴���˵Ĳݸ�����
+2026-09-24 09:33:05.266 [INFO ] [main] c.s.i.RequestLoggingInterceptor [abda32d9] - �������: GET /supervision-diaries/17 status=403 ��ʱ=4ms
+2026-09-24 09:33:05.272 [WARN ] [main] c.s.exception.GlobalExceptionHandler [378dbf1c] - ҵ���쳣: /supervision-diaries - ��Ȩ���ʸ���Ŀ
+2026-09-24 09:33:05.273 [INFO ] [main] c.s.i.RequestLoggingInterceptor [378dbf1c] - �������: POST /supervision-diaries status=403 ��ʱ=6ms
+2026-09-24 09:33:05.291 [INFO ] [main] c.s.i.RequestLoggingInterceptor [71046b71] - �������: GET /supervision-diaries status=200 ��ʱ=17ms
+2026-09-24 09:33:05.305 [INFO ] [main] c.s.i.RequestLoggingInterceptor [f7a5bae8] - �������: POST /files/upload status=200 ��ʱ=5ms
+2026-09-24 09:33:05.319 [INFO ] [main] c.s.i.RequestLoggingInterceptor [bb7dfbde] - �������: POST /supervision-diaries status=200 ��ʱ=13ms
+2026-09-24 09:33:05.332 [WARN ] [main] c.s.exception.GlobalExceptionHandler [7bea0329] - ҵ���쳣: /supervision-monthly-reports - ��Ȩ���ʸ���Ŀ
+2026-09-24 09:33:05.332 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7bea0329] - �������: POST /supervision-monthly-reports status=403 ��ʱ=12ms
+2026-09-24 09:33:05.355 [WARN ] [main] c.s.exception.GlobalExceptionHandler [b0844a7a] - ҵ���쳣: /supervision-monthly-reports - û�и�������Ȩ��
+2026-09-24 09:33:05.356 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b0844a7a] - �������: POST /supervision-monthly-reports status=403 ��ʱ=23ms
+2026-09-24 09:33:05.368 [WARN ] [main] c.s.exception.GlobalExceptionHandler [eb43e01e] - ҵ���쳣: /safety-logs - ��Ȩ���ʸ���Ŀ
+2026-09-24 09:33:05.369 [INFO ] [main] c.s.i.RequestLoggingInterceptor [eb43e01e] - �������: POST /safety-logs status=403 ��ʱ=12ms
+2026-09-24 09:33:05.392 [WARN ] [main] c.s.exception.GlobalExceptionHandler [7b336128] - ҵ���쳣: /safety-logs - û�и�������Ȩ��
+2026-09-24 09:33:05.393 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7b336128] - �������: POST /safety-logs status=403 ��ʱ=23ms
+2026-09-24 09:33:05.408 [WARN ] [main] c.s.exception.GlobalExceptionHandler [b481d55c] - ҵ���쳣: /supervision-notices - ��Ȩ���ʸ���Ŀ
+2026-09-24 09:33:05.409 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b481d55c] - �������: POST /supervision-notices status=403 ��ʱ=15ms
+2026-09-24 09:33:05.439 [WARN ] [main] c.s.exception.GlobalExceptionHandler [27752c20] - ҵ���쳣: /supervision-notices - û�и�������Ȩ��
+2026-09-24 09:33:05.440 [INFO ] [main] c.s.i.RequestLoggingInterceptor [27752c20] - �������: POST /supervision-notices status=403 ��ʱ=30ms
+2026-09-24 09:33:05.454 [WARN ] [main] c.s.exception.GlobalExceptionHandler [94b3534f] - ҵ���쳣: /meeting-minutes - ��Ȩ���ʸ���Ŀ
+2026-09-24 09:33:05.455 [INFO ] [main] c.s.i.RequestLoggingInterceptor [94b3534f] - �������: POST /meeting-minutes status=403 ��ʱ=13ms
+2026-09-24 09:33:05.476 [WARN ] [main] c.s.exception.GlobalExceptionHandler [f6c690c3] - ҵ���쳣: /meeting-minutes - û�и�������Ȩ��
+2026-09-24 09:33:05.479 [INFO ] [main] c.s.i.RequestLoggingInterceptor [f6c690c3] - �������: POST /meeting-minutes status=403 ��ʱ=22ms
+2026-09-24 09:33:05.494 [WARN ] [main] c.s.exception.GlobalExceptionHandler [d76e3902] - ҵ���쳣: /work-contacts - ��Ȩ���ʸ���Ŀ
+2026-09-24 09:33:05.495 [INFO ] [main] c.s.i.RequestLoggingInterceptor [d76e3902] - �������: POST /work-contacts status=403 ��ʱ=15ms
+2026-09-24 09:33:05.520 [WARN ] [main] c.s.exception.GlobalExceptionHandler [797e3853] - ҵ���쳣: /work-contacts - û�и�������Ȩ��
+2026-09-24 09:33:05.520 [INFO ] [main] c.s.i.RequestLoggingInterceptor [797e3853] - �������: POST /work-contacts status=403 ��ʱ=24ms
+2026-09-24 09:33:05.525 [WARN ] [main] c.s.exception.GlobalExceptionHandler [857c4c28] - ҵ���쳣: /files/access - ��Ȩ���ʸ���Ŀ
+2026-09-24 09:33:05.525 [INFO ] [main] c.s.i.RequestLoggingInterceptor [857c4c28] - �������: GET /files/access status=403 ��ʱ=4ms
+2026-09-24 09:33:05.538 [WARN ] [main] c.s.exception.GlobalExceptionHandler [22100320] - ҵ���쳣: /project-documents - ��Ȩ���ʸ���Ŀ
+2026-09-24 09:33:05.538 [INFO ] [main] c.s.i.RequestLoggingInterceptor [22100320] - �������: POST /project-documents status=403 ��ʱ=12ms
+2026-09-24 09:33:05.545 [WARN ] [main] c.s.exception.GlobalExceptionHandler [93763e93] - ҵ���쳣: /files/access - ��Ȩ���ʸ���Ŀ
+2026-09-24 09:33:05.545 [INFO ] [main] c.s.i.RequestLoggingInterceptor [93763e93] - �������: GET /files/access status=403 ��ʱ=5ms
+2026-09-24 09:33:05.557 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c55f2e4d] - �������: POST /files/upload status=200 ��ʱ=5ms
+2026-09-24 09:33:05.574 [INFO ] [main] c.s.i.RequestLoggingInterceptor [43acec68] - �������: POST /supervision-diaries status=200 ��ʱ=8ms
+2026-09-24 09:33:05.578 [WARN ] [main] c.s.exception.GlobalExceptionHandler [cdd7a7d1] - ҵ���쳣: /supervision-diaries/19/submit - �����ռ������ϴ�һ���ֳ���Ƭ
+2026-09-24 09:33:05.579 [INFO ] [main] c.s.i.RequestLoggingInterceptor [cdd7a7d1] - �������: POST /supervision-diaries/19/submit status=400 ��ʱ=4ms
+2026-09-24 09:33:05.597 [INFO ] [main] c.s.i.RequestLoggingInterceptor [20960463] - �������: POST /daily-inspections status=200 ��ʱ=17ms
+2026-09-24 09:33:05.606 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a6665d8f] - �������: POST /daily-inspections/1/submit status=200 ��ʱ=7ms
+2026-09-24 09:33:05.613 [INFO ] [main] c.s.i.RequestLoggingInterceptor [515da42d] - �������: POST /daily-inspections/1/approve status=200 ��ʱ=6ms
+2026-09-24 09:33:05.633 [INFO ] [main] c.s.i.RequestLoggingInterceptor [2f6f0560] - �������: POST /sideline-inspections status=200 ��ʱ=18ms
+2026-09-24 09:33:05.644 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9233302d] - �������: POST /sideline-inspections/1/submit status=200 ��ʱ=10ms
+2026-09-24 09:33:05.653 [INFO ] [main] c.s.i.RequestLoggingInterceptor [3bdb4da9] - �������: POST /sideline-inspections/1/approve status=200 ��ʱ=8ms
+2026-09-24 09:33:05.661 [WARN ] [main] c.s.exception.GlobalExceptionHandler [fb14bb14] - ҵ���쳣: /sideline-inspections - ��ͨ���ύ����˲����ı�״̬
+2026-09-24 09:33:05.662 [INFO ] [main] c.s.i.RequestLoggingInterceptor [fb14bb14] - �������: POST /sideline-inspections status=400 ��ʱ=8ms
+2026-09-24 09:33:05.673 [INFO ] [main] c.s.i.RequestLoggingInterceptor [ee9f8721] - �������: POST /files/upload status=200 ��ʱ=4ms
+2026-09-24 09:33:05.688 [WARN ] [pool-7-thread-2] o.h.e.jdbc.spi.SqlExceptionHelper [] - SQL Error: 23505, SQLState: 23505
+2026-09-24 09:33:05.689 [ERROR] [pool-7-thread-2] o.h.e.jdbc.spi.SqlExceptionHelper [] - Unique index or primary key violation: "PUBLIC.CONSTRAINT_INDEX_4 ON PUBLIC.BIZ_SUPERVISION_DIARY(REQUEST_KEY NULLS FIRST) VALUES ( /* 20 */ '9902bef35565357e3452bb38406ae80b834dc56aa49e5280a02c3bad9c49362e' )"; SQL statement:
+insert into biz_supervision_diary (attachments,author_id,code,construction,create_time,diary_date,drawing_review,inspection,lock_version,management,morning_meeting,other_matters,photos,project_id,reject_reason,rejected_at,rejected_by,request_hash,request_key,reviewed_at,reviewer_id,source_record_id,status,submitted_at,submitted_by,temperature,update_time,version,weather,wind,id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default) [23505-224]
+2026-09-24 09:33:05.704 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e24290f5] - �������: POST /files/upload status=200 ��ʱ=4ms
+2026-09-24 09:33:05.717 [INFO ] [main] c.s.i.RequestLoggingInterceptor [28c50b85] - �������: POST /work-standard-configs status=200 ��ʱ=11ms
+2026-09-24 09:33:05.721 [INFO ] [main] c.s.i.RequestLoggingInterceptor [913296a4] - �������: GET /work-standard-configs/1 status=200 ��ʱ=3ms
+2026-09-24 09:33:05.724 [WARN ] [main] c.s.exception.GlobalExceptionHandler [a2d9bfe7] - ҵ���쳣: /work-standard-configs - ������Ա����ά��������׼����
+2026-09-24 09:33:05.725 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a2d9bfe7] - �������: POST /work-standard-configs status=403 ��ʱ=3ms
+2026-09-24 09:33:05.729 [WARN ] [main] c.s.exception.GlobalExceptionHandler [7438c6ed] - ҵ���쳣: /work-standard-configs/1 - ������Ա����ά��������׼����
+2026-09-24 09:33:05.730 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7438c6ed] - �������: PUT /work-standard-configs/1 status=403 ��ʱ=4ms
+2026-09-24 09:33:05.736 [WARN ] [main] c.s.exception.GlobalExceptionHandler [859a4421] - ҵ���쳣: /work-standard-configs/1 - ������Ա����ά��������׼����
+2026-09-24 09:33:05.737 [INFO ] [main] c.s.i.RequestLoggingInterceptor [859a4421] - �������: DELETE /work-standard-configs/1 status=403 ��ʱ=4ms
+2026-09-24 09:33:05.741 [INFO ] [main] c.s.i.RequestLoggingInterceptor [98d51cb6] - �������: GET /work-standard-configs/1 status=200 ��ʱ=2ms
+2026-09-24 09:33:05.751 [INFO ] [main] c.s.i.RequestLoggingInterceptor [2801abd3] - �������: PUT /work-standard-configs/1 status=200 ��ʱ=8ms
+2026-09-24 09:33:05.755 [WARN ] [main] c.s.exception.GlobalExceptionHandler [06cfc3a8] - ҵ���쳣: /work-standard-configs/1 - ������Ա����ά��������׼����
+2026-09-24 09:33:05.756 [INFO ] [main] c.s.i.RequestLoggingInterceptor [06cfc3a8] - �������: PUT /work-standard-configs/1 status=403 ��ʱ=3ms
+2026-09-24 09:33:05.761 [INFO ] [main] c.s.i.RequestLoggingInterceptor [21e85a6b] - �������: DELETE /work-standard-configs/1 status=200 ��ʱ=4ms
+2026-09-24 09:33:05.773 [INFO ] [main] c.s.i.RequestLoggingInterceptor [99cc5a91] - �������: POST /files/upload status=200 ��ʱ=4ms
+2026-09-24 09:33:05.786 [INFO ] [main] c.s.i.RequestLoggingInterceptor [d8ca20b8] - �������: POST /supervision-diaries status=200 ��ʱ=11ms
+2026-09-24 09:33:05.798 [INFO ] [main] c.s.i.RequestLoggingInterceptor [12e544ae] - �������: GET /files/access status=200 ��ʱ=10ms
+2026-09-24 09:33:05.812 [WARN ] [main] c.s.exception.GlobalExceptionHandler [ac076284] - ҵ���쳣: /files/access - û�и�������Ȩ��
+2026-09-24 09:33:05.813 [INFO ] [main] c.s.i.RequestLoggingInterceptor [ac076284] - �������: GET /files/access status=403 ��ʱ=14ms
+2026-09-24 09:33:05.829 [WARN ] [main] c.s.exception.GlobalExceptionHandler [2ee9cb4e] - ҵ���쳣: /files/access - û�и�������Ȩ��
+2026-09-24 09:33:05.830 [INFO ] [main] c.s.i.RequestLoggingInterceptor [2ee9cb4e] - �������: GET /files/access status=403 ��ʱ=16ms
+2026-09-24 09:33:05.843 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7da174de] - �������: GET /files/access status=200 ��ʱ=12ms
+2026-09-24 09:33:05.857 [INFO ] [main] c.s.i.RequestLoggingInterceptor [411e6758] - �������: POST /files/upload status=200 ��ʱ=6ms
+2026-09-24 09:33:05.867 [WARN ] [main] c.s.exception.GlobalExceptionHandler [437d7afa] - ҵ���쳣: /project-documents - ��ѡ��������������
+2026-09-24 09:33:05.868 [INFO ] [main] c.s.i.RequestLoggingInterceptor [437d7afa] - �������: POST /project-documents status=400 ��ʱ=8ms
+2026-09-24 09:33:05.885 [INFO ] [main] c.s.i.RequestLoggingInterceptor [645930f1] - �������: POST /project-documents status=200 ��ʱ=15ms
+2026-09-24 09:33:05.896 [WARN ] [main] c.s.exception.GlobalExceptionHandler [aaa2782c] - ҵ���쳣: /project-documents - ����������ڵ�ǰ��Ŀ����ͣ��
+2026-09-24 09:33:05.897 [INFO ] [main] c.s.i.RequestLoggingInterceptor [aaa2782c] - �������: POST /project-documents status=400 ��ʱ=10ms
+2026-09-24 09:33:05.906 [INFO ] [main] c.s.i.RequestLoggingInterceptor [6bd643a1] - �������: GET /files/access status=200 ��ʱ=8ms
+2026-09-24 09:33:05.913 [WARN ] [main] c.s.exception.GlobalExceptionHandler [5ed0db53] - ҵ���쳣: /project-documents/1 - ��Ȩ���ʸ���Ŀ
+2026-09-24 09:33:05.914 [INFO ] [main] c.s.i.RequestLoggingInterceptor [5ed0db53] - �������: GET /project-documents/1 status=403 ��ʱ=6ms
+2026-09-24 09:33:05.919 [WARN ] [main] c.s.exception.GlobalExceptionHandler [2195112a] - ҵ���쳣: /files/access - ��Ȩ���ʸ���Ŀ
+2026-09-24 09:33:05.920 [INFO ] [main] c.s.i.RequestLoggingInterceptor [2195112a] - �������: GET /files/access status=403 ��ʱ=5ms
+2026-09-24 09:33:05.924 [WARN ] [main] c.s.exception.GlobalExceptionHandler [36bb2531] - ҵ���쳣: /field/summary - ��Ȩ���ʸ���Ŀ
+2026-09-24 09:33:05.926 [INFO ] [main] c.s.i.RequestLoggingInterceptor [36bb2531] - �������: GET /field/summary status=403 ��ʱ=5ms
+2026-09-24 09:33:05.936 [INFO ] [main] c.s.i.RequestLoggingInterceptor [625912b1] - �������: POST /files/upload status=200 ��ʱ=4ms
+2026-09-24 09:33:05.951 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b858fee5] - �������: GET /messages status=200 ��ʱ=12ms
+2026-09-24 09:33:05.956 [INFO ] [main] c.s.i.RequestLoggingInterceptor [5bb9b07b] - �������: GET /messages status=200 ��ʱ=4ms
+2026-09-24 09:33:05.960 [WARN ] [main] c.s.exception.GlobalExceptionHandler [de1da292] - ҵ���쳣: /messages - ֻ�ܷ��ʱ��˵���Ϣ
+2026-09-24 09:33:05.960 [INFO ] [main] c.s.i.RequestLoggingInterceptor [de1da292] - �������: GET /messages status=403 ��ʱ=2ms
+2026-09-24 09:33:05.964 [WARN ] [main] c.s.exception.GlobalExceptionHandler [621aa916] - ҵ���쳣: /messages/10094 - ֻ�ܷ��ʱ��˵���Ϣ
+2026-09-24 09:33:05.964 [INFO ] [main] c.s.i.RequestLoggingInterceptor [621aa916] - �������: GET /messages/10094 status=403 ��ʱ=3ms
+2026-09-24 09:33:05.969 [WARN ] [main] c.s.exception.GlobalExceptionHandler [c3ab8e49] - ҵ���쳣: /messages/unread-count - ֻ�ܷ��ʱ��˵���Ϣ
+2026-09-24 09:33:05.970 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c3ab8e49] - �������: GET /messages/unread-count status=403 ��ʱ=4ms
+2026-09-24 09:33:05.973 [WARN ] [main] c.s.exception.GlobalExceptionHandler [9b9e88f5] - ҵ���쳣: /messages/10094/read - ֻ�ܷ��ʱ��˵���Ϣ
+2026-09-24 09:33:05.974 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9b9e88f5] - �������: PUT /messages/10094/read status=403 ��ʱ=3ms
+2026-09-24 09:33:05.978 [WARN ] [main] c.s.exception.GlobalExceptionHandler [39bfd1f0] - ҵ���쳣: /messages/10094 - ֻ�ܷ��ʱ��˵���Ϣ
+2026-09-24 09:33:05.979 [INFO ] [main] c.s.i.RequestLoggingInterceptor [39bfd1f0] - �������: DELETE /messages/10094 status=403 ��ʱ=3ms
+2026-09-24 09:33:06.026 [INFO ] [main] c.s.i.RequestLoggingInterceptor [20f80bb7] - �������: GET /messages/unread-count status=200 ��ʱ=42ms
+2026-09-24 09:33:06.035 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e5c21257] - �������: PUT /messages/10094/read status=200 ��ʱ=7ms
+2026-09-24 09:33:06.039 [INFO ] [main] c.s.i.RequestLoggingInterceptor [17cef948] - �������: GET /messages/unread-count status=200 ��ʱ=3ms
+2026-09-24 09:33:06.054 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8de6e5d5] - �������: DELETE /messages/10094 status=200 ��ʱ=14ms
+[INFO] Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.49 s -- in com.supervision.FieldWorkflowIntegrationTest
+[INFO] Running com.supervision.FileUploadControllerTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.060 s -- in com.supervision.FileUploadControllerTest
+[INFO] Running com.supervision.GlobalExceptionHandlerTest
+2026-09-24 09:33:06.138 [WARN ] [main] c.s.exception.GlobalExceptionHandler [] - �������ʽ����: /api/users - JSON parse error
+2026-09-24 09:33:06.139 [WARN ] [main] c.s.exception.GlobalExceptionHandler [] - �����������쳣: /api/users - could not execute statement [Duplicate entry '13800000000' for key 'uk_phone']
+2026-09-24 09:33:06.141 [WARN ] [main] c.s.exception.GlobalExceptionHandler [] - ��Դ������: /api/not-exist - /api/not-exist
+2026-09-24 09:33:06.143 [WARN ] [main] c.s.exception.GlobalExceptionHandler [] - �ϴ��ļ���С��������: /api/files/upload - Maximum upload size of 10485760 bytes exceeded
+2026-09-24 09:33:06.144 [WARN ] [main] c.s.exception.GlobalExceptionHandler [] - �������ʹ���: /api/projects/abc - ����[projectId]: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; For input string: "abc"
+2026-09-24 09:33:06.147 [ERROR] [main] c.s.exception.GlobalExceptionHandler [] - ���ݿ�����쳣: /api/projects - query timeout after 30s
+org.springframework.dao.QueryTimeoutException: query timeout after 30s
+	at com.supervision.GlobalExceptionHandlerTest.testDataAccessException(GlobalExceptionHandlerTest.java:52)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:728)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:156)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:147)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:103)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:93)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:92)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:86)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:218)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:214)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:139)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+2026-09-24 09:33:06.150 [WARN ] [main] c.s.exception.GlobalExceptionHandler [] - ȱ�ٱ������: /api/roles - ����[userId]
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.015 s -- in com.supervision.GlobalExceptionHandlerTest
+[INFO] Running com.supervision.MeetingMinutesServiceTest
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.261 s -- in com.supervision.MeetingMinutesServiceTest
+[INFO] Running com.supervision.PageResultTest
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 s -- in com.supervision.PageResultTest
+[INFO] Running com.supervision.PageUtilsTest
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.014 s -- in com.supervision.PageUtilsTest
+[INFO] Running com.supervision.ProductionSafetyValidatorTest
+[INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.030 s -- in com.supervision.ProductionSafetyValidatorTest
+[INFO] Running com.supervision.RoleCheckInterceptorTest
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.020 s -- in com.supervision.RoleCheckInterceptorTest
+[INFO] Running com.supervision.SafetyLogServiceTest
+[INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.151 s -- in com.supervision.SafetyLogServiceTest
+[INFO] Running com.supervision.SidelineInspectionServiceTest
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.116 s -- in com.supervision.SidelineInspectionServiceTest
+[INFO] Running com.supervision.SupervisionDiaryServiceTest
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.100 s -- in com.supervision.SupervisionDiaryServiceTest
+[INFO] Running com.supervision.SupervisionLogServiceTest
+[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.116 s -- in com.supervision.SupervisionLogServiceTest
+[INFO] Running com.supervision.SupervisionMonthlyReportServiceTest
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.123 s -- in com.supervision.SupervisionMonthlyReportServiceTest
+[INFO] Running com.supervision.SupervisionNoticeServiceTest
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.114 s -- in com.supervision.SupervisionNoticeServiceTest
+[INFO] Running com.supervision.UserControllerRoleCheckTest
+2026-09-24 09:33:07.385 [INFO ] [main] o.s.mock.web.MockServletContext [] - Initializing Spring TestDispatcherServlet ''
+2026-09-24 09:33:07.386 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Initializing Servlet ''
+2026-09-24 09:33:07.386 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Completed initialization in 0 ms
+2026-09-24 09:33:07.400 [INFO ] [main] o.s.mock.web.MockServletContext [] - Initializing Spring TestDispatcherServlet ''
+2026-09-24 09:33:07.401 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Initializing Servlet ''
+2026-09-24 09:33:07.401 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Completed initialization in 0 ms
+2026-09-24 09:33:07.429 [INFO ] [main] o.s.mock.web.MockServletContext [] - Initializing Spring TestDispatcherServlet ''
+2026-09-24 09:33:07.429 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Initializing Servlet ''
+2026-09-24 09:33:07.429 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Completed initialization in 0 ms
+2026-09-24 09:33:07.441 [INFO ] [main] o.s.mock.web.MockServletContext [] - Initializing Spring TestDispatcherServlet ''
+2026-09-24 09:33:07.441 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Initializing Servlet ''
+2026-09-24 09:33:07.442 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Completed initialization in 0 ms
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.180 s -- in com.supervision.UserControllerRoleCheckTest
+[INFO] Running com.supervision.UserServiceTest
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.088 s -- in com.supervision.UserServiceTest
+[INFO] Running com.supervision.WorkContactServiceTest
+[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.123 s -- in com.supervision.WorkContactServiceTest
+[INFO] Running com.supervision.WorkStandardConfigServiceTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.091 s -- in com.supervision.WorkStandardConfigServiceTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 227, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  16.955 s
+[INFO] Finished at: 2026-09-24T09:33:07+08:00
+[INFO] ------------------------------------------------------------------------
+WARNING: A Java agent has been loaded dynamically (E:\???�����\trae ???��???\?��??��?-?��?�� - qoder\.m2-cache\net\bytebuddy\byte-buddy-agent\1.14.13\byte-buddy-agent-1.14)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended

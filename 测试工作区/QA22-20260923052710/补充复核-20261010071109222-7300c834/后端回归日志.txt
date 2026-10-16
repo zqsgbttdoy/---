@@ -1,0 +1,532 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------< com.supervision:supervision-site-management >-------------
+[INFO] Building �����ֳ�����ϵͳ 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ supervision-site-management ---
+[INFO] Copying 3 resources from src\main\resources to target\classes
+[INFO] Copying 5 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ supervision-site-management ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ supervision-site-management ---
+[INFO] skip non existing resourceDirectory E:\ϣ�ع���\trae �ļ�����\������-���� - qoder\�����\backend\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ supervision-site-management ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.1.2:test (default-test) @ supervision-site-management ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.supervision.AuthServiceTest
+15:11:17.207 [main] INFO com.supervision.service.AuthService -- ��¼�ɹ���userId=1, userName=admin, roles=[admin]
+15:11:17.306 [main] INFO com.supervision.service.AuthService -- ��¼ʧ�ܣ��û������ڣ���¼��=nobody
+15:11:17.357 [main] INFO com.supervision.service.AuthService -- ��¼�ɹ���userId=1, userName=admin, roles=[]
+15:11:17.380 [main] INFO com.supervision.service.AuthService -- ��¼ʧ�ܣ��������userId=1, ��¼��=13800000000
+15:11:17.414 [main] INFO com.supervision.service.AuthService -- ��¼�ɹ���userId=1, userName=admin, roles=[admin, supervisor]
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.106 s -- in com.supervision.AuthServiceTest
+[INFO] Running com.supervision.DailyInspectionServiceTest
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.276 s -- in com.supervision.DailyInspectionServiceTest
+[INFO] Running com.supervision.FieldWorkflowIntegrationTest
+15:11:18.344 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.supervision.FieldWorkflowIntegrationTest]: FieldWorkflowIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+15:11:18.884 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.supervision.SupervisionApplication for test class com.supervision.FieldWorkflowIntegrationTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-10-10 15:11:19.680 [INFO ] [background-preinit] o.h.validator.internal.util.Version [] - HV000001: Hibernate Validator 8.0.1.Final
+2026-10-10 15:11:19.733 [INFO ] [main] c.s.FieldWorkflowIntegrationTest [] - Starting FieldWorkflowIntegrationTest using Java 17.0.20.1 with PID 15128 (started by Administrator in E:\希地工作\trae 文件保存\完整�?-监理 - qoder\补后端\backend)
+2026-10-10 15:11:19.734 [INFO ] [main] c.s.FieldWorkflowIntegrationTest [] - The following 1 profile is active: "e2e"
+2026-10-10 15:11:23.059 [INFO ] [main] o.s.d.r.c.RepositoryConfigurationDelegate [] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-10 15:11:23.228 [INFO ] [main] o.s.d.r.c.RepositoryConfigurationDelegate [] - Finished Spring Data repository scanning in 161 ms. Found 21 JPA repository interfaces.
+2026-10-10 15:11:24.444 [INFO ] [main] o.h.jpa.internal.util.LogHelper [] - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-10-10 15:11:24.556 [INFO ] [main] org.hibernate.Version [] - HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-10-10 15:11:24.616 [INFO ] [main] o.h.c.i.RegionFactoryInitiator [] - HHH000026: Second-level cache disabled
+2026-10-10 15:11:24.761 [INFO ] [main] o.s.o.j.p.SpringPersistenceUnitInfo [] - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-10 15:11:24.792 [INFO ] [main] com.zaxxer.hikari.HikariDataSource [] - HikariPool-1 - Starting...
+2026-10-10 15:11:25.113 [INFO ] [main] com.zaxxer.hikari.pool.HikariPool [] - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:fieldtests user=SA
+2026-10-10 15:11:25.115 [INFO ] [main] com.zaxxer.hikari.HikariDataSource [] - HikariPool-1 - Start completed.
+2026-10-10 15:11:25.150 [WARN ] [main] org.hibernate.orm.deprecation [] - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-10-10 15:11:27.019 [INFO ] [main] o.h.e.t.j.p.i.JtaPlatformInitiator [] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-10 15:11:27.091 [INFO ] [main] o.s.o.j.LocalContainerEntityManagerFactoryBean [] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-10 15:11:29.606 [INFO ] [main] o.s.b.t.m.w.SpringBootMockServletContext [] - Initializing Spring TestDispatcherServlet ''
+2026-10-10 15:11:29.606 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Initializing Servlet ''
+2026-10-10 15:11:29.608 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Completed initialization in 2 ms
+2026-10-10 15:11:29.650 [INFO ] [main] c.s.FieldWorkflowIntegrationTest [] - Started FieldWorkflowIntegrationTest in 10.588 seconds (process running for 15.234)
+2026-10-10 15:11:30.707 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b6027f7f] - 请求完成: POST /files/upload status=200 耗时=738ms
+2026-10-10 15:11:31.057 [INFO ] [main] c.s.i.RequestLoggingInterceptor [dac22fe8] - 请求完成: POST /supervision-diaries status=200 耗时=308ms
+2026-10-10 15:11:31.141 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a5f2b3fa] - 请求完成: PUT /supervision-diaries/1 status=200 耗时=81ms
+2026-10-10 15:11:31.178 [INFO ] [main] c.s.i.RequestLoggingInterceptor [84ccb2b6] - 请求完成: POST /files/upload status=200 耗时=14ms
+2026-10-10 15:11:31.239 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b89e5513] - 请求完成: POST /supervision-diaries status=200 耗时=59ms
+2026-10-10 15:11:31.274 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c9f021f6] - 请求完成: GET /supervision-diaries/2 status=200 耗时=25ms
+2026-10-10 15:11:31.318 [WARN ] [main] c.s.exception.GlobalExceptionHandler [02f8b7c0] - 业务异常: /supervision-diaries/2/approve - 无权查看他人的草稿或待办
+2026-10-10 15:11:31.321 [INFO ] [main] c.s.i.RequestLoggingInterceptor [02f8b7c0] - 请求完成: POST /supervision-diaries/2/approve status=403 耗时=40ms
+2026-10-10 15:11:31.385 [INFO ] [main] c.s.i.RequestLoggingInterceptor [0f151902] - 请求完成: POST /supervision-diaries/2/submit status=200 耗时=30ms
+2026-10-10 15:11:31.400 [WARN ] [main] c.s.exception.GlobalExceptionHandler [ec4fb629] - 业务异常: /supervision-diaries/2/approve - 无权访问该项�?
+2026-10-10 15:11:31.402 [INFO ] [main] c.s.i.RequestLoggingInterceptor [ec4fb629] - 请求完成: POST /supervision-diaries/2/approve status=403 耗时=14ms
+2026-10-10 15:11:31.424 [WARN ] [main] c.s.exception.GlobalExceptionHandler [8e4d16fd] - 业务异常: /supervision-diaries/2 - 记录已提交或已审核，不能直接修改；已审核记录请建立修订稿
+2026-10-10 15:11:31.426 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8e4d16fd] - 请求完成: DELETE /supervision-diaries/2 status=409 耗时=22ms
+2026-10-10 15:11:31.501 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c3de26f5] - 请求完成: POST /files/upload status=200 耗时=30ms
+2026-10-10 15:11:31.530 [INFO ] [main] c.s.i.RequestLoggingInterceptor [01165ee9] - 请求完成: GET /sub-item-databases/10016 status=200 耗时=20ms
+2026-10-10 15:11:31.541 [WARN ] [main] c.s.exception.GlobalExceptionHandler [0f3b487f] - 业务异常: /sub-item-databases/10016 - 无权访问该项�?
+2026-10-10 15:11:31.542 [INFO ] [main] c.s.i.RequestLoggingInterceptor [0f3b487f] - 请求完成: GET /sub-item-databases/10016 status=403 耗时=10ms
+2026-10-10 15:11:31.566 [INFO ] [main] c.s.i.RequestLoggingInterceptor [91b0e762] - 请求完成: POST /files/upload status=200 耗时=12ms
+2026-10-10 15:11:31.607 [INFO ] [main] c.s.i.RequestLoggingInterceptor [211125da] - 请求完成: POST /supervision-diaries status=200 耗时=39ms
+2026-10-10 15:11:31.754 [INFO ] [main] c.s.i.RequestLoggingInterceptor [55347d52] - 请求完成: GET /field/diary-source status=200 耗时=145ms
+2026-10-10 15:11:31.778 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e59b510b] - 请求完成: POST /supervision-diaries/3/submit status=200 耗时=21ms
+2026-10-10 15:11:31.824 [INFO ] [main] c.s.i.RequestLoggingInterceptor [3df5e015] - 请求完成: POST /supervision-diaries/3/approve status=200 耗时=43ms
+2026-10-10 15:11:31.842 [INFO ] [main] c.s.i.RequestLoggingInterceptor [62f24b93] - 请求完成: GET /field/diary-source status=200 耗时=16ms
+2026-10-10 15:11:31.864 [INFO ] [main] c.s.i.RequestLoggingInterceptor [521bb3ee] - 请求完成: GET /field/diary-source status=200 耗时=17ms
+2026-10-10 15:11:31.944 [INFO ] [main] c.s.i.RequestLoggingInterceptor [876d89b6] - 请求完成: POST /supervision-logs status=200 耗时=70ms
+2026-10-10 15:11:31.964 [WARN ] [main] c.s.exception.GlobalExceptionHandler [830f493b] - 业务异常: /supervision-logs - 日记来源不是本项目当日已审核版本，请重新取数
+2026-10-10 15:11:31.965 [INFO ] [main] c.s.i.RequestLoggingInterceptor [830f493b] - 请求完成: POST /supervision-logs status=409 耗时=19ms
+2026-10-10 15:11:32.183 [INFO ] [main] c.s.i.RequestLoggingInterceptor [cecbdec5] - 请求完成: GET /field/summary status=200 耗时=216ms
+2026-10-10 15:11:32.214 [INFO ] [main] c.s.i.RequestLoggingInterceptor [1ab99da1] - 请求完成: POST /files/upload status=200 耗时=16ms
+2026-10-10 15:11:32.254 [INFO ] [main] c.s.i.RequestLoggingInterceptor [5bc126d8] - 请求完成: POST /supervision-diaries status=200 耗时=37ms
+2026-10-10 15:11:32.267 [WARN ] [main] c.s.exception.GlobalExceptionHandler [91280464] - 业务异常: /supervision-diaries/4 - 缺少记录版本，请重新打开记录后操�?
+2026-10-10 15:11:32.272 [INFO ] [main] c.s.i.RequestLoggingInterceptor [91280464] - 请求完成: PUT /supervision-diaries/4 status=428 耗时=13ms
+2026-10-10 15:11:32.299 [INFO ] [main] c.s.i.RequestLoggingInterceptor [d374a4ec] - 请求完成: POST /supervision-diaries/4/submit status=200 耗时=25ms
+2026-10-10 15:11:32.357 [WARN ] [main] c.s.exception.GlobalExceptionHandler [d1d8c0ce] - 业务异常: /supervision-diaries/4/approve - 没有该项目的审核权限
+2026-10-10 15:11:32.359 [INFO ] [main] c.s.i.RequestLoggingInterceptor [d1d8c0ce] - 请求完成: POST /supervision-diaries/4/approve status=403 耗时=51ms
+2026-10-10 15:11:32.393 [WARN ] [main] c.s.exception.GlobalExceptionHandler [0f332e9a] - 业务异常: /supervision-diaries/4/approve - 请填写�??回原�?
+2026-10-10 15:11:32.394 [INFO ] [main] c.s.i.RequestLoggingInterceptor [0f332e9a] - 请求完成: POST /supervision-diaries/4/approve status=400 耗时=31ms
+2026-10-10 15:11:32.424 [INFO ] [main] c.s.i.RequestLoggingInterceptor [eb773646] - 请求完成: POST /supervision-diaries/4/approve status=200 耗时=26ms
+2026-10-10 15:11:32.462 [INFO ] [main] c.s.i.RequestLoggingInterceptor [28e19d0a] - 请求完成: PUT /supervision-diaries/4 status=200 耗时=34ms
+2026-10-10 15:11:32.495 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e3c3a61c] - 请求完成: POST /supervision-diaries/4/submit status=200 耗时=31ms
+2026-10-10 15:11:32.515 [INFO ] [main] c.s.i.RequestLoggingInterceptor [cece1229] - 请求完成: POST /supervision-diaries/4/approve status=200 耗时=18ms
+2026-10-10 15:11:32.528 [WARN ] [main] c.s.exception.GlobalExceptionHandler [dee6708d] - 业务异常: /supervision-diaries/4 - 记录已提交或已审核，不能直接修改；已审核记录请建立修订稿
+2026-10-10 15:11:32.529 [INFO ] [main] c.s.i.RequestLoggingInterceptor [dee6708d] - 请求完成: PUT /supervision-diaries/4 status=409 耗时=9ms
+2026-10-10 15:11:32.563 [INFO ] [main] c.s.i.RequestLoggingInterceptor [75b48a42] - 请求完成: GET /supervision-diaries/4/history status=200 耗时=32ms
+2026-10-10 15:11:32.598 [INFO ] [main] c.s.i.RequestLoggingInterceptor [4fcd3876] - 请求完成: POST /supervision-diaries status=200 耗时=33ms
+2026-10-10 15:11:32.626 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a8ced3f2] - 请求完成: POST /files/upload status=200 耗时=15ms
+2026-10-10 15:11:32.663 [WARN ] [main] c.s.exception.GlobalExceptionHandler [6779b3c7] - 业务异常: /supervision-notices - 创建通知单仅允许 draft/issued 初始状�?�，当前状�?�请通过后续流程流转
+2026-10-10 15:11:32.663 [INFO ] [main] c.s.i.RequestLoggingInterceptor [6779b3c7] - 请求完成: POST /supervision-notices status=400 耗时=34ms
+2026-10-10 15:11:32.693 [WARN ] [main] c.s.exception.GlobalExceptionHandler [9eb9bafa] - 业务异常: /work-contacts - 创建工作联系单仅允许 draft/sent 初始状�?�，当前状�?�请通过后续流程流转
+2026-10-10 15:11:32.693 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9eb9bafa] - 请求完成: POST /work-contacts status=400 耗时=28ms
+2026-10-10 15:11:32.726 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e1ea3995] - 请求完成: POST /files/upload status=200 耗时=17ms
+2026-10-10 15:11:32.964 [INFO ] [main] c.s.i.RequestLoggingInterceptor [1038f9d7] - 请求完成: PUT /users/10034/status status=403 耗时=235ms
+2026-10-10 15:11:32.983 [INFO ] [main] c.s.i.RequestLoggingInterceptor [086aa863] - 请求完成: POST /files/upload status=200 耗时=6ms
+2026-10-10 15:11:33.016 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a61779f8] - 请求完成: POST /safety-logs status=200 耗时=30ms
+2026-10-10 15:11:33.040 [WARN ] [main] c.s.exception.GlobalExceptionHandler [3d0a5c16] - 业务异常: /safety-logs/1 - 已批准的安全日志正文不可覆盖，如�?修正请新建修订版�?
+2026-10-10 15:11:33.041 [INFO ] [main] c.s.i.RequestLoggingInterceptor [3d0a5c16] - 请求完成: PUT /safety-logs/1 status=409 耗时=18ms
+2026-10-10 15:11:33.060 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c8c6668b] - 请求完成: POST /files/upload status=200 耗时=10ms
+2026-10-10 15:11:33.123 [INFO ] [pool-3-thread-1] c.s.i.RequestLoggingInterceptor [e65ed1d2] - 请求完成: POST /supervision-diaries status=200 耗时=44ms
+2026-10-10 15:11:33.150 [INFO ] [pool-3-thread-2] c.s.i.RequestLoggingInterceptor [81744ce4] - 请求完成: POST /supervision-diaries status=200 耗时=85ms
+2026-10-10 15:11:33.164 [INFO ] [pool-3-thread-3] c.s.i.RequestLoggingInterceptor [5a5d04bb] - 请求完成: POST /supervision-diaries status=200 耗时=84ms
+2026-10-10 15:11:33.176 [INFO ] [pool-3-thread-4] c.s.i.RequestLoggingInterceptor [66faf3a8] - 请求完成: POST /supervision-diaries status=200 耗时=110ms
+2026-10-10 15:11:33.196 [INFO ] [main] c.s.i.RequestLoggingInterceptor [185f2ddd] - 请求完成: POST /supervision-diaries status=200 耗时=18ms
+2026-10-10 15:11:33.238 [WARN ] [main] c.s.exception.GlobalExceptionHandler [7ba90712] - 业务异常: /supervision-diaries - 编号已存在，请使用新编号
+2026-10-10 15:11:33.240 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7ba90712] - 请求完成: POST /supervision-diaries status=409 耗时=42ms
+2026-10-10 15:11:33.265 [WARN ] [main] c.s.exception.GlobalExceptionHandler [47a07ea4] - 业务异常: /supervision-diaries - 同一请求标识不能提交不同内容
+2026-10-10 15:11:33.266 [INFO ] [main] c.s.i.RequestLoggingInterceptor [47a07ea4] - 请求完成: POST /supervision-diaries status=409 耗时=19ms
+2026-10-10 15:11:33.293 [INFO ] [main] c.s.i.RequestLoggingInterceptor [dc200eaa] - 请求完成: POST /supervision-diaries/6/submit status=200 耗时=26ms
+2026-10-10 15:11:33.378 [INFO ] [pool-4-thread-3] c.s.i.RequestLoggingInterceptor [c4d4e615] - 请求完成: POST /supervision-diaries status=200 耗时=64ms
+2026-10-10 15:11:33.390 [INFO ] [pool-4-thread-4] c.s.i.RequestLoggingInterceptor [0a0943bf] - 请求完成: POST /supervision-diaries status=200 耗时=70ms
+2026-10-10 15:11:33.395 [INFO ] [pool-4-thread-2] c.s.i.RequestLoggingInterceptor [4d731953] - 请求完成: POST /supervision-diaries status=200 耗时=82ms
+2026-10-10 15:11:33.415 [INFO ] [pool-4-thread-1] c.s.i.RequestLoggingInterceptor [f4df387a] - 请求完成: POST /supervision-diaries status=200 耗时=108ms
+2026-10-10 15:11:33.425 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e66f36b2] - 请求完成: POST /supervision-diaries status=200 耗时=9ms
+2026-10-10 15:11:33.443 [WARN ] [main] c.s.exception.GlobalExceptionHandler [efff1c45] - 业务异常: /supervision-diaries - 编号已存在，请使用新编号
+2026-10-10 15:11:33.445 [INFO ] [main] c.s.i.RequestLoggingInterceptor [efff1c45] - 请求完成: POST /supervision-diaries status=409 耗时=17ms
+2026-10-10 15:11:33.462 [WARN ] [main] c.s.exception.GlobalExceptionHandler [8111bec2] - 业务异常: /supervision-diaries - 同一请求标识不能提交不同内容
+2026-10-10 15:11:33.463 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8111bec2] - 请求完成: POST /supervision-diaries status=409 耗时=18ms
+2026-10-10 15:11:33.480 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e8612e27] - 请求完成: POST /supervision-diaries/7/submit status=200 耗时=16ms
+2026-10-10 15:11:33.531 [INFO ] [pool-5-thread-2] c.s.i.RequestLoggingInterceptor [a17f2e29] - 请求完成: POST /supervision-diaries status=200 耗时=48ms
+2026-10-10 15:11:33.565 [INFO ] [pool-5-thread-1] c.s.i.RequestLoggingInterceptor [e13ea2fe] - 请求完成: POST /supervision-diaries status=200 耗时=65ms
+2026-10-10 15:11:33.566 [INFO ] [pool-5-thread-3] c.s.i.RequestLoggingInterceptor [0d5757b5] - 请求完成: POST /supervision-diaries status=200 耗时=82ms
+2026-10-10 15:11:33.581 [INFO ] [pool-5-thread-4] c.s.i.RequestLoggingInterceptor [e1f10474] - 请求完成: POST /supervision-diaries status=200 耗时=84ms
+2026-10-10 15:11:33.596 [INFO ] [main] c.s.i.RequestLoggingInterceptor [839da0da] - 请求完成: POST /supervision-diaries status=200 耗时=14ms
+2026-10-10 15:11:33.615 [WARN ] [main] c.s.exception.GlobalExceptionHandler [5d78e7c7] - 业务异常: /supervision-diaries - 编号已存在，请使用新编号
+2026-10-10 15:11:33.616 [INFO ] [main] c.s.i.RequestLoggingInterceptor [5d78e7c7] - 请求完成: POST /supervision-diaries status=409 耗时=17ms
+2026-10-10 15:11:33.641 [WARN ] [main] c.s.exception.GlobalExceptionHandler [bf4b49a0] - 业务异常: /supervision-diaries - 同一请求标识不能提交不同内容
+2026-10-10 15:11:33.642 [INFO ] [main] c.s.i.RequestLoggingInterceptor [bf4b49a0] - 请求完成: POST /supervision-diaries status=409 耗时=21ms
+2026-10-10 15:11:33.657 [INFO ] [main] c.s.i.RequestLoggingInterceptor [2528e8f6] - 请求完成: POST /supervision-diaries/8/submit status=200 耗时=13ms
+2026-10-10 15:11:33.714 [INFO ] [pool-6-thread-3] c.s.i.RequestLoggingInterceptor [242caeca] - 请求完成: POST /supervision-diaries status=200 耗时=47ms
+2026-10-10 15:11:33.717 [WARN ] [pool-6-thread-2] o.h.e.jdbc.spi.SqlExceptionHelper [63366f62] - SQL Error: 23505, SQLState: 23505
+2026-10-10 15:11:33.722 [ERROR] [pool-6-thread-2] o.h.e.jdbc.spi.SqlExceptionHelper [63366f62] - Unique index or primary key violation: "PUBLIC.CONSTRAINT_INDEX_4 ON PUBLIC.BIZ_SUPERVISION_DIARY(REQUEST_KEY NULLS FIRST) VALUES ( /* 9 */ '23d49d03f31a122c31cdc31e49575ded1336d91d0af9fe67b6cf50b7f7a25553' )"; SQL statement:
+insert into biz_supervision_diary (attachments,author_id,code,construction,create_time,diary_date,drawing_review,inspection,lock_version,management,morning_meeting,other_matters,photos,project_id,reject_reason,rejected_at,rejected_by,request_hash,request_key,reviewed_at,reviewer_id,source_record_id,status,submitted_at,submitted_by,temperature,update_time,version,weather,wind,id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default) [23505-224]
+2026-10-10 15:11:33.740 [INFO ] [pool-6-thread-2] c.s.i.RequestLoggingInterceptor [63366f62] - 请求完成: POST /supervision-diaries status=200 耗时=78ms
+2026-10-10 15:11:33.741 [WARN ] [pool-6-thread-4] o.h.e.jdbc.spi.SqlExceptionHelper [0423fd88] - SQL Error: 23505, SQLState: 23505
+2026-10-10 15:11:33.741 [ERROR] [pool-6-thread-4] o.h.e.jdbc.spi.SqlExceptionHelper [0423fd88] - Unique index or primary key violation: "PUBLIC.CONSTRAINT_INDEX_4 ON PUBLIC.BIZ_SUPERVISION_DIARY(REQUEST_KEY NULLS FIRST) VALUES ( /* 9 */ '23d49d03f31a122c31cdc31e49575ded1336d91d0af9fe67b6cf50b7f7a25553' )"; SQL statement:
+insert into biz_supervision_diary (attachments,author_id,code,construction,create_time,diary_date,drawing_review,inspection,lock_version,management,morning_meeting,other_matters,photos,project_id,reject_reason,rejected_at,rejected_by,request_hash,request_key,reviewed_at,reviewer_id,source_record_id,status,submitted_at,submitted_by,temperature,update_time,version,weather,wind,id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default) [23505-224]
+2026-10-10 15:11:33.750 [WARN ] [pool-6-thread-1] o.h.e.jdbc.spi.SqlExceptionHelper [2ceda250] - SQL Error: 23505, SQLState: 23505
+2026-10-10 15:11:33.750 [ERROR] [pool-6-thread-1] o.h.e.jdbc.spi.SqlExceptionHelper [2ceda250] - Unique index or primary key violation: "PUBLIC.CONSTRAINT_INDEX_4 ON PUBLIC.BIZ_SUPERVISION_DIARY(REQUEST_KEY NULLS FIRST) VALUES ( /* 9 */ '23d49d03f31a122c31cdc31e49575ded1336d91d0af9fe67b6cf50b7f7a25553' )"; SQL statement:
+insert into biz_supervision_diary (attachments,author_id,code,construction,create_time,diary_date,drawing_review,inspection,lock_version,management,morning_meeting,other_matters,photos,project_id,reject_reason,rejected_at,rejected_by,request_hash,request_key,reviewed_at,reviewer_id,source_record_id,status,submitted_at,submitted_by,temperature,update_time,version,weather,wind,id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default) [23505-224]
+2026-10-10 15:11:33.762 [INFO ] [pool-6-thread-4] c.s.i.RequestLoggingInterceptor [0423fd88] - 请求完成: POST /supervision-diaries status=200 耗时=87ms
+2026-10-10 15:11:33.763 [INFO ] [pool-6-thread-1] c.s.i.RequestLoggingInterceptor [2ceda250] - 请求完成: POST /supervision-diaries status=200 耗时=100ms
+2026-10-10 15:11:33.783 [INFO ] [main] c.s.i.RequestLoggingInterceptor [6f20daa9] - 请求完成: POST /supervision-diaries status=200 耗时=17ms
+2026-10-10 15:11:33.797 [WARN ] [main] c.s.exception.GlobalExceptionHandler [06582530] - 业务异常: /supervision-diaries - 同一请求标识不能提交不同内容
+2026-10-10 15:11:33.799 [INFO ] [main] c.s.i.RequestLoggingInterceptor [06582530] - 请求完成: POST /supervision-diaries status=409 耗时=11ms
+2026-10-10 15:11:33.813 [INFO ] [main] c.s.i.RequestLoggingInterceptor [479e8ae5] - 请求完成: POST /supervision-diaries/9/submit status=200 耗时=13ms
+2026-10-10 15:11:33.833 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c11a8838] - 请求完成: POST /files/upload status=200 耗时=6ms
+2026-10-10 15:11:33.839 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e7027cd6] - 请求完成: OPTIONS /messages status=200 耗时=0ms
+2026-10-10 15:11:33.847 [INFO ] [main] c.s.i.RequestLoggingInterceptor [93703cc2] - 请求完成: GET /messages status=401 耗时=0ms
+2026-10-10 15:11:33.871 [INFO ] [main] c.s.i.RequestLoggingInterceptor [aaa96cd4] - 请求完成: POST /files/upload status=200 耗时=10ms
+2026-10-10 15:11:33.890 [INFO ] [main] c.s.i.RequestLoggingInterceptor [26b10873] - 请求完成: POST /messages status=200 耗时=15ms
+2026-10-10 15:11:33.898 [INFO ] [main] c.s.i.RequestLoggingInterceptor [4498d88a] - 请求完成: GET /messages/1 status=200 耗时=5ms
+2026-10-10 15:11:33.908 [WARN ] [main] c.s.exception.GlobalExceptionHandler [097b484a] - 业务异常: /messages/1 - 只能访问本人的消�?
+2026-10-10 15:11:33.910 [INFO ] [main] c.s.i.RequestLoggingInterceptor [097b484a] - 请求完成: GET /messages/1 status=403 耗时=11ms
+2026-10-10 15:11:33.915 [WARN ] [main] c.s.exception.GlobalExceptionHandler [74c326c0] - 业务异常: /messages/1 - 只能访问本人的消�?
+2026-10-10 15:11:33.915 [INFO ] [main] c.s.i.RequestLoggingInterceptor [74c326c0] - 请求完成: GET /messages/1 status=403 耗时=4ms
+2026-10-10 15:11:33.921 [INFO ] [main] c.s.i.RequestLoggingInterceptor [1ff4d144] - 请求完成: GET /messages status=401 耗时=4ms
+2026-10-10 15:11:33.932 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c06e317f] - 请求完成: PUT /messages/1/read status=401 耗时=8ms
+2026-10-10 15:11:33.958 [INFO ] [main] c.s.i.RequestLoggingInterceptor [5ea839e5] - 请求完成: POST /files/upload status=200 耗时=9ms
+2026-10-10 15:11:33.964 [WARN ] [main] c.s.exception.GlobalExceptionHandler [7d8e2a27] - 业务异常: /files/upload - 不支持的文件类型: exe
+2026-10-10 15:11:33.965 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7d8e2a27] - 请求完成: POST /files/upload status=400 耗时=4ms
+2026-10-10 15:11:33.971 [WARN ] [main] c.s.exception.GlobalExceptionHandler [d6bf4587] - 业务异常: /files/upload - 不支持的文件类型: html
+2026-10-10 15:11:33.974 [INFO ] [main] c.s.i.RequestLoggingInterceptor [d6bf4587] - 请求完成: POST /files/upload status=400 耗时=8ms
+2026-10-10 15:11:33.977 [WARN ] [main] c.s.exception.GlobalExceptionHandler [03671ae6] - 业务异常: /files/upload - 不支持的文件类型: svg
+2026-10-10 15:11:33.978 [INFO ] [main] c.s.i.RequestLoggingInterceptor [03671ae6] - 请求完成: POST /files/upload status=400 耗时=3ms
+2026-10-10 15:11:33.980 [WARN ] [main] c.s.exception.GlobalExceptionHandler [5c90c6dd] - 业务异常: /files/upload - 不支持的文件类型: exe
+2026-10-10 15:11:33.981 [INFO ] [main] c.s.i.RequestLoggingInterceptor [5c90c6dd] - 请求完成: POST /files/upload status=400 耗时=2ms
+2026-10-10 15:11:33.989 [WARN ] [main] c.s.exception.GlobalExceptionHandler [54b4103e] - 业务异常: /files/upload - 文件缺少扩展名，无法识别文件类型
+2026-10-10 15:11:33.989 [INFO ] [main] c.s.i.RequestLoggingInterceptor [54b4103e] - 请求完成: POST /files/upload status=400 耗时=6ms
+2026-10-10 15:11:33.993 [WARN ] [main] c.s.exception.GlobalExceptionHandler [218c1c9c] - 业务异常: /files/upload - 非法的文件名: a..jpg
+2026-10-10 15:11:33.994 [INFO ] [main] c.s.i.RequestLoggingInterceptor [218c1c9c] - 请求完成: POST /files/upload status=400 耗时=3ms
+2026-10-10 15:11:33.996 [WARN ] [main] c.s.exception.GlobalExceptionHandler [ef4a961d] - 业务异常: /files/upload - 上传文件不能为空
+2026-10-10 15:11:33.997 [INFO ] [main] c.s.i.RequestLoggingInterceptor [ef4a961d] - 请求完成: POST /files/upload status=400 耗时=3ms
+2026-10-10 15:11:33.998 [INFO ] [main] c.s.i.RequestLoggingInterceptor [2be55732] - 请求完成: POST /files/upload status=401 耗时=0ms
+2026-10-10 15:11:34.029 [INFO ] [main] c.s.i.RequestLoggingInterceptor [862a512b] - 请求完成: POST /files/upload status=200 耗时=17ms
+2026-10-10 15:11:34.062 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b73ca1d2] - 请求完成: POST /supervision-diaries status=200 耗时=30ms
+2026-10-10 15:11:34.076 [WARN ] [main] c.s.exception.GlobalExceptionHandler [22d75a82] - 业务异常: /files/access - 无权访问该项�?
+2026-10-10 15:11:34.077 [INFO ] [main] c.s.i.RequestLoggingInterceptor [22d75a82] - 请求完成: GET /files/access status=403 耗时=14ms
+2026-10-10 15:11:34.229 [WARN ] [main] c.s.exception.GlobalExceptionHandler [cde534d5] - 业务异常: /files/access - 没有附件访问权限
+2026-10-10 15:11:34.232 [INFO ] [main] c.s.i.RequestLoggingInterceptor [cde534d5] - 请求完成: GET /files/access status=403 耗时=154ms
+2026-10-10 15:11:34.249 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9127bed3] - 请求完成: POST /supervision-diaries/13/submit status=200 耗时=16ms
+2026-10-10 15:11:34.264 [INFO ] [main] c.s.i.RequestLoggingInterceptor [42fc8d25] - 请求完成: GET /files/access status=200 耗时=14ms
+2026-10-10 15:11:34.288 [INFO ] [main] c.s.i.RequestLoggingInterceptor [f11fdbbc] - 请求完成: GET /files/content status=200 耗时=23ms
+2026-10-10 15:11:34.293 [INFO ] [main] c.s.i.RequestLoggingInterceptor [225e3a1a] - 请求完成: GET /uploads/20261010/a65a1f546e8f4b6e94254bfb455e9c55.jpg status=401 耗时=1ms
+2026-10-10 15:11:34.295 [WARN ] [main] c.s.exception.GlobalExceptionHandler [0bba178a] - 业务异常: /files/content - 附件链接无效或已过期
+2026-10-10 15:11:34.296 [INFO ] [main] c.s.i.RequestLoggingInterceptor [0bba178a] - 请求完成: GET /files/content status=403 耗时=3ms
+2026-10-10 15:11:34.306 [WARN ] [main] c.s.exception.GlobalExceptionHandler [22a65554] - 业务异常: /supervision-diaries/13 - 无权访问该项�?
+2026-10-10 15:11:34.312 [INFO ] [main] c.s.i.RequestLoggingInterceptor [22a65554] - 请求完成: GET /supervision-diaries/13 status=403 耗时=15ms
+2026-10-10 15:11:34.326 [WARN ] [main] c.s.exception.GlobalExceptionHandler [d006148d] - 业务异常: /files/access - 无权访问该项�?
+2026-10-10 15:11:34.327 [INFO ] [main] c.s.i.RequestLoggingInterceptor [d006148d] - 请求完成: GET /files/access status=403 耗时=14ms
+2026-10-10 15:11:34.364 [INFO ] [main] c.s.i.RequestLoggingInterceptor [25f2a073] - 请求完成: POST /files/upload status=200 耗时=24ms
+2026-10-10 15:11:34.373 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b7efb015] - 请求完成: GET /messages status=401 耗时=2ms
+2026-10-10 15:11:34.379 [INFO ] [main] c.s.i.RequestLoggingInterceptor [303d7c42] - 请求完成: GET /messages status=401 耗时=1ms
+2026-10-10 15:11:34.397 [INFO ] [main] c.s.i.RequestLoggingInterceptor [12457764] - 请求完成: GET /messages status=200 耗时=17ms
+2026-10-10 15:11:34.430 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9e0261a6] - 请求完成: POST /files/upload status=200 耗时=20ms
+2026-10-10 15:11:34.458 [INFO ] [main] c.s.i.RequestLoggingInterceptor [07e67b62] - 请求完成: POST /supervision-diaries status=200 耗时=26ms
+2026-10-10 15:11:34.479 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e8b01c12] - 请求完成: PUT /supervision-diaries/14 status=200 耗时=18ms
+2026-10-10 15:11:34.492 [WARN ] [main] c.s.exception.GlobalExceptionHandler [47f49697] - 业务异常: /supervision-diaries/14 - 记录已被其他端修改；本次内容未覆盖，请保留草稿并重新打开核对
+2026-10-10 15:11:34.493 [INFO ] [main] c.s.i.RequestLoggingInterceptor [47f49697] - 请求完成: PUT /supervision-diaries/14 status=409 耗时=12ms
+2026-10-10 15:11:34.500 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7415adb8] - 请求完成: GET /supervision-diaries/14 status=200 耗时=6ms
+2026-10-10 15:11:34.531 [INFO ] [main] c.s.i.RequestLoggingInterceptor [eadfb9a9] - 请求完成: POST /files/upload status=200 耗时=15ms
+2026-10-10 15:11:34.575 [INFO ] [main] c.s.i.RequestLoggingInterceptor [d742deac] - 请求完成: POST /supervision-diaries status=200 耗时=42ms
+2026-10-10 15:11:34.595 [INFO ] [main] c.s.i.RequestLoggingInterceptor [dca82cc3] - 请求完成: POST /supervision-diaries/15/submit status=200 耗时=19ms
+2026-10-10 15:11:34.614 [INFO ] [main] c.s.i.RequestLoggingInterceptor [20e3f05d] - 请求完成: POST /supervision-diaries/15/approve status=200 耗时=16ms
+2026-10-10 15:11:34.641 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9f2793b8] - 请求完成: POST /supervision-diaries status=200 耗时=27ms
+2026-10-10 15:11:34.651 [INFO ] [main] c.s.i.RequestLoggingInterceptor [4ce4b3c1] - 请求完成: POST /supervision-diaries/16/submit status=200 耗时=8ms
+2026-10-10 15:11:34.663 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c0c2a4a9] - 请求完成: POST /supervision-diaries/16/approve status=200 耗时=8ms
+2026-10-10 15:11:34.680 [INFO ] [main] c.s.i.RequestLoggingInterceptor [0ea5669f] - 请求完成: GET /field/diary-source status=200 耗时=16ms
+2026-10-10 15:11:34.713 [INFO ] [main] c.s.i.RequestLoggingInterceptor [303c9b55] - 请求完成: POST /files/upload status=200 耗时=17ms
+2026-10-10 15:11:34.758 [INFO ] [main] c.s.i.RequestLoggingInterceptor [50749854] - 请求完成: GET /files/access status=200 耗时=36ms
+2026-10-10 15:11:34.794 [WARN ] [main] c.s.exception.GlobalExceptionHandler [4a1fbc51] - 业务异常: /files/access - 没有附件访问权限
+2026-10-10 15:11:34.794 [INFO ] [main] c.s.i.RequestLoggingInterceptor [4a1fbc51] - 请求完成: GET /files/access status=403 耗时=33ms
+2026-10-10 15:11:34.831 [WARN ] [main] c.s.exception.GlobalExceptionHandler [763cdd09] - 业务异常: /files/access - 没有附件访问权限
+2026-10-10 15:11:34.832 [INFO ] [main] c.s.i.RequestLoggingInterceptor [763cdd09] - 请求完成: GET /files/access status=403 耗时=36ms
+2026-10-10 15:11:34.856 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c6e9296f] - 请求完成: POST /files/upload status=200 耗时=10ms
+2026-10-10 15:11:34.876 [INFO ] [main] c.s.i.RequestLoggingInterceptor [121fbb7b] - 请求完成: POST /safety-logs status=200 耗时=16ms
+2026-10-10 15:11:34.904 [INFO ] [main] c.s.i.RequestLoggingInterceptor [ec7c23f3] - 请求完成: PUT /safety-logs/2 status=200 耗时=25ms
+2026-10-10 15:11:34.910 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9b545180] - 请求完成: GET /safety-logs/2 status=200 耗时=3ms
+2026-10-10 15:11:34.929 [INFO ] [main] c.s.i.RequestLoggingInterceptor [6a35458b] - 请求完成: POST /files/upload status=200 耗时=12ms
+2026-10-10 15:11:34.949 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c87cfc7f] - 请求完成: POST /supervision-diaries status=200 耗时=18ms
+2026-10-10 15:11:34.976 [INFO ] [main] c.s.i.RequestLoggingInterceptor [973e6144] - 请求完成: GET /files/access status=200 耗时=15ms
+2026-10-10 15:11:35.006 [WARN ] [main] c.s.exception.GlobalExceptionHandler [f658146d] - 业务异常: /files/access - 没有附件访问权限
+2026-10-10 15:11:35.008 [INFO ] [main] c.s.i.RequestLoggingInterceptor [f658146d] - 请求完成: GET /files/access status=403 耗时=31ms
+2026-10-10 15:11:35.056 [WARN ] [main] c.s.exception.GlobalExceptionHandler [0d94afa2] - 业务异常: /files/access - 没有附件访问权限
+2026-10-10 15:11:35.057 [INFO ] [main] c.s.i.RequestLoggingInterceptor [0d94afa2] - 请求完成: GET /files/access status=403 耗时=47ms
+2026-10-10 15:11:35.082 [WARN ] [main] c.s.exception.GlobalExceptionHandler [c26f4a6b] - 业务异常: /files/access - 没有附件访问权限
+2026-10-10 15:11:35.083 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c26f4a6b] - 请求完成: GET /files/access status=403 耗时=24ms
+2026-10-10 15:11:35.100 [INFO ] [main] c.s.i.RequestLoggingInterceptor [df34a61f] - 请求完成: GET /files/access status=200 耗时=13ms
+2026-10-10 15:11:35.138 [WARN ] [main] c.s.exception.GlobalExceptionHandler [a5466c9d] - 业务异常: /files/access - 没有附件访问权限
+2026-10-10 15:11:35.139 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a5466c9d] - 请求完成: GET /files/access status=403 耗时=34ms
+2026-10-10 15:11:35.172 [WARN ] [main] c.s.exception.GlobalExceptionHandler [14affcbc] - 业务异常: /files/access - 没有附件访问权限
+2026-10-10 15:11:35.173 [INFO ] [main] c.s.i.RequestLoggingInterceptor [14affcbc] - 请求完成: GET /files/access status=403 耗时=33ms
+2026-10-10 15:11:35.209 [WARN ] [main] c.s.exception.GlobalExceptionHandler [e72e7d0a] - 业务异常: /files/access - 没有附件访问权限
+2026-10-10 15:11:35.210 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e72e7d0a] - 请求完成: GET /files/access status=403 耗时=36ms
+2026-10-10 15:11:35.226 [INFO ] [main] c.s.i.RequestLoggingInterceptor [14646f45] - 请求完成: GET /files/access status=200 耗时=14ms
+2026-10-10 15:11:35.247 [WARN ] [main] c.s.exception.GlobalExceptionHandler [5772a14b] - 业务异常: /files/access - 没有附件访问权限
+2026-10-10 15:11:35.247 [INFO ] [main] c.s.i.RequestLoggingInterceptor [5772a14b] - 请求完成: GET /files/access status=403 耗时=20ms
+2026-10-10 15:11:35.275 [WARN ] [main] c.s.exception.GlobalExceptionHandler [6ca43b43] - 业务异常: /files/access - 没有附件访问权限
+2026-10-10 15:11:35.276 [INFO ] [main] c.s.i.RequestLoggingInterceptor [6ca43b43] - 请求完成: GET /files/access status=403 耗时=27ms
+2026-10-10 15:11:35.306 [WARN ] [main] c.s.exception.GlobalExceptionHandler [060b3fb4] - 业务异常: /files/access - 没有附件访问权限
+2026-10-10 15:11:35.309 [INFO ] [main] c.s.i.RequestLoggingInterceptor [060b3fb4] - 请求完成: GET /files/access status=403 耗时=32ms
+2026-10-10 15:11:35.321 [INFO ] [main] c.s.i.RequestLoggingInterceptor [5528bb9e] - 请求完成: GET /files/access status=200 耗时=10ms
+2026-10-10 15:11:35.340 [WARN ] [main] c.s.exception.GlobalExceptionHandler [8ae28bf0] - 业务异常: /files/access - 没有附件访问权限
+2026-10-10 15:11:35.341 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8ae28bf0] - 请求完成: GET /files/access status=403 耗时=19ms
+2026-10-10 15:11:35.365 [WARN ] [main] c.s.exception.GlobalExceptionHandler [4136162b] - 业务异常: /files/access - 没有附件访问权限
+2026-10-10 15:11:35.365 [INFO ] [main] c.s.i.RequestLoggingInterceptor [4136162b] - 请求完成: GET /files/access status=403 耗时=22ms
+2026-10-10 15:11:35.390 [WARN ] [main] c.s.exception.GlobalExceptionHandler [65c3b2c2] - 业务异常: /files/access - 没有附件访问权限
+2026-10-10 15:11:35.390 [INFO ] [main] c.s.i.RequestLoggingInterceptor [65c3b2c2] - 请求完成: GET /files/access status=403 耗时=24ms
+2026-10-10 15:11:35.406 [INFO ] [main] c.s.i.RequestLoggingInterceptor [879b3ba3] - 请求完成: GET /files/access status=200 耗时=13ms
+2026-10-10 15:11:35.431 [WARN ] [main] c.s.exception.GlobalExceptionHandler [6affefcd] - 业务异常: /files/access - 没有附件访问权限
+2026-10-10 15:11:35.439 [INFO ] [main] c.s.i.RequestLoggingInterceptor [6affefcd] - 请求完成: GET /files/access status=403 耗时=29ms
+2026-10-10 15:11:35.456 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e21d421a] - 请求完成: POST /files/upload status=200 耗时=7ms
+2026-10-10 15:11:35.479 [INFO ] [main] c.s.i.RequestLoggingInterceptor [08af338d] - 请求完成: POST /supervision-diaries status=200 耗时=21ms
+2026-10-10 15:11:35.490 [INFO ] [main] c.s.i.RequestLoggingInterceptor [85062b81] - 请求完成: POST /supervision-diaries status=200 耗时=11ms
+2026-10-10 15:11:35.503 [WARN ] [main] c.s.exception.GlobalExceptionHandler [f115d4ec] - 业务异常: /supervision-diaries - 同一请求标识不能提交不同内容
+2026-10-10 15:11:35.505 [INFO ] [main] c.s.i.RequestLoggingInterceptor [f115d4ec] - 请求完成: POST /supervision-diaries status=409 耗时=12ms
+2026-10-10 15:11:35.514 [WARN ] [main] c.s.exception.GlobalExceptionHandler [163422b9] - 业务异常: /supervision-diaries/18 - 无权访问该项�?
+2026-10-10 15:11:35.514 [INFO ] [main] c.s.i.RequestLoggingInterceptor [163422b9] - 请求完成: GET /supervision-diaries/18 status=403 耗时=7ms
+2026-10-10 15:11:35.525 [WARN ] [main] c.s.exception.GlobalExceptionHandler [eb24cc97] - 业务异常: /supervision-diaries/18 - 无权查看他人的草稿或待办
+2026-10-10 15:11:35.526 [INFO ] [main] c.s.i.RequestLoggingInterceptor [eb24cc97] - 请求完成: GET /supervision-diaries/18 status=403 耗时=6ms
+2026-10-10 15:11:35.536 [WARN ] [main] c.s.exception.GlobalExceptionHandler [6be1cb8d] - 业务异常: /supervision-diaries - 无权访问该项�?
+2026-10-10 15:11:35.537 [INFO ] [main] c.s.i.RequestLoggingInterceptor [6be1cb8d] - 请求完成: POST /supervision-diaries status=403 耗时=9ms
+2026-10-10 15:11:35.549 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7e0cc0f5] - 请求完成: GET /supervision-diaries status=200 耗时=10ms
+2026-10-10 15:11:35.575 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a18944dc] - 请求完成: POST /files/upload status=200 耗时=11ms
+2026-10-10 15:11:35.594 [INFO ] [main] c.s.i.RequestLoggingInterceptor [15c221cb] - 请求完成: POST /supervision-diaries status=200 耗时=17ms
+2026-10-10 15:11:35.614 [WARN ] [main] c.s.exception.GlobalExceptionHandler [8a5de49e] - 业务异常: /meeting-minutes - 无权访问该项�?
+2026-10-10 15:11:35.614 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8a5de49e] - 请求完成: POST /meeting-minutes status=403 耗时=18ms
+2026-10-10 15:11:35.657 [WARN ] [main] c.s.exception.GlobalExceptionHandler [b8c28f98] - 业务异常: /meeting-minutes - 没有附件访问权限
+2026-10-10 15:11:35.658 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b8c28f98] - 请求完成: POST /meeting-minutes status=403 耗时=43ms
+2026-10-10 15:11:35.675 [WARN ] [main] c.s.exception.GlobalExceptionHandler [c5d83d47] - 业务异常: /supervision-notices - 无权访问该项�?
+2026-10-10 15:11:35.676 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c5d83d47] - 请求完成: POST /supervision-notices status=403 耗时=15ms
+2026-10-10 15:11:35.711 [WARN ] [main] c.s.exception.GlobalExceptionHandler [6e7b1037] - 业务异常: /supervision-notices - 没有附件访问权限
+2026-10-10 15:11:35.712 [INFO ] [main] c.s.i.RequestLoggingInterceptor [6e7b1037] - 请求完成: POST /supervision-notices status=403 耗时=35ms
+2026-10-10 15:11:35.727 [WARN ] [main] c.s.exception.GlobalExceptionHandler [61d50b96] - 业务异常: /safety-logs - 无权访问该项�?
+2026-10-10 15:11:35.727 [INFO ] [main] c.s.i.RequestLoggingInterceptor [61d50b96] - 请求完成: POST /safety-logs status=403 耗时=14ms
+2026-10-10 15:11:35.764 [WARN ] [main] c.s.exception.GlobalExceptionHandler [b94cf12c] - 业务异常: /safety-logs - 没有附件访问权限
+2026-10-10 15:11:35.764 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b94cf12c] - 请求完成: POST /safety-logs status=403 耗时=36ms
+2026-10-10 15:11:35.783 [WARN ] [main] c.s.exception.GlobalExceptionHandler [34c24b3e] - 业务异常: /supervision-monthly-reports - 无权访问该项�?
+2026-10-10 15:11:35.788 [INFO ] [main] c.s.i.RequestLoggingInterceptor [34c24b3e] - 请求完成: POST /supervision-monthly-reports status=403 耗时=21ms
+2026-10-10 15:11:35.821 [WARN ] [main] c.s.exception.GlobalExceptionHandler [e3dcdaaf] - 业务异常: /supervision-monthly-reports - 没有附件访问权限
+2026-10-10 15:11:35.821 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e3dcdaaf] - 请求完成: POST /supervision-monthly-reports status=403 耗时=32ms
+2026-10-10 15:11:35.832 [WARN ] [main] c.s.exception.GlobalExceptionHandler [f935510c] - 业务异常: /work-contacts - 无权访问该项�?
+2026-10-10 15:11:35.836 [INFO ] [main] c.s.i.RequestLoggingInterceptor [f935510c] - 请求完成: POST /work-contacts status=403 耗时=13ms
+2026-10-10 15:11:35.877 [WARN ] [main] c.s.exception.GlobalExceptionHandler [ff410c38] - 业务异常: /work-contacts - 没有附件访问权限
+2026-10-10 15:11:35.878 [INFO ] [main] c.s.i.RequestLoggingInterceptor [ff410c38] - 请求完成: POST /work-contacts status=403 耗时=39ms
+2026-10-10 15:11:35.887 [WARN ] [main] c.s.exception.GlobalExceptionHandler [8da5631e] - 业务异常: /files/access - 无权访问该项�?
+2026-10-10 15:11:35.888 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8da5631e] - 请求完成: GET /files/access status=403 耗时=10ms
+2026-10-10 15:11:35.907 [WARN ] [main] c.s.exception.GlobalExceptionHandler [8f1ab23c] - 业务异常: /project-documents - 无权访问该项�?
+2026-10-10 15:11:35.907 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8f1ab23c] - 请求完成: POST /project-documents status=403 耗时=16ms
+2026-10-10 15:11:35.914 [WARN ] [main] c.s.exception.GlobalExceptionHandler [18bce4b3] - 业务异常: /files/access - 无权访问该项�?
+2026-10-10 15:11:35.914 [INFO ] [main] c.s.i.RequestLoggingInterceptor [18bce4b3] - 请求完成: GET /files/access status=403 耗时=5ms
+2026-10-10 15:11:35.941 [INFO ] [main] c.s.i.RequestLoggingInterceptor [db8b30db] - 请求完成: POST /files/upload status=200 耗时=9ms
+2026-10-10 15:11:35.956 [INFO ] [main] c.s.i.RequestLoggingInterceptor [5804e754] - 请求完成: POST /supervision-diaries status=200 耗时=13ms
+2026-10-10 15:11:35.963 [WARN ] [main] c.s.exception.GlobalExceptionHandler [93489023] - 业务异常: /supervision-diaries/20/submit - 监理日记至少上传�?张现场照�?
+2026-10-10 15:11:35.964 [INFO ] [main] c.s.i.RequestLoggingInterceptor [93489023] - 请求完成: POST /supervision-diaries/20/submit status=400 耗时=5ms
+2026-10-10 15:11:35.999 [INFO ] [main] c.s.i.RequestLoggingInterceptor [4121f4c6] - 请求完成: POST /daily-inspections status=200 耗时=34ms
+2026-10-10 15:11:36.012 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8c02b2c7] - 请求完成: POST /daily-inspections/1/submit status=200 耗时=12ms
+2026-10-10 15:11:36.027 [INFO ] [main] c.s.i.RequestLoggingInterceptor [bc6657d1] - 请求完成: POST /daily-inspections/1/approve status=200 耗时=14ms
+2026-10-10 15:11:36.063 [INFO ] [main] c.s.i.RequestLoggingInterceptor [21dcdae6] - 请求完成: POST /sideline-inspections status=200 耗时=34ms
+2026-10-10 15:11:36.078 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8dc4805b] - 请求完成: POST /sideline-inspections/1/submit status=200 耗时=14ms
+2026-10-10 15:11:36.092 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8017900d] - 请求完成: POST /sideline-inspections/1/approve status=200 耗时=13ms
+2026-10-10 15:11:36.107 [WARN ] [main] c.s.exception.GlobalExceptionHandler [2d7c5930] - 业务异常: /sideline-inspections - 请�?�过提交或审核操作改变状�?
+2026-10-10 15:11:36.108 [INFO ] [main] c.s.i.RequestLoggingInterceptor [2d7c5930] - 请求完成: POST /sideline-inspections status=400 耗时=14ms
+2026-10-10 15:11:36.128 [INFO ] [main] c.s.i.RequestLoggingInterceptor [65a9886b] - 请求完成: POST /files/upload status=200 耗时=6ms
+2026-10-10 15:11:36.144 [INFO ] [main] c.s.i.RequestLoggingInterceptor [80b45cf4] - 请求完成: POST /safety-logs status=200 耗时=15ms
+2026-10-10 15:11:36.159 [INFO ] [main] c.s.i.RequestLoggingInterceptor [14d1c102] - 请求完成: POST /safety-logs/3/approve status=200 耗时=12ms
+2026-10-10 15:11:36.175 [INFO ] [main] c.s.i.RequestLoggingInterceptor [2ee6e289] - 请求完成: POST /files/upload status=200 耗时=9ms
+2026-10-10 15:11:36.198 [WARN ] [pool-7-thread-1] o.h.e.jdbc.spi.SqlExceptionHelper [] - SQL Error: 23505, SQLState: 23505
+2026-10-10 15:11:36.198 [ERROR] [pool-7-thread-1] o.h.e.jdbc.spi.SqlExceptionHelper [] - Unique index or primary key violation: "PUBLIC.CONSTRAINT_INDEX_4 ON PUBLIC.BIZ_SUPERVISION_DIARY(REQUEST_KEY NULLS FIRST) VALUES ( /* 21 */ '041b04adbfae2fcb67dc7f8689268b009f2f86ba551114cab4450f3da9929995' )"; SQL statement:
+insert into biz_supervision_diary (attachments,author_id,code,construction,create_time,diary_date,drawing_review,inspection,lock_version,management,morning_meeting,other_matters,photos,project_id,reject_reason,rejected_at,rejected_by,request_hash,request_key,reviewed_at,reviewer_id,source_record_id,status,submitted_at,submitted_by,temperature,update_time,version,weather,wind,id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default) [23505-224]
+2026-10-10 15:11:36.220 [INFO ] [main] c.s.i.RequestLoggingInterceptor [232fc82e] - 请求完成: POST /files/upload status=200 耗时=7ms
+2026-10-10 15:11:36.240 [INFO ] [main] c.s.i.RequestLoggingInterceptor [0108bca5] - 请求完成: POST /work-standard-configs status=200 耗时=17ms
+2026-10-10 15:11:36.245 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7e65654d] - 请求完成: GET /work-standard-configs/1 status=200 耗时=4ms
+2026-10-10 15:11:36.250 [WARN ] [main] c.s.exception.GlobalExceptionHandler [6e3d3003] - 业务异常: /work-standard-configs - 仅管理员可以维护工作标准配置
+2026-10-10 15:11:36.256 [INFO ] [main] c.s.i.RequestLoggingInterceptor [6e3d3003] - 请求完成: POST /work-standard-configs status=403 耗时=9ms
+2026-10-10 15:11:36.265 [WARN ] [main] c.s.exception.GlobalExceptionHandler [a166b1df] - 业务异常: /work-standard-configs/1 - 仅管理员可以维护工作标准配置
+2026-10-10 15:11:36.266 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a166b1df] - 请求完成: PUT /work-standard-configs/1 status=403 耗时=8ms
+2026-10-10 15:11:36.274 [WARN ] [main] c.s.exception.GlobalExceptionHandler [ce55d84f] - 业务异常: /work-standard-configs/1 - 仅管理员可以维护工作标准配置
+2026-10-10 15:11:36.275 [INFO ] [main] c.s.i.RequestLoggingInterceptor [ce55d84f] - 请求完成: DELETE /work-standard-configs/1 status=403 耗时=8ms
+2026-10-10 15:11:36.280 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c3997540] - 请求完成: GET /work-standard-configs/1 status=200 耗时=4ms
+2026-10-10 15:11:36.291 [INFO ] [main] c.s.i.RequestLoggingInterceptor [cbad21b4] - 请求完成: PUT /work-standard-configs/1 status=200 耗时=10ms
+2026-10-10 15:11:36.298 [WARN ] [main] c.s.exception.GlobalExceptionHandler [b8e62bcc] - 业务异常: /work-standard-configs/1 - 仅管理员可以维护工作标准配置
+2026-10-10 15:11:36.298 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b8e62bcc] - 请求完成: PUT /work-standard-configs/1 status=403 耗时=3ms
+2026-10-10 15:11:36.317 [INFO ] [main] c.s.i.RequestLoggingInterceptor [312e78f2] - 请求完成: DELETE /work-standard-configs/1 status=200 耗时=18ms
+2026-10-10 15:11:36.339 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9db4a300] - 请求完成: POST /files/upload status=200 耗时=10ms
+2026-10-10 15:11:36.362 [INFO ] [main] c.s.i.RequestLoggingInterceptor [5409a2fb] - 请求完成: POST /supervision-diaries status=200 耗时=21ms
+2026-10-10 15:11:36.378 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9d7b6f6b] - 请求完成: GET /files/access status=200 耗时=14ms
+2026-10-10 15:11:36.412 [WARN ] [main] c.s.exception.GlobalExceptionHandler [a6974959] - 业务异常: /files/access - 没有附件访问权限
+2026-10-10 15:11:36.430 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a6974959] - 请求完成: GET /files/access status=403 耗时=51ms
+2026-10-10 15:11:36.456 [WARN ] [main] c.s.exception.GlobalExceptionHandler [a2bf4b2d] - 业务异常: /files/access - 没有附件访问权限
+2026-10-10 15:11:36.457 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a2bf4b2d] - 请求完成: GET /files/access status=403 耗时=25ms
+2026-10-10 15:11:36.478 [INFO ] [main] c.s.i.RequestLoggingInterceptor [3ae304c9] - 请求完成: GET /files/access status=200 耗时=18ms
+2026-10-10 15:11:36.504 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a1219241] - 请求完成: POST /files/upload status=200 耗时=15ms
+2026-10-10 15:11:36.514 [WARN ] [main] c.s.exception.GlobalExceptionHandler [a23bfb7d] - 业务异常: /project-documents - 请�?�择资料�?属子�?
+2026-10-10 15:11:36.515 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a23bfb7d] - 请求完成: POST /project-documents status=400 耗时=8ms
+2026-10-10 15:11:36.532 [INFO ] [main] c.s.i.RequestLoggingInterceptor [fa7eac55] - 请求完成: POST /project-documents status=200 耗时=16ms
+2026-10-10 15:11:36.547 [WARN ] [main] c.s.exception.GlobalExceptionHandler [8e531636] - 业务异常: /project-documents - 资料子项不属于当前项目或已停�?
+2026-10-10 15:11:36.547 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8e531636] - 请求完成: POST /project-documents status=400 耗时=14ms
+2026-10-10 15:11:36.564 [INFO ] [main] c.s.i.RequestLoggingInterceptor [abbe378d] - 请求完成: GET /files/access status=200 耗时=16ms
+2026-10-10 15:11:36.578 [WARN ] [main] c.s.exception.GlobalExceptionHandler [25b47e62] - 业务异常: /project-documents/1 - 无权访问该项�?
+2026-10-10 15:11:36.579 [INFO ] [main] c.s.i.RequestLoggingInterceptor [25b47e62] - 请求完成: GET /project-documents/1 status=403 耗时=13ms
+2026-10-10 15:11:36.590 [WARN ] [main] c.s.exception.GlobalExceptionHandler [dfbebe7b] - 业务异常: /files/access - 无权访问该项�?
+2026-10-10 15:11:36.590 [INFO ] [main] c.s.i.RequestLoggingInterceptor [dfbebe7b] - 请求完成: GET /files/access status=403 耗时=10ms
+2026-10-10 15:11:36.595 [WARN ] [main] c.s.exception.GlobalExceptionHandler [eaf85e6e] - 业务异常: /field/summary - 无权访问该项�?
+2026-10-10 15:11:36.596 [INFO ] [main] c.s.i.RequestLoggingInterceptor [eaf85e6e] - 请求完成: GET /field/summary status=403 耗时=5ms
+2026-10-10 15:11:36.612 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8433e92a] - 请求完成: POST /files/upload status=200 耗时=6ms
+2026-10-10 15:11:36.624 [INFO ] [main] c.s.i.RequestLoggingInterceptor [1bfffadc] - 请求完成: POST /safety-logs status=200 耗时=11ms
+2026-10-10 15:11:36.639 [WARN ] [main] c.s.exception.GlobalExceptionHandler [24526e9a] - 业务异常: /safety-logs/4/approve - 只有已提交状态的安全日志才能审批
+2026-10-10 15:11:36.640 [INFO ] [main] c.s.i.RequestLoggingInterceptor [24526e9a] - 请求完成: POST /safety-logs/4/approve status=409 耗时=12ms
+2026-10-10 15:11:36.661 [INFO ] [main] c.s.i.RequestLoggingInterceptor [351b713c] - 请求完成: POST /files/upload status=200 耗时=6ms
+2026-10-10 15:11:36.700 [INFO ] [main] c.s.i.RequestLoggingInterceptor [20f07b6e] - 请求完成: GET /messages status=200 耗时=36ms
+2026-10-10 15:11:36.721 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c135d7ea] - 请求完成: GET /messages status=200 耗时=18ms
+2026-10-10 15:11:36.724 [WARN ] [main] c.s.exception.GlobalExceptionHandler [c36c9860] - 业务异常: /messages - 只能访问本人的消�?
+2026-10-10 15:11:36.726 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c36c9860] - 请求完成: GET /messages status=403 耗时=4ms
+2026-10-10 15:11:36.729 [WARN ] [main] c.s.exception.GlobalExceptionHandler [e0115b59] - 业务异常: /messages/10151 - 只能访问本人的消�?
+2026-10-10 15:11:36.729 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e0115b59] - 请求完成: GET /messages/10151 status=403 耗时=2ms
+2026-10-10 15:11:36.731 [WARN ] [main] c.s.exception.GlobalExceptionHandler [f9f907d8] - 业务异常: /messages/unread-count - 只能访问本人的消�?
+2026-10-10 15:11:36.732 [INFO ] [main] c.s.i.RequestLoggingInterceptor [f9f907d8] - 请求完成: GET /messages/unread-count status=403 耗时=3ms
+2026-10-10 15:11:36.737 [WARN ] [main] c.s.exception.GlobalExceptionHandler [64583c15] - 业务异常: /messages/10151/read - 只能访问本人的消�?
+2026-10-10 15:11:36.738 [INFO ] [main] c.s.i.RequestLoggingInterceptor [64583c15] - 请求完成: PUT /messages/10151/read status=403 耗时=6ms
+2026-10-10 15:11:36.742 [WARN ] [main] c.s.exception.GlobalExceptionHandler [5d38faa5] - 业务异常: /messages/10151 - 只能访问本人的消�?
+2026-10-10 15:11:36.743 [INFO ] [main] c.s.i.RequestLoggingInterceptor [5d38faa5] - 请求完成: DELETE /messages/10151 status=403 耗时=3ms
+2026-10-10 15:11:36.793 [INFO ] [main] c.s.i.RequestLoggingInterceptor [83a9ef6b] - 请求完成: GET /messages/unread-count status=200 耗时=49ms
+2026-10-10 15:11:36.806 [INFO ] [main] c.s.i.RequestLoggingInterceptor [f69a1f69] - 请求完成: PUT /messages/10151/read status=200 耗时=11ms
+2026-10-10 15:11:36.814 [INFO ] [main] c.s.i.RequestLoggingInterceptor [eb37f33e] - 请求完成: GET /messages/unread-count status=200 耗时=4ms
+2026-10-10 15:11:36.829 [INFO ] [main] c.s.i.RequestLoggingInterceptor [1ae383c2] - 请求完成: DELETE /messages/10151 status=200 耗时=15ms
+2026-10-10 15:11:36.848 [INFO ] [main] c.s.i.RequestLoggingInterceptor [dc12c762] - 请求完成: POST /files/upload status=200 耗时=5ms
+2026-10-10 15:11:36.863 [INFO ] [main] c.s.i.RequestLoggingInterceptor [543218f9] - 请求完成: PUT /users/10153/status status=401 耗时=1ms
+[INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 18.71 s -- in com.supervision.FieldWorkflowIntegrationTest
+[INFO] Running com.supervision.FileUploadControllerTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.142 s -- in com.supervision.FileUploadControllerTest
+[INFO] Running com.supervision.GlobalExceptionHandlerTest
+2026-10-10 15:11:37.039 [WARN ] [main] c.s.exception.GlobalExceptionHandler [] - 请求体格式错�?: /api/users - JSON parse error
+2026-10-10 15:11:37.042 [WARN ] [main] c.s.exception.GlobalExceptionHandler [] - 数据完整性异�?: /api/users - could not execute statement [Duplicate entry '13800000000' for key 'uk_phone']
+2026-10-10 15:11:37.045 [WARN ] [main] c.s.exception.GlobalExceptionHandler [] - 资源不存�?: /api/not-exist - /api/not-exist
+2026-10-10 15:11:37.046 [WARN ] [main] c.s.exception.GlobalExceptionHandler [] - 上传文件大小超出限制: /api/files/upload - Maximum upload size of 10485760 bytes exceeded
+2026-10-10 15:11:37.048 [WARN ] [main] c.s.exception.GlobalExceptionHandler [] - 参数类型错误: /api/projects/abc - 参数[projectId]: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; For input string: "abc"
+2026-10-10 15:11:37.060 [ERROR] [main] c.s.exception.GlobalExceptionHandler [] - 数据库访问异�?: /api/projects - query timeout after 30s
+org.springframework.dao.QueryTimeoutException: query timeout after 30s
+	at com.supervision.GlobalExceptionHandlerTest.testDataAccessException(GlobalExceptionHandlerTest.java:52)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:728)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:156)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:147)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:103)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:93)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:92)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:86)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:218)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:214)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:139)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+2026-10-10 15:11:37.077 [WARN ] [main] c.s.exception.GlobalExceptionHandler [] - 缺少必填参数: /api/roles - 参数[userId]
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.044 s -- in com.supervision.GlobalExceptionHandlerTest
+[INFO] Running com.supervision.MeetingMinutesServiceTest
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.384 s -- in com.supervision.MeetingMinutesServiceTest
+[INFO] Running com.supervision.PageResultTest
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 s -- in com.supervision.PageResultTest
+[INFO] Running com.supervision.PageUtilsTest
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s -- in com.supervision.PageUtilsTest
+[INFO] Running com.supervision.ProductionSafetyValidatorTest
+2026-10-10 15:11:37.581 [WARN ] [main] o.s.c.a.AnnotationConfigApplicationContext [] - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'productionSafetyValidator': Invocation of init method failed
+[INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.157 s -- in com.supervision.ProductionSafetyValidatorTest
+[INFO] Running com.supervision.RoleCheckInterceptorTest
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.025 s -- in com.supervision.RoleCheckInterceptorTest
+[INFO] Running com.supervision.SafetyLogServiceTest
+[INFO] Tests run: 21, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.236 s -- in com.supervision.SafetyLogServiceTest
+[INFO] Running com.supervision.SidelineInspectionServiceTest
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.152 s -- in com.supervision.SidelineInspectionServiceTest
+[INFO] Running com.supervision.SupervisionDiaryServiceTest
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.168 s -- in com.supervision.SupervisionDiaryServiceTest
+[INFO] Running com.supervision.SupervisionLogServiceTest
+[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.240 s -- in com.supervision.SupervisionLogServiceTest
+[INFO] Running com.supervision.SupervisionMonthlyReportServiceTest
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.180 s -- in com.supervision.SupervisionMonthlyReportServiceTest
+[INFO] Running com.supervision.SupervisionNoticeServiceTest
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.168 s -- in com.supervision.SupervisionNoticeServiceTest
+[INFO] Running com.supervision.UserControllerRoleCheckTest
+2026-10-10 15:11:39.049 [INFO ] [main] o.s.mock.web.MockServletContext [] - Initializing Spring TestDispatcherServlet ''
+2026-10-10 15:11:39.049 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Initializing Servlet ''
+2026-10-10 15:11:39.050 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Completed initialization in 1 ms
+2026-10-10 15:11:39.073 [INFO ] [main] o.s.mock.web.MockServletContext [] - Initializing Spring TestDispatcherServlet ''
+2026-10-10 15:11:39.073 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Initializing Servlet ''
+2026-10-10 15:11:39.073 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Completed initialization in 0 ms
+2026-10-10 15:11:39.112 [INFO ] [main] o.s.mock.web.MockServletContext [] - Initializing Spring TestDispatcherServlet ''
+2026-10-10 15:11:39.112 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Initializing Servlet ''
+2026-10-10 15:11:39.112 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Completed initialization in 0 ms
+2026-10-10 15:11:39.131 [INFO ] [main] o.s.mock.web.MockServletContext [] - Initializing Spring TestDispatcherServlet ''
+2026-10-10 15:11:39.131 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Initializing Servlet ''
+2026-10-10 15:11:39.132 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Completed initialization in 1 ms
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.242 s -- in com.supervision.UserControllerRoleCheckTest
+[INFO] Running com.supervision.UserServiceTest
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.081 s -- in com.supervision.UserServiceTest
+[INFO] Running com.supervision.WorkContactServiceTest
+[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.198 s -- in com.supervision.WorkContactServiceTest
+[INFO] Running com.supervision.WorkStandardConfigServiceTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.229 s -- in com.supervision.WorkStandardConfigServiceTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 246, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  28.394 s
+[INFO] Finished at: 2026-10-10T15:11:40+08:00
+[INFO] ------------------------------------------------------------------------
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended

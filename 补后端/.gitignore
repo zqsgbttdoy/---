@@ -1,0 +1,5 @@
+# 当前目录尚未纳入 git 管理，本文件为未来纳管预留：忽略构建产物、依赖与日志
+dist/
+软著申请材料/generator/node_modules/
+logs/
+*.log

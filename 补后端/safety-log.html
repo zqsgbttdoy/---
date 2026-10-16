@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监理现场管理系统 - 监理安全日志</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background: #F0F5FF; color: #1F2937; display: flex; min-height: 100vh; }
+        .sidebar { width: 240px; background: linear-gradient(180deg, #1E3A5F 0%, #0F2440 100%); color: #fff; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; overflow-y: auto; }
+        .sidebar-logo { padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo h2 { font-size: 16px; font-weight: 600; letter-spacing: 1px; }
+        .sidebar-logo p { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+        .menu-group { padding: 8px 0; }
+        .menu-group-title { padding: 10px 20px 6px; font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
+        .menu-item { display: flex; align-items: center; padding: 10px 20px; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; transition: all 0.2s; cursor: pointer; }
+        .menu-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+        .menu-item.active { background: rgba(37,99,235,0.3); color: #fff; border-right: 3px solid #2563EB; }
+        .menu-item .icon { width: 20px; margin-right: 10px; text-align: center; font-size: 14px; }
+        .main { margin-left: 240px; flex: 1; }
+        .header { background: #fff; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 50; }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .header-left h3 { font-size: 15px; font-weight: 600; color: #1E3A5F; }
+        .breadcrumb { font-size: 12px; color: #6B7280; }
+        .breadcrumb a { color: #2563EB; text-decoration: none; }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .notification { position: relative; cursor: pointer; font-size: 18px; }
+        .badge { position: absolute; top: -6px; right: -6px; background: #EF4444; color: #fff; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .user-info { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #2563EB; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; }
+        .user-name { font-size: 13px; color: #374151; }
+        .content { padding: 24px; }
+        .toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+        .toolbar-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .search-box { display: flex; align-items: center; background: #fff; border: 1px solid #E5E7EB; border-radius: 6px; padding: 0 12px; height: 36px; }
+        .search-box input { border: none; outline: none; font-size: 13px; width: 200px; background: transparent; }
+        .search-box .search-icon { color: #9CA3AF; margin-right: 8px; }
+        .filter-select { height: 36px; border: 1px solid #E5E7EB; border-radius: 6px; padding: 0 12px; font-size: 13px; color: #374151; background: #fff; outline: none; cursor: pointer; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; border: none; transition: all 0.2s; }
+        .btn-primary { background: #2563EB; color: #fff; }
+        .btn-primary:hover { background: #1D4ED8; }
+        .btn-danger { background: #EF4444; color: #fff; }
+        .btn-outline { background: #fff; color: #374151; border: 1px solid #E5E7EB; }
+        .btn-outline:hover { background: #F9FAFB; }
+        .btn-sm { padding: 4px 10px; font-size: 12px; }
+        .btn-success { background: #10B981; color: #fff; }
+        .table-container { background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; }
+        thead { background: #F8FAFC; }
+        th { padding: 12px 16px; text-align: left; font-size: 12px; font-weight: 600; color: #6B7280; border-bottom: 1px solid #E5E7EB; white-space: nowrap; }
+        td { padding: 12px 16px; font-size: 13px; color: #374151; border-bottom: 1px solid #F3F4F6; }
+        tr:hover td { background: #F8FAFC; }
+        .status-tag { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; }
+        .status-draft { background: #F3F4F6; color: #6B7280; }
+        .status-pending { background: #DBEAFE; color: #2563EB; }
+        .status-approved { background: #D1FAE5; color: #059669; }
+        .status-rejected { background: #FEE2E2; color: #DC2626; }
+
+        .role-toggle { display: inline-flex; align-items: center; gap: 8px; margin-left: 16px; }
+        .role-toggle .role-label { font-size: 12px; color: #6B7280; }
+        .role-toggle .role-btn { padding: 4px 14px; border: 1px solid #E5E7EB; border-radius: 6px; font-size: 12px; cursor: pointer; background: #fff; color: #374151; transition: all 0.2s; }
+        .role-toggle .role-btn.active { background: #2563EB; color: #fff; border-color: #2563EB; }
+        .role-toggle .role-btn:hover:not(.active) { background: #F3F4F6; }
+        .abnormal-row td { background: #FFFBEB !important; }
+        .abnormal-row:hover td { background: #FEF3C7 !important; }
+        .filter-tip { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: #FEF3C7; border: 1px solid #FCD34D; border-radius: 6px; margin-bottom: 12px; font-size: 13px; color: #92400E; }
+        .filter-tip .close-tip { cursor: pointer; color: #92400E; font-size: 16px; }
+        .actions { display: flex; gap: 8px; }
+        .pagination { display: flex; align-items: center; justify-content: space-between; padding: 16px; }
+        .pagination-info { font-size: 12px; color: #6B7280; }
+        .pagination-btns { display: flex; gap: 4px; }
+        .page-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 1px solid #E5E7EB; border-radius: 6px; font-size: 12px; cursor: pointer; background: #fff; color: #374151; }
+        .page-btn.active { background: #2563EB; color: #fff; border-color: #2563EB; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+        .modal-overlay.show { display: flex; }
+        .modal { background: #fff; border-radius: 12px; width: 800px; max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+        .modal-header { padding: 16px 24px 0; border-bottom: none; display: flex; flex-direction: column; position: sticky; top: 0; background: #fff; z-index: 2; border-radius: 12px 12px 0 0; }
+        .modal-header h3 { font-size: 16px; font-weight: 600; color: #1E3A5F; }
+        .modal-close { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer; font-size: 18px; color: #6B7280; border: none; background: none; }
+        .modal-close:hover { background: #F3F4F6; }
+        .modal-body { padding: 20px 24px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid #E5E7EB; display: flex; justify-content: flex-end; gap: 12px; position: sticky; bottom: 0; background: #fff; border-radius: 0 0 12px 12px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px; }
+        .form-group label .required { color: #EF4444; }
+        .form-control { width: 100%; height: 36px; border: 1px solid #E5E7EB; border-radius: 6px; padding: 0 12px; font-size: 13px; outline: none; transition: border-color 0.2s; }
+        .form-control:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        textarea.form-control { height: 100px; padding: 8px 12px; resize: vertical; }
+        .confirm-modal .modal { width: 400px; }
+        .confirm-icon { text-align: center; font-size: 48px; margin-bottom: 16px; }
+        .confirm-text { text-align: center; font-size: 14px; color: #374151; margin-bottom: 8px; }
+        .confirm-sub { text-align: center; font-size: 12px; color: #9CA3AF; }
+        .section-title { font-size: 14px; font-weight: 600; color: #1E3A5F; margin: 20px 0 12px; padding-top: 16px; border-top: 1px solid #F3F4F6; }
+        .section-title:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+        .section-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: #2563EB; color: #fff; font-size: 11px; font-weight: 600; margin-right: 8px; }
+        .field-hint { font-size: 11px; color: #9CA3AF; margin-top: 4px; line-height: 1.6; }
+        .create-modal .modal { width: 900px; max-height: 90vh; display: flex; flex-direction: column; }
+        .create-modal .modal-body { padding: 20px 24px; display: flex; gap: 0; overflow: hidden; flex: 1; min-height: 0; }
+        .form-main { flex: 1; min-width: 0; overflow-y: auto; padding-right: 20px; }
+        .form-main::-webkit-scrollbar { width: 4px; }
+        .form-main::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 2px; }
+        .create-modal .form-group { margin-bottom: 12px; }
+        .create-modal textarea.form-control { min-height: 80px; }
+        .create-modal .section-title { margin: 14px 0 10px; padding-top: 14px; border-top: 2px solid #E5E7EB; font-size: 14px; }
+        .create-modal .section-title:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .info-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+        .info-grid .full-width { grid-column: 1 / -1; }
+        .upload-section { margin-top: 4px; }
+        .upload-section h5 { font-size: 13px; font-weight: 600; color: #1E3A5F; margin-bottom: 8px; }
+        .photo-grid { display: flex; gap: 8px; flex-wrap: wrap; }
+        .photo-item { width: 80px; height: 80px; border: 1px dashed #D1D5DB; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #9CA3AF; font-size: 24px; cursor: pointer; position: relative; overflow: hidden; flex-shrink: 0; }
+        .photo-item:hover { border-color: #2563EB; color: #2563EB; }
+        .photo-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 5px; }
+        .photo-item .remove-photo { position: absolute; top: 2px; right: 2px; width: 18px; height: 18px; border-radius: 50%; background: rgba(239,68,68,0.9); color: #fff; font-size: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .attachment-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; background: #F8FAFC; border: 1px solid #E5E7EB; border-radius: 8px; margin-bottom: 8px; }
+        .attachment-item .file-icon { width: 36px; height: 36px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+        .attachment-item .file-icon.pdf { background: #FEE2E2; color: #DC2626; }
+        .attachment-item .file-icon.doc { background: #DBEAFE; color: #2563EB; }
+        .attachment-item .file-icon.xls { background: #D1FAE5; color: #059669; }
+        .attachment-item .file-icon.img { background: #FEF3C7; color: #D97706; }
+        .attachment-item .file-name { font-size: 12px; color: #374151; word-break: break-all; }
+        .attachment-item .remove-att { cursor: pointer; color: #9CA3AF; font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+        .attachment-item .remove-att:hover { color: #EF4444; }
+        .upload-btn { display: inline-flex; align-items: center; gap: 4px; padding: 6px 14px; border: 1px dashed #D1D5DB; border-radius: 6px; font-size: 12px; color: #6B7280; cursor: pointer; transition: all 0.2s; background: transparent; }
+        .upload-btn:hover { border-color: #2563EB; color: #2563EB; }
+        .dir-path { font-size: 12px; color: #6B7280; margin-top: 4px; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+        .dir-path .dir-label { color: #9CA3AF; }
+        .dir-path .dir-label.set { color: #059669; }
+        .dir-path .change-dir { color: #2563EB; cursor: pointer; text-decoration: underline; margin-left: 4px; }
+        .pending-badge { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 10px; background: #FEF3C7; color: #D97706; margin-left: 6px; }
+        .dir-tree-modal .modal { width: 560px; }
+        .dir-tree-container { max-height: 380px; overflow-y: auto; border: 1px solid #E5E7EB; border-radius: 8px; padding: 8px; background: #FAFBFC; }
+        .dir-tree-node { padding: 7px 12px; border-radius: 5px; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 6px; transition: background 0.15s; user-select: none; }
+        .dir-tree-node:hover { background: #EFF6FF; }
+        .dir-tree-node.selected { background: #DBEAFE; color: #1D4ED8; font-weight: 500; }
+        .dir-tree-node .expand { font-size: 10px; color: #9CA3AF; width: 16px; cursor: pointer; flex-shrink: 0; }
+        .dir-tree-node .expand:hover { color: #2563EB; }
+        .dir-tree-node .node-icon { font-size: 14px; }
+        .dir-tree-node input[type="checkbox"] { accent-color: #2563EB; width: 15px; height: 15px; cursor: pointer; flex-shrink: 0; }
+        .dir-tree-node.parent-node input[type="checkbox"] { accent-color: #9CA3AF; cursor: default; opacity: 0.5; }
+        .dir-tree-node.parent-node { color: #6B7280; cursor: default; }
+        .dir-tree-node.parent-node:hover { background: transparent; }
+        .dir-tree-node.leaf-node { cursor: pointer; }
+        .dir-tree-node.leaf-node:hover { background: #EFF6FF; }
+        .dir-selected-list { margin-top: 12px; padding: 10px; background: #F0F5FF; border: 1px solid #BFDBFE; border-radius: 6px; min-height: 36px; }
+        .dir-selected-list .selected-title { font-size: 12px; font-weight: 600; color: #1E3A5F; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; }
+        .dir-selected-list .selected-title .count { font-weight: 400; color: #6B7280; }
+        .dir-selected-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .dir-selected-tag { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 12px; font-size: 11px; background: #DBEAFE; color: #1D4ED8; }
+        .dir-selected-tag .remove-dir-tag { cursor: pointer; font-size: 12px; color: #6B7280; margin-left: 2px; }
+        .dir-selected-tag .remove-dir-tag:hover { color: #DC2626; }
+        .dir-selected-empty { font-size: 12px; color: #9CA3AF; }
+        .att-dir-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+        .att-dir-tag { display: inline-flex; align-items: center; padding: 1px 8px; border-radius: 10px; font-size: 10px; background: #D1FAE5; color: #059669; }
+        .dir-tree-children { padding-left: 20px; overflow: hidden; }
+        .dir-tree-children.collapsed { display: none; }
+        .dir-breadcrumb { font-size: 12px; color: #6B7280; margin-bottom: 12px; padding: 8px 12px; background: #F0F5FF; border-radius: 6px; display: flex; align-items: center; gap: 4px; }
+        .dir-breadcrumb .dir-sep { color: #D1D5DB; }
+        .dir-breadcrumb .dir-current { color: #1E3A5F; font-weight: 500; }
+        .form-row-compact { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-row-3-compact { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+        .readonly-field { height: 36px; border: 1px solid #E5E7EB; border-radius: 6px; padding: 0 12px; font-size: 13px; background: #F9FAFB; color: #374151; display: flex; align-items: center; cursor: default; }
+        .progress-indicator { display: flex; align-items: center; gap: 4px; margin-bottom: 20px; padding: 12px 16px; background: #F8FAFC; border-radius: 8px; }
+        .progress-step { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #9CA3AF; }
+        .progress-step.active { color: #2563EB; font-weight: 500; }
+        .progress-step.done { color: #10B981; }
+        .progress-step .step-dot { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #D1D5DB; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; }
+        .progress-step.active .step-dot { border-color: #2563EB; background: #2563EB; color: #fff; }
+        .progress-step.done .step-dot { border-color: #10B981; background: #10B981; color: #fff; }
+        .progress-connector { width: 24px; height: 2px; background: #E5E7EB; }
+        .progress-connector.done { background: #10B981; }
+        .version-tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #E0E7FF; color: #4338CA; }
+        .version-history-section { margin-top: 16px; border-top: 1px solid #E5E7EB; padding-top: 16px; }
+        .version-history-title { font-size: 14px; font-weight: 600; color: #1E3A5F; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+        .version-timeline { position: relative; padding-left: 24px; }
+        .version-timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: #E5E7EB; }
+        .version-item { position: relative; margin-bottom: 16px; padding: 12px; border-radius: 8px; border: 1px solid #E5E7EB; background: #F9FAFB; }
+        .version-item::before { content: ''; position: absolute; left: -20px; top: 14px; width: 12px; height: 12px; border-radius: 50%; background: #9CA3AF; border: 2px solid #fff; }
+        .version-item.v-approved::before { background: #10B981; }
+        .version-item.v-rejected::before { background: #EF4444; }
+        .version-item.v-pending::before { background: #F59E0B; }
+        .version-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+        .version-label { font-size: 13px; font-weight: 600; color: #1F2937; }
+        .version-status { font-size: 11px; padding: 2px 8px; border-radius: 10px; }
+        .version-status.vs-approved { background: #D1FAE5; color: #059669; }
+        .version-status.vs-rejected { background: #FEE2E2; color: #DC2626; }
+        .version-status.vs-pending { background: #FEF3C7; color: #D97706; }
+        .version-meta { font-size: 11px; color: #9CA3AF; margin-bottom: 6px; }
+        .version-content { font-size: 12px; color: #374151; line-height: 1.6; background: #fff; padding: 8px; border-radius: 4px; border: 1px solid #F3F4F6; }
+        .version-reject-reason { margin-top: 8px; padding: 8px; background: #FEE2E2; border-radius: 4px; font-size: 12px; color: #991B1B; }
+        .version-reject-reason .reason-label { font-weight: 600; margin-bottom: 4px; }
+        .resubmit-area { background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 8px; padding: 16px; margin-top: 16px; }
+        .resubmit-title { font-size: 13px; font-weight: 600; color: #1E40AF; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+        .modal-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0; }
+        .modal-header-row + .version-tabs { margin-top: 12px; }
+        .modal-header:not(:has(.version-tabs)) { border-bottom: 1px solid #E5E7EB; padding-bottom: 16px; }
+        .version-tabs {
+            display: flex; gap: 0; margin: 0 -24px; padding: 0 24px;
+            background: #fff; border-radius: 0; border: none;
+            border-bottom: 1px solid #E5E7EB; position: relative; flex-wrap: nowrap;
+        }
+        .version-tab {
+            padding: 8px 14px; font-size: 12px; font-weight: 500; cursor: pointer;
+            border: none; background: transparent; color: #9CA3AF;
+            border-bottom: 2px solid transparent; margin-bottom: -1px;
+            transition: color 0.2s ease, background 0.2s ease;
+            display: inline-flex; align-items: center; gap: 5px;
+            white-space: nowrap; position: relative; flex-shrink: 0;
+        }
+        .version-tab:hover { color: #374151; background: #F8FAFC; }
+        .version-tab.active { color: #2563EB; border-bottom-color: #2563EB; font-weight: 600; }
+        .tab-badge {
+            display: inline-block; padding: 1px 6px; border-radius: 8px;
+            font-size: 10px; font-weight: 500; line-height: 1.4;
+        }
+        .tab-badge.rejected { background: #FEE2E2; color: #DC2626; }
+        .tab-badge.editing { background: #DBEAFE; color: #2563EB; }
+        .tab-badge.readonly { background: #D1FAE5; color: #059669; }
+        .tab-badge.pending { background: #FEF3C7; color: #D97706; }
+        .tab-indicator {
+            position: absolute; bottom: 0; height: 2px; background: #2563EB;
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 1px;
+        }
+        .version-panel { display: none; animation: versionSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        @keyframes versionSlideIn {
+            from { opacity: 0; transform: translateX(6px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .version-panel.active { display: block; }
+        .version-content-card {
+            background: #fff; border: 1px solid #E5E7EB; border-radius: 10px;
+            overflow: hidden; margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        }
+        .version-card-header {
+            padding: 12px 16px; display: flex; align-items: center;
+            justify-content: space-between; border-bottom: 1px solid #F3F4F6;
+            background: linear-gradient(135deg, #F8FAFC 0%, #F0F5FF 100%);
+        }
+        .vch-left { display: flex; align-items: center; gap: 8px; }
+        .vch-version { font-size: 15px; font-weight: 700; color: #1E3A5F; }
+        .vch-status { font-size: 11px; padding: 3px 10px; border-radius: 12px; font-weight: 600; }
+        .vch-status.approved { background: #D1FAE5; color: #059669; }
+        .vch-status.rejected { background: #FEE2E2; color: #DC2626; }
+        .vch-status.pending { background: #FEF3C7; color: #D97706; }
+        .vch-meta { font-size: 11px; color: #9CA3AF; }
+        .version-card-body { padding: 14px 16px; }
+        .version-card-reject {
+            margin: 0 16px 12px; padding: 12px 14px;
+            background: linear-gradient(135deg, #FEF2F2 0%, #FFF5F5 100%);
+            border: 1px solid #FECACA; border-radius: 8px;
+        }
+        .vcr-title { font-size: 13px; font-weight: 600; color: #DC2626; display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+        .vcr-reason { font-size: 12px; color: #991B1B; line-height: 1.7; padding: 8px 12px; background: #fff; border-radius: 6px; border-left: 3px solid #EF4444; }
+        .vcr-meta { font-size: 11px; color: #B91C1C; margin-top: 6px; }
+        .vc-field-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+        }
+        .vc-field-item { display: flex; flex-direction: column; gap: 2px; }
+        .vc-field-item.full-width { grid-column: 1 / -1; }
+        .vc-field-label { font-size: 11px; color: #9CA3AF; font-weight: 500; }
+        .vc-field-value {
+            font-size: 13px; color: #1F2937; line-height: 1.6;
+            padding: 6px 10px; background: #F9FAFB; border-radius: 6px;
+            border: 1px solid #F3F4F6; min-height: 18px;
+        }
+        .vc-field-value.empty { color: #9CA3AF; font-style: italic; }
+        .vc-section-divider {
+            grid-column: 1 / -1; padding: 8px 0 4px;
+            border-top: 1px solid #F3F4F6; margin-top: 2px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .vc-sec-num {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 18px; height: 18px; border-radius: 50%; background: #2563EB;
+            color: #fff; font-size: 10px; font-weight: 600;
+        }
+        .vc-sec-title { font-size: 12px; font-weight: 600; color: #1E3A5F; }
+        .v2-edit-hint {
+            background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+            border: 1px solid #93C5FD; border-radius: 8px; padding: 10px 14px;
+            margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+            font-size: 12px; color: #1E40AF;
+            box-shadow: 0 1px 4px rgba(37,99,235,0.06);
+        }
+        .v2-edit-hint .hint-icon { font-size: 14px; }
+        .vc-photo-grid { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+        .vc-photo-item { width: 100px; height: 100px; border-radius: 8px; overflow: hidden; border: 1px solid #E5E7EB; position: relative; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; flex-shrink: 0; }
+        .vc-photo-item:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .vc-photo-item img { width: 100%; height: 100%; object-fit: cover; }
+        .vc-photo-item img.error { display: none; }
+        .vc-photo-item .vc-photo-fallback { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: none; background: #F3F4F6; align-items: center; justify-content: center; flex-direction: column; gap: 2px; font-size: 9px; color: #6B7280; padding: 4px; text-align: center; word-break: break-all; }
+        .vc-photo-item img.error + .vc-photo-fallback { display: flex; }
+        .vc-photo-item .vc-photo-name { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.7)); color: #fff; font-size: 9px; padding: 12px 4px 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .vc-photo-item .vc-photo-time { position: absolute; top: 2px; left: 2px; background: rgba(0,0,0,0.6); color: #fff; font-size: 7px; padding: 1px 4px; border-radius: 3px; }
+        .vc-photo-empty { color: #9CA3AF; font-style: italic; font-size: 12px; }
+        .vc-photo-viewer { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 10000; display: flex; align-items: center; justify-content: center; cursor: pointer; animation: fadeIn 0.2s; }
+        .vc-photo-viewer img { max-width: 90vw; max-height: 85vh; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+        .vc-photo-viewer .vc-viewer-close { position: absolute; top: 20px; right: 20px; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.2); color: #fff; font-size: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .vc-photo-viewer .vc-viewer-name { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: #fff; font-size: 13px; background: rgba(0,0,0,0.5); padding: 6px 16px; border-radius: 20px; }
+        .vc-attachment-list { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+        .vc-attachment-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 6px; font-size: 12px; }
+        .vc-att-icon { font-size: 16px; flex-shrink: 0; }
+        .vc-att-name { flex: 1; color: #1F2937; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .vc-att-size { color: #6B7280; flex-shrink: 0; }
+        .vc-att-time { color: #9CA3AF; font-size: 11px; flex-shrink: 0; }
+        .existing-photos-section { margin-bottom: 12px; }
+        .existing-photos-label { display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: #6B7280; margin-bottom: 8px; font-weight: 500; }
+        .existing-photos-label .lock-icon { font-size: 12px; }
+        .existing-photo-item { width: 80px; height: 80px; border-radius: 8px; overflow: hidden; border: 2px solid #D1D5DB; position: relative; cursor: pointer; display: inline-block; margin-right: 6px; }
+        .existing-photo-item img { width: 100%; height: 100%; object-fit: cover; }
+        .existing-photo-lock { position: absolute; top: 2px; right: 2px; font-size: 10px; background: rgba(0,0,0,0.5); border-radius: 4px; padding: 1px 3px; }
+        .existing-photo-time { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: #fff; font-size: 7px; padding: 1px 4px; text-align: center; }
+        .new-photos-section { margin-bottom: 8px; }
+        .new-photos-label { font-size: 12px; color: #2563EB; font-weight: 500; margin-bottom: 8px; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @media screen and (max-width: 1024px) {
+            .sidebar { width: 200px; }
+            .main { margin-left: 200px; }
+            .modal { width: 90% !important; max-width: 700px; }
+        }
+        @media screen and (max-width: 768px) {
+            .sidebar { width: 60px; overflow: visible; }
+            .sidebar .menu-group-title, .sidebar-logo p, .sidebar-logo h2, .menu-item .icon + * { display: none; }
+            .sidebar-logo { padding: 12px 8px; }
+            .menu-item { padding: 10px; justify-content: center; }
+            .menu-item .icon { margin-right: 0; }
+            .menu-item.active { border-right: none; border-left: 3px solid #2563EB; }
+            .main { margin-left: 60px; }
+            .header { padding: 0 12px; }
+            .content { padding: 12px; }
+            .toolbar { flex-direction: column; align-items: stretch; }
+            .toolbar-left { flex-wrap: wrap; }
+            .filter-select, .search-box input { width: 100% !important; min-width: 0; }
+            .modal { width: 95% !important; max-height: 90vh; }
+            .modal-body { padding: 16px; max-height: calc(90vh - 130px); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+            table { font-size: 12px; }
+            th, td { padding: 8px; }
+            .version-timeline { padding-left: 16px; }
+            .version-item { padding: 8px; }
+            .version-content { font-size: 11px; }
+            .create-modal .form-main { padding-right: 0; }
+        }
+        @media screen and (max-width: 480px) {
+            .sidebar { display: none; }
+            .main { margin-left: 0; }
+            .header { height: 48px; }
+            .header-left h3 { font-size: 14px; }
+            .breadcrumb { display: none; }
+            .btn { padding: 6px 10px; font-size: 12px; }
+            .actions { flex-wrap: wrap; gap: 4px; }
+            .version-item { margin-bottom: 10px; }
+            .version-tabs { padding: 0 16px; margin: 0 -16px; }
+        }
+        .btn, .menu-item, .page-btn, .filter-select { -webkit-tap-highlight-color: transparent; }
+        .btn:active { transform: scale(0.97); }
+        .version-item { transition: box-shadow 0.2s; }
+        .version-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        html { scroll-behavior: smooth; }
+        .table-container { -webkit-overflow-scrolling: touch; }
+        .modal-overlay { -webkit-overflow-scrolling: touch; }
+    </style>
+    <script src="assets/app.js"></script>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/responsive.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-logo"><h2>监理现场管理系统</h2><p>Supervision Site Management</p></div>
+        <div class="menu-group"><a class="menu-item" href="index.html"><span class="icon">📊</span> 仪表盘</a></div>
+        <div class="menu-group"><div class="menu-group-title">项目管理</div><a class="menu-item" href="project-ledger.html"><span class="icon">📁</span> 项目台账</a></div>
+        <div class="menu-group">
+            <div class="menu-group-title">监理现场工作</div>
+            <a class="menu-item" href="daily-inspection.html"><span class="icon">🔍</span> 日常巡检</a>
+            <a class="menu-item" href="sideline-inspection.html"><span class="icon">👁️</span> 旁站</a>
+            <a class="menu-item" href="supervision-notice.html"><span class="icon">📋</span> 监理通知单</a>
+            <a class="menu-item" href="work-contact.html"><span class="icon">✉️</span> 工作联系单</a>
+            <a class="menu-item" href="supervision-diary.html"><span class="icon">📝</span> 监理日记</a>
+            <a class="menu-item" href="supervision-log.html"><span class="icon">📄</span> 监理日志</a>
+            <a class="menu-item active" href="safety-log.html"><span class="icon">🛡️</span> 监理安全日志</a>
+            <a class="menu-item" href="meeting-minutes.html"><span class="icon">📅</span> 会议纪要</a>
+            <a class="menu-item" href="supervision-monthly-report.html"><span class="icon">📊</span> 监理月报</a>
+        </div>
+        <div class="menu-group"><div class="menu-group-title">项目资料</div><a class="menu-item" href="sub-item-database.html"><span class="icon">🗄️</span> 工程资料目录设置</a><a class="menu-item" href="project-data-upload.html"><span class="icon">📤</span> 工程资料上传</a></div>
+        <div class="menu-group"><div class="menu-group-title">数据统计</div><a class="menu-item" href="diary-statistics.html"><span class="icon">📈</span> 日记统计</a><a class="menu-item" href="diary-report.html"><span class="icon">📑</span> 日记报表</a><a class="menu-item" href="log-statistics.html"><span class="icon">📊</span> 日志统计</a><a class="menu-item" href="safety-log-statistics.html"><span class="icon">🛡️</span> 安全日志统计</a></div>
+        <div class="menu-group"><div class="menu-group-title">团队管理</div><a class="menu-item" href="department-management.html"><span class="icon">🏢</span> 部门管理</a><a class="menu-item" href="personnel-management.html"><span class="icon">👥</span> 人员管理</a><a class="menu-item" href="permission-settings.html"><span class="icon">🔐</span> 权限设置</a><a class="menu-item" href="process-management.html"><span class="icon">🔄</span> 流程管理</a></div>
+        <div class="menu-group"><div class="menu-group-title">系统设置</div><a class="menu-item" href="operation-log.html"><span class="icon">📜</span> 操作日志</a><a class="menu-item" href="message-center.html"><span class="icon">🔔</span> 消息中心</a><a class="menu-item" href="work-standard-config.html"><span class="icon">⚙️</span> 工作标准配置</a></div>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <div class="header-left"><h3>监理安全日志</h3><span class="breadcrumb"><a href="index.html">首页</a> / 监理现场工作 / 监理安全日志</span></div>
+            <div class="header-right"><div class="notification">🔔<span class="badge">3</span></div><div class="user-info"><div class="user-avatar">张</div><span class="user-name">张监理</span></div></div>
+        </div>
+
+        <div class="content">
+            <div class="toolbar">
+                <div class="toolbar-left">
+                    <div class="role-toggle">
+                        <span class="role-label">当前视角：</span>
+                        <button class="role-btn active" onclick="switchRole('initiator')">发起人</button>
+                        <button class="role-btn" onclick="switchRole('reviewer')">审核人</button>
+                    </div>
+                    <div class="search-box"><span class="search-icon">🔍</span><input type="text" placeholder="搜索安全日志..." id="searchInput"><button class="btn btn-primary btn-sm" onclick="searchData()" style="margin-left:8px;height:32px;">搜索</button></div>
+                    <select class="filter-select" id="projectFilter"><option value="">全部项目</option><option>城东综合体项目</option><option>滨河路改造工程</option><option>科技产业园二期</option></select>
+                    <select class="filter-select" id="statusFilter"><option value="">全部状态</option><option value="draft">草稿</option><option value="pending">待审核</option><option value="approved">审核通过</option><option value="rejected">驳回</option></select>
+                    <button class="btn btn-primary btn-sm" onclick="filterData()" style="height:36px;">确认</button>
+                    <button class="btn btn-outline btn-sm" onclick="resetFilters()" style="height:36px;">重置</button>
+                </div>
+                <div style="display:flex;gap:8px;">
+                    <button class="btn btn-outline" onclick="exportData()">📥 导出</button>
+                    <button class="btn btn-primary" onclick="openCreateModal()">＋ 新建安全日志</button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>日志编号</th>
+                            <th>工程名称</th>
+                            <th>日期</th>
+                            <th>填写人</th>
+                            <th>审核人</th>
+                            <th>状态</th>
+                            <th>当前版本</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-status="approved">
+                            <td style="font-weight:500;">AQ-2026-015</td>
+                            <td>城东综合体项目</td>
+                            <td>2026-04-30</td>
+                            <td>张监理</td>
+                            <td>赵总监</td>
+                            <td><span class="status-tag status-approved">审核通过</span></td>
+                            <td class="action-cell"></td>
+                        </tr>
+                        <tr data-status="pending">
+                            <td style="font-weight:500;">AQ-2026-014</td>
+                            <td>城东综合体项目</td>
+                            <td>2026-04-29</td>
+                            <td>张监理</td>
+                            <td>赵总监</td>
+                            <td><span class="status-tag status-pending">待审核</span></td>
+                            <td class="action-cell"></td>
+                        </tr>
+                        <tr data-status="rejected" class="abnormal-row">
+                            <td style="color:#DC2626;font-weight:500;">AQ-2026-013</td>
+                            <td>科技产业园二期</td>
+                            <td>2026-04-28</td>
+                            <td>王监理</td>
+                            <td>赵总监</td>
+                            <td><span class="status-tag status-rejected">驳回</span></td>
+                            <td class="action-cell"></td>
+                        </tr>
+                        <tr data-status="approved">
+                            <td style="font-weight:500;">AQ-2026-012</td>
+                            <td>城东综合体项目</td>
+                            <td>2026-04-28</td>
+                            <td>李监理</td>
+                            <td>赵总监</td>
+                            <td><span class="status-tag status-approved">审核通过</span></td>
+                            <td class="action-cell"></td>
+                        </tr>
+                        <tr data-status="draft">
+                            <td style="font-weight:500;">AQ-2026-D01</td>
+                            <td>城东综合体项目</td>
+                            <td>2026-04-30</td>
+                            <td>张监理</td>
+                            <td>赵总监</td>
+                            <td><span class="status-tag status-draft">草稿</span></td>
+                            <td class="action-cell"></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div class="pagination">
+                    <div class="pagination-info">共 5 条记录，第 1/1 页</div>
+                    <div class="pagination-btns"><button class="page-btn">‹</button><button class="page-btn active">1</button><button class="page-btn">›</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay create-modal" id="createModal">
+        <div class="modal">
+            <div class="modal-header"><div class="modal-header-row"><h3 id="modalTitle">新建监理安全日志</h3><button class="modal-close" onclick="closeModal('createModal')">✕</button></div></div>
+            <div class="modal-body">
+                <div class="form-main">
+                <div class="section-title" style="margin-top:0;padding-top:0;border-top:none;"><span class="section-num">1</span>基本信息</div>
+                <div class="form-row-compact">
+                    <div class="form-group"><label>工程名称 <span class="required">*</span></label><select class="form-control" id="projectSelect"><option value="">请选择工程</option><option>城东综合体项目</option><option>滨河路改造工程</option><option>科技产业园二期</option></select></div>
+                    <div class="form-group"><label>日期</label><div class="readonly-field">2026-04-30</div></div>
+                </div>
+                <div class="form-row-3-compact">
+                    <div class="form-group"><label>天气</label><input type="text" class="form-control" id="safetyWeather" placeholder="如：晴、多云、小雨等"></div>
+                    <div class="form-group"><label>风力</label><select class="form-control" id="safetyWind"><option value="">请选择</option><option>微风</option><option>3-4级</option><option>4-5级</option><option>5-6级</option><option>6级以上</option></select></div>
+                    <div class="form-group"><label>气温</label><input type="text" class="form-control" id="safetyTemp" placeholder="如：18℃~26℃"></div>
+                </div>
+                <div class="form-row-compact">
+                    <div class="form-group"><label>填写人</label><div class="readonly-field">张监理</div></div>
+                    <div class="form-group"><label>审核人</label><div class="readonly-field">赵总监</div></div>
+                </div>
+
+                <div class="section-title"><span class="section-num">2</span>施工部位及形象进度</div>
+                <div class="form-group"><textarea class="form-control" id="safetyContent" placeholder="现场施工的当前具体部位及其形象进度进展"></textarea></div>
+
+                <div class="section-title"><span class="section-num">3</span>巡视检查内容资料审核及验收情况</div>
+                <div class="form-group"><textarea class="form-control" id="safetyInspection" style="min-height:120px;" placeholder="现场安全巡查项目包括但不限于：&#10;①专职安全员是否在岗履职；&#10;②特种作业人员是否持有有效证件上岗；&#10;③施工机械运行状态是否正常，有无进出场登记及环保合规记录；&#10;④临时用电系统安全状态；&#10;⑤脚手架、吊篮、升降机、吊车等设备的验收记录与现场状态检查等"></textarea></div>
+
+                <div class="section-title"><span class="section-num">4</span>存在的安全问题处理结果</div>
+                <div class="form-group"><textarea class="form-control" id="safetySafety" placeholder="明确当日施工区域是否存有重大危险源，描述当天整体安全生产现状与异常问题"></textarea></div>
+
+                <div class="section-title"><span class="section-num">5</span>重大事项</div>
+                <div class="form-group"><textarea class="form-control" id="safetyMajorIssue" placeholder="如发生安全事故、停工、重要会议、主管部门检查等需记录的重大事件，应在此栏填写"></textarea></div>
+
+                <div class="section-title"><span class="section-num">6</span>附件上传</div>
+                <div class="upload-section">
+                    <h5>现场照片</h5>
+                    <div class="photo-grid" id="createPhotoGrid">
+                        <div class="photo-item" onclick="document.getElementById('createPhotoInput').click()">+</div>
+                    </div>
+                    <input type="file" id="createPhotoInput" accept="image/*" multiple style="display:none" onchange="handleCreatePhoto(this)">
+                </div>
+                <div class="upload-section" style="margin-top:16px;">
+                    <h5>附件材料</h5>
+                    <div id="createAttachmentList">
+                        <div style="font-size:12px;color:#9CA3AF;padding:12px 0;text-align:center;" id="emptyAttTip">暂无附件，点击下方按钮添加</div>
+                    </div>
+                    <button class="upload-btn" onclick="document.getElementById('createFileInput').click()">+ 添加附件</button>
+                    <input type="file" id="createFileInput" multiple style="display:none" onchange="handleCreateFile(this)">
+                    <div class="field-hint" style="margin-top:8px;">应提供与安全监理行为或验收结果相关的材料，例如：签发的《监理工程师通知单》；相关专题会议纪要；签发的《工程暂停令》；脚手架、机械、吊篮等设备的第三方验收单等。<strong style="color:#D97706;">每个附件均需选择存储目录。</strong></div>
+                </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('createModal')">取消</button>
+                <button class="btn btn-outline" onclick="saveDraft()">保存草稿</button>
+                <button class="btn btn-primary" onclick="submitLog()">提交</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay confirm-modal" id="deleteModal">
+        <div class="modal" style="width:400px;">
+            <div class="modal-header"><div class="modal-header-row"><h3>确认删除</h3><button class="modal-close" onclick="closeModal('deleteModal')">✕</button></div></div>
+            <div class="modal-body" style="padding:32px 24px;">
+                <div class="confirm-icon">⚠️</div>
+                <div class="confirm-text">确定要删除该安全日志吗？</div>
+                <div class="confirm-sub">仅草稿状态可删除</div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('deleteModal')">取消</button><button class="btn btn-danger" onclick="executeDelete()">确认删除</button></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="viewModal">
+        <div class="modal" style="width:700px;">
+            <div class="modal-header">
+                <div class="modal-header-row"><h3>监理安全日志详情</h3><button class="modal-close" onclick="closeModal('viewModal')">✕</button></div>
+            </div>
+            <div class="modal-body">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                    <div><span style="font-size:12px;color:#9CA3AF;">日志编号</span><div style="font-size:14px;margin-top:4px;color:#2563EB;font-weight:500;">AQ-2026-0428</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">工程名称</span><div style="font-size:14px;margin-top:4px;">城东综合体项目</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">日期</span><div style="font-size:14px;margin-top:4px;">2026-04-28</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">填写人</span><div style="font-size:14px;margin-top:4px;">张监理</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">天气</span><div style="font-size:14px;margin-top:4px;">晴</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">风力/气温</span><div style="font-size:14px;margin-top:4px;">微风 / 18℃~26℃</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">状态</span><div style="margin-top:4px;"><span class="status-tag status-approved">审核通过</span></div></div>
+                </div>
+                <div style="margin-top:20px;padding-top:16px;border-top:1px solid #F3F4F6;">
+                    <h4 style="font-size:14px;font-weight:600;color:#1E3A5F;margin-bottom:8px;">施工部位及形象进度</h4>
+                    <div style="font-size:13px;color:#374151;line-height:1.8;background:#F8FAFC;padding:12px;border-radius:6px;">A区主体结构15层施工，B区地下室防水施工完成，C区基坑支护进行中。</div>
+                </div>
+                <div style="margin-top:16px;padding-top:16px;border-top:1px solid #F3F4F6;">
+                    <h4 style="font-size:14px;font-weight:600;color:#1E3A5F;margin-bottom:8px;">巡视检查内容</h4>
+                    <div style="font-size:13px;color:#374151;line-height:1.8;background:#F8FAFC;padding:12px;border-radius:6px;">①专职安全员在岗履职；②特种作业人员持证上岗，证件均在有效期内；③施工机械运行正常，进出场登记完整；④临时用电系统安全，无违规接线；⑤脚手架验收合格，吊篮设备状态良好。</div>
+                </div>
+                <div style="margin-top:16px;padding-top:16px;border-top:1px solid #F3F4F6;">
+                    <h4 style="font-size:14px;font-weight:600;color:#1E3A5F;margin-bottom:8px;">安全问题处理结果</h4>
+                    <div style="font-size:13px;color:#374151;line-height:1.8;background:#FFF7ED;padding:12px;border-radius:6px;">当日无重大危险源，安全生产状况正常。上午巡检发现B区临边防护栏杆松动，已要求施工单位立即加固，下午复查已整改到位。</div>
+                </div>
+                <div style="margin-top:16px;padding-top:16px;border-top:1px solid #F3F4F6;">
+                    <h4 style="font-size:14px;font-weight:600;color:#1E3A5F;margin-bottom:8px;">重大事项</h4>
+                    <div style="font-size:13px;color:#374151;line-height:1.8;background:#F8FAFC;padding:12px;border-radius:6px;">无重大事项。</div>
+                </div>
+                <div class="version-history-section" id="viewVersionHistory">
+                    <div class="version-history-title">📋 版本历史</div>
+                    <div class="version-timeline" id="viewVersionTimeline"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('viewModal')">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay dir-tree-modal" id="dirTreeModal">
+        <div class="modal">
+            <div class="modal-header"><div class="modal-header-row"><h3>选择存储目录</h3><button class="modal-close" onclick="closeModal('dirTreeModal')">✕</button></div></div>
+            <div class="modal-body">
+                <div style="font-size:12px;color:#6B7280;margin-bottom:12px;">请为附件 <strong id="currentFileName" style="color:#1E3A5F;"></strong> 选择存储位置（仅可选择最低一级目录，可多选）</div>
+                <div class="dir-selected-list" id="dirSelectedList">
+                    <div class="selected-title"><span>已选目录</span><span class="count" id="dirSelectedCount">0 项</span></div>
+                    <div class="dir-selected-tags" id="dirSelectedTags">
+                        <span class="dir-selected-empty">未选择任何目录</span>
+                    </div>
+                </div>
+                <div class="dir-tree-container" id="dirTreeContainer">
+                    <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目')" data-path="城东综合体项目">
+                        <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▼</span><span class="node-icon">🏗️</span> 城东综合体项目
+                    </div>
+                    <div class="dir-tree-children">
+                        <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼')" data-path="城东综合体项目 / 主楼">
+                            <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▼</span><span class="node-icon">📁</span> 单位工程：主楼
+                        </div>
+                        <div class="dir-tree-children">
+                            <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 地基基础')" data-path="城东综合体项目 / 主楼 / 地基基础">
+                                <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▼</span><span class="node-icon">📂</span> 分部工程：地基基础
+                            </div>
+                            <div class="dir-tree-children">
+                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 地基基础 / 土方工程')" data-path="城东综合体项目 / 主楼 / 地基基础 / 土方工程"><span class="node-icon">📄</span> 分项：土方工程</div>
+                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 地基基础 / 地基处理')" data-path="城东综合体项目 / 主楼 / 地基基础 / 地基处理"><span class="node-icon">📄</span> 分项：地基处理</div>
+                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 地基基础 / 桩基工程')" data-path="城东综合体项目 / 主楼 / 地基基础 / 桩基工程"><span class="node-icon">📄</span> 分项：桩基工程</div>
+                            </div>
+                            <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 主体结构')" data-path="城东综合体项目 / 主楼 / 主体结构">
+                                <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📂</span> 分部工程：主体结构
+                            </div>
+                            <div class="dir-tree-children collapsed">
+                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 主体结构 / 钢筋工程')" data-path="城东综合体项目 / 主楼 / 主体结构 / 钢筋工程"><span class="node-icon">📄</span> 分项：钢筋工程</div>
+                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 主体结构 / 混凝土工程')" data-path="城东综合体项目 / 主楼 / 主体结构 / 混凝土工程"><span class="node-icon">📄</span> 分项：混凝土工程</div>
+                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 主体结构 / 模板工程')" data-path="城东综合体项目 / 主楼 / 主体结构 / 模板工程"><span class="node-icon">📄</span> 分项：模板工程</div>
+                            </div>
+                            <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 装饰装修')" data-path="城东综合体项目 / 主楼 / 装饰装修">
+                                <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📂</span> 分部工程：装饰装修
+                            </div>
+                            <div class="dir-tree-children collapsed">
+                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 装饰装修 / 抹灰工程')" data-path="城东综合体项目 / 主楼 / 装饰装修 / 抹灰工程"><span class="node-icon">📄</span> 分项：抹灰工程</div>
+                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 装饰装修 / 门窗工程')" data-path="城东综合体项目 / 主楼 / 装饰装修 / 门窗工程"><span class="node-icon">📄</span> 分项：门窗工程</div>
+                            </div>
+                        </div>
+                        <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 裙楼')" data-path="城东综合体项目 / 裙楼">
+                            <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📁</span> 单位工程：裙楼
+                        </div>
+                        <div class="dir-tree-children collapsed">
+                            <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 裙楼 / 地基基础')" data-path="城东综合体项目 / 裙楼 / 地基基础">
+                                <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📂</span> 分部工程：地基基础
+                            </div>
+                            <div class="dir-tree-children collapsed">
+                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 裙楼 / 地基基础 / 土方工程')" data-path="城东综合体项目 / 裙楼 / 地基基础 / 土方工程"><span class="node-icon">📄</span> 分项：土方工程</div>
+                            </div>
+                            <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 裙楼 / 主体结构')" data-path="城东综合体项目 / 裙楼 / 主体结构">
+                                <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📂</span> 分部工程：主体结构
+                            </div>
+                            <div class="dir-tree-children collapsed">
+                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 裙楼 / 主体结构 / 钢筋工程')" data-path="城东综合体项目 / 裙楼 / 主体结构 / 钢筋工程"><span class="node-icon">📄</span> 分项：钢筋工程</div>
+                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 裙楼 / 主体结构 / 混凝土工程')" data-path="城东综合体项目 / 裙楼 / 主体结构 / 混凝土工程"><span class="node-icon">📄</span> 分项：混凝土工程</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程')" data-path="滨河路改造工程">
+                        <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">🏗️</span> 滨河路改造工程
+                    </div>
+                    <div class="dir-tree-children collapsed">
+                        <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程 / 道路工程')" data-path="滨河路改造工程 / 道路工程">
+                            <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📁</span> 单位工程：道路工程
+                        </div>
+                        <div class="dir-tree-children collapsed">
+                            <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程 / 道路工程 / 路基工程')" data-path="滨河路改造工程 / 道路工程 / 路基工程">
+                                <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📂</span> 分部工程：路基工程
+                            </div>
+                            <div class="dir-tree-children collapsed">
+                                <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程 / 道路工程 / 路基工程 / 土方工程')" data-path="滨河路改造工程 / 道路工程 / 路基工程 / 土方工程"><span class="node-icon">📄</span> 分项：土方工程</div>
+                                <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程 / 道路工程 / 路基工程 / 排水工程')" data-path="滨河路改造工程 / 道路工程 / 路基工程 / 排水工程"><span class="node-icon">📄</span> 分项：排水工程</div>
+                            </div>
+                            <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程 / 道路工程 / 路面工程')" data-path="滨河路改造工程 / 道路工程 / 路面工程">
+                                <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📂</span> 分部工程：路面工程
+                            </div>
+                            <div class="dir-tree-children collapsed">
+                                <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程 / 道路工程 / 路面工程 / 基层')" data-path="滨河路改造工程 / 道路工程 / 路面工程 / 基层"><span class="node-icon">📄</span> 分项：基层</div>
+                                <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程 / 道路工程 / 路面工程 / 面层')" data-path="滨河路改造工程 / 道路工程 / 路面工程 / 面层"><span class="node-icon">📄</span> 分项：面层</div>
+                            </div>
+                        </div>
+                        <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程 / 桥梁工程')" data-path="滨河路改造工程 / 桥梁工程">
+                            <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📁</span> 单位工程：桥梁工程
+                        </div>
+                        <div class="dir-tree-children collapsed">
+                            <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程 / 桥梁工程 / 基础工程')" data-path="滨河路改造工程 / 桥梁工程 / 基础工程"><span class="node-icon">📂</span> 分部工程：基础工程</div>
+                            <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程 / 桥梁工程 / 上部结构')" data-path="滨河路改造工程 / 桥梁工程 / 上部结构"><span class="node-icon">📂</span> 分部工程：上部结构</div>
+                        </div>
+                    </div>
+                    <div class="dir-tree-node" onclick="selectDirNode(this, '科技产业园二期')" data-path="科技产业园二期">
+                        <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">🏗️</span> 科技产业园二期
+                    </div>
+                    <div class="dir-tree-children collapsed">
+                        <div class="dir-tree-node" onclick="selectDirNode(this, '科技产业园二期 / 厂房A')" data-path="科技产业园二期 / 厂房A">
+                            <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📁</span> 单位工程：厂房A
+                        </div>
+                        <div class="dir-tree-children collapsed">
+                            <div class="dir-tree-node" onclick="selectDirNode(this, '科技产业园二期 / 厂房A / 地基基础')" data-path="科技产业园二期 / 厂房A / 地基基础"><span class="node-icon">📂</span> 分部工程：地基基础</div>
+                            <div class="dir-tree-node" onclick="selectDirNode(this, '科技产业园二期 / 厂房A / 主体结构')" data-path="科技产业园二期 / 厂房A / 主体结构"><span class="node-icon">📂</span> 分部工程：主体结构</div>
+                        </div>
+                        <div class="dir-tree-node" onclick="selectDirNode(this, '科技产业园二期 / 厂房B')" data-path="科技产业园二期 / 厂房B">
+                            <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📁</span> 单位工程：厂房B
+                        </div>
+                        <div class="dir-tree-children collapsed">
+                            <div class="dir-tree-node" onclick="selectDirNode(this, '科技产业园二期 / 厂房B / 地基基础')" data-path="科技产业园二期 / 厂房B / 地基基础"><span class="node-icon">📂</span> 分部工程：地基基础</div>
+                            <div class="dir-tree-node" onclick="selectDirNode(this, '科技产业园二期 / 厂房B / 主体结构')" data-path="科技产业园二期 / 厂房B / 主体结构"><span class="node-icon">📂</span> 分部工程：主体结构</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('dirTreeModal')">取消</button>
+                <button class="btn btn-primary" onclick="confirmDirSelection()">确认选择</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var currentRole = 'initiator';
+        var editingId = null;
+
+        var roleActionMap = {
+            initiator: {
+                draft: ['view', 'edit', 'delete'],
+                pending: ['view'],
+                approved: ['view'],
+                rejected: ['view', 'edit']
+            },
+            reviewer: {
+                draft: ['view', 'edit', 'delete'],
+                pending: ['view', 'approve', 'reject'],
+                approved: ['view'],
+                rejected: ['view']
+            }
+        };
+
+        var actionLabelMap = {
+            view: '查看',
+            edit: '编辑',
+            delete: '删除',
+            approve: '通过',
+            reject: '驳回'
+        };
+
+        var actionClassMap = {
+            view: 'btn-outline',
+            edit: 'btn-primary',
+            delete: 'btn-danger',
+            approve: 'btn-success',
+            reject: 'btn-danger'
+        };
+
+        function switchRole(role) {
+            currentRole = role;
+            var btns = document.querySelectorAll('.role-btn');
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].classList.toggle('active', btns[i].textContent === (role === 'initiator' ? '发起人' : '审核人'));
+            }
+            renderAllActions();
+        }
+
+        function renderAllActions() {
+            var rows = document.querySelectorAll('tbody tr[data-status]');
+            for (var i = 0; i < rows.length; i++) {
+                var row = rows[i];
+                var status = row.getAttribute('data-status');
+                var cell = row.querySelector('.action-cell');
+                if (!cell) continue;
+                var actions = roleActionMap[currentRole][status] || ['view'];
+                var html = '<div class="actions">';
+                for (var j = 0; j < actions.length; j++) {
+                    var act = actions[j];
+                    var label = actionLabelMap[act];
+                    if (act === 'edit' && status === 'rejected') label = '修改';
+                    var cls = actionClassMap[act];
+                    var onclick = '';
+                    if (act === 'view') onclick = 'viewDetail(' + (i + 1) + ')';
+                    else if (act === 'edit') onclick = 'openEditModal(' + (i + 1) + ')';
+                    else if (act === 'delete') onclick = 'confirmDelete(' + (i + 1) + ')';
+                    else if (act === 'approve') onclick = 'approveLog(' + (i + 1) + ')';
+                    else if (act === 'reject') onclick = 'rejectLog(' + (i + 1) + ')';
+                    html += '<button class="btn ' + cls + ' btn-sm" onclick="' + onclick + '">' + label + '</button>';
+                }
+                html += '</div>';
+                cell.innerHTML = html;
+            }
+        }
+
+        function approveLog(id) {
+            var d = filteredData[id - 1] || tableData[id - 1];
+            if (!d) return;
+            App.confirm('确认审核通过该监理安全日志？', { danger: false, okText: '审核通过' }).then(function (ok) {
+                if (!ok) return;
+                App.apiFetch('/safety-logs/' + d.id + '/approve', { method: 'POST', body: { status: 'approved' } })
+                    .then(function () { App.toast('已审核通过', 'success'); loadData(); }).catch(function () { });
+            });
+        }
+
+        function rejectLog(id) {
+            var d = filteredData[id - 1] || tableData[id - 1];
+            if (!d) return;
+            App.prompt({ title: '驳回原因', placeholder: '请输入驳回原因：', okText: '确认驳回', danger: true }).then(function (reason) {
+                if (reason === null) return;
+                App.apiFetch('/safety-logs/' + d.id + '/approve', { method: 'POST', body: { status: 'rejected', rejectReason: reason } })
+                    .then(function () { App.toast('已驳回', 'success'); loadData(); }).catch(function () { });
+            });
+        }
+
+        function updateTabIndicator(activeTab) {
+            var tabsContainer = activeTab.parentElement;
+            var indicator = tabsContainer.querySelector('.tab-indicator');
+            if (!indicator) {
+                indicator = document.createElement('div');
+                indicator.className = 'tab-indicator';
+                indicator.id = 'dynamic-tab-indicator';
+                tabsContainer.appendChild(indicator);
+            }
+            indicator.style.left = activeTab.offsetLeft + 'px';
+            indicator.style.width = activeTab.offsetWidth + 'px';
+        }
+
+        function switchVersionTab(btn, versionNum) {
+            var modalHeader = document.querySelector('#createModal .modal-header');
+            var tabs = modalHeader.querySelectorAll('.version-tab');
+            for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+            btn.classList.add('active');
+            updateTabIndicator(btn);
+
+            var modalBody = document.querySelector('#createModal .modal-body');
+            var formMain = modalBody.querySelector('.form-main');
+            var v2Hint = formMain ? formMain.querySelector('.v2-edit-hint') : null;
+            var allPanels = formMain ? formMain.querySelectorAll('.version-panel') : [];
+
+            var d = null;
+            for (var i = 0; i < tableData.length; i++) {
+                if (tableData[i].status === 'rejected') { d = tableData[i]; break; }
+            }
+            if (!d) return;
+            var nextVersion = d.version + 1;
+
+            if (versionNum === nextVersion) {
+                var formChildren = formMain ? formMain.children : [];
+                for (var i = 0; i < formChildren.length; i++) {
+                    var child = formChildren[i];
+                    if (!child.classList.contains('version-panel')) {
+                        child.style.display = '';
+                    }
+                }
+                if (v2Hint) v2Hint.style.display = '';
+                for (var i = 0; i < allPanels.length; i++) {
+                    allPanels[i].style.display = 'none';
+                    allPanels[i].classList.remove('active');
+                }
+            } else {
+                var formChildren = formMain ? formMain.children : [];
+                for (var i = 0; i < formChildren.length; i++) {
+                    var child = formChildren[i];
+                    if (!child.classList.contains('version-panel')) {
+                        child.style.display = 'none';
+                    }
+                }
+                if (v2Hint) v2Hint.style.display = 'none';
+                for (var i = 0; i < allPanels.length; i++) {
+                    var panel = allPanels[i];
+                    if (panel.getAttribute('data-version') === 'v' + versionNum) {
+                        panel.style.display = '';
+                        panel.classList.add('active');
+                    } else {
+                        panel.style.display = 'none';
+                        panel.classList.remove('active');
+                    }
+                }
+            }
+        }
+
+        function switchViewVersionTab(btn, versionNum, logId) {
+            var viewHeader = document.querySelector('#viewModal .modal-header');
+            var tabs = viewHeader.querySelectorAll('.version-tab');
+            for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+            btn.classList.add('active');
+            updateTabIndicator(btn);
+
+            var viewBody = document.querySelector('#viewModal .modal-body');
+            var existingPanel = viewBody.querySelector('.version-view-panel');
+            if (existingPanel) existingPanel.remove();
+
+            var d = filteredData[logId - 1] || tableData[logId - 1];
+            if (!d) return;
+            var v = null;
+            for (var i = 0; i < d.versions.length; i++) {
+                if (d.versions[i].num === versionNum) { v = d.versions[i]; break; }
+            }
+            if (!v) return;
+
+            var panelHtml = buildViewVersionPanel(d, v);
+            viewBody.insertAdjacentHTML('beforeend', panelHtml);
+
+            var staticContent = viewBody.querySelector('.view-static-content');
+            if (staticContent) staticContent.style.display = 'none';
+        }
+
+        function buildViewVersionPanel(d, v) {
+            var html = '<div class="version-view-panel">';
+            html += '<div class="version-content-card">';
+            html += '<div class="version-card-header">';
+            html += '<div class="vch-left"><span class="vch-version">V' + v.num + '.0 版本详情</span>';
+            var statusClass = v.status === 'approved' ? 'approved' : (v.status === 'rejected' ? 'rejected' : 'pending');
+            var statusText = v.status === 'approved' ? '审核通过' : (v.status === 'rejected' ? '已驳回' : '待审核');
+            html += '<span class="vch-status ' + statusClass + '">' + statusText + '</span></div>';
+            html += '<span class="vch-meta">提交人：' + v.submittedBy + ' | 提交时间：' + v.submittedAt + '</span>';
+            html += '</div>';
+            if (v.status === 'rejected' && v.rejectReason) {
+                html += '<div class="version-card-reject">';
+                html += '<div class="vcr-title">❌ 驳回原因</div>';
+                html += '<div class="vcr-reason">' + v.rejectReason + '</div>';
+                html += '<div class="vcr-meta">驳回人：' + v.rejectedBy + ' | 驳回时间：' + v.rejectedAt + '</div>';
+                html += '</div>';
+            }
+            html += '<div class="version-card-body">';
+            html += '<div class="vc-field-grid">';
+            html += '<div class="vc-section-divider"><span class="vc-sec-num">1</span><span class="vc-sec-title">基本信息</span></div>';
+            html += '<div class="vc-field-item"><div class="vc-field-label">工程名称</div><div class="vc-field-value">' + (d.project || '未填写') + '</div></div>';
+            html += '<div class="vc-field-item"><div class="vc-field-label">日期</div><div class="vc-field-value">' + (d.date || '未填写') + '</div></div>';
+            html += '<div class="vc-field-item"><div class="vc-field-label">填写人</div><div class="vc-field-value">' + (d.author || '未填写') + '</div></div>';
+            html += '<div class="vc-field-item"><div class="vc-field-label">审核人</div><div class="vc-field-value">' + (d.reviewer || '未填写') + '</div></div>';
+            html += '<div class="vc-section-divider"><span class="vc-sec-num">2</span><span class="vc-sec-title">天气信息</span></div>';
+            html += '<div class="vc-field-item"><div class="vc-field-label">天气</div><div class="vc-field-value' + (v.fields && v.fields.weather ? '' : ' empty') + '">' + (v.fields && v.fields.weather ? v.fields.weather : '未填写') + '</div></div>';
+            html += '<div class="vc-field-item"><div class="vc-field-label">风力</div><div class="vc-field-value' + (v.fields && v.fields.wind ? '' : ' empty') + '">' + (v.fields && v.fields.wind ? v.fields.wind : '未填写') + '</div></div>';
+            html += '<div class="vc-field-item"><div class="vc-field-label">气温</div><div class="vc-field-value' + (v.fields && v.fields.temperature ? '' : ' empty') + '">' + (v.fields && v.fields.temperature ? v.fields.temperature : '未填写') + '</div></div>';
+            html += '<div class="vc-section-divider"><span class="vc-sec-num">3</span><span class="vc-sec-title">施工部位及形象进度</span></div>';
+            html += '<div class="vc-field-item full-width"><div class="vc-field-label">施工部位及形象进度</div><div class="vc-field-value' + (v.fields && v.fields.construction ? '' : ' empty') + '">' + (v.fields && v.fields.construction ? v.fields.construction : '未填写') + '</div></div>';
+            html += '<div class="vc-section-divider"><span class="vc-sec-num">4</span><span class="vc-sec-title">巡视检查内容</span></div>';
+            html += '<div class="vc-field-item full-width"><div class="vc-field-label">巡视检查内容资料审核及验收情况</div><div class="vc-field-value' + (v.fields && v.fields.inspection ? '' : ' empty') + '">' + (v.fields && v.fields.inspection ? v.fields.inspection : v.content || '未填写') + '</div></div>';
+            html += '<div class="vc-section-divider"><span class="vc-sec-num">5</span><span class="vc-sec-title">安全问题处理结果</span></div>';
+            html += '<div class="vc-field-item full-width"><div class="vc-field-label">存在的安全问题处理结果</div><div class="vc-field-value' + (v.fields && v.fields.safety ? '' : ' empty') + '">' + (v.fields && v.fields.safety ? v.fields.safety : '未填写') + '</div></div>';
+            html += '<div class="vc-section-divider"><span class="vc-sec-num">6</span><span class="vc-sec-title">重大事项</span></div>';
+            html += '<div class="vc-field-item full-width"><div class="vc-field-label">重大事项</div><div class="vc-field-value' + (v.fields && v.fields.majorIssue ? '' : ' empty') + '">' + (v.fields && v.fields.majorIssue ? v.fields.majorIssue : '未填写') + '</div></div>';
+            html += '<div class="vc-section-divider"><span class="vc-sec-num">7</span><span class="vc-sec-title">附件上传</span></div>';
+
+            var versionPhotos = v.photos;
+            if (!versionPhotos || versionPhotos.length === 0) {
+                for (var vi = 0; vi < d.versions.length; vi++) {
+                    if (d.versions[vi].photos && d.versions[vi].photos.length > 0) {
+                        versionPhotos = d.versions[vi].photos;
+                        break;
+                    }
+                }
+            }
+            if (versionPhotos && versionPhotos.length > 0) {
+                html += '<div class="vc-field-item full-width"><div class="vc-field-label">现场照片</div><div class="vc-photo-grid">';
+                for (var pi = 0; pi < versionPhotos.length; pi++) {
+                    html += '<div class="vc-photo-item" onclick="viewPhoto(this)" data-url="' + versionPhotos[pi].url + '" data-name="' + versionPhotos[pi].name + '"><img src="' + versionPhotos[pi].url + '" alt="' + versionPhotos[pi].name + '" onerror="this.classList.add(\'error\')"><div class="vc-photo-fallback">📷<span>' + versionPhotos[pi].name + '</span></div><div class="vc-photo-name">' + versionPhotos[pi].name + '</div><div class="vc-photo-time">' + v.submittedAt + '</div></div>';
+                }
+                html += '</div></div>';
+            } else {
+                html += '<div class="vc-field-item full-width"><div class="vc-field-label">现场照片</div><div class="vc-photo-empty">暂无照片</div></div>';
+            }
+
+            var versionAttachments = v.attachments;
+            if (versionAttachments && versionAttachments.length > 0) {
+                html += '<div class="vc-field-item full-width"><div class="vc-field-label">附件材料</div><div class="vc-attachment-list">';
+                for (var ai = 0; ai < versionAttachments.length; ai++) {
+                    var att = versionAttachments[ai];
+                    var attIcon = att.name.indexOf('.pdf') > -1 ? '📄' : (att.name.indexOf('.doc') > -1 ? '📝' : (att.name.indexOf('.xls') > -1 ? '📊' : '📎'));
+                    html += '<div class="vc-attachment-item"><span class="vc-att-icon">' + attIcon + '</span><span class="vc-att-name">' + att.name + '</span><span class="vc-att-size">' + att.size + '</span><span class="vc-att-time">' + att.time + '</span></div>';
+                }
+                html += '</div></div>';
+            } else {
+                html += '<div class="vc-field-item full-width"><div class="vc-field-label">附件材料</div><div class="vc-photo-empty">暂无附件</div></div>';
+            }
+
+            html += '</div></div></div></div>';
+            return html;
+        }
+
+        function resetUploadAreas() {
+            var grid = document.getElementById('createPhotoGrid');
+            if (grid) { var addBtn = grid.querySelector('.photo-item[onclick]'); grid.innerHTML = ''; if (addBtn) grid.appendChild(addBtn); }
+            var list = document.getElementById('createAttachmentList');
+            if (list) { list.innerHTML = '<div style="font-size:12px;color:#9CA3AF;padding:12px 0;text-align:center;" id="emptyAttTip">暂无附件，点击下方按钮添加</div>'; }
+        }
+        function populateUploadAreas(lv) {
+            resetUploadAreas();
+            if (!lv) return;
+            var grid = document.getElementById('createPhotoGrid');
+            (lv.photos || []).forEach(function (p) {
+                if (!p || !p.url) return;
+                var item = document.createElement('div');
+                item.className = 'photo-item';
+                item.setAttribute('data-url', p.url);
+                item.setAttribute('data-fname', p.name || '');
+                item.innerHTML = '<img src="' + p.url + '"><span class="remove-photo" onclick="this.parentElement.remove()">✕</span>';
+                if (grid) grid.insertBefore(item, grid.lastElementChild);
+            });
+            var list = document.getElementById('createAttachmentList');
+            var atts = lv.attachments || [];
+            if (atts.length && list) {
+                var tip = document.getElementById('emptyAttTip'); if (tip) tip.remove();
+                atts.forEach(function (a) {
+                    if (!a || !a.url) return;
+                    var item = document.createElement('div');
+                    item.className = 'attachment-item';
+                    item.setAttribute('data-url', a.url);
+                    item.setAttribute('data-fname', a.name || '');
+                    item.setAttribute('data-fsize', a.size || '');
+                    item.innerHTML = '<div class="file-icon doc">FILE</div><div style="flex:1;min-width:0;"><div class="file-name">' + (a.name || '附件') + '</div></div><span class="remove-att" onclick="this.parentElement.remove()">✕</span>';
+                    list.appendChild(item);
+                });
+            }
+        }
+        function openCreateModal() {
+            editingId = null;
+            resetUploadAreas();
+            document.getElementById('modalTitle').textContent = '新建监理安全日志';
+            var modalHeader = document.querySelector('#createModal .modal-header');
+            modalHeader.style.borderBottom = '1px solid #E5E7EB';
+            modalHeader.style.paddingBottom = '16px';
+            var modalBody = document.querySelector('#createModal .modal-body');
+            var formMain = modalBody.querySelector('.form-main');
+            if (formMain) {
+                var existingPanels = formMain.querySelectorAll('.version-panel');
+                for (var p = 0; p < existingPanels.length; p++) existingPanels[p].remove();
+                var existingV2Hint = formMain.querySelector('.v2-edit-hint');
+                if (existingV2Hint) existingV2Hint.remove();
+                var formChildren = formMain.children;
+                for (var i = 0; i < formChildren.length; i++) {
+                    formChildren[i].style.display = '';
+                }
+            }
+            document.getElementById('createModal').classList.add('show');
+        }
+        function openEditModal(id) {
+            editingId = id;
+            var d = filteredData[id - 1] || tableData[id - 1];
+            if (!d) return;
+            (function () {
+                var lv = d.versions && d.versions.length ? d.versions[d.versions.length - 1] : null;
+                var f = lv && lv.fields ? lv.fields : {};
+                var set = function (fid, v) { var el = document.getElementById(fid); if (el) el.value = v || ''; };
+                var ps = document.getElementById('projectSelect'); if (ps && d.projectId) ps.value = d.projectId;
+                set('safetyWeather', f.weather); set('safetyWind', f.wind); set('safetyTemp', f.temperature);
+                set('safetyContent', f.construction); set('safetyInspection', f.inspection);
+                set('safetySafety', f.safety); set('safetyMajorIssue', f.majorIssue);
+                populateUploadAreas(lv);
+            })();
+            document.getElementById('createModal').classList.add('show');
+            var modalHeader = document.querySelector('#createModal .modal-header');
+            var existingTabs = modalHeader.querySelector('.version-tabs');
+            if (existingTabs) existingTabs.remove();
+            modalHeader.style.borderBottom = '';
+            modalHeader.style.paddingBottom = '';
+            var modalBody = document.querySelector('#createModal .modal-body');
+            var existingLock = modalBody.querySelector('.reject-lock-info');
+            if (existingLock) existingLock.remove();
+            var formMain = modalBody.querySelector('.form-main');
+            var existingPanels = formMain ? formMain.querySelectorAll('.version-panel') : [];
+            for (var p = 0; p < existingPanels.length; p++) existingPanels[p].remove();
+            var existingV2Hint = formMain ? formMain.querySelector('.v2-edit-hint') : null;
+            if (existingV2Hint) existingV2Hint.remove();
+            if (formMain) {
+                var formChildren = formMain.children;
+                for (var i = 0; i < formChildren.length; i++) {
+                    formChildren[i].style.display = '';
+                }
+            }
+
+            if (d.status === 'rejected') {
+                var nextVersion = d.version + 1;
+                document.querySelector('#createModal .modal-header h3').textContent = '修改监理安全日志 — V' + nextVersion + '.0 提交';
+
+                var tabsHtml = '<div class="version-tabs">';
+                for (var i = 0; i < d.versions.length; i++) {
+                    var v = d.versions[i];
+                    var badgeClass = v.status === 'rejected' ? 'rejected' : (v.status === 'approved' ? 'readonly' : 'pending');
+                    var badgeText = v.status === 'rejected' ? '已驳回' : (v.status === 'approved' ? '已通过' : '待审核');
+                    tabsHtml += '<button class="version-tab" data-tab="v' + v.num + '" onclick="switchVersionTab(this, ' + v.num + ')">V' + v.num + '.0<span class="tab-badge ' + badgeClass + '">' + badgeText + '</span></button>';
+                }
+                tabsHtml += '<button class="version-tab active" data-tab="v' + nextVersion + '" onclick="switchVersionTab(this, ' + nextVersion + ')">V' + nextVersion + '.0<span class="tab-badge editing">编辑中</span></button>';
+                tabsHtml += '</div>';
+                modalHeader.insertAdjacentHTML('beforeend', tabsHtml);
+                setTimeout(function() {
+                    var activeTab = modalHeader.querySelector('.version-tab.active');
+                    if (activeTab) updateTabIndicator(activeTab);
+                }, 50);
+
+                formMain = modalBody.querySelector('.form-main');
+                for (var i = 0; i < d.versions.length; i++) {
+                    var v = d.versions[i];
+                    var panelHtml = '<div class="version-panel" data-version="v' + v.num + '" style="display:none;">';
+                    panelHtml += '<div class="version-content-card">';
+                    panelHtml += '<div class="version-card-header">';
+                    panelHtml += '<div class="vch-left"><span class="vch-version">V' + v.num + '.0 版本详情</span>';
+                    var statusClass = v.status === 'approved' ? 'approved' : (v.status === 'rejected' ? 'rejected' : 'pending');
+                    var statusText = v.status === 'approved' ? '审核通过' : (v.status === 'rejected' ? '已驳回' : '待审核');
+                    panelHtml += '<span class="vch-status ' + statusClass + '">' + statusText + '</span></div>';
+                    panelHtml += '<span class="vch-meta">提交人：' + v.submittedBy + ' | 提交时间：' + v.submittedAt + '</span>';
+                    panelHtml += '</div>';
+                    if (v.status === 'rejected' && v.rejectReason) {
+                        panelHtml += '<div class="version-card-reject">';
+                        panelHtml += '<div class="vcr-title">❌ 驳回原因</div>';
+                        panelHtml += '<div class="vcr-reason">' + v.rejectReason + '</div>';
+                        panelHtml += '<div class="vcr-meta">驳回人：' + v.rejectedBy + ' | 驳回时间：' + v.rejectedAt + '</div>';
+                        panelHtml += '</div>';
+                    }
+                    panelHtml += '<div class="version-card-body">';
+                    panelHtml += '<div class="vc-field-grid">';
+                    panelHtml += '<div class="vc-section-divider"><span class="vc-sec-num">1</span><span class="vc-sec-title">基本信息</span></div>';
+                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">工程名称</div><div class="vc-field-value">' + d.project + '</div></div>';
+                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">日期</div><div class="vc-field-value">' + d.date + '</div></div>';
+                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">填写人</div><div class="vc-field-value">' + d.author + '</div></div>';
+                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">审核人</div><div class="vc-field-value">' + d.reviewer + '</div></div>';
+                    panelHtml += '<div class="vc-section-divider"><span class="vc-sec-num">2</span><span class="vc-sec-title">天气信息</span></div>';
+                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">天气</div><div class="vc-field-value' + (v.fields && v.fields.weather ? '' : ' empty') + '">' + (v.fields && v.fields.weather ? v.fields.weather : '未填写') + '</div></div>';
+                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">风力</div><div class="vc-field-value' + (v.fields && v.fields.wind ? '' : ' empty') + '">' + (v.fields && v.fields.wind ? v.fields.wind : '未填写') + '</div></div>';
+                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">气温</div><div class="vc-field-value' + (v.fields && v.fields.temperature ? '' : ' empty') + '">' + (v.fields && v.fields.temperature ? v.fields.temperature : '未填写') + '</div></div>';
+                    panelHtml += '<div class="vc-section-divider"><span class="vc-sec-num">3</span><span class="vc-sec-title">施工部位及形象进度</span></div>';
+                    panelHtml += '<div class="vc-field-item full-width"><div class="vc-field-label">施工部位及形象进度</div><div class="vc-field-value' + (v.fields && v.fields.construction ? '' : ' empty') + '">' + (v.fields && v.fields.construction ? v.fields.construction : '未填写') + '</div></div>';
+                    panelHtml += '<div class="vc-section-divider"><span class="vc-sec-num">4</span><span class="vc-sec-title">巡视检查内容</span></div>';
+                    panelHtml += '<div class="vc-field-item full-width"><div class="vc-field-label">巡视检查内容资料审核及验收情况</div><div class="vc-field-value' + (v.fields && v.fields.inspection ? '' : ' empty') + '">' + (v.fields && v.fields.inspection ? v.fields.inspection : v.content || '未填写') + '</div></div>';
+                    panelHtml += '<div class="vc-section-divider"><span class="vc-sec-num">5</span><span class="vc-sec-title">安全问题处理结果</span></div>';
+                    panelHtml += '<div class="vc-field-item full-width"><div class="vc-field-label">存在的安全问题处理结果</div><div class="vc-field-value' + (v.fields && v.fields.safety ? '' : ' empty') + '">' + (v.fields && v.fields.safety ? v.fields.safety : '未填写') + '</div></div>';
+                    panelHtml += '<div class="vc-section-divider"><span class="vc-sec-num">6</span><span class="vc-sec-title">重大事项</span></div>';
+                    panelHtml += '<div class="vc-field-item full-width"><div class="vc-field-label">重大事项</div><div class="vc-field-value' + (v.fields && v.fields.majorIssue ? '' : ' empty') + '">' + (v.fields && v.fields.majorIssue ? v.fields.majorIssue : '未填写') + '</div></div>';
+                    panelHtml += '<div class="vc-section-divider"><span class="vc-sec-num">7</span><span class="vc-sec-title">附件上传</span></div>';
+
+                    var versionPhotos = v.photos;
+                    if (!versionPhotos || versionPhotos.length === 0) {
+                        for (var vi = 0; vi < d.versions.length; vi++) {
+                            if (d.versions[vi].photos && d.versions[vi].photos.length > 0) {
+                                versionPhotos = d.versions[vi].photos;
+                                break;
+                            }
+                        }
+                    }
+                    if (versionPhotos && versionPhotos.length > 0) {
+                        panelHtml += '<div class="vc-field-item full-width"><div class="vc-field-label">现场照片</div><div class="vc-photo-grid">';
+                        for (var pi = 0; pi < versionPhotos.length; pi++) {
+                            panelHtml += '<div class="vc-photo-item" onclick="viewPhoto(this)" data-url="' + versionPhotos[pi].url + '" data-name="' + versionPhotos[pi].name + '"><img src="' + versionPhotos[pi].url + '" alt="' + versionPhotos[pi].name + '" onerror="this.classList.add(\'error\')"><div class="vc-photo-fallback">📷<span>' + versionPhotos[pi].name + '</span></div><div class="vc-photo-name">' + versionPhotos[pi].name + '</div><div class="vc-photo-time">' + v.submittedAt + '</div></div>';
+                        }
+                        panelHtml += '</div></div>';
+                    } else {
+                        panelHtml += '<div class="vc-field-item full-width"><div class="vc-field-label">现场照片</div><div class="vc-photo-empty">暂无照片</div></div>';
+                    }
+
+                    var versionAttachments = v.attachments;
+                    if (versionAttachments && versionAttachments.length > 0) {
+                        panelHtml += '<div class="vc-field-item full-width"><div class="vc-field-label">附件材料</div><div class="vc-attachment-list">';
+                        for (var ai = 0; ai < versionAttachments.length; ai++) {
+                            var att = versionAttachments[ai];
+                            var attIcon = att.name.indexOf('.pdf') > -1 ? '📄' : (att.name.indexOf('.doc') > -1 ? '📝' : (att.name.indexOf('.xls') > -1 ? '📊' : '📎'));
+                            panelHtml += '<div class="vc-attachment-item"><span class="vc-att-icon">' + attIcon + '</span><span class="vc-att-name">' + att.name + '</span><span class="vc-att-size">' + att.size + '</span><span class="vc-att-time">' + att.time + '</span></div>';
+                        }
+                        panelHtml += '</div></div>';
+                    } else {
+                        panelHtml += '<div class="vc-field-item full-width"><div class="vc-field-label">附件材料</div><div class="vc-photo-empty">暂无附件</div></div>';
+                    }
+
+                    panelHtml += '</div></div></div></div>';
+                    if (formMain) formMain.insertAdjacentHTML('beforeend', panelHtml);
+                }
+
+                if (formMain) {
+                    formMain.style.display = '';
+                    var hintDiv = document.createElement('div');
+                    hintDiv.className = 'v2-edit-hint';
+                    hintDiv.innerHTML = '<span class="hint-icon">💡</span><span>当前为 V' + nextVersion + '.0 编辑模式，修改完成后点击"提交"。点击顶部版本标签可查看历史版本。</span>';
+                    formMain.insertBefore(hintDiv, formMain.firstChild);
+                }
+            } else {
+                document.querySelector('#createModal .modal-header h3').textContent = '编辑监理安全日志';
+                var formMain = modalBody.querySelector('.form-main');
+                if (formMain) formMain.style.display = '';
+            }
+        }
+        function viewDetail(id) {
+            var d = filteredData[id - 1] || tableData[id - 1];
+            if (!d) { document.getElementById('viewModal').classList.add('show'); return; }
+
+            var viewHeader = document.querySelector('#viewModal .modal-header');
+            var existingTabs = viewHeader.querySelector('.version-tabs');
+            if (existingTabs) existingTabs.remove();
+            viewHeader.style.borderBottom = '';
+            viewHeader.style.paddingBottom = '';
+            var viewBody = document.querySelector('#viewModal .modal-body');
+            var existingViewPanels = viewBody.querySelectorAll('.version-view-panel');
+            for (var p = 0; p < existingViewPanels.length; p++) existingViewPanels[p].remove();
+            var existingContent = viewBody.querySelector('.view-static-content');
+            if (existingContent) existingContent.style.display = '';
+
+            document.getElementById('viewModal').classList.add('show');
+
+            if (d.versions && d.versions.length > 1) {
+                var staticContent = viewBody.querySelector('.view-static-content');
+                if (!staticContent) {
+                    var children = viewBody.children;
+                    var wrapper = document.createElement('div');
+                    wrapper.className = 'view-static-content';
+                    while (children.length > 0) {
+                        wrapper.appendChild(children[0]);
+                    }
+                    viewBody.appendChild(wrapper);
+                }
+                staticContent = viewBody.querySelector('.view-static-content');
+                if (staticContent) staticContent.style.display = 'none';
+
+                var tabsHtml = '<div class="version-tabs">';
+                for (var i = 0; i < d.versions.length; i++) {
+                    var v = d.versions[i];
+                    var badgeClass = v.status === 'rejected' ? 'rejected' : (v.status === 'approved' ? 'readonly' : 'pending');
+                    var badgeText = v.status === 'rejected' ? '已驳回' : (v.status === 'approved' ? '已通过' : '待审核');
+                    var isActive = (i === d.versions.length - 1) ? ' active' : '';
+                    tabsHtml += '<button class="version-tab' + isActive + '" data-tab="vv' + v.num + '" onclick="switchViewVersionTab(this, ' + v.num + ', ' + id + ')">V' + v.num + '.0<span class="tab-badge ' + badgeClass + '">' + badgeText + '</span></button>';
+                }
+                tabsHtml += '</div>';
+                viewHeader.insertAdjacentHTML('beforeend', tabsHtml);
+                setTimeout(function() {
+                    var activeTab = viewHeader.querySelector('.version-tab.active');
+                    if (activeTab) updateTabIndicator(activeTab);
+                }, 50);
+
+                var lastV = d.versions[d.versions.length - 1];
+                var panelHtml = buildViewVersionPanel(d, lastV);
+                viewBody.insertAdjacentHTML('beforeend', panelHtml);
+            } else {
+                var timeline = document.getElementById('viewVersionTimeline');
+                var historySection = document.getElementById('viewVersionHistory');
+                if (d.versions && d.versions.length > 0) {
+                    if (historySection) historySection.style.display = '';
+                    var html = '';
+                    for (var i = 0; i < d.versions.length; i++) {
+                        var v = d.versions[i];
+                        var vClass = 'v-' + v.status;
+                        var statusLabel = v.status === 'approved' ? '审核通过' : v.status === 'rejected' ? '驳回' : '待审核';
+                        var statusClass = 'vs-' + v.status;
+                        html += '<div class="version-item ' + vClass + '">';
+                        html += '<div class="version-header"><span class="version-label">V' + v.num + '.0</span><span class="version-status ' + statusClass + '">' + statusLabel + '</span></div>';
+                        html += '<div class="version-meta">提交人：' + v.submittedBy + '　｜　提交时间：' + v.submittedAt + '</div>';
+                        html += '<div class="version-content">' + v.content + '</div>';
+                        if (v.status === 'rejected' && v.rejectReason) {
+                            html += '<div class="version-reject-reason"><div class="reason-label">驳回原因</div>' + v.rejectReason + '</div>';
+                            if (v.rejectedAt) {
+                                html += '<div style="font-size:11px;color:#9CA3AF;margin-top:4px;">驳回人：' + v.rejectedBy + '　｜　驳回时间：' + v.rejectedAt + '</div>';
+                            }
+                        }
+                        html += '</div>';
+                    }
+                    if (timeline) timeline.innerHTML = html;
+                } else {
+                    if (historySection) historySection.style.display = 'none';
+                    if (timeline) timeline.innerHTML = '';
+                }
+            }
+        }
+        var pendingDeleteId = null;
+        function confirmDelete(id) { pendingDeleteId = id; document.getElementById('deleteModal').classList.add('show'); }
+        function executeDelete() {
+            var d = pendingDeleteId ? (filteredData[pendingDeleteId - 1] || tableData[pendingDeleteId - 1]) : null;
+            closeModal('deleteModal');
+            if (!d || !d.id) { pendingDeleteId = null; return; }
+            App.apiFetch('/safety-logs/' + d.id, { method: 'DELETE' })
+                .then(function () { App.toast('已删除', 'success'); pendingDeleteId = null; loadData(); }).catch(function () { });
+        }
+        function collectSafetyDTO(status) {
+            var val = function (fid) { var el = document.getElementById(fid); return el ? el.value : ''; };
+            var rec = editingId ? (filteredData[editingId - 1] || tableData[editingId - 1]) : null;
+            var photos = [];
+            document.querySelectorAll('#createPhotoGrid .photo-item[data-url]').forEach(function (el) { var u = el.getAttribute('data-url'); if (u) photos.push({ url: u, name: el.getAttribute('data-fname') || '' }); });
+            var atts = [];
+            document.querySelectorAll('#createAttachmentList .attachment-item[data-url]').forEach(function (el) { var u = el.getAttribute('data-url'); if (u) atts.push({ url: u, name: el.getAttribute('data-fname') || '', size: el.getAttribute('data-fsize') || '' }); });
+            return {
+                code: rec ? rec.code : ('AQ-' + new Date().getFullYear() + '-' + String(Date.now()).slice(-6)),
+                projectId: Number(val('projectSelect')),
+                logDate: (rec && rec.date) ? rec.date : new Date().toISOString().slice(0, 10),
+                content: val('safetyContent'), inspection: val('safetyInspection'),
+                safety: val('safetySafety'), majorIssue: val('safetyMajorIssue'),
+                weather: val('safetyWeather'), wind: val('safetyWind'), temperature: val('safetyTemp'),
+                status: status,
+                photos: JSON.stringify(photos),
+                attachments: JSON.stringify(atts)
+            };
+        }
+        function saveLog(status, msg) {
+            var proj = document.getElementById('projectSelect');
+            if (!proj || !proj.value) { alert('请选择工程'); return; }
+            var rec = editingId ? (filteredData[editingId - 1] || tableData[editingId - 1]) : null;
+            var realId = rec ? rec.id : null;
+            var dto = collectSafetyDTO(status);
+            var p = realId ? App.apiFetch('/safety-logs/' + realId, { method: 'PUT', body: dto }) : App.apiFetch('/safety-logs', { method: 'POST', body: dto });
+            p.then(function () { App.toast(msg, 'success'); closeModal('createModal'); editingId = null; loadData(); }).catch(function () { });
+        }
+        function saveDraft() { saveLog('draft', '草稿已保存'); }
+        function submitLog() { saveLog('pending', '安全日志已提交'); }
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('show');
+            var existingDynamic = document.getElementById('dynamic-tab-indicator');
+            if (existingDynamic) existingDynamic.remove();
+            if (id === 'createModal') {
+                var modalHeader = document.querySelector('#createModal .modal-header');
+                var tabs = modalHeader.querySelector('.version-tabs');
+                if (tabs) tabs.remove();
+                modalHeader.style.borderBottom = '1px solid #E5E7EB';
+                modalHeader.style.paddingBottom = '16px';
+                var modalBody = document.querySelector('#createModal .modal-body');
+                var formMain = modalBody.querySelector('.form-main');
+                var allPanels = formMain ? formMain.querySelectorAll('.version-panel') : [];
+                for (var i = 0; i < allPanels.length; i++) allPanels[i].remove();
+                var v2Hint = formMain ? formMain.querySelector('.v2-edit-hint') : null;
+                if (v2Hint) v2Hint.remove();
+                if (formMain) {
+                    var formChildren = formMain.children;
+                    for (var i = 0; i < formChildren.length; i++) {
+                        formChildren[i].style.display = '';
+                    }
+                }
+                var rejectLock = modalBody.querySelector('.reject-lock-info');
+                if (rejectLock) rejectLock.remove();
+            }
+            if (id === 'viewModal') {
+                var viewHeader = document.querySelector('#viewModal .modal-header');
+                var tabs = viewHeader.querySelector('.version-tabs');
+                if (tabs) tabs.remove();
+                viewHeader.style.borderBottom = '1px solid #E5E7EB';
+                viewHeader.style.paddingBottom = '16px';
+                var viewBody = document.querySelector('#viewModal .modal-body');
+                var viewPanels = viewBody.querySelectorAll('.version-view-panel');
+                for (var i = 0; i < viewPanels.length; i++) viewPanels[i].remove();
+                var staticContent = viewBody.querySelector('.view-static-content');
+                if (staticContent) staticContent.style.display = '';
+            }
+        }
+        var tableData = [
+            { id: 1, code: 'AQ-2026-015', project: '城东综合体项目', date: '2026-04-30', author: '张监理', reviewer: '赵总监', status: 'approved', statusText: '审核通过', version: 1, versions: [{ num: 1, content: 'A区主体结构15层施工安全巡查，专职安全员在岗，特种作业人员持证上岗，施工机械运行正常，临时用电安全，脚手架验收合格。', fields: { weather: '晴', wind: '微风', temperature: '18℃~26℃', construction: 'A区主体结构15层施工，B区地下室防水施工完成，C区基坑支护进行中。', inspection: '①专职安全员在岗履职；②特种作业人员持证上岗，证件均在有效期内；③施工机械运行正常，进出场登记完整；④临时用电系统安全，无违规接线；⑤脚手架验收合格，吊篮设备状态良好。', safety: '当日无重大危险源，安全生产状况正常。', majorIssue: '无重大事项。' }, submittedAt: '2026-04-30 09:15', submittedBy: '张监理', status: 'approved', rejectReason: '', rejectedAt: '', rejectedBy: '', photos: [{ url: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=construction%20site%20safety%20inspection%20A%20zone%20structure%20realistic&image_size=landscape_4_3', name: 'A区安全巡检01.jpg' }, { url: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=construction%20scaffold%20inspection%20safety%20harness%20realistic&image_size=landscape_4_3', name: '脚手架验收02.jpg' }], attachments: [{ name: '安全巡检记录.pdf', size: '1.8MB', time: '2026-04-30 09:15' }] }] },
+            { id: 2, code: 'AQ-2026-014', project: '城东综合体项目', date: '2026-04-29', author: '张监理', reviewer: '赵总监', status: 'pending', statusText: '待审核', version: 1, versions: [{ num: 1, content: 'B区地下室防水施工安全巡查，临边防护到位，施工人员佩戴安全帽，临时用电规范。', fields: { weather: '多云', wind: '3-4级', temperature: '16℃~24℃', construction: 'B区地下室防水施工，临边防护到位。', inspection: 'B区地下室防水施工安全巡查，临边防护到位，施工人员佩戴安全帽，临时用电规范。', safety: '安全生产状况正常。', majorIssue: '无重大事项。' }, submittedAt: '2026-04-29 10:30', submittedBy: '张监理', status: 'pending', rejectReason: '', rejectedAt: '', rejectedBy: '', photos: [{ url: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=construction%20basement%20waterproof%20safety%20edge%20protection%20realistic&image_size=landscape_4_3', name: 'B区防水巡检01.jpg' }], attachments: [] }] },
+            { id: 3, code: 'AQ-2026-013', project: '科技产业园二期', date: '2026-04-28', author: '王监理', reviewer: '赵总监', status: 'rejected', statusText: '驳回', abnormal: true, version: 2, versions: [{ num: 1, content: '科技产业园二期现场安全巡查，发现临边防护缺失，已要求整改。', fields: { weather: '晴', wind: '微风', temperature: '20℃~28℃', construction: '科技产业园二期厂房A区3层施工。', inspection: '科技产业园二期现场安全巡查，发现临边防护缺失，已要求整改。', safety: '发现临边防护缺失，已要求整改。', majorIssue: '无。' }, submittedAt: '2026-04-28 08:45', submittedBy: '王监理', status: 'rejected', rejectReason: '安全巡查记录不够详细，缺少具体隐患位置、整改要求和整改期限，请补充完善。', rejectedAt: '2026-04-28 14:20', rejectedBy: '赵总监', photos: [{ url: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=construction%20site%20missing%20edge%20protection%20safety%20hazard%20realistic&image_size=landscape_4_3', name: '临边防护缺失01.jpg' }, { url: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=construction%20safety%20warning%20sign%20inspection%20site%20real&image_size=landscape_4_3', name: '安全警示不足02.jpg' }], attachments: [] }, { num: 2, content: '补充说明：厂房A区3层东侧临边防护栏杆缺失约5米，已下发整改通知单要求2日内完成整改；厂房B区基坑边缘警示标志不足，已要求当日补充设置。', fields: { weather: '多云', wind: '3-4级', temperature: '19℃~27℃', construction: '科技产业园二期厂房A区3层施工（补充）。', inspection: '补充说明：厂房A区3层东侧临边防护栏杆缺失约5米，已下发整改通知单要求2日内完成整改；厂房B区基坑边缘警示标志不足，已要求当日补充设置。', safety: '临边防护缺失已下发整改通知单，基坑警示标志不足已要求当日补充。', majorIssue: '无重大事项。' }, submittedAt: '2026-04-29 09:00', submittedBy: '王监理', status: 'rejected', rejectReason: '整改措施描述仍不够具体，缺少整改责任人及复查时间安排，请再次补充。', rejectedAt: '2026-04-29 16:10', rejectedBy: '赵总监', photos: [{ url: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=construction%20rectification%20notice%20edge%20protection%20barrier%20realistic&image_size=landscape_4_3', name: '整改通知单01.jpg' }, { url: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=construction%20foundation%20pit%20warning%20signs%20safety%20realistic&image_size=landscape_4_3', name: '基坑警示标志02.jpg' }, { url: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=construction%20safety%20rectification%20on%20site%20barrier%20installed&image_size=landscape_4_3', name: '整改后复查03.jpg' }], attachments: [{ name: '整改通知单TZ-AQ-013.pdf', size: '1.2MB', time: '2026-04-29 09:00' }, { name: '安全隐患整改记录.doc', size: '560KB', time: '2026-04-29 09:00' }] }] },
+            { id: 4, code: 'AQ-2026-012', project: '城东综合体项目', date: '2026-04-28', author: '李监理', reviewer: '赵总监', status: 'approved', statusText: '审核通过', version: 1, versions: [{ num: 1, content: 'C区基坑支护施工安全巡查，支护结构稳定，排水系统正常，周边监测数据在安全范围内。', fields: { weather: '晴', wind: '微风', temperature: '17℃~25℃', construction: 'C区基坑支护施工。', inspection: 'C区基坑支护施工安全巡查，支护结构稳定，排水系统正常，周边监测数据在安全范围内。', safety: '支护结构稳定，排水系统正常，监测数据安全。', majorIssue: '无重大事项。' }, submittedAt: '2026-04-28 11:00', submittedBy: '李监理', status: 'approved', rejectReason: '', rejectedAt: '', rejectedBy: '', photos: [{ url: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=construction%20foundation%20pit%20support%20structure%20safety%20monitoring&image_size=landscape_4_3', name: '基坑支护巡检01.jpg' }, { url: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=construction%20drainage%20system%20inspection%20foundation%20pit%20realistic&image_size=landscape_4_3', name: '排水系统检查02.jpg' }], attachments: [{ name: '基坑监测报告.pdf', size: '3.2MB', time: '2026-04-28 11:00' }] }] },
+            { id: 5, code: 'AQ-2026-D01', project: '城东综合体项目', date: '2026-04-30', author: '张监理', reviewer: '赵总监', status: 'draft', statusText: '草稿', version: 0, versions: [] }
+        ];
+        var filteredData = tableData.slice();
+
+        // ==================== 后端集成 ====================
+        var projectsMap = {};
+
+        function statusTextOf(s) {
+            return ({ draft: '草稿', pending: '待审核', approved: '审核通过', rejected: '驳回' })[s] || s || '';
+        }
+        function parseArr(s) {
+            if (!s) return [];
+            if (Array.isArray(s)) return s;
+            try { var a = JSON.parse(s); return Array.isArray(a) ? a : []; } catch (e) { return []; }
+        }
+        function fmtDateTime(t) { return t ? String(t).replace('T', ' ').slice(0, 16) : ''; }
+
+        function mapLog(r) {
+            var status = r.status || 'draft';
+            var abnormal = status === 'rejected';
+            var photos = parseArr(r.photos).map(function (p) { return (typeof p === 'string') ? { url: p, name: p.split('/').pop() } : p; });
+            var atts = parseArr(r.attachments);
+            var version = (r.version != null) ? r.version : (status === 'draft' ? 0 : 1);
+            var versions = [];
+            if (status !== 'draft') {
+                versions.push({
+                    num: version || 1,
+                    content: r.content || '',
+                    fields: { weather: r.weather, wind: r.wind, temperature: r.temperature, construction: r.content, inspection: r.inspection, safety: r.safety, majorIssue: r.majorIssue },
+                    submittedAt: fmtDateTime(r.submittedAt || r.createTime),
+                    submittedBy: r.submittedBy || '',
+                    status: status,
+                    rejectReason: r.rejectReason || '',
+                    rejectedAt: fmtDateTime(r.rejectedAt),
+                    rejectedBy: r.rejectedBy || '',
+                    photos: photos,
+                    attachments: atts
+                });
+            }
+            return {
+                id: r.id,
+                projectId: r.projectId,
+                code: r.code || '',
+                date: (r.logDate || '').slice(0, 10),
+                project: projectsMap[r.projectId] || ('项目#' + (r.projectId || '')),
+                author: r.submittedBy || (r.authorId ? ('用户#' + r.authorId) : ''),
+                reviewer: r.rejectedBy || '',
+                status: status,
+                statusText: statusTextOf(status),
+                abnormal: abnormal,
+                version: version,
+                versions: versions
+            };
+        }
+
+        function loadProjects() {
+            if (!window.App) return Promise.resolve();
+            return App.apiGetPage('/projects', { pageNum: 1, pageSize: 200 }).then(function (page) {
+                var list = page.list || [];
+                list.forEach(function (p) { projectsMap[p.id] = p.name; });
+                var pf = document.getElementById('projectFilter');
+                if (pf) pf.innerHTML = '<option value="">全部项目</option>' + list.map(function (p) { return '<option value="' + p.id + '">' + p.name + '</option>'; }).join('');
+                var ps = document.getElementById('projectSelect');
+                if (ps) ps.innerHTML = '<option value="">请选择工程</option>' + list.map(function (p) { return '<option value="' + p.id + '">' + p.name + '</option>'; }).join('');
+            }).catch(function () { });
+        }
+
+        function loadData() {
+            if (!window.App) return Promise.resolve();
+            var params = { pageNum: 1, pageSize: 200 };
+            var pf = document.getElementById('projectFilter'); if (pf && pf.value) params.projectId = pf.value;
+            var sf = document.getElementById('statusFilter'); if (sf && sf.value) params.status = sf.value;
+            var si = document.getElementById('searchInput'); if (si && si.value.trim()) params.code = si.value.trim();
+            return App.apiGetPage('/safety-logs', params).then(function (page) {
+                tableData = (page.list || []).map(mapLog);
+                filteredData = tableData.slice();
+                if (window.__urlStatus === 'abnormal') { filteredData = tableData.filter(function (d) { return d.abnormal; }); }
+                renderTable();
+            }).catch(function () { tableData = []; filteredData = []; renderTable(); });
+        }
+
+        function renderTable() {
+            try {
+                var tbody = document.querySelector('tbody');
+                var html = '';
+                for (var i = 0; i < filteredData.length; i++) {
+                    var d = filteredData[i];
+                    var rowClass = d.abnormal ? ' class="abnormal-row"' : '';
+                    var codeStyle = d.abnormal ? 'color:#DC2626;font-weight:500;' : 'font-weight:500;';
+                    html += '<tr data-status="' + d.status + '"' + rowClass + '>' +
+                        '<td style="' + codeStyle + '">' + d.code + '</td>' +
+                        '<td>' + d.project + '</td>' +
+                        '<td>' + d.date + '</td>' +
+                        '<td>' + d.author + '</td>' +
+                        '<td>' + d.reviewer + '</td>' +
+                        '<td><span class="status-tag status-' + d.status + '">' + d.statusText + '</span></td>' +
+                        '<td>' + (d.version > 0 ? '<span class="version-tag">V' + d.version + '.0</span>' : '<span style="font-size:11px;color:#9CA3AF;">—</span>') + '</td>' +
+                        '<td class="action-cell"></td>' +
+                        '</tr>';
+                }
+                tbody.innerHTML = html;
+                var info = document.querySelector('.pagination-info');
+                if (info) info.textContent = '共 ' + filteredData.length + ' 条记录，第 1/1 页';
+                renderAllActions();
+            } catch(e) { console.error('渲染表格出错：', e); }
+        }
+
+        function searchData() { loadData(); }
+
+        function filterData() { loadData(); }
+
+        function exportData() {
+            try {
+                if (filteredData.length === 0) { alert('没有可导出的数据'); return; }
+                var headers = ['日志编号', '工程名称', '日期', '填写人', '审核人', '状态'];
+                var rows = [headers.join(',')];
+                for (var i = 0; i < filteredData.length; i++) {
+                    var d = filteredData[i];
+                    rows.push([d.code, d.project, d.date, d.author, d.reviewer, d.statusText].join(','));
+                }
+                var csv = '\uFEFF' + rows.join('\n');
+                var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = '监理安全日志_' + new Date().toISOString().slice(0,10) + '.csv';
+                a.click();
+                URL.revokeObjectURL(url);
+            } catch(e) { console.error('导出出错：', e); alert('导出失败，请重试'); }
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('projectFilter').value = '';
+            document.getElementById('statusFilter').value = '';
+            window.__urlStatus = null;
+            loadData();
+        }
+
+        function handleCreatePhoto(input) {
+            var grid = document.getElementById('createPhotoGrid');
+            var files = input.files;
+            for (var i = 0; i < files.length; i++) {
+                (function (file) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var item = document.createElement('div');
+                        item.className = 'photo-item';
+                        item.setAttribute('data-fname', file.name);
+                        item.innerHTML = '<img src="' + e.target.result + '"><span class="remove-photo" onclick="this.parentElement.remove()">✕</span>';
+                        grid.insertBefore(item, grid.lastElementChild);
+                        if (window.App && App.uploadFile) {
+                            App.uploadFile(file).then(function (res) {
+                                item.setAttribute('data-url', (res && res.url) || '');
+                            }).catch(function () {
+                                App.toast('照片上传失败：' + file.name, 'error');
+                            });
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                })(files[i]);
+            }
+            input.value = '';
+        }
+
+        var pendingAttIds = [];
+        var pendingAttId = '';
+        var pendingFileName = '';
+        var pendingAttIndex = 0;
+        var selectedDirPaths = [];
+
+        function handleCreateFile(input) {
+            var list = document.getElementById('createAttachmentList');
+            var emptyTip = document.getElementById('emptyAttTip');
+            if (emptyTip) emptyTip.remove();
+            var files = input.files;
+            pendingAttIds = [];
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var ext = file.name.split('.').pop().toLowerCase();
+                var iconClass = 'doc';
+                var iconText = ext.toUpperCase().substring(0, 3);
+                if (ext === 'pdf') { iconClass = 'pdf'; iconText = 'PDF'; }
+                else if (['xls', 'xlsx'].indexOf(ext) > -1) { iconClass = 'xls'; iconText = 'XLS'; }
+                else if (['jpg', 'jpeg', 'png', 'gif', 'bmp'].indexOf(ext) > -1) { iconClass = 'img'; iconText = 'IMG'; }
+                var itemId = 'att-' + Date.now() + '-' + i;
+                var item = document.createElement('div');
+                item.className = 'attachment-item';
+                item.id = itemId;
+                item.innerHTML = '<div class="file-icon ' + iconClass + '">' + iconText + '</div>' +
+                    '<div style="flex:1;min-width:0;">' +
+                        '<div class="file-name">' + file.name + '<span class="pending-badge">待选目录</span></div>' +
+                        '<div class="dir-path">存储位置：<span class="dir-label">未选择</span><span class="change-dir" onclick="openDirSelector(\'' + itemId + '\',\'' + file.name.replace(/'/g, "\\'") + '\')">选择目录</span></div><div class="att-dir-tags"></div>' +
+                    '</div>' +
+                    '<span class="remove-att" onclick="this.parentElement.remove()">✕</span>';
+                list.appendChild(item);
+                item.setAttribute('data-fname', file.name);
+                (function (f, it) {
+                    if (window.App && App.uploadFile) {
+                        App.uploadFile(f).then(function (res) {
+                            it.setAttribute('data-url', (res && res.url) || '');
+                            if (res && res.size != null) it.setAttribute('data-fsize', res.size);
+                            var b = it.querySelector('.pending-badge'); if (b) { b.textContent = '已上传'; b.style.color = '#10B981'; }
+                        }).catch(function () {
+                            var b = it.querySelector('.pending-badge'); if (b) { b.textContent = '上传失败'; b.style.color = '#EF4444'; }
+                            App.toast('附件上传失败：' + f.name, 'error');
+                        });
+                    }
+                })(file, item);
+                pendingAttIds.push({ id: itemId, name: file.name });
+            }
+            input.value = '';
+            if (pendingAttIds.length > 0) {
+                pendingAttId = pendingAttIds[0].id;
+                pendingFileName = pendingAttIds[0].name;
+                pendingAttIndex = 0;
+                document.getElementById('currentFileName').textContent = pendingFileName;
+                document.querySelectorAll('.dir-tree-node').forEach(function(n) { n.classList.remove('selected'); });
+                selectedDirPaths = [];
+                updateSelectedDirList();
+                document.getElementById('dirTreeModal').classList.add('show');
+            }
+        }
+
+        function toggleDirExpand(el) {
+            var parentNode = el.parentElement;
+            var childrenDiv = parentNode.nextElementSibling;
+            if (!childrenDiv || !childrenDiv.classList.contains('dir-tree-children')) return;
+            if (childrenDiv.classList.contains('collapsed')) {
+                childrenDiv.classList.remove('collapsed');
+                el.textContent = '▼';
+            } else {
+                childrenDiv.classList.add('collapsed');
+                el.textContent = '▶';
+            }
+        }
+
+        function selectDirNode(el, path) {
+            if (el.classList.contains('parent-node')) return;
+            var checkbox = el.querySelector('input[type="checkbox"]');
+            if (checkbox) {
+                checkbox.checked = !checkbox.checked;
+            }
+            updateSelectedDirList();
+        }
+
+        function updateSelectedDirList() {
+            var container = document.getElementById('dirTreeContainer');
+            var leafCheckboxes = container.querySelectorAll('.leaf-node input[type="checkbox"]');
+            selectedDirPaths = [];
+            for (var i = 0; i < leafCheckboxes.length; i++) {
+                if (leafCheckboxes[i].checked) {
+                    selectedDirPaths.push(leafCheckboxes[i].value);
+                }
+            }
+            var tagsEl = document.getElementById('dirSelectedTags');
+            var countEl = document.getElementById('dirSelectedCount');
+            countEl.textContent = selectedDirPaths.length + ' 项';
+            if (selectedDirPaths.length === 0) {
+                tagsEl.innerHTML = '<span class="dir-selected-empty">未选择任何目录</span>';
+            } else {
+                var html = '';
+                for (var j = 0; j < selectedDirPaths.length; j++) {
+                    html += '<span class="dir-selected-tag">' + selectedDirPaths[j] + '<span class="remove-dir-tag" onclick="removeDirTag(\'' + selectedDirPaths[j].replace(/'/g, "\\'") + '\')">✕</span></span>';
+                }
+                tagsEl.innerHTML = html;
+            }
+        }
+
+        function removeDirTag(path) {
+            var container = document.getElementById('dirTreeContainer');
+            var leafCheckboxes = container.querySelectorAll('.leaf-node input[type="checkbox"]');
+            for (var i = 0; i < leafCheckboxes.length; i++) {
+                if (leafCheckboxes[i].value === path) {
+                    leafCheckboxes[i].checked = false;
+                    break;
+                }
+            }
+            updateSelectedDirList();
+        }
+
+        function openDirSelector(attId, fileName) {
+            pendingAttId = attId;
+            pendingFileName = fileName;
+            var attItem = document.getElementById(pendingAttId);
+            var existingTags = attItem ? attItem.querySelectorAll('.att-dir-tag') : [];
+            var existingPaths = [];
+            for (var i = 0; i < existingTags.length; i++) {
+                existingPaths.push(existingTags[i].getAttribute('data-path'));
+            }
+            var container = document.getElementById('dirTreeContainer');
+            var leafCheckboxes = container.querySelectorAll('.leaf-node input[type="checkbox"]');
+            for (var j = 0; j < leafCheckboxes.length; j++) {
+                leafCheckboxes[j].checked = existingPaths.indexOf(leafCheckboxes[j].value) > -1;
+            }
+            selectedDirPaths = existingPaths.slice();
+            document.getElementById('currentFileName').textContent = fileName;
+            updateSelectedDirList();
+            document.getElementById('dirTreeModal').classList.add('show');
+        }
+
+        function confirmDirSelection() {
+            updateSelectedDirList();
+            if (selectedDirPaths.length === 0) { alert('请至少选择一个存储目录'); return; }
+            var attItem = document.getElementById(pendingAttId);
+            if (attItem) {
+                var dirLabel = attItem.querySelector('.dir-label');
+                var dirPathEl = attItem.querySelector('.dir-path');
+                var oldTags = attItem.querySelectorAll('.att-dir-tags');
+                for (var t = 0; t < oldTags.length; t++) { oldTags[t].remove(); }
+                if (selectedDirPaths.length === 1) {
+                    dirLabel.textContent = selectedDirPaths[0];
+                    dirLabel.className = 'dir-label set';
+                } else {
+                    dirLabel.textContent = selectedDirPaths.length + '个目录';
+                    dirLabel.className = 'dir-label set';
+                }
+                var tagsDiv = document.createElement('div');
+                tagsDiv.className = 'att-dir-tags';
+                for (var j = 0; j < selectedDirPaths.length; j++) {
+                    var tag = document.createElement('span');
+                    tag.className = 'att-dir-tag';
+                    tag.setAttribute('data-path', selectedDirPaths[j]);
+                    tag.textContent = selectedDirPaths[j].split(' / ').pop();
+                    tag.title = selectedDirPaths[j];
+                    tagsDiv.appendChild(tag);
+                }
+                dirPathEl.parentNode.insertBefore(tagsDiv, dirPathEl.nextSibling);
+                var badge = attItem.querySelector('.pending-badge');
+                if (badge) badge.remove();
+            }
+            pendingAttIndex++;
+            if (pendingAttIndex < pendingAttIds.length) {
+                pendingAttId = pendingAttIds[pendingAttIndex].id;
+                pendingFileName = pendingAttIds[pendingAttIndex].name;
+                document.getElementById('currentFileName').textContent = pendingFileName;
+                var container = document.getElementById('dirTreeContainer');
+                var leafCheckboxes = container.querySelectorAll('.leaf-node input[type="checkbox"]');
+                for (var k = 0; k < leafCheckboxes.length; k++) {
+                    leafCheckboxes[k].checked = false;
+                }
+                selectedDirPaths = [];
+                updateSelectedDirList();
+            } else {
+                closeModal('dirTreeModal');
+            }
+        }
+
+        function initDirCheckboxes() {
+            var container = document.getElementById('dirTreeContainer');
+            var nodes = container.querySelectorAll('.dir-tree-node');
+            for (var i = 0; i < nodes.length; i++) {
+                var node = nodes[i];
+                var hasExpand = node.querySelector('.expand');
+                var match = node.getAttribute('onclick');
+                var path = '';
+                if (match) {
+                    var pathMatch = match.match(/selectDirNode\([^,]+,\s*'([^']+)'\)/);
+                    if (pathMatch) path = pathMatch[1];
+                }
+                if (!path) continue;
+                var cb = document.createElement('input');
+                cb.type = 'checkbox';
+                cb.value = path;
+                if (hasExpand) {
+                    node.classList.add('parent-node');
+                    cb.style.cssText = 'accent-color:#9CA3AF;width:15px;height:15px;cursor:default;flex-shrink:0;margin-right:4px;opacity:0.5;';
+                    cb.disabled = true;
+                } else {
+                    node.classList.add('leaf-node');
+                    cb.style.cssText = 'accent-color:#2563EB;width:15px;height:15px;cursor:pointer;flex-shrink:0;margin-right:4px;';
+                    cb.onclick = function(e) { e.stopPropagation(); };
+                }
+                node.insertBefore(cb, node.firstChild);
+            }
+        }
+
+        initDirCheckboxes();
+
+        (function () {
+            var params = new URLSearchParams(window.location.search);
+            window.__urlStatus = params.get('status');
+        })();
+
+        if (window.App) {
+            App.requireAuth();
+            App.initTopbar();
+            loadProjects().then(loadData);
+        }
+
+        function closeFilterTip(el) {
+            var tip = el.parentElement;
+            tip.remove();
+            window.__urlStatus = null;
+            loadData();
+        }
+
+        function viewPhoto(el) {
+            var url, name;
+            if (typeof el === 'string') {
+                url = el;
+                name = arguments[1] || '';
+            } else if (el && el.getAttribute) {
+                url = el.getAttribute('data-url');
+                name = el.getAttribute('data-name');
+            } else {
+                return;
+            }
+            var viewer = document.createElement('div');
+            viewer.className = 'vc-photo-viewer';
+            viewer.onclick = function() { viewer.remove(); };
+            viewer.innerHTML = '<div class="vc-viewer-close">✕</div><img src="' + url + '" alt="' + name + '"><div class="vc-viewer-name">' + name + '</div>';
+            document.body.appendChild(viewer);
+        }
+    </script>
+</body>
+</html>

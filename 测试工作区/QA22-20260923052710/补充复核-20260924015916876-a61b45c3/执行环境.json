@@ -1,0 +1,6 @@
+{
+  "node": "v24.16.0",
+  "javaHome": "C:\\Users\\Administrator\\.qoder\\extensions\\redhat.java-1.56.0-win32-x64\\jre\\21.0.12.1-win32-x86_64",
+  "maven": "C:\\tools\\apache-maven-3.9.9\\bin\\mvn.cmd",
+  "mode": "隔离MVC/H2＋prod配置上下文（无数据源自动配置）＋页面DOM/API桩；不使用生产凭据、不连接旧HTTP服务"
+}

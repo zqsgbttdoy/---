@@ -1,0 +1,32 @@
+{
+  "note": "只比较模板与DDL，未运行初始化脚本或连接MySQL",
+  "tables": [
+    "sys_department",
+    "sys_user",
+    "sys_role",
+    "sys_permission",
+    "sys_role_permission",
+    "sys_user_role",
+    "sys_operation_log",
+    "sys_message",
+    "sys_work_standard_config",
+    "biz_project",
+    "biz_daily_inspection",
+    "biz_sideline_inspection",
+    "biz_supervision_notice",
+    "biz_work_contact",
+    "biz_supervision_diary",
+    "biz_supervision_log",
+    "biz_safety_log",
+    "biz_meeting_minutes",
+    "biz_supervision_monthly_report",
+    "biz_sub_item_database",
+    "biz_project_document",
+    "biz_project_member",
+    "biz_uploaded_file",
+    "biz_field_record_event"
+  ],
+  "actual": 24,
+  "expected": 21,
+  "consistent": false
+}

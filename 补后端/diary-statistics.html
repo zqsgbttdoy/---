@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监理现场管理系统 - 日记统计</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background: #F0F5FF; color: #1F2937; display: flex; min-height: 100vh; }
+        .sidebar { width: 240px; background: linear-gradient(180deg, #1E3A5F 0%, #0F2440 100%); color: #fff; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; overflow-y: auto; }
+        .sidebar-logo { padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo h2 { font-size: 16px; font-weight: 600; letter-spacing: 1px; }
+        .sidebar-logo p { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+        .menu-group { padding: 8px 0; }
+        .menu-group-title { padding: 10px 20px 6px; font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
+        .menu-item { display: flex; align-items: center; padding: 10px 20px; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; transition: all 0.2s; cursor: pointer; }
+        .menu-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+        .menu-item.active { background: rgba(37,99,235,0.3); color: #fff; border-right: 3px solid #2563EB; }
+        .menu-item .icon { width: 20px; margin-right: 10px; text-align: center; font-size: 14px; }
+        .main { margin-left: 240px; flex: 1; }
+        .header { background: #fff; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 50; }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .header-left h3 { font-size: 15px; font-weight: 600; color: #1E3A5F; }
+        .breadcrumb { font-size: 12px; color: #6B7280; }
+        .breadcrumb a { color: #2563EB; text-decoration: none; }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .notification { position: relative; cursor: pointer; font-size: 18px; }
+        .badge { position: absolute; top: -6px; right: -6px; background: #EF4444; color: #fff; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .user-info { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #2563EB; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; }
+        .user-name { font-size: 13px; color: #374151; }
+        .content { padding: 24px; }
+        .filter-bar { background: #fff; border-radius: 10px; padding: 16px 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .filter-bar label { font-size: 13px; color: #6B7280; white-space: nowrap; }
+        .filter-select { height: 36px; border: 1px solid #E5E7EB; border-radius: 6px; padding: 0 12px; font-size: 13px; color: #374151; background: #fff; outline: none; cursor: pointer; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; border: none; transition: all 0.2s; }
+        .btn-primary { background: #2563EB; color: #fff; }
+        .btn-primary:hover { background: #1D4ED8; }
+        .btn-outline { background: #fff; color: #374151; border: 1px solid #E5E7EB; }
+        .btn-outline:hover { background: #F9FAFB; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+        .stat-card { background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        .stat-card .label { font-size: 13px; color: #6B7280; margin-bottom: 8px; }
+        .stat-card .value { font-size: 28px; font-weight: 700; }
+        .stat-card .sub { font-size: 12px; color: #9CA3AF; margin-top: 4px; }
+        .stat-card.blue .value { color: #2563EB; }
+        .stat-card.green .value { color: #10B981; }
+        .stat-card.orange .value { color: #F59E0B; }
+        .stat-card.red .value { color: #EF4444; }
+        .panel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+        .panel { background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        .panel-header { padding: 16px 20px; border-bottom: 1px solid #F3F4F6; display: flex; align-items: center; justify-content: space-between; }
+        .panel-header h4 { font-size: 14px; font-weight: 600; color: #1E3A5F; }
+        .panel-body { padding: 20px; }
+        .chart-bar-group { display: flex; align-items: flex-end; gap: 12px; height: 180px; padding-top: 10px; }
+        .chart-bar-item { flex: 1; display: flex; flex-direction: column; align-items: center; }
+        .chart-bar { width: 100%; border-radius: 4px 4px 0 0; transition: height 0.5s; position: relative; }
+        .chart-bar.blue { background: linear-gradient(180deg, #2563EB, #3B82F6); }
+        .chart-bar.green { background: linear-gradient(180deg, #10B981, #34D399); }
+        .chart-bar.red { background: linear-gradient(180deg, #EF4444, #F87171); }
+        .chart-label { font-size: 11px; color: #9CA3AF; margin-top: 6px; }
+        .chart-value { font-size: 10px; color: #374151; margin-bottom: 4px; font-weight: 600; }
+        .rank-list .rank-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #F9FAFB; }
+        .rank-list .rank-item:last-child { border-bottom: none; }
+        .rank-num { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; margin-right: 12px; }
+        .rank-num.top1 { background: #FEF3C7; color: #D97706; }
+        .rank-num.top2 { background: #E5E7EB; color: #6B7280; }
+        .rank-num.top3 { background: #FDDCAF; color: #B45309; }
+        .rank-num.normal { background: #F3F4F6; color: #9CA3AF; }
+        .rank-info { flex: 1; }
+        .rank-name { font-size: 13px; color: #1F2937; }
+        .rank-dept { font-size: 11px; color: #9CA3AF; }
+        .rank-rate { font-size: 14px; font-weight: 600; }
+        .rank-rate.high { color: #10B981; }
+        .rank-rate.medium { color: #F59E0B; }
+        .rank-rate.low { color: #EF4444; }
+        .attendance-table { width: 100%; border-collapse: collapse; }
+        .attendance-table th { padding: 10px 12px; text-align: left; font-size: 12px; font-weight: 600; color: #6B7280; border-bottom: 1px solid #E5E7EB; background: #F8FAFC; }
+        .attendance-table td { padding: 10px 12px; font-size: 13px; color: #374151; border-bottom: 1px solid #F3F4F6; }
+        .attendance-table tr:hover td { background: #F8FAFC; }
+        .progress-bar { width: 100px; height: 8px; background: #E5E7EB; border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 4px; }
+        .progress-fill.green { background: #10B981; }
+        .progress-fill.orange { background: #F59E0B; }
+        .progress-fill.red { background: #EF4444; }
+        .readonly-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; background: #FEF3C7; color: #92400E; }
+    </style>
+    <script src="assets/app.js"></script>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/responsive.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-logo"><h2>监理现场管理系统</h2><p>Supervision Site Management</p></div>
+        <div class="menu-group"><a class="menu-item" href="index.html"><span class="icon">📊</span> 仪表盘</a></div>
+        <div class="menu-group"><div class="menu-group-title">项目管理</div><a class="menu-item" href="project-ledger.html"><span class="icon">📁</span> 项目台账</a></div>
+        <div class="menu-group"><div class="menu-group-title">监理现场工作</div><a class="menu-item" href="daily-inspection.html"><span class="icon">🔍</span> 日常巡检</a><a class="menu-item" href="sideline-inspection.html"><span class="icon">👁️</span> 旁站</a><a class="menu-item" href="supervision-notice.html"><span class="icon">📋</span> 监理通知单</a><a class="menu-item" href="work-contact.html"><span class="icon">✉️</span> 工作联系单</a><a class="menu-item" href="supervision-diary.html"><span class="icon">📝</span> 监理日记</a><a class="menu-item" href="supervision-log.html"><span class="icon">📄</span> 监理日志</a><a class="menu-item" href="safety-log.html"><span class="icon">🛡️</span> 监理安全日志</a><a class="menu-item" href="meeting-minutes.html"><span class="icon">📅</span> 会议纪要</a><a class="menu-item" href="supervision-monthly-report.html"><span class="icon">📊</span> 监理月报</a></div>
+        <div class="menu-group"><div class="menu-group-title">项目资料</div><a class="menu-item" href="sub-item-database.html"><span class="icon">🗄️</span> 工程资料目录设置</a><a class="menu-item" href="project-data-upload.html"><span class="icon">📤</span> 工程资料上传</a></div>
+        <div class="menu-group"><div class="menu-group-title">数据统计</div><a class="menu-item active" href="diary-statistics.html"><span class="icon">📈</span> 日记统计</a><a class="menu-item" href="diary-report.html"><span class="icon">📑</span> 日记报表</a><a class="menu-item" href="log-statistics.html"><span class="icon">📊</span> 日志统计</a><a class="menu-item" href="safety-log-statistics.html"><span class="icon">🛡️</span> 安全日志统计</a></div>
+        <div class="menu-group"><div class="menu-group-title">团队管理</div><a class="menu-item" href="department-management.html"><span class="icon">🏢</span> 部门管理</a><a class="menu-item" href="personnel-management.html"><span class="icon">👥</span> 人员管理</a><a class="menu-item" href="permission-settings.html"><span class="icon">🔐</span> 权限设置</a><a class="menu-item" href="process-management.html"><span class="icon">🔄</span> 流程管理</a></div>
+        <div class="menu-group"><div class="menu-group-title">系统设置</div><a class="menu-item" href="operation-log.html"><span class="icon">📜</span> 操作日志</a><a class="menu-item" href="message-center.html"><span class="icon">🔔</span> 消息中心</a><a class="menu-item" href="work-standard-config.html"><span class="icon">⚙️</span> 工作标准配置</a></div>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <div class="header-left"><h3>日记统计</h3><span class="breadcrumb"><a href="index.html">首页</a> / 数据统计 / 日记统计</span></div>
+            <div class="header-right"><div class="notification">🔔<span class="badge" id="notifBadge" style="display:none;">0</span></div><div class="user-info"><div class="user-avatar">张</div><span class="user-name">张监理</span></div></div>
+        </div>
+
+        <div class="content">
+            <div style="background:#FEF3C7;border:1px solid #F59E0B;border-radius:8px;padding:10px 16px;margin-bottom:16px;display:flex;align-items:center;gap:8px;">
+                <span style="font-size:16px;">🔒</span>
+                <span style="font-size:13px;color:#92400E;">当前页面为只读模式，数据统计模块仅支持查看操作，不支持修改、编辑、删除或添加。</span>
+            </div>
+            <div class="filter-bar">
+                <label>统计维度：</label>
+                <select class="filter-select" id="dimensionSelect" onchange="onDimensionChange()">
+                    <option value="person">按人员</option>
+                    <option value="project">按项目</option>
+                </select>
+                <span id="personFilter">
+                    <label>人员搜索：</label>
+                    <input type="text" class="filter-select" id="personSearch" placeholder="输入姓名搜索" style="width:160px;">
+                </span>
+                <span id="projectFilter" style="display:none;">
+                    <label>选择项目：</label>
+                    <select class="filter-select" id="projectSelect">
+                        <option value="">全部项目</option>
+                    </select>
+                </span>
+                <label>时间范围：</label>
+                <input type="date" class="filter-select" id="startDate" value="2026-04-01">
+                <span>~</span>
+                <input type="date" class="filter-select" id="endDate" value="2026-04-29">
+                <button class="btn btn-primary" onclick="queryData()">查询</button>
+                <button class="btn btn-outline" onclick="resetFilters()">重置</button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card blue" style="cursor:default;">
+                    <div class="label">应写日记数</div>
+                    <div class="value" id="statTotal">0</div>
+                    <div class="sub">范围内日记总数</div>
+                </div>
+                <div class="stat-card green" style="cursor:default;">
+                    <div class="label">已通过日记</div>
+                    <div class="value" id="statApproved">0</div>
+                    <div class="sub" id="statRate">完成率 0%</div>
+                </div>
+                <div class="stat-card red" style="cursor:default;">
+                    <div class="label">被驳回日记</div>
+                    <div class="value" id="statRejected">0</div>
+                    <div class="sub">审核未通过需修改</div>
+                </div>
+                <div class="stat-card orange" style="cursor:default;">
+                    <div class="label">未提交日记</div>
+                    <div class="value" id="statDraft">0</div>
+                    <div class="sub">草稿未提交</div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header"><h4>日记提交明细</h4></div>
+                <div class="panel-body" style="padding:0;">
+                    <table class="attendance-table">
+                        <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>所属项目</th>
+                                <th>应写天数</th>
+                                <th>已通过</th>
+                                <th>完成率</th>
+                                <th>异常次数</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="statBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var projectsMap = {};
+        var usersMap = {};
+
+        function escapeHtml(t) { var d = document.createElement('div'); d.textContent = t == null ? '' : t; return d.innerHTML; }
+
+        function loadProjects() {
+            return apiGetPage('/projects', { pageNum: 1, pageSize: 500 }).then(function(res) {
+                var sel = document.getElementById('projectSelect');
+                sel.innerHTML = '<option value="">全部项目</option>';
+                (res.list || []).forEach(function(p) {
+                    projectsMap[p.id] = p.name;
+                    var opt = document.createElement('option');
+                    opt.value = p.id;
+                    opt.textContent = p.name;
+                    sel.appendChild(opt);
+                });
+            });
+        }
+
+        function loadUsers() {
+            return apiGetPage('/users', { pageNum: 1, pageSize: 500 }).then(function(res) {
+                (res.list || []).forEach(function(u) { usersMap[u.id] = u.name || u.userName || u.realName; });
+            }).catch(function() {});
+        }
+
+        function recorderName(d) {
+            return d.submittedBy || usersMap[d.authorId] || (d.authorId ? ('用户#' + d.authorId) : '—');
+        }
+
+        function onDimensionChange() {
+            var val = document.getElementById('dimensionSelect').value;
+            document.getElementById('personFilter').style.display = val === 'person' ? '' : 'none';
+            document.getElementById('projectFilter').style.display = val === 'project' ? '' : 'none';
+        }
+
+        function loadData() {
+            var dimension = document.getElementById('dimensionSelect').value;
+            var startDateVal = document.getElementById('startDate').value;
+            var endDateVal = document.getElementById('endDate').value;
+            if (startDateVal && endDateVal && startDateVal > endDateVal) {
+                if (window.App) App.toast('开始日期不能晚于结束日期', 'warning');
+                return;
+            }
+            var personSearch = document.getElementById('personSearch').value.trim();
+            var projectVal = document.getElementById('projectSelect').value;
+            var params = { pageNum: 1, pageSize: 1000 };
+            if (dimension === 'project' && projectVal) params.projectId = projectVal;
+            apiGetPage('/supervision-diaries', params).then(function(res) {
+                var list = (res.list || []).filter(function(d) {
+                    var date = d.diaryDate || '';
+                    if (startDateVal && date && date < startDateVal) return false;
+                    if (endDateVal && date && date > endDateVal) return false;
+                    if (dimension === 'person' && personSearch && recorderName(d).indexOf(personSearch) === -1) return false;
+                    return true;
+                });
+                renderStats(list);
+            });
+        }
+
+        function renderStats(list) {
+            var total = list.length, approved = 0, rejected = 0, draft = 0;
+            var groups = {};
+            list.forEach(function(d) {
+                if (d.status === 'approved') approved++;
+                else if (d.status === 'rejected') rejected++;
+                else if (d.status === 'draft') draft++;
+                var name = recorderName(d);
+                if (!groups[name]) groups[name] = { name: name, projects: {}, total: 0, approved: 0, rejected: 0 };
+                var g = groups[name];
+                g.total++;
+                if (d.status === 'approved') g.approved++;
+                if (d.status === 'rejected') g.rejected++;
+                g.projects[projectsMap[d.projectId] || ('项目#' + d.projectId)] = true;
+            });
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statApproved').textContent = approved;
+            document.getElementById('statRejected').textContent = rejected;
+            document.getElementById('statDraft').textContent = draft;
+            document.getElementById('statRate').textContent = '完成率 ' + (total ? Math.round(approved / total * 100) : 0) + '%';
+            var tbody = document.getElementById('statBody');
+            var names = Object.keys(groups);
+            if (!names.length) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#9CA3AF;padding:24px;">暂无数据</td></tr>';
+                return;
+            }
+            var html = '';
+            names.forEach(function(n) {
+                var g = groups[n];
+                var rate = g.total ? Math.round(g.approved / g.total * 100) : 0;
+                var cls = rate >= 90 ? 'green' : (rate >= 70 ? 'orange' : 'red');
+                var abnColor = g.rejected === 0 ? '#10B981' : (g.rejected <= 2 ? '#F59E0B' : '#EF4444');
+                var projs = Object.keys(g.projects).join('、') || '—';
+                html += '<tr>' +
+                    '<td>' + escapeHtml(g.name) + '</td>' +
+                    '<td>' + escapeHtml(projs) + '</td>' +
+                    '<td>' + g.total + '</td>' +
+                    '<td>' + g.approved + '</td>' +
+                    '<td><div style="display:flex;align-items:center;gap:8px;"><div class="progress-bar"><div class="progress-fill ' + cls + '" style="width:' + rate + '%"></div></div><span style="font-size:12px;">' + rate + '%</span></div></td>' +
+                    '<td style="color:' + abnColor + ';">' + g.rejected + '</td>' +
+                    '<td><a href="diary-report.html" style="color:#2563EB;text-decoration:none;font-size:12px;">查看详情</a></td>' +
+                '</tr>';
+            });
+            tbody.innerHTML = html;
+        }
+
+        function queryData() { loadData(); }
+
+        function resetFilters() {
+            document.getElementById('dimensionSelect').value = 'person';
+            document.getElementById('personSearch').value = '';
+            document.getElementById('projectSelect').value = '';
+            document.getElementById('startDate').value = '';
+            document.getElementById('endDate').value = '';
+            document.getElementById('personFilter').style.display = '';
+            document.getElementById('projectFilter').style.display = 'none';
+            loadData();
+        }
+
+        if (window.App) {
+            App.requireAuth();
+            App.initTopbar();
+            Promise.all([loadProjects(), loadUsers()]).then(loadData);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监理现场管理系统 - 流程管理</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background: #F0F5FF; color: #1F2937; display: flex; min-height: 100vh; }
+        .sidebar { width: 240px; background: linear-gradient(180deg, #1E3A5F 0%, #0F2440 100%); color: #fff; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; overflow-y: auto; }
+        .sidebar-logo { padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo h2 { font-size: 16px; font-weight: 600; letter-spacing: 1px; }
+        .sidebar-logo p { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+        .menu-group { padding: 8px 0; }
+        .menu-group-title { padding: 10px 20px 6px; font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
+        .menu-item { display: flex; align-items: center; padding: 10px 20px; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; transition: all 0.2s; cursor: pointer; }
+        .menu-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+        .menu-item.active { background: rgba(37,99,235,0.3); color: #fff; border-right: 3px solid #2563EB; }
+        .menu-item .icon { width: 20px; margin-right: 10px; text-align: center; font-size: 14px; }
+        .main { margin-left: 240px; flex: 1; }
+        .header { background: #fff; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 50; }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .header-left h3 { font-size: 15px; font-weight: 600; color: #1E3A5F; }
+        .breadcrumb { font-size: 12px; color: #6B7280; }
+        .breadcrumb a { color: #2563EB; text-decoration: none; }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .notification { position: relative; cursor: pointer; font-size: 18px; }
+        .badge { position: absolute; top: -6px; right: -6px; background: #EF4444; color: #fff; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .user-info { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #2563EB; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; }
+        .user-name { font-size: 13px; color: #374151; }
+        .content { padding: 24px; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; border: none; transition: all 0.2s; }
+        .btn-primary { background: #2563EB; color: #fff; }
+        .btn-primary:hover { background: #1D4ED8; }
+        .btn-danger { background: #EF4444; color: #fff; }
+        .btn-outline { background: #fff; color: #374151; border: 1px solid #E5E7EB; }
+        .btn-outline:hover { background: #F9FAFB; }
+        .btn-sm { padding: 4px 10px; font-size: 12px; }
+        .btn-success { background: #10B981; color: #fff; }
+        .flow-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        .flow-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; }
+        .flow-card-header { padding: 16px 20px; border-bottom: 1px solid #F3F4F6; display: flex; align-items: center; justify-content: space-between; }
+        .flow-card-header h4 { font-size: 14px; font-weight: 600; color: #1E3A5F; display: flex; align-items: center; gap: 8px; }
+        .flow-card-header .flow-status { padding: 2px 8px; border-radius: 12px; font-size: 11px; }
+        .flow-status.active { background: #D1FAE5; color: #059669; }
+        .flow-status.inactive { background: #F3F4F6; color: #6B7280; }
+        .flow-card-body { padding: 20px; }
+        .flow-steps { display: flex; align-items: center; gap: 0; margin-bottom: 16px; flex-wrap: wrap; }
+        .flow-step { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .step-box { padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; min-width: 60px; text-align: center; }
+        .step-box.start { background: #DBEAFE; color: #2563EB; }
+        .step-box.process { background: #FEF3C7; color: #D97706; }
+        .step-box.end { background: #D1FAE5; color: #059669; }
+        .step-box.review { background: #E0E7FF; color: #4F46E5; }
+        .flow-arrow { color: #D1D5DB; font-size: 16px; margin: 0 4px; align-self: center; }
+        .step-label { font-size: 10px; color: #9CA3AF; }
+        .flow-info { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; }
+        .flow-info-item { display: flex; gap: 4px; }
+        .flow-info-item .info-label { color: #9CA3AF; }
+        .flow-info-item .info-value { color: #374151; }
+        .flow-card-footer { padding: 12px 20px; border-top: 1px solid #F3F4F6; display: flex; justify-content: flex-end; gap: 8px; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+        .modal-overlay.show { display: flex; }
+        .modal { background: #fff; border-radius: 12px; width: 600px; max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: space-between; }
+        .modal-header h3 { font-size: 16px; font-weight: 600; color: #1E3A5F; }
+        .modal-close { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer; font-size: 18px; color: #6B7280; border: none; background: none; }
+        .modal-close:hover { background: #F3F4F6; }
+        .modal-body { padding: 24px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid #E5E7EB; display: flex; justify-content: flex-end; gap: 12px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px; }
+        .form-group label .required { color: #EF4444; }
+        .form-control { width: 100%; height: 36px; border: 1px solid #E5E7EB; border-radius: 6px; padding: 0 12px; font-size: 13px; outline: none; }
+        .form-control:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .confirm-modal .modal { width: 400px; }
+        .confirm-icon { text-align: center; font-size: 48px; margin-bottom: 16px; }
+        .confirm-text { text-align: center; font-size: 14px; color: #374151; margin-bottom: 8px; }
+        .confirm-sub { text-align: center; font-size: 12px; color: #9CA3AF; }
+        .node-list { border: 1px solid #E5E7EB; border-radius: 8px; padding: 12px; }
+        .node-item { display: flex; align-items: center; gap: 8px; padding: 8px; border-bottom: 1px solid #F3F4F6; }
+        .node-item:last-child { border-bottom: none; }
+        .node-item .node-order { width: 24px; height: 24px; border-radius: 50%; background: #DBEAFE; color: #2563EB; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; }
+        .node-item .node-name { flex: 1; font-size: 13px; }
+        .node-item .node-role { font-size: 12px; color: #6B7280; }
+        .add-node-btn { width: 100%; padding: 8px; border: 2px dashed #E5E7EB; border-radius: 6px; background: transparent; color: #9CA3AF; font-size: 12px; cursor: pointer; margin-top: 8px; }
+        .add-node-btn:hover { border-color: #2563EB; color: #2563EB; }
+    </style>
+    <script src="assets/app.js"></script>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/responsive.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-logo"><h2>监理现场管理系统</h2><p>Supervision Site Management</p></div>
+        <div class="menu-group"><a class="menu-item" href="index.html"><span class="icon">📊</span> 仪表盘</a></div>
+        <div class="menu-group"><div class="menu-group-title">项目管理</div><a class="menu-item" href="project-ledger.html"><span class="icon">📁</span> 项目台账</a></div>
+        <div class="menu-group"><div class="menu-group-title">监理现场工作</div><a class="menu-item" href="daily-inspection.html"><span class="icon">🔍</span> 日常巡检</a><a class="menu-item" href="sideline-inspection.html"><span class="icon">👁️</span> 旁站</a><a class="menu-item" href="supervision-notice.html"><span class="icon">📋</span> 监理通知单</a><a class="menu-item" href="work-contact.html"><span class="icon">✉️</span> 工作联系单</a><a class="menu-item" href="supervision-diary.html"><span class="icon">📝</span> 监理日记</a><a class="menu-item" href="supervision-log.html"><span class="icon">📄</span> 监理日志</a><a class="menu-item" href="safety-log.html"><span class="icon">🛡️</span> 监理安全日志</a><a class="menu-item" href="meeting-minutes.html"><span class="icon">📅</span> 会议纪要</a><a class="menu-item" href="supervision-monthly-report.html"><span class="icon">📊</span> 监理月报</a></div>
+        <div class="menu-group"><div class="menu-group-title">项目资料</div><a class="menu-item" href="sub-item-database.html"><span class="icon">🗄️</span> 工程资料目录设置</a><a class="menu-item" href="project-data-upload.html"><span class="icon">📤</span> 工程资料上传</a></div>
+        <div class="menu-group"><div class="menu-group-title">数据统计</div><a class="menu-item" href="diary-statistics.html"><span class="icon">📈</span> 日记统计</a><a class="menu-item" href="diary-report.html"><span class="icon">📑</span> 日记报表</a><a class="menu-item" href="log-statistics.html"><span class="icon">📊</span> 日志统计</a><a class="menu-item" href="safety-log-statistics.html"><span class="icon">🛡️</span> 安全日志统计</a></div>
+        <div class="menu-group"><div class="menu-group-title">团队管理</div><a class="menu-item" href="department-management.html"><span class="icon">🏢</span> 部门管理</a><a class="menu-item" href="personnel-management.html"><span class="icon">👥</span> 人员管理</a><a class="menu-item" href="permission-settings.html"><span class="icon">🔐</span> 权限设置</a><a class="menu-item active" href="process-management.html"><span class="icon">🔄</span> 流程管理</a></div>
+        <div class="menu-group"><div class="menu-group-title">系统设置</div><a class="menu-item" href="operation-log.html"><span class="icon">📜</span> 操作日志</a><a class="menu-item" href="message-center.html"><span class="icon">🔔</span> 消息中心</a><a class="menu-item" href="work-standard-config.html"><span class="icon">⚙️</span> 工作标准配置</a></div>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <div class="header-left"><h3>流程管理</h3><span class="breadcrumb"><a href="index.html">首页</a> / 团队管理 / 流程管理</span></div>
+            <div class="header-right"><div class="notification">🔔<span class="badge" id="notifBadge" style="display:none;">0</span></div><div class="user-info"><div class="user-avatar">张</div><span class="user-name">张监理</span></div></div>
+        </div>
+
+        <div class="content">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+                <span style="font-size:13px;color:#6B7280;">共 6 个审批流程</span>
+                <button class="btn btn-primary" onclick="openCreateModal()">＋ 新建流程</button>
+            </div>
+
+            <div class="flow-list">
+                <div class="flow-card">
+                    <div class="flow-card-header"><h4>📋 监理通知单审批</h4><span class="flow-status active">已启用</span></div>
+                    <div class="flow-card-body">
+                        <div class="flow-steps">
+                            <div class="flow-step"><div class="step-box start">填写</div><div class="step-label">发起人</div></div><span class="flow-arrow">→</span>
+                            <div class="flow-step"><div class="step-box review">审核</div><div class="step-label">总监</div></div><span class="flow-arrow">→</span>
+                            <div class="flow-step"><div class="step-box process">下发</div><div class="step-label">系统</div></div><span class="flow-arrow">→</span>
+                            <div class="flow-step"><div class="step-box process">回复</div><div class="step-label">施工方</div></div><span class="flow-arrow">→</span>
+                            <div class="flow-step"><div class="step-box review">验证</div><div class="step-label">监理</div></div><span class="flow-arrow">→</span>
+                            <div class="flow-step"><div class="step-box end">关闭</div><div class="step-label">系统</div></div>
+                        </div>
+                        <div class="flow-info">
+                            <div class="flow-info-item"><span class="info-label">审批节点：</span><span class="info-value">6个</span></div>
+                            <div class="flow-info-item"><span class="info-label">超时提醒：</span><span class="info-value">3天</span></div>
+                        </div>
+                    </div>
+                    <div class="flow-card-footer"><button class="btn btn-outline btn-sm" onclick="openEditModal(1)">编辑</button><button class="btn btn-outline btn-sm" onclick="toggleFlow(1)">停用</button></div>
+                </div>
+
+                <div class="flow-card">
+                    <div class="flow-card-header"><h4>📝 监理日记审批</h4><span class="flow-status active">已启用</span></div>
+                    <div class="flow-card-body">
+                        <div class="flow-steps">
+                            <div class="flow-step"><div class="step-box start">填写</div><div class="step-label">监理</div></div><span class="flow-arrow">→</span>
+                            <div class="flow-step"><div class="step-box process">提交</div><div class="step-label">系统</div></div><span class="flow-arrow">→</span>
+                            <div class="flow-step"><div class="step-box review">审核</div><div class="step-label">总监</div></div><span class="flow-arrow">→</span>
+                            <div class="flow-step"><div class="step-box end">完成</div><div class="step-label">系统</div></div>
+                        </div>
+                        <div class="flow-info">
+                            <div class="flow-info-item"><span class="info-label">审批节点：</span><span class="info-value">4个</span></div>
+                            <div class="flow-info-item"><span class="info-label">超时提醒：</span><span class="info-value">1天</span></div>
+                        </div>
+                    </div>
+                    <div class="flow-card-footer"><button class="btn btn-outline btn-sm" onclick="openEditModal(2)">编辑</button><button class="btn btn-outline btn-sm" onclick="toggleFlow(2)">停用</button></div>
+                </div>
+
+                <div class="flow-card">
+                    <div class="flow-card-header"><h4>📄 监理日志审批</h4><span class="flow-status active">已启用</span></div>
+                    <div class="flow-card-body">
+                        <div class="flow-steps">
+                            <div class="flow-step"><div class="step-box start">编制</div><div class="step-label">监理</div></div><span class="flow-arrow">→</span>
+                            <div class="flow-step"><div class="step-box review">审核</div><div class="step-label">总监</div></div><span class="flow-arrow">→</span>
+                            <div class="flow-step"><div class="step-box end">归档</div><div class="step-label">系统</div></div>
+                        </div>
+                        <div class="flow-info">
+                            <div class="flow-info-item"><span class="info-label">审批节点：</span><span class="info-value">3个</span></div>
+                            <div class="flow-info-item"><span class="info-label">超时提醒：</span><span class="info-value">3天</span></div>
+                        </div>
+                    </div>
+                    <div class="flow-card-footer"><button class="btn btn-outline btn-sm" onclick="openEditModal(3)">编辑</button><button class="btn btn-outline btn-sm" onclick="toggleFlow(3)">停用</button></div>
+                </div>
+
+                <div class="flow-card">
+                    <div class="flow-card-header"><h4>📅 会议纪要审批</h4><span class="flow-status active">已启用</span></div>
+                    <div class="flow-card-body">
+                        <div class="flow-steps">
+                            <div class="flow-step"><div class="step-box start">记录</div><div class="step-label">记录人</div></div><span class="flow-arrow">→</span>
+                            <div class="flow-step"><div class="step-box review">审核</div><div class="step-label">主持人</div></div><span class="flow-arrow">→</span>
+                            <div class="flow-step"><div class="step-box end">归档</div><div class="step-label">系统</div></div>
+                        </div>
+                        <div class="flow-info">
+                            <div class="flow-info-item"><span class="info-label">审批节点：</span><span class="info-value">3个</span></div>
+                            <div class="flow-info-item"><span class="info-label">超时提醒：</span><span class="info-value">2天</span></div>
+                        </div>
+                    </div>
+                    <div class="flow-card-footer"><button class="btn btn-outline btn-sm" onclick="openEditModal(4)">编辑</button><button class="btn btn-outline btn-sm" onclick="toggleFlow(4)">停用</button></div>
+                </div>
+
+                <div class="flow-card">
+                    <div class="flow-card-header"><h4>🔍 巡检整改审批</h4><span class="flow-status active">已启用</span></div>
+                    <div class="flow-card-body">
+                        <div class="flow-steps">
+                            <div class="flow-step"><div class="step-box start">巡检</div><div class="step-label">监理</div></div><span class="flow-arrow">→</span>
+                            <div class="flow-step"><div class="step-box process">整改</div><div class="step-label">施工方</div></div><span class="flow-arrow">→</span>
+                            <div class="flow-step"><div class="step-box review">验证</div><div class="step-label">监理</div></div><span class="flow-arrow">→</span>
+                            <div class="flow-step"><div class="step-box end">关闭</div><div class="step-label">系统</div></div>
+                        </div>
+                        <div class="flow-info">
+                            <div class="flow-info-item"><span class="info-label">审批节点：</span><span class="info-value">4个</span></div>
+                            <div class="flow-info-item"><span class="info-label">超时提醒：</span><span class="info-value">5天</span></div>
+                        </div>
+                    </div>
+                    <div class="flow-card-footer"><button class="btn btn-outline btn-sm" onclick="openEditModal(5)">编辑</button><button class="btn btn-outline btn-sm" onclick="toggleFlow(5)">停用</button></div>
+                </div>
+
+                <div class="flow-card">
+                    <div class="flow-card-header"><h4>✉️ 工作联系单审批</h4><span class="flow-status inactive">已停用</span></div>
+                    <div class="flow-card-body">
+                        <div class="flow-steps">
+                            <div class="flow-step"><div class="step-box start">发起</div><div class="step-label">监理</div></div><span class="flow-arrow">→</span>
+                            <div class="flow-step"><div class="step-box process">回复</div><div class="step-label">接收方</div></div><span class="flow-arrow">→</span>
+                            <div class="flow-step"><div class="step-box end">关闭</div><div class="step-label">发起人</div></div>
+                        </div>
+                        <div class="flow-info">
+                            <div class="flow-info-item"><span class="info-label">审批节点：</span><span class="info-value">3个</span></div>
+                            <div class="flow-info-item"><span class="info-label">超时提醒：</span><span class="info-value">—</span></div>
+                        </div>
+                    </div>
+                    <div class="flow-card-footer"><button class="btn btn-outline btn-sm" onclick="openEditModal(6)">编辑</button><button class="btn btn-success btn-sm" onclick="toggleFlow(6)">启用</button><button class="btn btn-danger btn-sm" onclick="confirmDelete(6)">删除</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="createModal">
+        <div class="modal">
+            <div class="modal-header"><h3 id="modalTitle">新建审批流程</h3><button class="modal-close" onclick="closeModal('createModal')">✕</button></div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group"><label>流程名称 <span class="required">*</span></label><input type="text" class="form-control" placeholder="请输入流程名称"></div>
+                    <div class="form-group"><label>关联模块 <span class="required">*</span></label><select class="form-control"><option value="">请选择</option><option>监理通知单</option><option>监理日记</option><option>监理日志</option><option>会议纪要</option><option>日常巡检</option><option>工作联系单</option></select></div>
+                </div>
+                <div class="form-group"><label>超时提醒（天）</label><input type="number" class="form-control" placeholder="0表示不提醒" value="3"></div>
+                <div class="form-group"><label>审批节点 <span class="required">*</span></label>
+                    <div class="node-list">
+                        <div class="node-item"><div class="node-order">1</div><div class="node-name">发起/填写</div><div class="node-role">发起人</div></div>
+                        <div class="node-item"><div class="node-order">2</div><div class="node-name">审核</div><div class="node-role">总监理工程师</div></div>
+                        <div class="node-item"><div class="node-order">3</div><div class="node-name">完成/归档</div><div class="node-role">系统</div></div>
+                        <button class="add-node-btn" onclick="addNode()">＋ 添加审批节点</button>
+                    </div>
+                </div>
+                <div class="form-group"><label>流程说明</label><textarea class="form-control" placeholder="请输入流程说明" style="height:60px;padding:8px 12px;resize:vertical;"></textarea></div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('createModal')">取消</button><button class="btn btn-primary" onclick="saveFlow()">保存</button></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay confirm-modal" id="deleteModal">
+        <div class="modal" style="width:400px;">
+            <div class="modal-header"><h3>确认删除</h3><button class="modal-close" onclick="closeModal('deleteModal')">✕</button></div>
+            <div class="modal-body" style="padding:32px 24px;">
+                <div class="confirm-icon">⚠️</div>
+                <div class="confirm-text">确定要删除该流程吗？</div>
+                <div class="confirm-sub">仅已停用的流程可删除</div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('deleteModal')">取消</button><button class="btn btn-danger" onclick="executeDelete()">确认删除</button></div>
+        </div>
+    </div>
+
+    <script>
+        function openCreateModal() { document.getElementById('modalTitle').textContent = '新建审批流程'; document.getElementById('createModal').classList.add('show'); }
+        function openEditModal(id) { document.getElementById('modalTitle').textContent = '编辑审批流程'; document.getElementById('createModal').classList.add('show'); }
+        function toggleFlow(id) { App.confirm('确认切换流程状态？', { danger: false }).then(function (ok) { if (ok) App.toast('流程状态已更新', 'success'); }); }
+        function confirmDelete(id) { document.getElementById('deleteModal').classList.add('show'); }
+        function executeDelete() { App.toast('已删除', 'success'); closeModal('deleteModal'); }
+        function addNode() { var list = document.querySelector('.node-list'); var count = list.querySelectorAll('.node-item').length + 1; var html = '<div class="node-item"><div class="node-order">'+count+'</div><div class="node-name"><input type="text" class="form-control" style="height:28px;font-size:12px;" placeholder="节点名称"></div><div class="node-role"><select class="form-control" style="height:28px;font-size:12px;"><option>总监理工程师</option><option>专业监理工程师</option><option>系统</option></select></div></div>'; list.querySelector('.add-node-btn').insertAdjacentHTML('beforebegin', html); }
+        function saveFlow() { alert('保存成功'); closeModal('createModal'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+        // 注：后端暂无 ProcessController，流程配置为本地演示数据；仅统一登录鉴权与顶栏。
+        if (window.App) {
+            App.requireAuth();
+            App.initTopbar();
+        }
+    </script>
+</body>
+</html>

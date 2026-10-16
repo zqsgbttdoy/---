@@ -1,0 +1,714 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.supervision.FieldWorkflowIntegrationTest" time="12.598" tests="30" errors="0" skipped="0" failures="8">
+  <properties>
+    <property name="java.specification.version" value="21"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="GBK"/>
+    <property name="java.class.path" value="E:\希地工作\trae 文件保存\完整版-监理 - qoder\补后端\backend\target\test-classes;E:\希地工作\trae 文件保存\完整版-监理 - qoder\补后端\backend\target\classes;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-starter-web\3.2.5\spring-boot-starter-web-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-starter\3.2.5\spring-boot-starter-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot\3.2.5\spring-boot-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-starter-logging\3.2.5\spring-boot-starter-logging-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\apache\logging\log4j\log4j-to-slf4j\2.21.1\log4j-to-slf4j-2.21.1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\apache\logging\log4j\log4j-api\2.21.1\log4j-api-2.21.1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\slf4j\jul-to-slf4j\2.0.13\jul-to-slf4j-2.0.13.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-starter-json\3.2.5\spring-boot-starter-json-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.4\jackson-datatype-jdk8-2.15.4.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.4\jackson-datatype-jsr310-2.15.4.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.4\jackson-module-parameter-names-2.15.4.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-starter-tomcat\3.2.5\spring-boot-starter-tomcat-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\apache\tomcat\embed\tomcat-embed-core\10.1.20\tomcat-embed-core-10.1.20.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.20\tomcat-embed-websocket-10.1.20.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-web\6.1.6\spring-web-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-beans\6.1.6\spring-beans-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\io\micrometer\micrometer-observation\1.12.5\micrometer-observation-1.12.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\io\micrometer\micrometer-commons\1.12.5\micrometer-commons-1.12.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-webmvc\6.1.6\spring-webmvc-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-aop\6.1.6\spring-aop-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-context\6.1.6\spring-context-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-expression\6.1.6\spring-expression-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-starter-data-jpa\3.2.5\spring-boot-starter-data-jpa-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-starter-aop\3.2.5\spring-boot-starter-aop-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\aspectj\aspectjweaver\1.9.22\aspectjweaver-1.9.22.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-starter-jdbc\3.2.5\spring-boot-starter-jdbc-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-jdbc\6.1.6\spring-jdbc-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\hibernate\orm\hibernate-core\6.4.4.Final\hibernate-core-6.4.4.Final.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\io\smallrye\jandex\3.1.2\jandex-3.1.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\fasterxml\classmate\1.6.0\classmate-1.6.0.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\net\bytebuddy\byte-buddy\1.14.13\byte-buddy-1.14.13.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\glassfish\jaxb\jaxb-runtime\4.0.5\jaxb-runtime-4.0.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\glassfish\jaxb\jaxb-core\4.0.5\jaxb-core-4.0.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\eclipse\angus\angus-activation\2.0.2\angus-activation-2.0.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\glassfish\jaxb\txw2\4.0.5\txw2-4.0.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\antlr\antlr4-runtime\4.13.0\antlr4-runtime-4.13.0.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\data\spring-data-jpa\3.2.5\spring-data-jpa-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\data\spring-data-commons\3.2.5\spring-data-commons-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-orm\6.1.6\spring-orm-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-tx\6.1.6\spring-tx-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-aspects\6.1.6\spring-aspects-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-starter-validation\3.2.5\spring-boot-starter-validation-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\apache\tomcat\embed\tomcat-embed-el\10.1.20\tomcat-embed-el-10.1.20.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\mysql\mysql-connector-j\8.3.0\mysql-connector-j-8.3.0.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\alibaba\druid-spring-boot-3-starter\1.2.22\druid-spring-boot-3-starter-1.2.22.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\alibaba\druid\1.2.22\druid-1.2.22.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\slf4j\slf4j-api\2.0.13\slf4j-api-2.0.13.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-autoconfigure\3.2.5\spring-boot-autoconfigure-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\h2database\h2\2.2.224\h2-2.2.224.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\projectlombok\lombok\1.18.38\lombok-1.18.38.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\alibaba\fastjson2\fastjson2\2.0.47\fastjson2-2.0.47.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\security\spring-security-crypto\6.2.4\spring-security-crypto-6.2.4.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\io\jsonwebtoken\jjwt-api\0.12.5\jjwt-api-0.12.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\io\jsonwebtoken\jjwt-impl\0.12.5\jjwt-impl-0.12.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\io\jsonwebtoken\jjwt-jackson\0.12.5\jjwt-jackson-0.12.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\fasterxml\jackson\core\jackson-databind\2.15.4\jackson-databind-2.15.4.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\fasterxml\jackson\core\jackson-annotations\2.15.4\jackson-annotations-2.15.4.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\fasterxml\jackson\core\jackson-core\2.15.4\jackson-core-2.15.4.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\apache\commons\commons-lang3\3.13.0\commons-lang3-3.13.0.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-starter-test\3.2.5\spring-boot-starter-test-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-test\3.2.5\spring-boot-test-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-test-autoconfigure\3.2.5\spring-boot-test-autoconfigure-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\jayway\jsonpath\json-path\2.9.0\json-path-2.9.0.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\jakarta\xml\bind\jakarta.xml.bind-api\4.0.2\jakarta.xml.bind-api-4.0.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\jakarta\activation\jakarta.activation-api\2.1.3\jakarta.activation-api-2.1.3.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\net\minidev\json-smart\2.5.1\json-smart-2.5.1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\net\minidev\accessors-smart\2.5.1\accessors-smart-2.5.1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\ow2\asm\asm\9.6\asm-9.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\awaitility\awaitility\4.2.1\awaitility-4.2.1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\mockito\mockito-core\5.7.0\mockito-core-5.7.0.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\net\bytebuddy\byte-buddy-agent\1.14.13\byte-buddy-agent-1.14.13.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\objenesis\objenesis\3.3\objenesis-3.3.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\mockito\mockito-junit-jupiter\5.7.0\mockito-junit-jupiter-5.7.0.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-core\6.1.6\spring-core-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-jcl\6.1.6\spring-jcl-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-test\6.1.6\spring-test-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;"/>
+    <property name="java.vm.vendor" value="Eclipse Adoptium"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://adoptium.net/"/>
+    <property name="user.timezone" value="Asia/Shanghai"/>
+    <property name="org.jboss.logging.provider" value="slf4j"/>
+    <property name="os.name" value="Windows 11"/>
+    <property name="java.vm.specification.version" value="21"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="CN"/>
+    <property name="sun.boot.library.path" value="C:\Users\Administrator\.qoder\extensions\redhat.java-1.56.0-win32-x64\jre\21.0.12.1-win32-x86_64\bin"/>
+    <property name="qa.reportsDirectory" value="E:\希地工作\trae 文件保存\完整版-监理 - qoder\测试工作区\QA22-20260923052710\补充复核-20260924015916876-a61b45c3\surefire"/>
+    <property name="sun.java.command" value="C:\Users\Administrator\AppData\Local\Temp\surefire13320648800027712717\surefirebooter-20260924095921057_3.jar C:\Users\Administrator\AppData\Local\Temp\surefire13320648800027712717 2026-09-24T09-59-20_903-jvmRun1 surefire-20260924095921057_1tmp surefire_0-20260924095921057_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="E:\希地工作\trae 文件保存\完整版-监理 - qoder\补后端\backend\target\test-classes;E:\希地工作\trae 文件保存\完整版-监理 - qoder\补后端\backend\target\classes;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-starter-web\3.2.5\spring-boot-starter-web-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-starter\3.2.5\spring-boot-starter-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot\3.2.5\spring-boot-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-starter-logging\3.2.5\spring-boot-starter-logging-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\apache\logging\log4j\log4j-to-slf4j\2.21.1\log4j-to-slf4j-2.21.1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\apache\logging\log4j\log4j-api\2.21.1\log4j-api-2.21.1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\slf4j\jul-to-slf4j\2.0.13\jul-to-slf4j-2.0.13.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-starter-json\3.2.5\spring-boot-starter-json-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.4\jackson-datatype-jdk8-2.15.4.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.4\jackson-datatype-jsr310-2.15.4.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.4\jackson-module-parameter-names-2.15.4.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-starter-tomcat\3.2.5\spring-boot-starter-tomcat-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\apache\tomcat\embed\tomcat-embed-core\10.1.20\tomcat-embed-core-10.1.20.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.20\tomcat-embed-websocket-10.1.20.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-web\6.1.6\spring-web-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-beans\6.1.6\spring-beans-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\io\micrometer\micrometer-observation\1.12.5\micrometer-observation-1.12.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\io\micrometer\micrometer-commons\1.12.5\micrometer-commons-1.12.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-webmvc\6.1.6\spring-webmvc-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-aop\6.1.6\spring-aop-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-context\6.1.6\spring-context-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-expression\6.1.6\spring-expression-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-starter-data-jpa\3.2.5\spring-boot-starter-data-jpa-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-starter-aop\3.2.5\spring-boot-starter-aop-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\aspectj\aspectjweaver\1.9.22\aspectjweaver-1.9.22.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-starter-jdbc\3.2.5\spring-boot-starter-jdbc-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-jdbc\6.1.6\spring-jdbc-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\hibernate\orm\hibernate-core\6.4.4.Final\hibernate-core-6.4.4.Final.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\io\smallrye\jandex\3.1.2\jandex-3.1.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\fasterxml\classmate\1.6.0\classmate-1.6.0.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\net\bytebuddy\byte-buddy\1.14.13\byte-buddy-1.14.13.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\glassfish\jaxb\jaxb-runtime\4.0.5\jaxb-runtime-4.0.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\glassfish\jaxb\jaxb-core\4.0.5\jaxb-core-4.0.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\eclipse\angus\angus-activation\2.0.2\angus-activation-2.0.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\glassfish\jaxb\txw2\4.0.5\txw2-4.0.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\antlr\antlr4-runtime\4.13.0\antlr4-runtime-4.13.0.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\data\spring-data-jpa\3.2.5\spring-data-jpa-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\data\spring-data-commons\3.2.5\spring-data-commons-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-orm\6.1.6\spring-orm-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-tx\6.1.6\spring-tx-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-aspects\6.1.6\spring-aspects-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-starter-validation\3.2.5\spring-boot-starter-validation-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\apache\tomcat\embed\tomcat-embed-el\10.1.20\tomcat-embed-el-10.1.20.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\mysql\mysql-connector-j\8.3.0\mysql-connector-j-8.3.0.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\alibaba\druid-spring-boot-3-starter\1.2.22\druid-spring-boot-3-starter-1.2.22.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\alibaba\druid\1.2.22\druid-1.2.22.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\slf4j\slf4j-api\2.0.13\slf4j-api-2.0.13.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-autoconfigure\3.2.5\spring-boot-autoconfigure-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\h2database\h2\2.2.224\h2-2.2.224.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\projectlombok\lombok\1.18.38\lombok-1.18.38.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\alibaba\fastjson2\fastjson2\2.0.47\fastjson2-2.0.47.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\security\spring-security-crypto\6.2.4\spring-security-crypto-6.2.4.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\io\jsonwebtoken\jjwt-api\0.12.5\jjwt-api-0.12.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\io\jsonwebtoken\jjwt-impl\0.12.5\jjwt-impl-0.12.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\io\jsonwebtoken\jjwt-jackson\0.12.5\jjwt-jackson-0.12.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\fasterxml\jackson\core\jackson-databind\2.15.4\jackson-databind-2.15.4.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\fasterxml\jackson\core\jackson-annotations\2.15.4\jackson-annotations-2.15.4.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\fasterxml\jackson\core\jackson-core\2.15.4\jackson-core-2.15.4.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\apache\commons\commons-lang3\3.13.0\commons-lang3-3.13.0.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-starter-test\3.2.5\spring-boot-starter-test-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-test\3.2.5\spring-boot-test-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\boot\spring-boot-test-autoconfigure\3.2.5\spring-boot-test-autoconfigure-3.2.5.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\jayway\jsonpath\json-path\2.9.0\json-path-2.9.0.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\jakarta\xml\bind\jakarta.xml.bind-api\4.0.2\jakarta.xml.bind-api-4.0.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\jakarta\activation\jakarta.activation-api\2.1.3\jakarta.activation-api-2.1.3.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\net\minidev\json-smart\2.5.1\json-smart-2.5.1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\net\minidev\accessors-smart\2.5.1\accessors-smart-2.5.1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\ow2\asm\asm\9.6\asm-9.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\awaitility\awaitility\4.2.1\awaitility-4.2.1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\mockito\mockito-core\5.7.0\mockito-core-5.7.0.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\net\bytebuddy\byte-buddy-agent\1.14.13\byte-buddy-agent-1.14.13.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\objenesis\objenesis\3.3\objenesis-3.3.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\mockito\mockito-junit-jupiter\5.7.0\mockito-junit-jupiter-5.7.0.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-core\6.1.6\spring-core-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-jcl\6.1.6\spring-jcl-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\springframework\spring-test\6.1.6\spring-test-6.1.6.jar;E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\Administrator"/>
+    <property name="user.language" value="zh"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2026-08-18"/>
+    <property name="java.home" value="C:\Users\Administrator\.qoder\extensions\redhat.java-1.56.0-win32-x64\jre\21.0.12.1-win32-x86_64"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="E:\希地工作\trae 文件保存\完整版-监理 - qoder\补后端\backend"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="FILE_LOG_CHARSET" value="UTF-8"/>
+    <property name="java.awt.headless" value="true"/>
+    <property name="surefire.real.class.path" value="C:\Users\Administrator\AppData\Local\Temp\surefire13320648800027712717\surefirebooter-20260924095921057_3.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="21.0.12.1+1-LTS"/>
+    <property name="user.name" value="Administrator"/>
+    <property name="stdout.encoding" value="GBK"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Temurin-21.0.12.1+1"/>
+    <property name="localRepository" value="E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache"/>
+    <property name="java.vendor.url.bug" value="https://github.com/adoptium/adoptium-support/issues"/>
+    <property name="java.io.tmpdir" value="C:\Users\Administrator\AppData\Local\Temp\"/>
+    <property name="com.zaxxer.hikari.pool_number" value="1"/>
+    <property name="java.version" value="21.0.12.1"/>
+    <property name="user.dir" value="E:\希地工作\trae 文件保存\完整版-监理 - qoder\补后端\backend"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="PID" value="15296"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
+    <property name="native.encoding" value="GBK"/>
+    <property name="java.library.path" value="C:\Users\Administrator\.qoder\extensions\redhat.java-1.56.0-win32-x64\jre\21.0.12.1-win32-x86_64\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;c:\Users\Administrator\AppData\Roaming\Qoder\User\globalStorage\github.copilot-chat\debugCommand;c:\Users\Administrator\AppData\Roaming\Qoder\User\globalStorage\github.copilot-chat\copilotCli;C:\Program Files (x86)\Common Files\Oracle\Java\java8path;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Adoptium\jdk-8.0.502.7-hotspot\bin;C:\tools\apache-maven-3.9.9\bin;C:\Program Files\Eclipse Adoptium\jdk-8.0.502.7-hotspot\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA App\NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\nodejs\;rogram Files\dotnet\;rogram Files\dotnet\;C:\Program Files (x86)\dotnet\;D:\软件下载\Git\cmd;C:\Program Files\Eclipse Adoptium\jdk-8.0.502.7-hotspot\bin;C:\tools\apache-maven-3.9.9\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;C:\Users\Administrator\AppData\Roaming\npm;C:\Users\Administrator\AppData\Local\GitHubDesktop\bin;D:\软件下载\Qoder\bin;D:\软件下载\Qoder IDE\bin;c:\Users\Administrator\.qoder\extensions\vscjava.vscode-java-debug-0.59.0\bundled\scripts\noConfigScripts;c:\Users\Administrator\.qoder\extensions\ms-python.debugpy-2025.14.0-win32-x64\bundled\scripts\noConfigScripts;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="GBK"/>
+    <property name="java.vendor" value="Eclipse Adoptium"/>
+    <property name="java.vm.version" value="21.0.12.1+1-LTS"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="maven.repo.local" value="E:\希地工作\trae 文件保存\完整版-监理 - qoder\.m2-cache"/>
+    <property name="java.class.version" value="65.0"/>
+  </properties>
+  <testcase name="emptyCodeUpdateKeepsAssignedNumber" classname="com.supervision.FieldWorkflowIntegrationTest" time="1.152">
+    <system-out><![CDATA[09:59:24.683 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.supervision.FieldWorkflowIntegrationTest]: FieldWorkflowIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+09:59:24.889 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.supervision.SupervisionApplication for test class com.supervision.FieldWorkflowIntegrationTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-09-24 09:59:25.562 [INFO ] [background-preinit] o.h.validator.internal.util.Version [] - HV000001: Hibernate Validator 8.0.1.Final
+2026-09-24 09:59:25.602 [INFO ] [main] c.s.FieldWorkflowIntegrationTest [] - Starting FieldWorkflowIntegrationTest using Java 21.0.12.1 with PID 15296 (started by Administrator in E:\希地工作\trae 文件保存\完整版-监理 - qoder\补后端\backend)
+2026-09-24 09:59:25.603 [INFO ] [main] c.s.FieldWorkflowIntegrationTest [] - The following 1 profile is active: "e2e"
+2026-09-24 09:59:26.707 [INFO ] [main] o.s.d.r.c.RepositoryConfigurationDelegate [] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-09-24 09:59:26.853 [INFO ] [main] o.s.d.r.c.RepositoryConfigurationDelegate [] - Finished Spring Data repository scanning in 135 ms. Found 21 JPA repository interfaces.
+2026-09-24 09:59:27.505 [INFO ] [main] o.h.jpa.internal.util.LogHelper [] - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-09-24 09:59:27.596 [INFO ] [main] org.hibernate.Version [] - HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-09-24 09:59:27.637 [INFO ] [main] o.h.c.i.RegionFactoryInitiator [] - HHH000026: Second-level cache disabled
+2026-09-24 09:59:27.771 [INFO ] [main] o.s.o.j.p.SpringPersistenceUnitInfo [] - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-09-24 09:59:27.802 [INFO ] [main] com.zaxxer.hikari.HikariDataSource [] - HikariPool-1 - Starting...
+2026-09-24 09:59:28.187 [INFO ] [main] com.zaxxer.hikari.pool.HikariPool [] - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:fieldtests user=SA
+2026-09-24 09:59:28.195 [INFO ] [main] com.zaxxer.hikari.HikariDataSource [] - HikariPool-1 - Start completed.
+2026-09-24 09:59:28.222 [WARN ] [main] org.hibernate.orm.deprecation [] - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-09-24 09:59:29.570 [INFO ] [main] o.h.e.t.j.p.i.JtaPlatformInitiator [] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-09-24 09:59:29.647 [INFO ] [main] o.s.o.j.LocalContainerEntityManagerFactoryBean [] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-09-24 09:59:31.619 [INFO ] [main] o.s.b.t.m.w.SpringBootMockServletContext [] - Initializing Spring TestDispatcherServlet ''
+2026-09-24 09:59:31.620 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Initializing Servlet ''
+2026-09-24 09:59:31.622 [INFO ] [main] o.s.t.w.s.TestDispatcherServlet [] - Completed initialization in 2 ms
+2026-09-24 09:59:31.650 [INFO ] [main] c.s.FieldWorkflowIntegrationTest [] - Started FieldWorkflowIntegrationTest in 6.58 seconds (process running for 10.428)
+2026-09-24 09:59:32.115 [INFO ] [main] c.s.i.RequestLoggingInterceptor [4a519307] - 请求完成: POST /files/upload status=200 耗时=241ms
+2026-09-24 09:59:32.778 [INFO ] [main] c.s.i.RequestLoggingInterceptor [d8cc6ccb] - 请求完成: POST /supervision-diaries status=200 耗时=647ms
+2026-09-24 09:59:32.821 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9265cb9a] - 请求完成: PUT /supervision-diaries/1 status=200 耗时=39ms
+]]></system-out>
+  </testcase>
+  <testcase name="qaAcceptanceDraftIsPersistedAndApprovalIsScoped" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.182">
+    <system-out><![CDATA[2026-09-24 09:59:32.850 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a3691cfc] - 请求完成: POST /files/upload status=200 耗时=12ms
+2026-09-24 09:59:32.878 [INFO ] [main] c.s.i.RequestLoggingInterceptor [3c95cbe7] - 请求完成: POST /supervision-diaries status=200 耗时=26ms
+2026-09-24 09:59:32.892 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7db08892] - 请求完成: GET /supervision-diaries/2 status=200 耗时=9ms
+2026-09-24 09:59:32.932 [WARN ] [main] c.s.exception.GlobalExceptionHandler [21930f13] - 业务异常: /supervision-diaries/2/approve - 无权查看他人的草稿或待办
+2026-09-24 09:59:32.934 [INFO ] [main] c.s.i.RequestLoggingInterceptor [21930f13] - 请求完成: POST /supervision-diaries/2/approve status=403 耗时=33ms
+2026-09-24 09:59:32.970 [INFO ] [main] c.s.i.RequestLoggingInterceptor [f779fa54] - 请求完成: POST /supervision-diaries/2/submit status=200 耗时=21ms
+2026-09-24 09:59:32.988 [WARN ] [main] c.s.exception.GlobalExceptionHandler [96cd1151] - 业务异常: /supervision-diaries/2/approve - 无权访问该项目
+2026-09-24 09:59:32.990 [INFO ] [main] c.s.i.RequestLoggingInterceptor [96cd1151] - 请求完成: POST /supervision-diaries/2/approve status=403 耗时=17ms
+2026-09-24 09:59:33.011 [WARN ] [main] c.s.exception.GlobalExceptionHandler [9872ef8b] - 业务异常: /supervision-diaries/2 - 记录已提交或已审核，不能直接修改；已审核记录请建立修订稿
+2026-09-24 09:59:33.012 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9872ef8b] - 请求完成: DELETE /supervision-diaries/2 status=409 耗时=18ms
+]]></system-out>
+  </testcase>
+  <testcase name="qaAcceptanceDirectoryRejectsOtherProject" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.055">
+    <failure message="Response status expected:&lt;403&gt; but was:&lt;200&gt;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: Response status expected:<403> but was:<200>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$is$1(StatusResultMatchers.java:64)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.supervision.FieldWorkflowIntegrationTest.call(FieldWorkflowIntegrationTest.java:57)
+	at com.supervision.FieldWorkflowIntegrationTest.qaAcceptanceDirectoryRejectsOtherProject(FieldWorkflowIntegrationTest.java:410)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+]]></failure>
+    <system-out><![CDATA[2026-09-24 09:59:33.031 [INFO ] [main] c.s.i.RequestLoggingInterceptor [33c5ecf1] - 请求完成: POST /files/upload status=200 耗时=8ms
+2026-09-24 09:59:33.059 [INFO ] [main] c.s.i.RequestLoggingInterceptor [83763edd] - 请求完成: GET /sub-item-databases/10016 status=200 耗时=24ms
+2026-09-24 09:59:33.065 [INFO ] [main] c.s.i.RequestLoggingInterceptor [f32364c5] - 请求完成: GET /sub-item-databases/10016 status=200 耗时=3ms
+]]></system-out>
+  </testcase>
+  <testcase name="serverSideSingleDateSourceAndNoDraftCounting" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.409">
+    <system-out><![CDATA[2026-09-24 09:59:33.087 [INFO ] [main] c.s.i.RequestLoggingInterceptor [edcab5be] - 请求完成: POST /files/upload status=200 耗时=5ms
+2026-09-24 09:59:33.112 [INFO ] [main] c.s.i.RequestLoggingInterceptor [d41aabb7] - 请求完成: POST /supervision-diaries status=200 耗时=23ms
+2026-09-24 09:59:33.221 [INFO ] [main] c.s.i.RequestLoggingInterceptor [15aebc1e] - 请求完成: GET /field/diary-source status=200 耗时=107ms
+2026-09-24 09:59:33.235 [INFO ] [main] c.s.i.RequestLoggingInterceptor [d2bf246e] - 请求完成: POST /supervision-diaries/3/submit status=200 耗时=12ms
+2026-09-24 09:59:33.255 [INFO ] [main] c.s.i.RequestLoggingInterceptor [19ee29b9] - 请求完成: POST /supervision-diaries/3/approve status=200 耗时=18ms
+2026-09-24 09:59:33.263 [INFO ] [main] c.s.i.RequestLoggingInterceptor [4428a30d] - 请求完成: GET /field/diary-source status=200 耗时=7ms
+2026-09-24 09:59:33.268 [INFO ] [main] c.s.i.RequestLoggingInterceptor [35be8e01] - 请求完成: GET /field/diary-source status=200 耗时=4ms
+2026-09-24 09:59:33.317 [INFO ] [main] c.s.i.RequestLoggingInterceptor [374c4f59] - 请求完成: POST /supervision-logs status=200 耗时=46ms
+2026-09-24 09:59:33.334 [WARN ] [main] c.s.exception.GlobalExceptionHandler [9b5fce7f] - 业务异常: /supervision-logs - 日记来源不是本项目当日已审核版本，请重新取数
+2026-09-24 09:59:33.335 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9b5fce7f] - 请求完成: POST /supervision-logs status=409 耗时=17ms
+2026-09-24 09:59:33.484 [INFO ] [main] c.s.i.RequestLoggingInterceptor [6593b567] - 请求完成: GET /field/summary status=200 耗时=148ms
+]]></system-out>
+  </testcase>
+  <testcase name="rejectEditResubmitAndApprovedLock" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.236">
+    <system-out><![CDATA[2026-09-24 09:59:33.501 [INFO ] [main] c.s.i.RequestLoggingInterceptor [008428f4] - 请求完成: POST /files/upload status=200 耗时=5ms
+2026-09-24 09:59:33.522 [INFO ] [main] c.s.i.RequestLoggingInterceptor [687b26f8] - 请求完成: POST /supervision-diaries status=200 耗时=18ms
+2026-09-24 09:59:33.529 [WARN ] [main] c.s.exception.GlobalExceptionHandler [1278c295] - 业务异常: /supervision-diaries/4 - 缺少记录版本，请重新打开记录后操作
+2026-09-24 09:59:33.529 [INFO ] [main] c.s.i.RequestLoggingInterceptor [1278c295] - 请求完成: PUT /supervision-diaries/4 status=428 耗时=4ms
+2026-09-24 09:59:33.541 [INFO ] [main] c.s.i.RequestLoggingInterceptor [ff3421d6] - 请求完成: POST /supervision-diaries/4/submit status=200 耗时=11ms
+2026-09-24 09:59:33.551 [WARN ] [main] c.s.exception.GlobalExceptionHandler [9870c6af] - 业务异常: /supervision-diaries/4/approve - 没有该项目的审核权限
+2026-09-24 09:59:33.551 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9870c6af] - 请求完成: POST /supervision-diaries/4/approve status=403 耗时=8ms
+2026-09-24 09:59:33.566 [WARN ] [main] c.s.exception.GlobalExceptionHandler [7e63624b] - 业务异常: /supervision-diaries/4/approve - 请填写退回原因
+2026-09-24 09:59:33.567 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7e63624b] - 请求完成: POST /supervision-diaries/4/approve status=400 耗时=14ms
+2026-09-24 09:59:33.589 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7677250d] - 请求完成: POST /supervision-diaries/4/approve status=200 耗时=21ms
+2026-09-24 09:59:33.617 [INFO ] [main] c.s.i.RequestLoggingInterceptor [4c9e8629] - 请求完成: PUT /supervision-diaries/4 status=200 耗时=25ms
+2026-09-24 09:59:33.633 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a12f469d] - 请求完成: POST /supervision-diaries/4/submit status=200 耗时=15ms
+2026-09-24 09:59:33.653 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e26e9b26] - 请求完成: POST /supervision-diaries/4/approve status=200 耗时=19ms
+2026-09-24 09:59:33.663 [WARN ] [main] c.s.exception.GlobalExceptionHandler [42c8b2dc] - 业务异常: /supervision-diaries/4 - 记录已提交或已审核，不能直接修改；已审核记录请建立修订稿
+2026-09-24 09:59:33.663 [INFO ] [main] c.s.i.RequestLoggingInterceptor [42c8b2dc] - 请求完成: PUT /supervision-diaries/4 status=409 耗时=9ms
+2026-09-24 09:59:33.687 [INFO ] [main] c.s.i.RequestLoggingInterceptor [38af00b6] - 请求完成: GET /supervision-diaries/4/history status=200 耗时=22ms
+2026-09-24 09:59:33.721 [INFO ] [main] c.s.i.RequestLoggingInterceptor [ba4221f1] - 请求完成: POST /supervision-diaries status=200 耗时=31ms
+]]></system-out>
+  </testcase>
+  <testcase name="qaAcceptanceNoticesAndContactsCannotSkipWorkflow" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.09">
+    <failure message="Multiple Failures (2 failures)&#10;	org.opentest4j.AssertionFailedError: supervision-notices创建即verified必须拒绝，实际HTTP=200 ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;&#10;	org.opentest4j.AssertionFailedError: work-contacts创建即verified必须拒绝，实际HTTP=200 ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.MultipleFailuresError"><![CDATA[org.opentest4j.MultipleFailuresError: 
+Multiple Failures (2 failures)
+	org.opentest4j.AssertionFailedError: supervision-notices创建即verified必须拒绝，实际HTTP=200 ==> expected: <true> but was: <false>
+	org.opentest4j.AssertionFailedError: work-contacts创建即verified必须拒绝，实际HTTP=200 ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertAll.assertAll(AssertAll.java:80)
+	at org.junit.jupiter.api.AssertAll.assertAll(AssertAll.java:58)
+	at org.junit.jupiter.api.Assertions.assertAll(Assertions.java:3012)
+	at com.supervision.FieldWorkflowIntegrationTest.qaAcceptanceNoticesAndContactsCannotSkipWorkflow(FieldWorkflowIntegrationTest.java:475)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+	Suppressed: org.opentest4j.AssertionFailedError: supervision-notices创建即verified必须拒绝，实际HTTP=200 ==> expected: <true> but was: <false>
+		at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+		at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+		at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+		at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+		at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+		at com.supervision.FieldWorkflowIntegrationTest.lambda$qaAcceptanceNoticesAndContactsCannotSkipWorkflow$6(FieldWorkflowIntegrationTest.java:481)
+		at org.junit.jupiter.api.AssertAll.lambda$assertAll$0(AssertAll.java:68)
+		at java.base/java.util.stream.ReferencePipeline$3$1.accept(Unknown Source)
+		at java.base/java.util.stream.ReferencePipeline$3$1.accept(Unknown Source)
+		at java.base/java.util.Iterator.forEachRemaining(Unknown Source)
+		at java.base/java.util.Spliterators$IteratorSpliterator.forEachRemaining(Unknown Source)
+		at java.base/java.util.stream.AbstractPipeline.copyInto(Unknown Source)
+		at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(Unknown Source)
+		at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(Unknown Source)
+		at java.base/java.util.stream.AbstractPipeline.evaluate(Unknown Source)
+		at java.base/java.util.stream.ReferencePipeline.collect(Unknown Source)
+		at org.junit.jupiter.api.AssertAll.assertAll(AssertAll.java:77)
+		... 6 more
+	Suppressed: org.opentest4j.AssertionFailedError: work-contacts创建即verified必须拒绝，实际HTTP=200 ==> expected: <true> but was: <false>
+		at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+		at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+		at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+		at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+		at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+		at com.supervision.FieldWorkflowIntegrationTest.lambda$qaAcceptanceNoticesAndContactsCannotSkipWorkflow$6(FieldWorkflowIntegrationTest.java:481)
+		at org.junit.jupiter.api.AssertAll.lambda$assertAll$0(AssertAll.java:68)
+		at java.base/java.util.stream.ReferencePipeline$3$1.accept(Unknown Source)
+		at java.base/java.util.stream.ReferencePipeline$3$1.accept(Unknown Source)
+		at java.base/java.util.Iterator.forEachRemaining(Unknown Source)
+		at java.base/java.util.Spliterators$IteratorSpliterator.forEachRemaining(Unknown Source)
+		at java.base/java.util.stream.AbstractPipeline.copyInto(Unknown Source)
+		at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(Unknown Source)
+		at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(Unknown Source)
+		at java.base/java.util.stream.AbstractPipeline.evaluate(Unknown Source)
+		at java.base/java.util.stream.ReferencePipeline.collect(Unknown Source)
+		at org.junit.jupiter.api.AssertAll.assertAll(AssertAll.java:77)
+		... 6 more
+]]></failure>
+    <system-out><![CDATA[2026-09-24 09:59:33.742 [INFO ] [main] c.s.i.RequestLoggingInterceptor [3f4fa870] - 请求完成: POST /files/upload status=200 耗时=8ms
+2026-09-24 09:59:33.781 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b75965aa] - 请求完成: POST /supervision-notices status=200 耗时=35ms
+2026-09-24 09:59:33.813 [INFO ] [main] c.s.i.RequestLoggingInterceptor [919578d2] - 请求完成: POST /work-contacts status=200 耗时=26ms
+]]></system-out>
+  </testcase>
+  <testcase name="qaAcceptanceRevokedAdminCannotManageUsers" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.039">
+    <failure message="Multiple Failures (2 failures)&#10;	org.opentest4j.AssertionFailedError: 撤权后的旧角色不得管理账号 ==&gt; expected: &lt;403&gt; but was: &lt;200&gt;&#10;	org.opentest4j.AssertionFailedError: expected: &lt;active&gt; but was: &lt;inactive&gt;" type="org.opentest4j.MultipleFailuresError"><![CDATA[org.opentest4j.MultipleFailuresError: 
+Multiple Failures (2 failures)
+	org.opentest4j.AssertionFailedError: 撤权后的旧角色不得管理账号 ==> expected: <403> but was: <200>
+	org.opentest4j.AssertionFailedError: expected: <active> but was: <inactive>
+	at org.junit.jupiter.api.AssertAll.assertAll(AssertAll.java:80)
+	at org.junit.jupiter.api.AssertAll.assertAll(AssertAll.java:44)
+	at org.junit.jupiter.api.AssertAll.assertAll(AssertAll.java:38)
+	at org.junit.jupiter.api.Assertions.assertAll(Assertions.java:2944)
+	at com.supervision.FieldWorkflowIntegrationTest.qaAcceptanceRevokedAdminCannotManageUsers(FieldWorkflowIntegrationTest.java:435)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+	Suppressed: org.opentest4j.AssertionFailedError: 撤权后的旧角色不得管理账号 ==> expected: <403> but was: <200>
+		at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+		at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+		at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+		at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+		at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:563)
+		at com.supervision.FieldWorkflowIntegrationTest.lambda$qaAcceptanceRevokedAdminCannotManageUsers$4(FieldWorkflowIntegrationTest.java:435)
+		at org.junit.jupiter.api.AssertAll.lambda$assertAll$0(AssertAll.java:68)
+		at java.base/java.util.stream.ReferencePipeline$3$1.accept(Unknown Source)
+		at java.base/java.util.Spliterators$ArraySpliterator.forEachRemaining(Unknown Source)
+		at java.base/java.util.stream.AbstractPipeline.copyInto(Unknown Source)
+		at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(Unknown Source)
+		at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(Unknown Source)
+		at java.base/java.util.stream.AbstractPipeline.evaluate(Unknown Source)
+		at java.base/java.util.stream.ReferencePipeline.collect(Unknown Source)
+		at org.junit.jupiter.api.AssertAll.assertAll(AssertAll.java:77)
+		... 7 more
+	Suppressed: org.opentest4j.AssertionFailedError: expected: <active> but was: <inactive>
+		at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+		at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+		at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+		at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+		at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+		at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1145)
+		at com.supervision.FieldWorkflowIntegrationTest.lambda$qaAcceptanceRevokedAdminCannotManageUsers$5(FieldWorkflowIntegrationTest.java:436)
+		at org.junit.jupiter.api.AssertAll.lambda$assertAll$0(AssertAll.java:68)
+		at java.base/java.util.stream.ReferencePipeline$3$1.accept(Unknown Source)
+		at java.base/java.util.Spliterators$ArraySpliterator.forEachRemaining(Unknown Source)
+		at java.base/java.util.stream.AbstractPipeline.copyInto(Unknown Source)
+		at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(Unknown Source)
+		at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(Unknown Source)
+		at java.base/java.util.stream.AbstractPipeline.evaluate(Unknown Source)
+		at java.base/java.util.stream.ReferencePipeline.collect(Unknown Source)
+		at org.junit.jupiter.api.AssertAll.assertAll(AssertAll.java:77)
+		... 7 more
+]]></failure>
+    <system-out><![CDATA[2026-09-24 09:59:33.837 [INFO ] [main] c.s.i.RequestLoggingInterceptor [753d19ec] - 请求完成: POST /files/upload status=200 耗时=8ms
+2026-09-24 09:59:33.854 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c1b01d59] - 请求完成: PUT /users/10034/status status=200 耗时=11ms
+]]></system-out>
+  </testcase>
+  <testcase name="qaAcceptanceSafetyApprovedBodyIsImmutable" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.102">
+    <failure message="Response status expected:&lt;409&gt; but was:&lt;200&gt;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: Response status expected:<409> but was:<200>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$is$1(StatusResultMatchers.java:64)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.supervision.FieldWorkflowIntegrationTest.call(FieldWorkflowIntegrationTest.java:57)
+	at com.supervision.FieldWorkflowIntegrationTest.qaAcceptanceSafetyApprovedBodyIsImmutable(FieldWorkflowIntegrationTest.java:471)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+]]></failure>
+    <system-out><![CDATA[2026-09-24 09:59:33.878 [INFO ] [main] c.s.i.RequestLoggingInterceptor [167fe8c9] - 请求完成: POST /files/upload status=200 耗时=8ms
+2026-09-24 09:59:33.921 [INFO ] [main] c.s.i.RequestLoggingInterceptor [4b3c4e67] - 请求完成: POST /safety-logs status=200 耗时=41ms
+2026-09-24 09:59:33.961 [INFO ] [main] c.s.i.RequestLoggingInterceptor [320208df] - 请求完成: PUT /safety-logs/1 status=200 耗时=37ms
+]]></system-out>
+  </testcase>
+  <testcase name="qa22ConcurrentExplicitAndAutomaticCodes" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.502">
+    <system-out><![CDATA[2026-09-24 09:59:33.994 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7034d33e] - 请求完成: POST /files/upload status=200 耗时=14ms
+2026-09-24 09:59:34.061 [INFO ] [pool-3-thread-2] c.s.i.RequestLoggingInterceptor [549e59d6] - 请求完成: POST /supervision-diaries status=200 耗时=53ms
+2026-09-24 09:59:34.079 [INFO ] [pool-3-thread-4] c.s.i.RequestLoggingInterceptor [dec563a3] - 请求完成: POST /supervision-diaries status=200 耗时=49ms
+2026-09-24 09:59:34.085 [INFO ] [pool-3-thread-3] c.s.i.RequestLoggingInterceptor [df896201] - 请求完成: POST /supervision-diaries status=200 耗时=71ms
+2026-09-24 09:59:34.094 [INFO ] [pool-3-thread-1] c.s.i.RequestLoggingInterceptor [1ef2da7c] - 请求完成: POST /supervision-diaries status=200 耗时=92ms
+2026-09-24 09:59:34.101 [INFO ] [main] c.s.i.RequestLoggingInterceptor [007607a3] - 请求完成: POST /supervision-diaries status=200 耗时=6ms
+2026-09-24 09:59:34.120 [WARN ] [main] c.s.exception.GlobalExceptionHandler [fdc4ab84] - 业务异常: /supervision-diaries - 编号已存在，请使用新编号
+2026-09-24 09:59:34.120 [INFO ] [main] c.s.i.RequestLoggingInterceptor [fdc4ab84] - 请求完成: POST /supervision-diaries status=409 耗时=17ms
+2026-09-24 09:59:34.137 [WARN ] [main] c.s.exception.GlobalExceptionHandler [f40eae59] - 业务异常: /supervision-diaries - 同一请求标识不能提交不同内容
+2026-09-24 09:59:34.137 [INFO ] [main] c.s.i.RequestLoggingInterceptor [f40eae59] - 请求完成: POST /supervision-diaries status=409 耗时=16ms
+2026-09-24 09:59:34.152 [INFO ] [main] c.s.i.RequestLoggingInterceptor [896e9fcc] - 请求完成: POST /supervision-diaries/6/submit status=200 耗时=14ms
+2026-09-24 09:59:34.191 [INFO ] [pool-4-thread-1] c.s.i.RequestLoggingInterceptor [723e3c17] - 请求完成: POST /supervision-diaries status=200 耗时=35ms
+2026-09-24 09:59:34.198 [INFO ] [pool-4-thread-4] c.s.i.RequestLoggingInterceptor [2cd2ec0c] - 请求完成: POST /supervision-diaries status=200 耗时=32ms
+2026-09-24 09:59:34.201 [INFO ] [pool-4-thread-2] c.s.i.RequestLoggingInterceptor [b7cb5dd5] - 请求完成: POST /supervision-diaries status=200 耗时=44ms
+2026-09-24 09:59:34.210 [INFO ] [pool-4-thread-3] c.s.i.RequestLoggingInterceptor [7de0add2] - 请求完成: POST /supervision-diaries status=200 耗时=47ms
+2026-09-24 09:59:34.218 [INFO ] [main] c.s.i.RequestLoggingInterceptor [1d4785d2] - 请求完成: POST /supervision-diaries status=200 耗时=6ms
+2026-09-24 09:59:34.233 [WARN ] [main] c.s.exception.GlobalExceptionHandler [4a72ee05] - 业务异常: /supervision-diaries - 编号已存在，请使用新编号
+2026-09-24 09:59:34.234 [INFO ] [main] c.s.i.RequestLoggingInterceptor [4a72ee05] - 请求完成: POST /supervision-diaries status=409 耗时=14ms
+2026-09-24 09:59:34.247 [WARN ] [main] c.s.exception.GlobalExceptionHandler [89deebb2] - 业务异常: /supervision-diaries - 同一请求标识不能提交不同内容
+2026-09-24 09:59:34.247 [INFO ] [main] c.s.i.RequestLoggingInterceptor [89deebb2] - 请求完成: POST /supervision-diaries status=409 耗时=12ms
+2026-09-24 09:59:34.257 [INFO ] [main] c.s.i.RequestLoggingInterceptor [1f6746ae] - 请求完成: POST /supervision-diaries/7/submit status=200 耗时=9ms
+2026-09-24 09:59:34.288 [INFO ] [pool-5-thread-3] c.s.i.RequestLoggingInterceptor [155969ff] - 请求完成: POST /supervision-diaries status=200 耗时=24ms
+2026-09-24 09:59:34.298 [INFO ] [pool-5-thread-1] c.s.i.RequestLoggingInterceptor [a741c410] - 请求完成: POST /supervision-diaries status=200 耗时=37ms
+2026-09-24 09:59:34.304 [INFO ] [pool-5-thread-4] c.s.i.RequestLoggingInterceptor [a4f64e2b] - 请求完成: POST /supervision-diaries status=200 耗时=33ms
+2026-09-24 09:59:34.311 [INFO ] [pool-5-thread-2] c.s.i.RequestLoggingInterceptor [4b3c9dce] - 请求完成: POST /supervision-diaries status=200 耗时=47ms
+2026-09-24 09:59:34.317 [INFO ] [main] c.s.i.RequestLoggingInterceptor [f324959f] - 请求完成: POST /supervision-diaries status=200 耗时=4ms
+2026-09-24 09:59:34.331 [WARN ] [main] c.s.exception.GlobalExceptionHandler [88c78482] - 业务异常: /supervision-diaries - 编号已存在，请使用新编号
+2026-09-24 09:59:34.332 [INFO ] [main] c.s.i.RequestLoggingInterceptor [88c78482] - 请求完成: POST /supervision-diaries status=409 耗时=13ms
+2026-09-24 09:59:34.347 [WARN ] [main] c.s.exception.GlobalExceptionHandler [83f09d68] - 业务异常: /supervision-diaries - 同一请求标识不能提交不同内容
+2026-09-24 09:59:34.348 [INFO ] [main] c.s.i.RequestLoggingInterceptor [83f09d68] - 请求完成: POST /supervision-diaries status=409 耗时=15ms
+2026-09-24 09:59:34.363 [INFO ] [main] c.s.i.RequestLoggingInterceptor [16d2d97b] - 请求完成: POST /supervision-diaries/8/submit status=200 耗时=14ms
+2026-09-24 09:59:34.400 [INFO ] [pool-6-thread-1] c.s.i.RequestLoggingInterceptor [9461ac24] - 请求完成: POST /supervision-diaries status=200 耗时=34ms
+2026-09-24 09:59:34.404 [WARN ] [pool-6-thread-3] o.h.e.jdbc.spi.SqlExceptionHelper [8d804d8d] - SQL Error: 23505, SQLState: 23505
+2026-09-24 09:59:34.404 [ERROR] [pool-6-thread-3] o.h.e.jdbc.spi.SqlExceptionHelper [8d804d8d] - Unique index or primary key violation: "PUBLIC.CONSTRAINT_INDEX_4 ON PUBLIC.BIZ_SUPERVISION_DIARY(REQUEST_KEY NULLS FIRST) VALUES ( /* 9 */ '98d2a6482b1097ac917f541033dffe8122249f852583f1095a30d6c1985ded75' )"; SQL statement:
+insert into biz_supervision_diary (attachments,author_id,code,construction,create_time,diary_date,drawing_review,inspection,lock_version,management,morning_meeting,other_matters,photos,project_id,reject_reason,rejected_at,rejected_by,request_hash,request_key,reviewed_at,reviewer_id,source_record_id,status,submitted_at,submitted_by,temperature,update_time,version,weather,wind,id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default) [23505-224]
+2026-09-24 09:59:34.415 [WARN ] [pool-6-thread-2] o.h.e.jdbc.spi.SqlExceptionHelper [ac7ca6bb] - SQL Error: 23505, SQLState: 23505
+2026-09-24 09:59:34.416 [ERROR] [pool-6-thread-2] o.h.e.jdbc.spi.SqlExceptionHelper [ac7ca6bb] - Unique index or primary key violation: "PUBLIC.CONSTRAINT_INDEX_4 ON PUBLIC.BIZ_SUPERVISION_DIARY(REQUEST_KEY NULLS FIRST) VALUES ( /* 9 */ '98d2a6482b1097ac917f541033dffe8122249f852583f1095a30d6c1985ded75' )"; SQL statement:
+insert into biz_supervision_diary (attachments,author_id,code,construction,create_time,diary_date,drawing_review,inspection,lock_version,management,morning_meeting,other_matters,photos,project_id,reject_reason,rejected_at,rejected_by,request_hash,request_key,reviewed_at,reviewer_id,source_record_id,status,submitted_at,submitted_by,temperature,update_time,version,weather,wind,id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default) [23505-224]
+2026-09-24 09:59:34.417 [INFO ] [pool-6-thread-3] c.s.i.RequestLoggingInterceptor [8d804d8d] - 请求完成: POST /supervision-diaries status=200 耗时=39ms
+2026-09-24 09:59:34.422 [WARN ] [pool-6-thread-4] o.h.e.jdbc.spi.SqlExceptionHelper [d82ca036] - SQL Error: 23505, SQLState: 23505
+2026-09-24 09:59:34.422 [ERROR] [pool-6-thread-4] o.h.e.jdbc.spi.SqlExceptionHelper [d82ca036] - Unique index or primary key violation: "PUBLIC.CONSTRAINT_INDEX_4 ON PUBLIC.BIZ_SUPERVISION_DIARY(REQUEST_KEY NULLS FIRST) VALUES ( /* 9 */ '98d2a6482b1097ac917f541033dffe8122249f852583f1095a30d6c1985ded75' )"; SQL statement:
+insert into biz_supervision_diary (attachments,author_id,code,construction,create_time,diary_date,drawing_review,inspection,lock_version,management,morning_meeting,other_matters,photos,project_id,reject_reason,rejected_at,rejected_by,request_hash,request_key,reviewed_at,reviewer_id,source_record_id,status,submitted_at,submitted_by,temperature,update_time,version,weather,wind,id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default) [23505-224]
+2026-09-24 09:59:34.430 [INFO ] [pool-6-thread-2] c.s.i.RequestLoggingInterceptor [ac7ca6bb] - 请求完成: POST /supervision-diaries status=200 耗时=64ms
+2026-09-24 09:59:34.432 [INFO ] [pool-6-thread-4] c.s.i.RequestLoggingInterceptor [d82ca036] - 请求完成: POST /supervision-diaries status=200 耗时=53ms
+2026-09-24 09:59:34.437 [INFO ] [main] c.s.i.RequestLoggingInterceptor [89a2c818] - 请求完成: POST /supervision-diaries status=200 耗时=3ms
+2026-09-24 09:59:34.459 [WARN ] [main] c.s.exception.GlobalExceptionHandler [064840a1] - 业务异常: /supervision-diaries - 同一请求标识不能提交不同内容
+2026-09-24 09:59:34.461 [INFO ] [main] c.s.i.RequestLoggingInterceptor [064840a1] - 请求完成: POST /supervision-diaries status=409 耗时=11ms
+2026-09-24 09:59:34.469 [INFO ] [main] c.s.i.RequestLoggingInterceptor [35a95d1e] - 请求完成: POST /supervision-diaries/9/submit status=200 耗时=7ms
+]]></system-out>
+  </testcase>
+  <testcase name="qaAcceptanceExplicitCorsPolicy" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.183">
+    <system-out><![CDATA[2026-09-24 09:59:34.484 [INFO ] [main] c.s.i.RequestLoggingInterceptor [253f47f6] - 请求完成: POST /files/upload status=200 耗时=4ms
+2026-09-24 09:59:34.486 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a5c35595] - 请求完成: OPTIONS /messages status=200 耗时=0ms
+2026-09-24 09:59:34.652 [INFO ] [main] c.s.i.RequestLoggingInterceptor [34e2e65a] - 请求完成: GET /messages status=401 耗时=158ms
+]]></system-out>
+  </testcase>
+  <testcase name="qa22MessageSenderAndAccountStatusAreServerControlled" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.05">
+    <system-out><![CDATA[2026-09-24 09:59:34.669 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c70a9fd8] - 请求完成: POST /files/upload status=200 耗时=6ms
+2026-09-24 09:59:34.681 [INFO ] [main] c.s.i.RequestLoggingInterceptor [62633754] - 请求完成: POST /messages status=200 耗时=10ms
+2026-09-24 09:59:34.685 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8a8c2000] - 请求完成: GET /messages/1 status=200 耗时=3ms
+2026-09-24 09:59:34.689 [WARN ] [main] c.s.exception.GlobalExceptionHandler [e06d52ba] - 业务异常: /messages/1 - 只能访问本人的消息
+2026-09-24 09:59:34.690 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e06d52ba] - 请求完成: GET /messages/1 status=403 耗时=4ms
+2026-09-24 09:59:34.695 [WARN ] [main] c.s.exception.GlobalExceptionHandler [b7404b51] - 业务异常: /messages/1 - 只能访问本人的消息
+2026-09-24 09:59:34.695 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b7404b51] - 请求完成: GET /messages/1 status=403 耗时=4ms
+2026-09-24 09:59:34.700 [WARN ] [main] c.s.exception.GlobalExceptionHandler [520f5abb] - 业务异常: /messages - 账号不可用，请重新登录
+2026-09-24 09:59:34.701 [INFO ] [main] c.s.i.RequestLoggingInterceptor [520f5abb] - 请求完成: GET /messages status=401 耗时=5ms
+2026-09-24 09:59:34.704 [WARN ] [main] c.s.exception.GlobalExceptionHandler [a894b81e] - 业务异常: /messages/1/read - 账号不可用，请重新登录
+2026-09-24 09:59:34.705 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a894b81e] - 请求完成: PUT /messages/1/read status=401 耗时=3ms
+]]></system-out>
+  </testcase>
+  <testcase name="qaAcceptanceUploadExtensionAndEmptyGuards" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.043">
+    <system-out><![CDATA[2026-09-24 09:59:34.728 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b115787b] - 请求完成: POST /files/upload status=200 耗时=13ms
+2026-09-24 09:59:34.731 [WARN ] [main] c.s.exception.GlobalExceptionHandler [c6c32ad0] - 业务异常: /files/upload - 不支持的文件类型: exe
+2026-09-24 09:59:34.732 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c6c32ad0] - 请求完成: POST /files/upload status=400 耗时=3ms
+2026-09-24 09:59:34.734 [WARN ] [main] c.s.exception.GlobalExceptionHandler [330512a7] - 业务异常: /files/upload - 不支持的文件类型: html
+2026-09-24 09:59:34.734 [INFO ] [main] c.s.i.RequestLoggingInterceptor [330512a7] - 请求完成: POST /files/upload status=400 耗时=1ms
+2026-09-24 09:59:34.737 [WARN ] [main] c.s.exception.GlobalExceptionHandler [b76b6e38] - 业务异常: /files/upload - 不支持的文件类型: svg
+2026-09-24 09:59:34.737 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b76b6e38] - 请求完成: POST /files/upload status=400 耗时=2ms
+2026-09-24 09:59:34.739 [WARN ] [main] c.s.exception.GlobalExceptionHandler [e8ce259c] - 业务异常: /files/upload - 不支持的文件类型: exe
+2026-09-24 09:59:34.739 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e8ce259c] - 请求完成: POST /files/upload status=400 耗时=1ms
+2026-09-24 09:59:34.743 [WARN ] [main] c.s.exception.GlobalExceptionHandler [dfb029ea] - 业务异常: /files/upload - 文件缺少扩展名，无法识别文件类型
+2026-09-24 09:59:34.745 [INFO ] [main] c.s.i.RequestLoggingInterceptor [dfb029ea] - 请求完成: POST /files/upload status=400 耗时=4ms
+2026-09-24 09:59:34.747 [WARN ] [main] c.s.exception.GlobalExceptionHandler [0b9134ab] - 业务异常: /files/upload - 非法的文件名: a..jpg
+2026-09-24 09:59:34.748 [INFO ] [main] c.s.i.RequestLoggingInterceptor [0b9134ab] - 请求完成: POST /files/upload status=400 耗时=2ms
+2026-09-24 09:59:34.750 [WARN ] [main] c.s.exception.GlobalExceptionHandler [d00ccd4b] - 业务异常: /files/upload - 上传文件不能为空
+2026-09-24 09:59:34.751 [INFO ] [main] c.s.i.RequestLoggingInterceptor [d00ccd4b] - 请求完成: POST /files/upload status=400 耗时=2ms
+2026-09-24 09:59:34.751 [INFO ] [main] c.s.i.RequestLoggingInterceptor [1dc45292] - 请求完成: POST /files/upload status=401 耗时=0ms
+]]></system-out>
+  </testcase>
+  <testcase name="protectedAttachmentsAndRevokedMembership" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.272">
+    <system-out><![CDATA[2026-09-24 09:59:34.767 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8ed00af4] - 请求完成: POST /files/upload status=200 耗时=5ms
+2026-09-24 09:59:34.788 [INFO ] [main] c.s.i.RequestLoggingInterceptor [496bf5fe] - 请求完成: POST /supervision-diaries status=200 耗时=20ms
+2026-09-24 09:59:34.805 [WARN ] [main] c.s.exception.GlobalExceptionHandler [9da5eb73] - 业务异常: /files/access - 无权访问该项目
+2026-09-24 09:59:34.805 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9da5eb73] - 请求完成: GET /files/access status=403 耗时=14ms
+2026-09-24 09:59:34.941 [WARN ] [main] c.s.exception.GlobalExceptionHandler [8a890861] - 业务异常: /files/access - 没有附件访问权限
+2026-09-24 09:59:34.942 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8a890861] - 请求完成: GET /files/access status=403 耗时=134ms
+2026-09-24 09:59:34.956 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e995737c] - 请求完成: POST /supervision-diaries/13/submit status=200 耗时=11ms
+2026-09-24 09:59:34.971 [INFO ] [main] c.s.i.RequestLoggingInterceptor [6ae86a79] - 请求完成: GET /files/access status=200 耗时=13ms
+2026-09-24 09:59:34.994 [INFO ] [main] c.s.i.RequestLoggingInterceptor [d3cd77ed] - 请求完成: GET /files/content status=200 耗时=22ms
+2026-09-24 09:59:34.999 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9d5d33d5] - 请求完成: GET /uploads/20260924/09dd25a752f948f28191e60606b63bca.jpg status=401 耗时=1ms
+2026-09-24 09:59:35.001 [WARN ] [main] c.s.exception.GlobalExceptionHandler [4258c4a7] - 业务异常: /files/content - 附件链接无效或已过期
+2026-09-24 09:59:35.002 [INFO ] [main] c.s.i.RequestLoggingInterceptor [4258c4a7] - 请求完成: GET /files/content status=403 耗时=3ms
+2026-09-24 09:59:35.012 [WARN ] [main] c.s.exception.GlobalExceptionHandler [641e6da6] - 业务异常: /supervision-diaries/13 - 无权访问该项目
+2026-09-24 09:59:35.013 [INFO ] [main] c.s.i.RequestLoggingInterceptor [641e6da6] - 请求完成: GET /supervision-diaries/13 status=403 耗时=9ms
+2026-09-24 09:59:35.022 [WARN ] [main] c.s.exception.GlobalExceptionHandler [6111d059] - 业务异常: /files/access - 无权访问该项目
+2026-09-24 09:59:35.022 [INFO ] [main] c.s.i.RequestLoggingInterceptor [6111d059] - 请求完成: GET /files/access status=403 耗时=7ms
+]]></system-out>
+  </testcase>
+  <testcase name="qaAcceptanceExpiredAndTamperedJwt" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.038">
+    <system-out><![CDATA[2026-09-24 09:59:35.038 [INFO ] [main] c.s.i.RequestLoggingInterceptor [fa4b7a0c] - 请求完成: POST /files/upload status=200 耗时=4ms
+2026-09-24 09:59:35.045 [INFO ] [main] c.s.i.RequestLoggingInterceptor [d42b15ae] - 请求完成: GET /messages status=401 耗时=2ms
+2026-09-24 09:59:35.050 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e8af25c5] - 请求完成: GET /messages status=401 耗时=1ms
+2026-09-24 09:59:35.067 [INFO ] [main] c.s.i.RequestLoggingInterceptor [803c7934] - 请求完成: GET /messages status=200 耗时=15ms
+]]></system-out>
+  </testcase>
+  <testcase name="staleVersionNeverOverwritesPcOrMobile" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.068">
+    <system-out><![CDATA[2026-09-24 09:59:35.079 [INFO ] [main] c.s.i.RequestLoggingInterceptor [523a3648] - 请求完成: POST /files/upload status=200 耗时=5ms
+2026-09-24 09:59:35.098 [INFO ] [main] c.s.i.RequestLoggingInterceptor [5686a76a] - 请求完成: POST /supervision-diaries status=200 耗时=18ms
+2026-09-24 09:59:35.119 [INFO ] [main] c.s.i.RequestLoggingInterceptor [efa8ca46] - 请求完成: PUT /supervision-diaries/14 status=200 耗时=19ms
+2026-09-24 09:59:35.127 [WARN ] [main] c.s.exception.GlobalExceptionHandler [9bce5b6c] - 业务异常: /supervision-diaries/14 - 记录已被其他端修改；本次内容未覆盖，请保留草稿并重新打开核对
+2026-09-24 09:59:35.130 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9bce5b6c] - 请求完成: PUT /supervision-diaries/14 status=409 耗时=9ms
+2026-09-24 09:59:35.136 [INFO ] [main] c.s.i.RequestLoggingInterceptor [2c341133] - 请求完成: GET /supervision-diaries/14 status=200 耗时=5ms
+]]></system-out>
+  </testcase>
+  <testcase name="approvedRevisionDoesNotDuplicateDiarySource" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.121">
+    <system-out><![CDATA[2026-09-24 09:59:35.151 [INFO ] [main] c.s.i.RequestLoggingInterceptor [74d0d905] - 请求完成: POST /files/upload status=200 耗时=6ms
+2026-09-24 09:59:35.169 [INFO ] [main] c.s.i.RequestLoggingInterceptor [6de0b191] - 请求完成: POST /supervision-diaries status=200 耗时=16ms
+2026-09-24 09:59:35.183 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a264482d] - 请求完成: POST /supervision-diaries/15/submit status=200 耗时=11ms
+2026-09-24 09:59:35.195 [INFO ] [main] c.s.i.RequestLoggingInterceptor [bab285c3] - 请求完成: POST /supervision-diaries/15/approve status=200 耗时=11ms
+2026-09-24 09:59:35.215 [INFO ] [main] c.s.i.RequestLoggingInterceptor [fcacbda4] - 请求完成: POST /supervision-diaries status=200 耗时=17ms
+2026-09-24 09:59:35.242 [INFO ] [main] c.s.i.RequestLoggingInterceptor [60e7ff80] - 请求完成: POST /supervision-diaries/16/submit status=200 耗时=25ms
+2026-09-24 09:59:35.251 [INFO ] [main] c.s.i.RequestLoggingInterceptor [2908dcaa] - 请求完成: POST /supervision-diaries/16/approve status=200 耗时=7ms
+2026-09-24 09:59:35.259 [INFO ] [main] c.s.i.RequestLoggingInterceptor [0abceaac] - 请求完成: GET /field/diary-source status=200 耗时=6ms
+]]></system-out>
+  </testcase>
+  <testcase name="legacyNonFieldReferencesSkipMalformedRows" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.096">
+    <system-out><![CDATA[2026-09-24 09:59:35.271 [INFO ] [main] c.s.i.RequestLoggingInterceptor [4a5a1e44] - 请求完成: POST /files/upload status=200 耗时=4ms
+2026-09-24 09:59:35.302 [INFO ] [main] c.s.i.RequestLoggingInterceptor [ebf0efef] - 请求完成: GET /files/access status=200 耗时=26ms
+2026-09-24 09:59:35.325 [WARN ] [main] c.s.exception.GlobalExceptionHandler [f58f792d] - 业务异常: /files/access - 没有附件访问权限
+2026-09-24 09:59:35.326 [INFO ] [main] c.s.i.RequestLoggingInterceptor [f58f792d] - 请求完成: GET /files/access status=403 耗时=21ms
+2026-09-24 09:59:35.356 [WARN ] [main] c.s.exception.GlobalExceptionHandler [f99cc0dc] - 业务异常: /files/access - 没有附件访问权限
+2026-09-24 09:59:35.357 [INFO ] [main] c.s.i.RequestLoggingInterceptor [f99cc0dc] - 请求完成: GET /files/access status=403 耗时=29ms
+]]></system-out>
+  </testcase>
+  <testcase name="qaAcceptanceSafetySubmissionPersists" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.046">
+    <failure message="expected: &lt;submitted&gt; but was: &lt;draft&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: expected: <submitted> but was: <draft>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1145)
+	at com.supervision.FieldWorkflowIntegrationTest.qaAcceptanceSafetySubmissionPersists(FieldWorkflowIntegrationTest.java:449)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+]]></failure>
+    <system-out><![CDATA[2026-09-24 09:59:35.370 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b769f9ce] - 请求完成: POST /files/upload status=200 耗时=5ms
+2026-09-24 09:59:35.385 [INFO ] [main] c.s.i.RequestLoggingInterceptor [0fb540f9] - 请求完成: POST /safety-logs status=200 耗时=13ms
+2026-09-24 09:59:35.398 [INFO ] [main] c.s.i.RequestLoggingInterceptor [1f5f0bb0] - 请求完成: PUT /safety-logs/2 status=200 耗时=11ms
+2026-09-24 09:59:35.404 [INFO ] [main] c.s.i.RequestLoggingInterceptor [17f8a9dc] - 请求完成: GET /safety-logs/2 status=200 耗时=4ms
+]]></system-out>
+  </testcase>
+  <testcase name="legacyPhotoPathsRemainScopedAndExact" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.576">
+    <system-out><![CDATA[2026-09-24 09:59:35.419 [INFO ] [main] c.s.i.RequestLoggingInterceptor [24b2f33f] - 请求完成: POST /files/upload status=200 耗时=5ms
+2026-09-24 09:59:35.454 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b96b0516] - 请求完成: POST /supervision-diaries status=200 耗时=32ms
+2026-09-24 09:59:35.479 [INFO ] [main] c.s.i.RequestLoggingInterceptor [25c76f4a] - 请求完成: GET /files/access status=200 耗时=11ms
+2026-09-24 09:59:35.530 [WARN ] [main] c.s.exception.GlobalExceptionHandler [8b0bf64f] - 业务异常: /files/access - 没有附件访问权限
+2026-09-24 09:59:35.531 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8b0bf64f] - 请求完成: GET /files/access status=403 耗时=49ms
+2026-09-24 09:59:35.572 [WARN ] [main] c.s.exception.GlobalExceptionHandler [634d2a0b] - 业务异常: /files/access - 没有附件访问权限
+2026-09-24 09:59:35.579 [INFO ] [main] c.s.i.RequestLoggingInterceptor [634d2a0b] - 请求完成: GET /files/access status=403 耗时=46ms
+2026-09-24 09:59:35.617 [WARN ] [main] c.s.exception.GlobalExceptionHandler [1f37200e] - 业务异常: /files/access - 没有附件访问权限
+2026-09-24 09:59:35.619 [INFO ] [main] c.s.i.RequestLoggingInterceptor [1f37200e] - 请求完成: GET /files/access status=403 耗时=39ms
+2026-09-24 09:59:35.647 [INFO ] [main] c.s.i.RequestLoggingInterceptor [5f8dd8f7] - 请求完成: GET /files/access status=200 耗时=14ms
+2026-09-24 09:59:35.680 [WARN ] [main] c.s.exception.GlobalExceptionHandler [8ef15d85] - 业务异常: /files/access - 没有附件访问权限
+2026-09-24 09:59:35.680 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8ef15d85] - 请求完成: GET /files/access status=403 耗时=32ms
+2026-09-24 09:59:35.719 [WARN ] [main] c.s.exception.GlobalExceptionHandler [52d95237] - 业务异常: /files/access - 没有附件访问权限
+2026-09-24 09:59:35.720 [INFO ] [main] c.s.i.RequestLoggingInterceptor [52d95237] - 请求完成: GET /files/access status=403 耗时=39ms
+2026-09-24 09:59:35.751 [WARN ] [main] c.s.exception.GlobalExceptionHandler [3ce602fa] - 业务异常: /files/access - 没有附件访问权限
+2026-09-24 09:59:35.752 [INFO ] [main] c.s.i.RequestLoggingInterceptor [3ce602fa] - 请求完成: GET /files/access status=403 耗时=31ms
+2026-09-24 09:59:35.762 [INFO ] [main] c.s.i.RequestLoggingInterceptor [26fbb386] - 请求完成: GET /files/access status=200 耗时=9ms
+2026-09-24 09:59:35.787 [WARN ] [main] c.s.exception.GlobalExceptionHandler [0c93a4dd] - 业务异常: /files/access - 没有附件访问权限
+2026-09-24 09:59:35.788 [INFO ] [main] c.s.i.RequestLoggingInterceptor [0c93a4dd] - 请求完成: GET /files/access status=403 耗时=25ms
+2026-09-24 09:59:35.815 [WARN ] [main] c.s.exception.GlobalExceptionHandler [91ad2780] - 业务异常: /files/access - 没有附件访问权限
+2026-09-24 09:59:35.816 [INFO ] [main] c.s.i.RequestLoggingInterceptor [91ad2780] - 请求完成: GET /files/access status=403 耗时=27ms
+2026-09-24 09:59:35.846 [WARN ] [main] c.s.exception.GlobalExceptionHandler [9dcdb7d2] - 业务异常: /files/access - 没有附件访问权限
+2026-09-24 09:59:35.847 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9dcdb7d2] - 请求完成: GET /files/access status=403 耗时=31ms
+2026-09-24 09:59:35.861 [INFO ] [main] c.s.i.RequestLoggingInterceptor [2b3c3069] - 请求完成: GET /files/access status=200 耗时=12ms
+2026-09-24 09:59:35.889 [WARN ] [main] c.s.exception.GlobalExceptionHandler [41a2d1c3] - 业务异常: /files/access - 没有附件访问权限
+2026-09-24 09:59:35.894 [INFO ] [main] c.s.i.RequestLoggingInterceptor [41a2d1c3] - 请求完成: GET /files/access status=403 耗时=31ms
+2026-09-24 09:59:35.917 [WARN ] [main] c.s.exception.GlobalExceptionHandler [a674a9dc] - 业务异常: /files/access - 没有附件访问权限
+2026-09-24 09:59:35.917 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a674a9dc] - 请求完成: GET /files/access status=403 耗时=21ms
+2026-09-24 09:59:35.938 [WARN ] [main] c.s.exception.GlobalExceptionHandler [49298612] - 业务异常: /files/access - 没有附件访问权限
+2026-09-24 09:59:35.938 [INFO ] [main] c.s.i.RequestLoggingInterceptor [49298612] - 请求完成: GET /files/access status=403 耗时=19ms
+2026-09-24 09:59:35.954 [INFO ] [main] c.s.i.RequestLoggingInterceptor [514a9a62] - 请求完成: GET /files/access status=200 耗时=9ms
+2026-09-24 09:59:35.985 [WARN ] [main] c.s.exception.GlobalExceptionHandler [998fbd3e] - 业务异常: /files/access - 没有附件访问权限
+2026-09-24 09:59:35.985 [INFO ] [main] c.s.i.RequestLoggingInterceptor [998fbd3e] - 请求完成: GET /files/access status=403 耗时=24ms
+]]></system-out>
+  </testcase>
+  <testcase name="identityProjectScopeAndIdempotentReplay" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.117">
+    <system-out><![CDATA[2026-09-24 09:59:36.000 [INFO ] [main] c.s.i.RequestLoggingInterceptor [5c4fd6a7] - 请求完成: POST /files/upload status=200 耗时=7ms
+2026-09-24 09:59:36.017 [INFO ] [main] c.s.i.RequestLoggingInterceptor [11c3e223] - 请求完成: POST /supervision-diaries status=200 耗时=16ms
+2026-09-24 09:59:36.030 [INFO ] [main] c.s.i.RequestLoggingInterceptor [3a53dc83] - 请求完成: POST /supervision-diaries status=200 耗时=11ms
+2026-09-24 09:59:36.046 [WARN ] [main] c.s.exception.GlobalExceptionHandler [672c084d] - 业务异常: /supervision-diaries - 同一请求标识不能提交不同内容
+2026-09-24 09:59:36.047 [INFO ] [main] c.s.i.RequestLoggingInterceptor [672c084d] - 请求完成: POST /supervision-diaries status=409 耗时=14ms
+2026-09-24 09:59:36.055 [WARN ] [main] c.s.exception.GlobalExceptionHandler [c4b7380d] - 业务异常: /supervision-diaries/18 - 无权访问该项目
+2026-09-24 09:59:36.055 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c4b7380d] - 请求完成: GET /supervision-diaries/18 status=403 耗时=7ms
+2026-09-24 09:59:36.065 [WARN ] [main] c.s.exception.GlobalExceptionHandler [57cfa1d3] - 业务异常: /supervision-diaries/18 - 无权查看他人的草稿或待办
+2026-09-24 09:59:36.065 [INFO ] [main] c.s.i.RequestLoggingInterceptor [57cfa1d3] - 请求完成: GET /supervision-diaries/18 status=403 耗时=7ms
+2026-09-24 09:59:36.077 [WARN ] [main] c.s.exception.GlobalExceptionHandler [9ec67f3f] - 业务异常: /supervision-diaries - 无权访问该项目
+2026-09-24 09:59:36.078 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9ec67f3f] - 请求完成: POST /supervision-diaries status=403 耗时=11ms
+2026-09-24 09:59:36.103 [INFO ] [main] c.s.i.RequestLoggingInterceptor [462861fe] - 请求完成: GET /supervision-diaries status=200 耗时=24ms
+]]></system-out>
+  </testcase>
+  <testcase name="legacyReferencesCannotLaunderProtectedPhotos" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.298">
+    <system-out><![CDATA[2026-09-24 09:59:36.119 [INFO ] [main] c.s.i.RequestLoggingInterceptor [79b608ce] - 请求完成: POST /files/upload status=200 耗时=6ms
+2026-09-24 09:59:36.146 [INFO ] [main] c.s.i.RequestLoggingInterceptor [fb7905be] - 请求完成: POST /supervision-diaries status=200 耗时=25ms
+2026-09-24 09:59:36.163 [WARN ] [main] c.s.exception.GlobalExceptionHandler [284f7b94] - 业务异常: /meeting-minutes - 无权访问该项目
+2026-09-24 09:59:36.163 [INFO ] [main] c.s.i.RequestLoggingInterceptor [284f7b94] - 请求完成: POST /meeting-minutes status=403 耗时=16ms
+2026-09-24 09:59:36.192 [WARN ] [main] c.s.exception.GlobalExceptionHandler [aec2e067] - 业务异常: /meeting-minutes - 没有附件访问权限
+2026-09-24 09:59:36.193 [INFO ] [main] c.s.i.RequestLoggingInterceptor [aec2e067] - 请求完成: POST /meeting-minutes status=403 耗时=26ms
+2026-09-24 09:59:36.203 [WARN ] [main] c.s.exception.GlobalExceptionHandler [56871b76] - 业务异常: /supervision-notices - 无权访问该项目
+2026-09-24 09:59:36.203 [INFO ] [main] c.s.i.RequestLoggingInterceptor [56871b76] - 请求完成: POST /supervision-notices status=403 耗时=9ms
+2026-09-24 09:59:36.228 [WARN ] [main] c.s.exception.GlobalExceptionHandler [eba8b25f] - 业务异常: /supervision-notices - 没有附件访问权限
+2026-09-24 09:59:36.228 [INFO ] [main] c.s.i.RequestLoggingInterceptor [eba8b25f] - 请求完成: POST /supervision-notices status=403 耗时=24ms
+2026-09-24 09:59:36.236 [WARN ] [main] c.s.exception.GlobalExceptionHandler [33f04052] - 业务异常: /safety-logs - 无权访问该项目
+2026-09-24 09:59:36.237 [INFO ] [main] c.s.i.RequestLoggingInterceptor [33f04052] - 请求完成: POST /safety-logs status=403 耗时=8ms
+2026-09-24 09:59:36.264 [WARN ] [main] c.s.exception.GlobalExceptionHandler [a1503966] - 业务异常: /safety-logs - 没有附件访问权限
+2026-09-24 09:59:36.266 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a1503966] - 请求完成: POST /safety-logs status=403 耗时=27ms
+2026-09-24 09:59:36.291 [WARN ] [main] c.s.exception.GlobalExceptionHandler [160ca8a2] - 业务异常: /supervision-monthly-reports - 无权访问该项目
+2026-09-24 09:59:36.295 [INFO ] [main] c.s.i.RequestLoggingInterceptor [160ca8a2] - 请求完成: POST /supervision-monthly-reports status=403 耗时=27ms
+2026-09-24 09:59:36.335 [WARN ] [main] c.s.exception.GlobalExceptionHandler [9c647d2a] - 业务异常: /supervision-monthly-reports - 没有附件访问权限
+2026-09-24 09:59:36.336 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9c647d2a] - 请求完成: POST /supervision-monthly-reports status=403 耗时=40ms
+2026-09-24 09:59:36.350 [WARN ] [main] c.s.exception.GlobalExceptionHandler [30cd6473] - 业务异常: /work-contacts - 无权访问该项目
+2026-09-24 09:59:36.350 [INFO ] [main] c.s.i.RequestLoggingInterceptor [30cd6473] - 请求完成: POST /work-contacts status=403 耗时=13ms
+2026-09-24 09:59:36.377 [WARN ] [main] c.s.exception.GlobalExceptionHandler [f2ad14e6] - 业务异常: /work-contacts - 没有附件访问权限
+2026-09-24 09:59:36.378 [INFO ] [main] c.s.i.RequestLoggingInterceptor [f2ad14e6] - 请求完成: POST /work-contacts status=403 耗时=27ms
+2026-09-24 09:59:36.383 [WARN ] [main] c.s.exception.GlobalExceptionHandler [02b8e688] - 业务异常: /files/access - 无权访问该项目
+2026-09-24 09:59:36.383 [INFO ] [main] c.s.i.RequestLoggingInterceptor [02b8e688] - 请求完成: GET /files/access status=403 耗时=4ms
+2026-09-24 09:59:36.395 [WARN ] [main] c.s.exception.GlobalExceptionHandler [a9a199c2] - 业务异常: /project-documents - 无权访问该项目
+2026-09-24 09:59:36.396 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a9a199c2] - 请求完成: POST /project-documents status=403 耗时=12ms
+2026-09-24 09:59:36.403 [WARN ] [main] c.s.exception.GlobalExceptionHandler [93f4cef5] - 业务异常: /files/access - 无权访问该项目
+2026-09-24 09:59:36.403 [INFO ] [main] c.s.i.RequestLoggingInterceptor [93f4cef5] - 请求完成: GET /files/access status=403 耗时=5ms
+]]></system-out>
+  </testcase>
+  <testcase name="formalValidationAndAllFourTypes" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.115">
+    <system-out><![CDATA[2026-09-24 09:59:36.417 [INFO ] [main] c.s.i.RequestLoggingInterceptor [35bafa07] - 请求完成: POST /files/upload status=200 耗时=4ms
+2026-09-24 09:59:36.427 [INFO ] [main] c.s.i.RequestLoggingInterceptor [cf209888] - 请求完成: POST /supervision-diaries status=200 耗时=9ms
+2026-09-24 09:59:36.432 [WARN ] [main] c.s.exception.GlobalExceptionHandler [8bc4e193] - 业务异常: /supervision-diaries/20/submit - 监理日记至少上传一张现场照片
+2026-09-24 09:59:36.432 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8bc4e193] - 请求完成: POST /supervision-diaries/20/submit status=400 耗时=4ms
+2026-09-24 09:59:36.456 [INFO ] [main] c.s.i.RequestLoggingInterceptor [18585d8d] - 请求完成: POST /daily-inspections status=200 耗时=22ms
+2026-09-24 09:59:36.465 [INFO ] [main] c.s.i.RequestLoggingInterceptor [2f31e2d0] - 请求完成: POST /daily-inspections/1/submit status=200 耗时=7ms
+2026-09-24 09:59:36.472 [INFO ] [main] c.s.i.RequestLoggingInterceptor [13386a8a] - 请求完成: POST /daily-inspections/1/approve status=200 耗时=6ms
+2026-09-24 09:59:36.492 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a4b7d023] - 请求完成: POST /sideline-inspections status=200 耗时=19ms
+2026-09-24 09:59:36.500 [INFO ] [main] c.s.i.RequestLoggingInterceptor [367c4b26] - 请求完成: POST /sideline-inspections/1/submit status=200 耗时=7ms
+2026-09-24 09:59:36.512 [INFO ] [main] c.s.i.RequestLoggingInterceptor [067b5888] - 请求完成: POST /sideline-inspections/1/approve status=200 耗时=11ms
+2026-09-24 09:59:36.519 [WARN ] [main] c.s.exception.GlobalExceptionHandler [674c6b16] - 业务异常: /sideline-inspections - 请通过提交或审核操作改变状态
+2026-09-24 09:59:36.520 [INFO ] [main] c.s.i.RequestLoggingInterceptor [674c6b16] - 请求完成: POST /sideline-inspections status=400 耗时=7ms
+]]></system-out>
+  </testcase>
+  <testcase name="qaAcceptanceSafetySubmittedManagerCanReview" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.047">
+    <failure message="Response status expected:&lt;200&gt; but was:&lt;403&gt;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: Response status expected:<200> but was:<403>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$is$1(StatusResultMatchers.java:64)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.supervision.FieldWorkflowIntegrationTest.call(FieldWorkflowIntegrationTest.java:57)
+	at com.supervision.FieldWorkflowIntegrationTest.qaAcceptanceSafetySubmittedManagerCanReview(FieldWorkflowIntegrationTest.java:463)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+]]></failure>
+    <system-out><![CDATA[2026-09-24 09:59:36.546 [INFO ] [main] c.s.i.RequestLoggingInterceptor [9d4b1278] - 请求完成: POST /files/upload status=200 耗时=18ms
+2026-09-24 09:59:36.566 [INFO ] [main] c.s.i.RequestLoggingInterceptor [93b9ac03] - 请求完成: POST /safety-logs status=200 耗时=19ms
+2026-09-24 09:59:36.569 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7c1587df] - 请求完成: POST /safety-logs/3/approve status=403 耗时=1ms
+]]></system-out>
+  </testcase>
+  <testcase name="concurrentCreateUsesDatabaseUniqueKey" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.042">
+    <system-out><![CDATA[2026-09-24 09:59:36.586 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c867c3c1] - 请求完成: POST /files/upload status=200 耗时=7ms
+2026-09-24 09:59:36.605 [WARN ] [pool-7-thread-2] o.h.e.jdbc.spi.SqlExceptionHelper [] - SQL Error: 23505, SQLState: 23505
+2026-09-24 09:59:36.605 [ERROR] [pool-7-thread-2] o.h.e.jdbc.spi.SqlExceptionHelper [] - Unique index or primary key violation: "PUBLIC.CONSTRAINT_INDEX_4 ON PUBLIC.BIZ_SUPERVISION_DIARY(REQUEST_KEY NULLS FIRST) VALUES ( /* 21 */ 'c0450a33fd31a7bd370c10cf5b2978460719fb5522e9c12c55432a0afad0d257' )"; SQL statement:
+insert into biz_supervision_diary (attachments,author_id,code,construction,create_time,diary_date,drawing_review,inspection,lock_version,management,morning_meeting,other_matters,photos,project_id,reject_reason,rejected_at,rejected_by,request_hash,request_key,reviewed_at,reviewer_id,source_record_id,status,submitted_at,submitted_by,temperature,update_time,version,weather,wind,id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default) [23505-224]
+]]></system-out>
+  </testcase>
+  <testcase name="qa22WorkStandardsRequireCurrentAdministrator" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.061">
+    <system-out><![CDATA[2026-09-24 09:59:36.633 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a75abd93] - 请求完成: POST /files/upload status=200 耗时=4ms
+2026-09-24 09:59:36.649 [INFO ] [main] c.s.i.RequestLoggingInterceptor [a190d175] - 请求完成: POST /work-standard-configs status=200 耗时=14ms
+2026-09-24 09:59:36.654 [INFO ] [main] c.s.i.RequestLoggingInterceptor [fdcb8cf0] - 请求完成: GET /work-standard-configs/1 status=200 耗时=3ms
+2026-09-24 09:59:36.657 [WARN ] [main] c.s.exception.GlobalExceptionHandler [31712a7c] - 业务异常: /work-standard-configs - 仅管理员可以维护工作标准配置
+2026-09-24 09:59:36.658 [INFO ] [main] c.s.i.RequestLoggingInterceptor [31712a7c] - 请求完成: POST /work-standard-configs status=403 耗时=3ms
+2026-09-24 09:59:36.662 [WARN ] [main] c.s.exception.GlobalExceptionHandler [cd6cec31] - 业务异常: /work-standard-configs/1 - 仅管理员可以维护工作标准配置
+2026-09-24 09:59:36.662 [INFO ] [main] c.s.i.RequestLoggingInterceptor [cd6cec31] - 请求完成: PUT /work-standard-configs/1 status=403 耗时=3ms
+2026-09-24 09:59:36.665 [WARN ] [main] c.s.exception.GlobalExceptionHandler [d230a9d3] - 业务异常: /work-standard-configs/1 - 仅管理员可以维护工作标准配置
+2026-09-24 09:59:36.666 [INFO ] [main] c.s.i.RequestLoggingInterceptor [d230a9d3] - 请求完成: DELETE /work-standard-configs/1 status=403 耗时=3ms
+2026-09-24 09:59:36.668 [INFO ] [main] c.s.i.RequestLoggingInterceptor [ac5f2b2f] - 请求完成: GET /work-standard-configs/1 status=200 耗时=1ms
+2026-09-24 09:59:36.674 [INFO ] [main] c.s.i.RequestLoggingInterceptor [2d7c9e04] - 请求完成: PUT /work-standard-configs/1 status=200 耗时=5ms
+2026-09-24 09:59:36.677 [WARN ] [main] c.s.exception.GlobalExceptionHandler [0238de85] - 业务异常: /work-standard-configs/1 - 仅管理员可以维护工作标准配置
+2026-09-24 09:59:36.678 [INFO ] [main] c.s.i.RequestLoggingInterceptor [0238de85] - 请求完成: PUT /work-standard-configs/1 status=403 耗时=3ms
+2026-09-24 09:59:36.682 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c0e578ed] - 请求完成: DELETE /work-standard-configs/1 status=200 耗时=3ms
+]]></system-out>
+  </testcase>
+  <testcase name="legacySnapshotAttachmentRequiresCurrentRecordVisibility" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.098">
+    <system-out><![CDATA[2026-09-24 09:59:36.697 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8eb9c06e] - 请求完成: POST /files/upload status=200 耗时=4ms
+2026-09-24 09:59:36.716 [INFO ] [main] c.s.i.RequestLoggingInterceptor [cca821b1] - 请求完成: POST /supervision-diaries status=200 耗时=18ms
+2026-09-24 09:59:36.730 [INFO ] [main] c.s.i.RequestLoggingInterceptor [3a5af181] - 请求完成: GET /files/access status=200 耗时=13ms
+2026-09-24 09:59:36.750 [WARN ] [main] c.s.exception.GlobalExceptionHandler [e2bf2594] - 业务异常: /files/access - 没有附件访问权限
+2026-09-24 09:59:36.750 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e2bf2594] - 请求完成: GET /files/access status=403 耗时=19ms
+2026-09-24 09:59:36.769 [WARN ] [main] c.s.exception.GlobalExceptionHandler [87b98b3e] - 业务异常: /files/access - 没有附件访问权限
+2026-09-24 09:59:36.769 [INFO ] [main] c.s.i.RequestLoggingInterceptor [87b98b3e] - 请求完成: GET /files/access status=403 耗时=18ms
+2026-09-24 09:59:36.783 [INFO ] [main] c.s.i.RequestLoggingInterceptor [478208b5] - 请求完成: GET /files/access status=200 耗时=13ms
+]]></system-out>
+  </testcase>
+  <testcase name="projectDocumentsAndManagerRevocation" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.17">
+    <system-out><![CDATA[2026-09-24 09:59:36.793 [INFO ] [main] c.s.i.RequestLoggingInterceptor [40d9a2bd] - 请求完成: POST /files/upload status=200 耗时=3ms
+2026-09-24 09:59:36.799 [WARN ] [main] c.s.exception.GlobalExceptionHandler [dd08b933] - 业务异常: /project-documents - 请选择资料所属子项
+2026-09-24 09:59:36.800 [INFO ] [main] c.s.i.RequestLoggingInterceptor [dd08b933] - 请求完成: POST /project-documents status=400 耗时=5ms
+2026-09-24 09:59:36.874 [INFO ] [main] c.s.i.RequestLoggingInterceptor [080e2778] - 请求完成: POST /project-documents status=200 耗时=72ms
+2026-09-24 09:59:36.894 [WARN ] [main] c.s.exception.GlobalExceptionHandler [8c1daaf2] - 业务异常: /project-documents - 资料子项不属于当前项目或已停用
+2026-09-24 09:59:36.894 [INFO ] [main] c.s.i.RequestLoggingInterceptor [8c1daaf2] - 请求完成: POST /project-documents status=400 耗时=19ms
+2026-09-24 09:59:36.910 [INFO ] [main] c.s.i.RequestLoggingInterceptor [90072fe2] - 请求完成: GET /files/access status=200 耗时=15ms
+2026-09-24 09:59:36.941 [WARN ] [main] c.s.exception.GlobalExceptionHandler [43a432c0] - 业务异常: /project-documents/1 - 无权访问该项目
+2026-09-24 09:59:36.941 [INFO ] [main] c.s.i.RequestLoggingInterceptor [43a432c0] - 请求完成: GET /project-documents/1 status=403 耗时=28ms
+2026-09-24 09:59:36.949 [WARN ] [main] c.s.exception.GlobalExceptionHandler [0ab2a82f] - 业务异常: /files/access - 无权访问该项目
+2026-09-24 09:59:36.950 [INFO ] [main] c.s.i.RequestLoggingInterceptor [0ab2a82f] - 请求完成: GET /files/access status=403 耗时=5ms
+2026-09-24 09:59:36.954 [WARN ] [main] c.s.exception.GlobalExceptionHandler [139e0246] - 业务异常: /field/summary - 无权访问该项目
+2026-09-24 09:59:36.955 [INFO ] [main] c.s.i.RequestLoggingInterceptor [139e0246] - 请求完成: GET /field/summary status=403 耗时=4ms
+]]></system-out>
+  </testcase>
+  <testcase name="qaAcceptanceSafetyDraftCannotBeApproved" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.047">
+    <failure message="Status expected:&lt;409&gt; but was:&lt;200&gt;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: Status expected:<409> but was:<200>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:637)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.supervision.FieldWorkflowIntegrationTest.qaAcceptanceSafetyDraftCannotBeApproved(FieldWorkflowIntegrationTest.java:456)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+]]></failure>
+    <system-out><![CDATA[2026-09-24 09:59:36.979 [INFO ] [main] c.s.i.RequestLoggingInterceptor [2b7df21d] - 请求完成: POST /files/upload status=200 耗时=17ms
+2026-09-24 09:59:36.988 [INFO ] [main] c.s.i.RequestLoggingInterceptor [e512e9dd] - 请求完成: POST /safety-logs status=200 耗时=7ms
+2026-09-24 09:59:37.002 [INFO ] [main] c.s.i.RequestLoggingInterceptor [da1f603c] - 请求完成: POST /safety-logs/4/approve status=200 耗时=13ms
+]]></system-out>
+  </testcase>
+  <testcase name="qa22MessagesArePrivateToRecipient" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.136">
+    <system-out><![CDATA[2026-09-24 09:59:37.039 [INFO ] [main] c.s.i.RequestLoggingInterceptor [641d23ec] - 请求完成: POST /files/upload status=200 耗时=26ms
+2026-09-24 09:59:37.062 [INFO ] [main] c.s.i.RequestLoggingInterceptor [00a5b2fb] - 请求完成: GET /messages status=200 耗时=16ms
+2026-09-24 09:59:37.065 [INFO ] [main] c.s.i.RequestLoggingInterceptor [2192541c] - 请求完成: GET /messages status=200 耗时=2ms
+2026-09-24 09:59:37.074 [WARN ] [main] c.s.exception.GlobalExceptionHandler [278a0d9d] - 业务异常: /messages - 只能访问本人的消息
+2026-09-24 09:59:37.075 [INFO ] [main] c.s.i.RequestLoggingInterceptor [278a0d9d] - 请求完成: GET /messages status=403 耗时=8ms
+2026-09-24 09:59:37.080 [WARN ] [main] c.s.exception.GlobalExceptionHandler [1c668d20] - 业务异常: /messages/10151 - 只能访问本人的消息
+2026-09-24 09:59:37.080 [INFO ] [main] c.s.i.RequestLoggingInterceptor [1c668d20] - 请求完成: GET /messages/10151 status=403 耗时=2ms
+2026-09-24 09:59:37.083 [WARN ] [main] c.s.exception.GlobalExceptionHandler [bdf2e0b9] - 业务异常: /messages/unread-count - 只能访问本人的消息
+2026-09-24 09:59:37.083 [INFO ] [main] c.s.i.RequestLoggingInterceptor [bdf2e0b9] - 请求完成: GET /messages/unread-count status=403 耗时=2ms
+2026-09-24 09:59:37.085 [WARN ] [main] c.s.exception.GlobalExceptionHandler [4c14e6bf] - 业务异常: /messages/10151/read - 只能访问本人的消息
+2026-09-24 09:59:37.085 [INFO ] [main] c.s.i.RequestLoggingInterceptor [4c14e6bf] - 请求完成: PUT /messages/10151/read status=403 耗时=1ms
+2026-09-24 09:59:37.088 [WARN ] [main] c.s.exception.GlobalExceptionHandler [5fa5fd70] - 业务异常: /messages/10151 - 只能访问本人的消息
+2026-09-24 09:59:37.088 [INFO ] [main] c.s.i.RequestLoggingInterceptor [5fa5fd70] - 请求完成: DELETE /messages/10151 status=403 耗时=2ms
+2026-09-24 09:59:37.126 [INFO ] [main] c.s.i.RequestLoggingInterceptor [4344dc5e] - 请求完成: GET /messages/unread-count status=200 耗时=37ms
+2026-09-24 09:59:37.130 [INFO ] [main] c.s.i.RequestLoggingInterceptor [b4a8002b] - 请求完成: PUT /messages/10151/read status=200 耗时=2ms
+2026-09-24 09:59:37.133 [INFO ] [main] c.s.i.RequestLoggingInterceptor [fe9df37b] - 请求完成: GET /messages/unread-count status=200 耗时=2ms
+2026-09-24 09:59:37.142 [INFO ] [main] c.s.i.RequestLoggingInterceptor [c59ade16] - 请求完成: DELETE /messages/10151 status=200 耗时=9ms
+]]></system-out>
+  </testcase>
+  <testcase name="qaAcceptanceDisabledAdminCannotReactivateSelf" classname="com.supervision.FieldWorkflowIntegrationTest" time="0.013">
+    <failure message="Multiple Failures (2 failures)&#10;	org.opentest4j.AssertionFailedError: 停用账号不得使用旧令牌重新启用自己 ==&gt; expected: &lt;401&gt; but was: &lt;200&gt;&#10;	org.opentest4j.AssertionFailedError: expected: &lt;inactive&gt; but was: &lt;active&gt;" type="org.opentest4j.MultipleFailuresError"><![CDATA[org.opentest4j.MultipleFailuresError: 
+Multiple Failures (2 failures)
+	org.opentest4j.AssertionFailedError: 停用账号不得使用旧令牌重新启用自己 ==> expected: <401> but was: <200>
+	org.opentest4j.AssertionFailedError: expected: <inactive> but was: <active>
+	at org.junit.jupiter.api.AssertAll.assertAll(AssertAll.java:80)
+	at org.junit.jupiter.api.AssertAll.assertAll(AssertAll.java:44)
+	at org.junit.jupiter.api.AssertAll.assertAll(AssertAll.java:38)
+	at org.junit.jupiter.api.Assertions.assertAll(Assertions.java:2944)
+	at com.supervision.FieldWorkflowIntegrationTest.qaAcceptanceDisabledAdminCannotReactivateSelf(FieldWorkflowIntegrationTest.java:426)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+	Suppressed: org.opentest4j.AssertionFailedError: 停用账号不得使用旧令牌重新启用自己 ==> expected: <401> but was: <200>
+		at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+		at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+		at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+		at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+		at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:563)
+		at com.supervision.FieldWorkflowIntegrationTest.lambda$qaAcceptanceDisabledAdminCannotReactivateSelf$2(FieldWorkflowIntegrationTest.java:426)
+		at org.junit.jupiter.api.AssertAll.lambda$assertAll$0(AssertAll.java:68)
+		at java.base/java.util.stream.ReferencePipeline$3$1.accept(Unknown Source)
+		at java.base/java.util.Spliterators$ArraySpliterator.forEachRemaining(Unknown Source)
+		at java.base/java.util.stream.AbstractPipeline.copyInto(Unknown Source)
+		at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(Unknown Source)
+		at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(Unknown Source)
+		at java.base/java.util.stream.AbstractPipeline.evaluate(Unknown Source)
+		at java.base/java.util.stream.ReferencePipeline.collect(Unknown Source)
+		at org.junit.jupiter.api.AssertAll.assertAll(AssertAll.java:77)
+		... 7 more
+	Suppressed: org.opentest4j.AssertionFailedError: expected: <inactive> but was: <active>
+		at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+		at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+		at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+		at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+		at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+		at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1145)
+		at com.supervision.FieldWorkflowIntegrationTest.lambda$qaAcceptanceDisabledAdminCannotReactivateSelf$3(FieldWorkflowIntegrationTest.java:427)
+		at org.junit.jupiter.api.AssertAll.lambda$assertAll$0(AssertAll.java:68)
+		at java.base/java.util.stream.ReferencePipeline$3$1.accept(Unknown Source)
+		at java.base/java.util.Spliterators$ArraySpliterator.forEachRemaining(Unknown Source)
+		at java.base/java.util.stream.AbstractPipeline.copyInto(Unknown Source)
+		at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(Unknown Source)
+		at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(Unknown Source)
+		at java.base/java.util.stream.AbstractPipeline.evaluate(Unknown Source)
+		at java.base/java.util.stream.ReferencePipeline.collect(Unknown Source)
+		at org.junit.jupiter.api.AssertAll.assertAll(AssertAll.java:77)
+		... 7 more
+]]></failure>
+    <system-out><![CDATA[2026-09-24 09:59:37.150 [INFO ] [main] c.s.i.RequestLoggingInterceptor [4f836633] - 请求完成: POST /files/upload status=200 耗时=3ms
+2026-09-24 09:59:37.155 [INFO ] [main] c.s.i.RequestLoggingInterceptor [7c4421ff] - 请求完成: PUT /users/10153/status status=200 耗时=3ms
+]]></system-out>
+  </testcase>
+</testsuite>

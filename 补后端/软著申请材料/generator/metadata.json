@@ -1,0 +1,3370 @@
+{
+  "generatedAt": "2026-07-30T06:49:19.193Z",
+  "system": {
+    "name": "监理现场管理系统",
+    "version": "1.0.0",
+    "backendPackage": "com.supervision"
+  },
+  "stats": {
+    "controllerCount": 22,
+    "endpointCount": 111,
+    "tableCount": 21,
+    "compositeIndexCount": 7,
+    "pageCount": 26
+  },
+  "controllers": [
+    {
+      "className": "AuthController",
+      "basePath": "/auth",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "POST",
+          "path": "/api/auth/login",
+          "methodName": "login",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/auth/logout",
+          "methodName": "logout",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/auth/info",
+          "methodName": "info",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/auth/change-password",
+          "methodName": "changePassword",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "className": "DailyInspectionController",
+      "basePath": "/daily-inspections",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "GET",
+          "path": "/api/daily-inspections",
+          "methodName": "list",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/daily-inspections/{id}",
+          "methodName": "getById",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/daily-inspections",
+          "methodName": "create",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/daily-inspections/{id}",
+          "methodName": "update",
+          "summary": ""
+        },
+        {
+          "httpMethod": "DELETE",
+          "path": "/api/daily-inspections/{id}",
+          "methodName": "delete",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "className": "DashboardController",
+      "basePath": "/dashboard",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "GET",
+          "path": "/api/dashboard/stats",
+          "methodName": "getStats",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "className": "DepartmentController",
+      "basePath": "/departments",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "GET",
+          "path": "/api/departments",
+          "methodName": "list",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/departments/{id}",
+          "methodName": "getById",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/departments",
+          "methodName": "create",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/departments/{id}",
+          "methodName": "update",
+          "summary": ""
+        },
+        {
+          "httpMethod": "DELETE",
+          "path": "/api/departments/{id}",
+          "methodName": "delete",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "className": "FileUploadController",
+      "basePath": "/files",
+      "classDoc": "文件上传接口（安全加固版）。",
+      "endpoints": [
+        {
+          "httpMethod": "POST",
+          "path": "/api/files/upload",
+          "methodName": "upload",
+          "summary": "上传单个文件。"
+        }
+      ]
+    },
+    {
+      "className": "MeetingMinutesController",
+      "basePath": "/meeting-minutes",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "GET",
+          "path": "/api/meeting-minutes",
+          "methodName": "list",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/meeting-minutes/{id}",
+          "methodName": "getById",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/meeting-minutes",
+          "methodName": "create",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/meeting-minutes/{id}",
+          "methodName": "update",
+          "summary": ""
+        },
+        {
+          "httpMethod": "DELETE",
+          "path": "/api/meeting-minutes/{id}",
+          "methodName": "delete",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "className": "MessageController",
+      "basePath": "/messages",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "GET",
+          "path": "/api/messages",
+          "methodName": "list",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/messages/{id}",
+          "methodName": "getById",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/messages",
+          "methodName": "create",
+          "summary": ""
+        },
+        {
+          "httpMethod": "DELETE",
+          "path": "/api/messages/{id}",
+          "methodName": "delete",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/messages/{id}/read",
+          "methodName": "markRead",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/messages/unread-count",
+          "methodName": "getUnreadCount",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "className": "OperationLogController",
+      "basePath": "/operation-logs",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "GET",
+          "path": "/api/operation-logs",
+          "methodName": "list",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "className": "PermissionController",
+      "basePath": "/permissions",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "GET",
+          "path": "/api/permissions",
+          "methodName": "list",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/permissions/{id}",
+          "methodName": "getById",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/permissions",
+          "methodName": "create",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/permissions/{id}",
+          "methodName": "update",
+          "summary": ""
+        },
+        {
+          "httpMethod": "DELETE",
+          "path": "/api/permissions/{id}",
+          "methodName": "delete",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/permissions/tree",
+          "methodName": "getTree",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "className": "ProjectController",
+      "basePath": "/projects",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "GET",
+          "path": "/api/projects",
+          "methodName": "list",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/projects/{id}",
+          "methodName": "getById",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/projects",
+          "methodName": "create",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/projects/{id}",
+          "methodName": "update",
+          "summary": ""
+        },
+        {
+          "httpMethod": "DELETE",
+          "path": "/api/projects/{id}",
+          "methodName": "delete",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/projects/{id}/status",
+          "methodName": "updateStatus",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "className": "ProjectDocumentController",
+      "basePath": "/project-documents",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "GET",
+          "path": "/api/project-documents",
+          "methodName": "list",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/project-documents/{id}",
+          "methodName": "getById",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/project-documents",
+          "methodName": "create",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/project-documents/{id}",
+          "methodName": "update",
+          "summary": ""
+        },
+        {
+          "httpMethod": "DELETE",
+          "path": "/api/project-documents/{id}",
+          "methodName": "delete",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/project-documents/upload",
+          "methodName": "upload",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "className": "RoleController",
+      "basePath": "/roles",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "GET",
+          "path": "/api/roles",
+          "methodName": "list",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/roles/{id}",
+          "methodName": "getById",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/roles",
+          "methodName": "create",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/roles/{id}",
+          "methodName": "update",
+          "summary": ""
+        },
+        {
+          "httpMethod": "DELETE",
+          "path": "/api/roles/{id}",
+          "methodName": "delete",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/roles/{id}/permissions",
+          "methodName": "assignPermissions",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/roles/{id}/users",
+          "methodName": "assignUsers",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "className": "SafetyLogController",
+      "basePath": "/safety-logs",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "GET",
+          "path": "/api/safety-logs",
+          "methodName": "list",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/safety-logs/{id}",
+          "methodName": "getById",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/safety-logs",
+          "methodName": "create",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/safety-logs/{id}",
+          "methodName": "update",
+          "summary": ""
+        },
+        {
+          "httpMethod": "DELETE",
+          "path": "/api/safety-logs/{id}",
+          "methodName": "delete",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/safety-logs/{id}/approve",
+          "methodName": "approve",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "className": "SidelineInspectionController",
+      "basePath": "/sideline-inspections",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "GET",
+          "path": "/api/sideline-inspections",
+          "methodName": "list",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/sideline-inspections/{id}",
+          "methodName": "getById",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/sideline-inspections",
+          "methodName": "create",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/sideline-inspections/{id}",
+          "methodName": "update",
+          "summary": ""
+        },
+        {
+          "httpMethod": "DELETE",
+          "path": "/api/sideline-inspections/{id}",
+          "methodName": "delete",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "className": "SubItemDatabaseController",
+      "basePath": "/sub-item-databases",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "GET",
+          "path": "/api/sub-item-databases",
+          "methodName": "list",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/sub-item-databases/{id}",
+          "methodName": "getById",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/sub-item-databases",
+          "methodName": "create",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/sub-item-databases/{id}",
+          "methodName": "update",
+          "summary": ""
+        },
+        {
+          "httpMethod": "DELETE",
+          "path": "/api/sub-item-databases/{id}",
+          "methodName": "delete",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/sub-item-databases/tree",
+          "methodName": "getTree",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "className": "SupervisionDiaryController",
+      "basePath": "/supervision-diaries",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "GET",
+          "path": "/api/supervision-diaries",
+          "methodName": "list",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/supervision-diaries/{id}",
+          "methodName": "getById",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/supervision-diaries",
+          "methodName": "create",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/supervision-diaries/{id}",
+          "methodName": "update",
+          "summary": ""
+        },
+        {
+          "httpMethod": "DELETE",
+          "path": "/api/supervision-diaries/{id}",
+          "methodName": "delete",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/supervision-diaries/{id}/approve",
+          "methodName": "approve",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "className": "SupervisionLogController",
+      "basePath": "/supervision-logs",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "GET",
+          "path": "/api/supervision-logs",
+          "methodName": "list",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/supervision-logs/{id}",
+          "methodName": "getById",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/supervision-logs",
+          "methodName": "create",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/supervision-logs/{id}",
+          "methodName": "update",
+          "summary": ""
+        },
+        {
+          "httpMethod": "DELETE",
+          "path": "/api/supervision-logs/{id}",
+          "methodName": "delete",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/supervision-logs/{id}/approve",
+          "methodName": "approve",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "className": "SupervisionMonthlyReportController",
+      "basePath": "/supervision-monthly-reports",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "GET",
+          "path": "/api/supervision-monthly-reports",
+          "methodName": "list",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/supervision-monthly-reports/{id}",
+          "methodName": "getById",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/supervision-monthly-reports",
+          "methodName": "create",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/supervision-monthly-reports/{id}",
+          "methodName": "update",
+          "summary": ""
+        },
+        {
+          "httpMethod": "DELETE",
+          "path": "/api/supervision-monthly-reports/{id}",
+          "methodName": "delete",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "className": "SupervisionNoticeController",
+      "basePath": "/supervision-notices",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "GET",
+          "path": "/api/supervision-notices",
+          "methodName": "list",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/supervision-notices/{id}",
+          "methodName": "getById",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/supervision-notices",
+          "methodName": "create",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/supervision-notices/{id}",
+          "methodName": "update",
+          "summary": ""
+        },
+        {
+          "httpMethod": "DELETE",
+          "path": "/api/supervision-notices/{id}",
+          "methodName": "delete",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/supervision-notices/{id}/reply",
+          "methodName": "reply",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "className": "UserController",
+      "basePath": "/users",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "GET",
+          "path": "/api/users",
+          "methodName": "list",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/users/{id}",
+          "methodName": "getById",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/users",
+          "methodName": "create",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/users/{id}",
+          "methodName": "update",
+          "summary": ""
+        },
+        {
+          "httpMethod": "DELETE",
+          "path": "/api/users/{id}",
+          "methodName": "delete",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/users/{id}/status",
+          "methodName": "updateStatus",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/users/{id}/reset-password",
+          "methodName": "resetPassword",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "className": "WorkContactController",
+      "basePath": "/work-contacts",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "GET",
+          "path": "/api/work-contacts",
+          "methodName": "list",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/work-contacts/{id}",
+          "methodName": "getById",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/work-contacts",
+          "methodName": "create",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/work-contacts/{id}",
+          "methodName": "update",
+          "summary": ""
+        },
+        {
+          "httpMethod": "DELETE",
+          "path": "/api/work-contacts/{id}",
+          "methodName": "delete",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/work-contacts/{id}/reply",
+          "methodName": "reply",
+          "summary": ""
+        }
+      ]
+    },
+    {
+      "className": "WorkStandardConfigController",
+      "basePath": "/work-standard-configs",
+      "classDoc": "",
+      "endpoints": [
+        {
+          "httpMethod": "GET",
+          "path": "/api/work-standard-configs",
+          "methodName": "list",
+          "summary": ""
+        },
+        {
+          "httpMethod": "GET",
+          "path": "/api/work-standard-configs/{id}",
+          "methodName": "getById",
+          "summary": ""
+        },
+        {
+          "httpMethod": "POST",
+          "path": "/api/work-standard-configs",
+          "methodName": "create",
+          "summary": ""
+        },
+        {
+          "httpMethod": "PUT",
+          "path": "/api/work-standard-configs/{id}",
+          "methodName": "update",
+          "summary": ""
+        },
+        {
+          "httpMethod": "DELETE",
+          "path": "/api/work-standard-configs/{id}",
+          "methodName": "delete",
+          "summary": ""
+        }
+      ]
+    }
+  ],
+  "tables": [
+    {
+      "tableName": "sys_department",
+      "tableComment": "部门表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "部门ID"
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(100)",
+          "constraints": "NOT NULL",
+          "comment": "部门名称"
+        },
+        {
+          "name": "parent_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "上级部门ID"
+        },
+        {
+          "name": "description",
+          "type": "VARCHAR(500)",
+          "constraints": "",
+          "comment": "部门描述"
+        },
+        {
+          "name": "leader",
+          "type": "VARCHAR(50)",
+          "constraints": "",
+          "comment": "负责人"
+        },
+        {
+          "name": "sort_order",
+          "type": "INT",
+          "constraints": "",
+          "comment": "排序号"
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "constraints": "DEFAULT 'active'",
+          "comment": "状态"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_sys_department_parent_id",
+          "unique": false,
+          "columns": [
+            "parent_id"
+          ]
+        },
+        {
+          "name": "idx_sys_department_status",
+          "unique": false,
+          "columns": [
+            "status"
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "sys_user",
+      "tableComment": "用户表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "用户ID"
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(50)",
+          "constraints": "NOT NULL",
+          "comment": "姓名"
+        },
+        {
+          "name": "gender",
+          "type": "VARCHAR(10)",
+          "constraints": "",
+          "comment": "性别"
+        },
+        {
+          "name": "dept_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "部门ID"
+        },
+        {
+          "name": "position",
+          "type": "VARCHAR(50)",
+          "constraints": "",
+          "comment": "职位"
+        },
+        {
+          "name": "cert_no",
+          "type": "VARCHAR(50)",
+          "constraints": "",
+          "comment": "证书编号"
+        },
+        {
+          "name": "phone",
+          "type": "VARCHAR(20)",
+          "constraints": "",
+          "comment": "手机号"
+        },
+        {
+          "name": "id_card",
+          "type": "VARCHAR(20)",
+          "constraints": "",
+          "comment": "身份证号"
+        },
+        {
+          "name": "project_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "所属项目ID"
+        },
+        {
+          "name": "hire_date",
+          "type": "DATE",
+          "constraints": "",
+          "comment": "入职日期"
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "constraints": "DEFAULT 'active'",
+          "comment": "状态"
+        },
+        {
+          "name": "password",
+          "type": "VARCHAR(100)",
+          "constraints": "",
+          "comment": "密码(BCrypt)"
+        },
+        {
+          "name": "avatar",
+          "type": "VARCHAR(500)",
+          "constraints": "",
+          "comment": "头像路径"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_sys_user_dept_id",
+          "unique": false,
+          "columns": [
+            "dept_id"
+          ]
+        },
+        {
+          "name": "idx_sys_user_project_id",
+          "unique": false,
+          "columns": [
+            "project_id"
+          ]
+        },
+        {
+          "name": "idx_sys_user_status",
+          "unique": false,
+          "columns": [
+            "status"
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "sys_role",
+      "tableComment": "角色表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "角色ID"
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(50)",
+          "constraints": "NOT NULL",
+          "comment": "角色名称"
+        },
+        {
+          "name": "code",
+          "type": "VARCHAR(50)",
+          "constraints": "NOT NULL",
+          "comment": "角色编码"
+        },
+        {
+          "name": "description",
+          "type": "VARCHAR(500)",
+          "constraints": "",
+          "comment": "角色描述"
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "constraints": "DEFAULT 'active'",
+          "comment": "状态"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "uk_sys_role_code",
+          "unique": true,
+          "columns": [
+            "code"
+          ]
+        },
+        {
+          "name": "idx_sys_role_status",
+          "unique": false,
+          "columns": [
+            "status"
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "sys_permission",
+      "tableComment": "权限表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "权限ID"
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(100)",
+          "constraints": "NOT NULL",
+          "comment": "权限名称"
+        },
+        {
+          "name": "code",
+          "type": "VARCHAR(100)",
+          "constraints": "NOT NULL",
+          "comment": "权限编码"
+        },
+        {
+          "name": "module",
+          "type": "VARCHAR(50)",
+          "constraints": "",
+          "comment": "所属模块"
+        },
+        {
+          "name": "description",
+          "type": "VARCHAR(500)",
+          "constraints": "",
+          "comment": "权限描述"
+        },
+        {
+          "name": "parent_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "上级权限ID"
+        },
+        {
+          "name": "sort_order",
+          "type": "INT",
+          "constraints": "",
+          "comment": "排序号"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "uk_sys_permission_code",
+          "unique": true,
+          "columns": [
+            "code"
+          ]
+        },
+        {
+          "name": "idx_sys_permission_parent_id",
+          "unique": false,
+          "columns": [
+            "parent_id"
+          ]
+        },
+        {
+          "name": "idx_sys_permission_module",
+          "unique": false,
+          "columns": [
+            "module"
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "sys_role_permission",
+      "tableComment": "角色权限关联表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "ID"
+        },
+        {
+          "name": "role_id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL",
+          "comment": "角色ID"
+        },
+        {
+          "name": "permission_id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL",
+          "comment": "权限ID"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_sys_role_permission_role_id",
+          "unique": false,
+          "columns": [
+            "role_id"
+          ]
+        },
+        {
+          "name": "idx_sys_role_permission_permission_id",
+          "unique": false,
+          "columns": [
+            "permission_id"
+          ]
+        },
+        {
+          "name": "uk_sys_role_permission",
+          "unique": true,
+          "columns": [
+            "role_id",
+            "permission_id"
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "sys_user_role",
+      "tableComment": "用户角色关联表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "ID"
+        },
+        {
+          "name": "user_id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL",
+          "comment": "用户ID"
+        },
+        {
+          "name": "role_id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL",
+          "comment": "角色ID"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_sys_user_role_user_id",
+          "unique": false,
+          "columns": [
+            "user_id"
+          ]
+        },
+        {
+          "name": "idx_sys_user_role_role_id",
+          "unique": false,
+          "columns": [
+            "role_id"
+          ]
+        },
+        {
+          "name": "uk_sys_user_role",
+          "unique": true,
+          "columns": [
+            "user_id",
+            "role_id"
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "sys_operation_log",
+      "tableComment": "操作日志表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "日志ID"
+        },
+        {
+          "name": "user_id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL",
+          "comment": "操作用户ID"
+        },
+        {
+          "name": "user_name",
+          "type": "VARCHAR(50)",
+          "constraints": "",
+          "comment": "操作用户名"
+        },
+        {
+          "name": "action",
+          "type": "VARCHAR(50)",
+          "constraints": "",
+          "comment": "操作动作"
+        },
+        {
+          "name": "module",
+          "type": "VARCHAR(50)",
+          "constraints": "",
+          "comment": "操作模块"
+        },
+        {
+          "name": "detail",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "操作详情"
+        },
+        {
+          "name": "ip",
+          "type": "VARCHAR(50)",
+          "constraints": "",
+          "comment": "IP地址"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_sys_operation_log_user_id",
+          "unique": false,
+          "columns": [
+            "user_id"
+          ]
+        },
+        {
+          "name": "idx_sys_operation_log_module",
+          "unique": false,
+          "columns": [
+            "module"
+          ]
+        },
+        {
+          "name": "idx_sys_operation_log_create_time",
+          "unique": false,
+          "columns": [
+            "create_time"
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "sys_message",
+      "tableComment": "消息表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "消息ID"
+        },
+        {
+          "name": "sender_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "发送者ID"
+        },
+        {
+          "name": "receiver_id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL",
+          "comment": "接收者ID"
+        },
+        {
+          "name": "title",
+          "type": "VARCHAR(200)",
+          "constraints": "",
+          "comment": "消息标题"
+        },
+        {
+          "name": "content",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "消息内容"
+        },
+        {
+          "name": "type",
+          "type": "VARCHAR(30)",
+          "constraints": "",
+          "comment": "消息类型"
+        },
+        {
+          "name": "is_read",
+          "type": "VARCHAR(10)",
+          "constraints": "",
+          "comment": "是否已读"
+        },
+        {
+          "name": "related_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "关联业务ID"
+        },
+        {
+          "name": "related_type",
+          "type": "VARCHAR(50)",
+          "constraints": "",
+          "comment": "关联业务类型"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_sys_message_receiver_id",
+          "unique": false,
+          "columns": [
+            "receiver_id"
+          ]
+        },
+        {
+          "name": "idx_sys_message_sender_id",
+          "unique": false,
+          "columns": [
+            "sender_id"
+          ]
+        },
+        {
+          "name": "idx_sys_message_is_read",
+          "unique": false,
+          "columns": [
+            "is_read"
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "sys_work_standard_config",
+      "tableComment": "工作标准配置表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "ID"
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(100)",
+          "constraints": "NOT NULL",
+          "comment": "配置名称"
+        },
+        {
+          "name": "module",
+          "type": "VARCHAR(50)",
+          "constraints": "",
+          "comment": "所属模块"
+        },
+        {
+          "name": "standard",
+          "type": "VARCHAR(50)",
+          "constraints": "",
+          "comment": "标准"
+        },
+        {
+          "name": "description",
+          "type": "VARCHAR(500)",
+          "constraints": "",
+          "comment": "描述"
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "constraints": "DEFAULT 'active'",
+          "comment": "状态"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_sys_work_standard_config_module",
+          "unique": false,
+          "columns": [
+            "module"
+          ]
+        },
+        {
+          "name": "idx_sys_work_standard_config_status",
+          "unique": false,
+          "columns": [
+            "status"
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "biz_project",
+      "tableComment": "项目表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "项目ID"
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(200)",
+          "constraints": "NOT NULL",
+          "comment": "项目名称"
+        },
+        {
+          "name": "code",
+          "type": "VARCHAR(50)",
+          "constraints": "NOT NULL",
+          "comment": "项目编码"
+        },
+        {
+          "name": "address",
+          "type": "VARCHAR(500)",
+          "constraints": "",
+          "comment": "项目地址"
+        },
+        {
+          "name": "type",
+          "type": "VARCHAR(50)",
+          "constraints": "",
+          "comment": "项目类型"
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "constraints": "DEFAULT 'active'",
+          "comment": "状态"
+        },
+        {
+          "name": "start_date",
+          "type": "DATE",
+          "constraints": "",
+          "comment": "开始日期"
+        },
+        {
+          "name": "end_date",
+          "type": "DATE",
+          "constraints": "",
+          "comment": "结束日期"
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "项目描述"
+        },
+        {
+          "name": "manager_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "项目经理ID"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "uk_biz_project_code",
+          "unique": true,
+          "columns": [
+            "code"
+          ]
+        },
+        {
+          "name": "idx_biz_project_status",
+          "unique": false,
+          "columns": [
+            "status"
+          ]
+        },
+        {
+          "name": "idx_biz_project_manager_id",
+          "unique": false,
+          "columns": [
+            "manager_id"
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "biz_daily_inspection",
+      "tableComment": "日常巡检表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "ID"
+        },
+        {
+          "name": "code",
+          "type": "VARCHAR(50)",
+          "constraints": "NOT NULL",
+          "comment": "巡检编号"
+        },
+        {
+          "name": "project_id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL",
+          "comment": "项目ID"
+        },
+        {
+          "name": "inspection_date",
+          "type": "DATE",
+          "constraints": "NOT NULL",
+          "comment": "巡检日期"
+        },
+        {
+          "name": "inspector_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "巡检人ID"
+        },
+        {
+          "name": "location",
+          "type": "VARCHAR(200)",
+          "constraints": "",
+          "comment": "巡检位置"
+        },
+        {
+          "name": "content",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "巡检内容"
+        },
+        {
+          "name": "issues",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "发现问题"
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "constraints": "DEFAULT 'active'",
+          "comment": "状态"
+        },
+        {
+          "name": "photos",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "照片(JSON)"
+        },
+        {
+          "name": "attachments",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "附件(JSON)"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "uk_biz_daily_inspection_code",
+          "unique": true,
+          "columns": [
+            "code"
+          ]
+        },
+        {
+          "name": "idx_biz_daily_inspection_project_id",
+          "unique": false,
+          "columns": [
+            "project_id"
+          ]
+        },
+        {
+          "name": "idx_biz_daily_inspection_inspection_date",
+          "unique": false,
+          "columns": [
+            "inspection_date"
+          ]
+        },
+        {
+          "name": "idx_biz_daily_inspection_status",
+          "unique": false,
+          "columns": [
+            "status"
+          ]
+        },
+        {
+          "name": "idx_biz_daily_inspection_inspector_id",
+          "unique": false,
+          "columns": [
+            "inspector_id"
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "biz_sideline_inspection",
+      "tableComment": "旁站巡检表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "ID"
+        },
+        {
+          "name": "code",
+          "type": "VARCHAR(50)",
+          "constraints": "NOT NULL",
+          "comment": "旁站编号"
+        },
+        {
+          "name": "project_id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL",
+          "comment": "项目ID"
+        },
+        {
+          "name": "inspection_date",
+          "type": "DATE",
+          "constraints": "NOT NULL",
+          "comment": "旁站日期"
+        },
+        {
+          "name": "inspector_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "旁站人ID"
+        },
+        {
+          "name": "location",
+          "type": "VARCHAR(200)",
+          "constraints": "",
+          "comment": "旁站位置"
+        },
+        {
+          "name": "content",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "旁站内容"
+        },
+        {
+          "name": "start_time",
+          "type": "DATETIME",
+          "constraints": "",
+          "comment": "开始时间"
+        },
+        {
+          "name": "end_time",
+          "type": "DATETIME",
+          "constraints": "",
+          "comment": "结束时间"
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "constraints": "DEFAULT 'active'",
+          "comment": "状态"
+        },
+        {
+          "name": "photos",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "照片(JSON)"
+        },
+        {
+          "name": "attachments",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "附件(JSON)"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "uk_biz_sideline_inspection_code",
+          "unique": true,
+          "columns": [
+            "code"
+          ]
+        },
+        {
+          "name": "idx_biz_sideline_inspection_project_id",
+          "unique": false,
+          "columns": [
+            "project_id"
+          ]
+        },
+        {
+          "name": "idx_biz_sideline_inspection_inspection_date",
+          "unique": false,
+          "columns": [
+            "inspection_date"
+          ]
+        },
+        {
+          "name": "idx_biz_sideline_inspection_status",
+          "unique": false,
+          "columns": [
+            "status"
+          ]
+        },
+        {
+          "name": "idx_biz_sideline_inspection_inspector_id",
+          "unique": false,
+          "columns": [
+            "inspector_id"
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "biz_supervision_notice",
+      "tableComment": "监理通知表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "ID"
+        },
+        {
+          "name": "code",
+          "type": "VARCHAR(50)",
+          "constraints": "NOT NULL",
+          "comment": "通知编号"
+        },
+        {
+          "name": "project_id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL",
+          "comment": "项目ID"
+        },
+        {
+          "name": "notice_date",
+          "type": "DATE",
+          "constraints": "NOT NULL",
+          "comment": "通知日期"
+        },
+        {
+          "name": "author_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "拟稿人ID"
+        },
+        {
+          "name": "title",
+          "type": "VARCHAR(200)",
+          "constraints": "NOT NULL",
+          "comment": "通知标题"
+        },
+        {
+          "name": "content",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "通知内容"
+        },
+        {
+          "name": "deadline",
+          "type": "DATE",
+          "constraints": "",
+          "comment": "整改截止日期"
+        },
+        {
+          "name": "reply_content",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "回复内容"
+        },
+        {
+          "name": "reply_date",
+          "type": "DATE",
+          "constraints": "",
+          "comment": "回复日期"
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "constraints": "DEFAULT 'active'",
+          "comment": "状态"
+        },
+        {
+          "name": "priority",
+          "type": "VARCHAR(20)",
+          "constraints": "",
+          "comment": "优先级"
+        },
+        {
+          "name": "photos",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "照片"
+        },
+        {
+          "name": "attachments",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "附件"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "uk_biz_supervision_notice_code",
+          "unique": true,
+          "columns": [
+            "code"
+          ]
+        },
+        {
+          "name": "idx_biz_supervision_notice_project_id",
+          "unique": false,
+          "columns": [
+            "project_id"
+          ]
+        },
+        {
+          "name": "idx_biz_supervision_notice_notice_date",
+          "unique": false,
+          "columns": [
+            "notice_date"
+          ]
+        },
+        {
+          "name": "idx_biz_supervision_notice_status",
+          "unique": false,
+          "columns": [
+            "status"
+          ]
+        },
+        {
+          "name": "idx_biz_supervision_notice_author_id",
+          "unique": false,
+          "columns": [
+            "author_id"
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "biz_work_contact",
+      "tableComment": "工作联系单表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "ID"
+        },
+        {
+          "name": "code",
+          "type": "VARCHAR(50)",
+          "constraints": "NOT NULL",
+          "comment": "联系单编号"
+        },
+        {
+          "name": "project_id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL",
+          "comment": "项目ID"
+        },
+        {
+          "name": "contact_date",
+          "type": "DATE",
+          "constraints": "NOT NULL",
+          "comment": "联系日期"
+        },
+        {
+          "name": "author_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "拟稿人ID"
+        },
+        {
+          "name": "title",
+          "type": "VARCHAR(200)",
+          "constraints": "NOT NULL",
+          "comment": "联系单标题"
+        },
+        {
+          "name": "content",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "联系单内容"
+        },
+        {
+          "name": "reply_content",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "回复内容"
+        },
+        {
+          "name": "reply_date",
+          "type": "DATE",
+          "constraints": "",
+          "comment": "回复日期"
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "constraints": "DEFAULT 'active'",
+          "comment": "状态"
+        },
+        {
+          "name": "priority",
+          "type": "VARCHAR(20)",
+          "constraints": "",
+          "comment": "优先级"
+        },
+        {
+          "name": "photos",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "照片"
+        },
+        {
+          "name": "attachments",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "附件"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "uk_biz_work_contact_code",
+          "unique": true,
+          "columns": [
+            "code"
+          ]
+        },
+        {
+          "name": "idx_biz_work_contact_project_id",
+          "unique": false,
+          "columns": [
+            "project_id"
+          ]
+        },
+        {
+          "name": "idx_biz_work_contact_contact_date",
+          "unique": false,
+          "columns": [
+            "contact_date"
+          ]
+        },
+        {
+          "name": "idx_biz_work_contact_status",
+          "unique": false,
+          "columns": [
+            "status"
+          ]
+        },
+        {
+          "name": "idx_biz_work_contact_author_id",
+          "unique": false,
+          "columns": [
+            "author_id"
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "biz_supervision_diary",
+      "tableComment": "监理日记表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "ID"
+        },
+        {
+          "name": "code",
+          "type": "VARCHAR(50)",
+          "constraints": "NOT NULL",
+          "comment": "日记编号"
+        },
+        {
+          "name": "project_id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL",
+          "comment": "项目ID"
+        },
+        {
+          "name": "diary_date",
+          "type": "DATE",
+          "constraints": "NOT NULL",
+          "comment": "日记日期"
+        },
+        {
+          "name": "author_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "作者ID"
+        },
+        {
+          "name": "weather",
+          "type": "VARCHAR(30)",
+          "constraints": "",
+          "comment": "天气"
+        },
+        {
+          "name": "wind",
+          "type": "VARCHAR(30)",
+          "constraints": "",
+          "comment": "风力"
+        },
+        {
+          "name": "temperature",
+          "type": "VARCHAR(30)",
+          "constraints": "",
+          "comment": "温度"
+        },
+        {
+          "name": "construction",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "施工情况"
+        },
+        {
+          "name": "management",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "管理情况"
+        },
+        {
+          "name": "inspection",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "检查情况"
+        },
+        {
+          "name": "other_matters",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "其他事项"
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "constraints": "DEFAULT 'active'",
+          "comment": "状态"
+        },
+        {
+          "name": "version",
+          "type": "INT",
+          "constraints": "",
+          "comment": "版本号"
+        },
+        {
+          "name": "reject_reason",
+          "type": "VARCHAR(500)",
+          "constraints": "",
+          "comment": "驳回原因"
+        },
+        {
+          "name": "photos",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "照片(JSON)"
+        },
+        {
+          "name": "attachments",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "附件(JSON)"
+        },
+        {
+          "name": "morning_meeting",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "晨会记录"
+        },
+        {
+          "name": "drawing_review",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "图纸会审"
+        },
+        {
+          "name": "reviewer_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "审核人ID"
+        },
+        {
+          "name": "reviewed_at",
+          "type": "DATETIME",
+          "constraints": "",
+          "comment": "审核时间"
+        },
+        {
+          "name": "submitted_at",
+          "type": "DATETIME",
+          "constraints": "",
+          "comment": "提交时间"
+        },
+        {
+          "name": "submitted_by",
+          "type": "VARCHAR(50)",
+          "constraints": "",
+          "comment": "提交人"
+        },
+        {
+          "name": "rejected_at",
+          "type": "DATETIME",
+          "constraints": "",
+          "comment": "驳回时间"
+        },
+        {
+          "name": "rejected_by",
+          "type": "VARCHAR(50)",
+          "constraints": "",
+          "comment": "驳回人"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "uk_biz_supervision_diary_code",
+          "unique": true,
+          "columns": [
+            "code"
+          ]
+        },
+        {
+          "name": "idx_biz_supervision_diary_project_id",
+          "unique": false,
+          "columns": [
+            "project_id"
+          ]
+        },
+        {
+          "name": "idx_biz_supervision_diary_diary_date",
+          "unique": false,
+          "columns": [
+            "diary_date"
+          ]
+        },
+        {
+          "name": "idx_biz_supervision_diary_status",
+          "unique": false,
+          "columns": [
+            "status"
+          ]
+        },
+        {
+          "name": "idx_biz_supervision_diary_author_id",
+          "unique": false,
+          "columns": [
+            "author_id"
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "biz_supervision_log",
+      "tableComment": "监理日志表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "ID"
+        },
+        {
+          "name": "code",
+          "type": "VARCHAR(50)",
+          "constraints": "NOT NULL",
+          "comment": "日志编号"
+        },
+        {
+          "name": "project_id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL",
+          "comment": "项目ID"
+        },
+        {
+          "name": "log_date",
+          "type": "DATE",
+          "constraints": "NOT NULL",
+          "comment": "日志日期"
+        },
+        {
+          "name": "week_start",
+          "type": "DATE",
+          "constraints": "",
+          "comment": "周开始日期"
+        },
+        {
+          "name": "week_end",
+          "type": "DATE",
+          "constraints": "",
+          "comment": "周结束日期"
+        },
+        {
+          "name": "author_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "作者ID"
+        },
+        {
+          "name": "content",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "工作内容"
+        },
+        {
+          "name": "management",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "管理情况"
+        },
+        {
+          "name": "inspection",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "检查情况"
+        },
+        {
+          "name": "morning_meeting",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "晨会记录"
+        },
+        {
+          "name": "drawing_review",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "图纸会审"
+        },
+        {
+          "name": "other_matters",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "其他事项"
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "constraints": "DEFAULT 'active'",
+          "comment": "状态"
+        },
+        {
+          "name": "version",
+          "type": "INT",
+          "constraints": "",
+          "comment": "版本号"
+        },
+        {
+          "name": "reject_reason",
+          "type": "VARCHAR(500)",
+          "constraints": "",
+          "comment": "驳回原因"
+        },
+        {
+          "name": "photos",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "照片(JSON)"
+        },
+        {
+          "name": "attachments",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "附件(JSON)"
+        },
+        {
+          "name": "weather",
+          "type": "VARCHAR(30)",
+          "constraints": "",
+          "comment": "天气"
+        },
+        {
+          "name": "wind",
+          "type": "VARCHAR(30)",
+          "constraints": "",
+          "comment": "风力"
+        },
+        {
+          "name": "temperature",
+          "type": "VARCHAR(30)",
+          "constraints": "",
+          "comment": "温度"
+        },
+        {
+          "name": "reviewer_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "审核人ID"
+        },
+        {
+          "name": "reviewed_at",
+          "type": "DATETIME",
+          "constraints": "",
+          "comment": "审核时间"
+        },
+        {
+          "name": "submitted_at",
+          "type": "DATETIME",
+          "constraints": "",
+          "comment": "提交时间"
+        },
+        {
+          "name": "submitted_by",
+          "type": "VARCHAR(50)",
+          "constraints": "",
+          "comment": "提交人"
+        },
+        {
+          "name": "rejected_at",
+          "type": "DATETIME",
+          "constraints": "",
+          "comment": "驳回时间"
+        },
+        {
+          "name": "rejected_by",
+          "type": "VARCHAR(50)",
+          "constraints": "",
+          "comment": "驳回人"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "uk_biz_supervision_log_code",
+          "unique": true,
+          "columns": [
+            "code"
+          ]
+        },
+        {
+          "name": "idx_biz_supervision_log_project_id",
+          "unique": false,
+          "columns": [
+            "project_id"
+          ]
+        },
+        {
+          "name": "idx_biz_supervision_log_log_date",
+          "unique": false,
+          "columns": [
+            "log_date"
+          ]
+        },
+        {
+          "name": "idx_biz_supervision_log_status",
+          "unique": false,
+          "columns": [
+            "status"
+          ]
+        },
+        {
+          "name": "idx_biz_supervision_log_author_id",
+          "unique": false,
+          "columns": [
+            "author_id"
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "biz_safety_log",
+      "tableComment": "安全日志表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "ID"
+        },
+        {
+          "name": "code",
+          "type": "VARCHAR(50)",
+          "constraints": "NOT NULL",
+          "comment": "日志编号"
+        },
+        {
+          "name": "project_id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL",
+          "comment": "项目ID"
+        },
+        {
+          "name": "log_date",
+          "type": "DATE",
+          "constraints": "NOT NULL",
+          "comment": "日志日期"
+        },
+        {
+          "name": "author_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "作者ID"
+        },
+        {
+          "name": "content",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "工作内容"
+        },
+        {
+          "name": "inspection",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "检查情况"
+        },
+        {
+          "name": "safety",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "安全情况"
+        },
+        {
+          "name": "major_issue",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "重大问题"
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "constraints": "DEFAULT 'active'",
+          "comment": "状态"
+        },
+        {
+          "name": "version",
+          "type": "INT",
+          "constraints": "",
+          "comment": "版本号"
+        },
+        {
+          "name": "reject_reason",
+          "type": "VARCHAR(500)",
+          "constraints": "",
+          "comment": "驳回原因"
+        },
+        {
+          "name": "photos",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "照片(JSON)"
+        },
+        {
+          "name": "attachments",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "附件(JSON)"
+        },
+        {
+          "name": "weather",
+          "type": "VARCHAR(30)",
+          "constraints": "",
+          "comment": "天气"
+        },
+        {
+          "name": "wind",
+          "type": "VARCHAR(30)",
+          "constraints": "",
+          "comment": "风力"
+        },
+        {
+          "name": "temperature",
+          "type": "VARCHAR(30)",
+          "constraints": "",
+          "comment": "温度"
+        },
+        {
+          "name": "reviewer_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "审核人ID"
+        },
+        {
+          "name": "reviewed_at",
+          "type": "DATETIME",
+          "constraints": "",
+          "comment": "审核时间"
+        },
+        {
+          "name": "submitted_at",
+          "type": "DATETIME",
+          "constraints": "",
+          "comment": "提交时间"
+        },
+        {
+          "name": "submitted_by",
+          "type": "VARCHAR(50)",
+          "constraints": "",
+          "comment": "提交人"
+        },
+        {
+          "name": "rejected_at",
+          "type": "DATETIME",
+          "constraints": "",
+          "comment": "驳回时间"
+        },
+        {
+          "name": "rejected_by",
+          "type": "VARCHAR(50)",
+          "constraints": "",
+          "comment": "驳回人"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "uk_biz_safety_log_code",
+          "unique": true,
+          "columns": [
+            "code"
+          ]
+        },
+        {
+          "name": "idx_biz_safety_log_project_id",
+          "unique": false,
+          "columns": [
+            "project_id"
+          ]
+        },
+        {
+          "name": "idx_biz_safety_log_log_date",
+          "unique": false,
+          "columns": [
+            "log_date"
+          ]
+        },
+        {
+          "name": "idx_biz_safety_log_status",
+          "unique": false,
+          "columns": [
+            "status"
+          ]
+        },
+        {
+          "name": "idx_biz_safety_log_author_id",
+          "unique": false,
+          "columns": [
+            "author_id"
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "biz_meeting_minutes",
+      "tableComment": "会议纪要表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "ID"
+        },
+        {
+          "name": "code",
+          "type": "VARCHAR(50)",
+          "constraints": "NOT NULL",
+          "comment": "会议纪要编号"
+        },
+        {
+          "name": "project_id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL",
+          "comment": "项目ID"
+        },
+        {
+          "name": "meeting_date",
+          "type": "DATE",
+          "constraints": "NOT NULL",
+          "comment": "会议日期"
+        },
+        {
+          "name": "author_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "记录人ID"
+        },
+        {
+          "name": "title",
+          "type": "VARCHAR(200)",
+          "constraints": "NOT NULL",
+          "comment": "会议标题"
+        },
+        {
+          "name": "content",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "会议内容"
+        },
+        {
+          "name": "attendees",
+          "type": "VARCHAR(500)",
+          "constraints": "",
+          "comment": "参会人员"
+        },
+        {
+          "name": "location",
+          "type": "VARCHAR(200)",
+          "constraints": "",
+          "comment": "会议地点"
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "constraints": "DEFAULT 'active'",
+          "comment": "状态"
+        },
+        {
+          "name": "photos",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "照片(JSON)"
+        },
+        {
+          "name": "attachments",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "附件(JSON)"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "uk_biz_meeting_minutes_code",
+          "unique": true,
+          "columns": [
+            "code"
+          ]
+        },
+        {
+          "name": "idx_biz_meeting_minutes_project_id",
+          "unique": false,
+          "columns": [
+            "project_id"
+          ]
+        },
+        {
+          "name": "idx_biz_meeting_minutes_meeting_date",
+          "unique": false,
+          "columns": [
+            "meeting_date"
+          ]
+        },
+        {
+          "name": "idx_biz_meeting_minutes_status",
+          "unique": false,
+          "columns": [
+            "status"
+          ]
+        },
+        {
+          "name": "idx_biz_meeting_minutes_author_id",
+          "unique": false,
+          "columns": [
+            "author_id"
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "biz_supervision_monthly_report",
+      "tableComment": "监理月报表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "ID"
+        },
+        {
+          "name": "code",
+          "type": "VARCHAR(50)",
+          "constraints": "NOT NULL",
+          "comment": "月报编号"
+        },
+        {
+          "name": "project_id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL",
+          "comment": "项目ID"
+        },
+        {
+          "name": "report_month",
+          "type": "VARCHAR(10)",
+          "constraints": "NOT NULL",
+          "comment": "报告月份(yyyy-MM)"
+        },
+        {
+          "name": "author_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "作者ID"
+        },
+        {
+          "name": "content",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "月报内容"
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "constraints": "DEFAULT 'active'",
+          "comment": "状态"
+        },
+        {
+          "name": "photos",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "照片(JSON)"
+        },
+        {
+          "name": "attachments",
+          "type": "TEXT",
+          "constraints": "",
+          "comment": "附件(JSON)"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "uk_biz_supervision_monthly_report_code",
+          "unique": true,
+          "columns": [
+            "code"
+          ]
+        },
+        {
+          "name": "idx_biz_supervision_monthly_report_project_id",
+          "unique": false,
+          "columns": [
+            "project_id"
+          ]
+        },
+        {
+          "name": "idx_biz_supervision_monthly_report_report_month",
+          "unique": false,
+          "columns": [
+            "report_month"
+          ]
+        },
+        {
+          "name": "idx_biz_supervision_monthly_report_status",
+          "unique": false,
+          "columns": [
+            "status"
+          ]
+        },
+        {
+          "name": "idx_biz_supervision_monthly_report_author_id",
+          "unique": false,
+          "columns": [
+            "author_id"
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "biz_sub_item_database",
+      "tableComment": "子项数据库表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "ID"
+        },
+        {
+          "name": "project_id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL",
+          "comment": "项目ID"
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(200)",
+          "constraints": "NOT NULL",
+          "comment": "子项名称"
+        },
+        {
+          "name": "parent_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "上级子项ID"
+        },
+        {
+          "name": "sort_order",
+          "type": "INT",
+          "constraints": "",
+          "comment": "排序号"
+        },
+        {
+          "name": "description",
+          "type": "VARCHAR(500)",
+          "constraints": "",
+          "comment": "描述"
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "constraints": "DEFAULT 'active'",
+          "comment": "状态"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_biz_sub_item_database_project_id",
+          "unique": false,
+          "columns": [
+            "project_id"
+          ]
+        },
+        {
+          "name": "idx_biz_sub_item_database_parent_id",
+          "unique": false,
+          "columns": [
+            "parent_id"
+          ]
+        },
+        {
+          "name": "idx_biz_sub_item_database_status",
+          "unique": false,
+          "columns": [
+            "status"
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "biz_project_document",
+      "tableComment": "项目文档表",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL AUTO_INCREMENT",
+          "comment": "ID"
+        },
+        {
+          "name": "project_id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL",
+          "comment": "项目ID"
+        },
+        {
+          "name": "sub_item_id",
+          "type": "BIGINT",
+          "constraints": "NOT NULL",
+          "comment": "子项ID"
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(200)",
+          "constraints": "NOT NULL",
+          "comment": "文档名称"
+        },
+        {
+          "name": "file_path",
+          "type": "VARCHAR(500)",
+          "constraints": "NOT NULL",
+          "comment": "文件路径"
+        },
+        {
+          "name": "file_size",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "文件大小(字节)"
+        },
+        {
+          "name": "upload_date",
+          "type": "DATE",
+          "constraints": "NOT NULL",
+          "comment": "上传日期"
+        },
+        {
+          "name": "uploader_id",
+          "type": "BIGINT",
+          "constraints": "",
+          "comment": "上传人ID"
+        },
+        {
+          "name": "description",
+          "type": "VARCHAR(500)",
+          "constraints": "",
+          "comment": "描述"
+        },
+        {
+          "name": "create_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "创建时间"
+        },
+        {
+          "name": "update_time",
+          "type": "DATETIME",
+          "constraints": "DEFAULT CURRENT_TIMESTAMP",
+          "comment": "更新时间"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_biz_project_document_project_id",
+          "unique": false,
+          "columns": [
+            "project_id"
+          ]
+        },
+        {
+          "name": "idx_biz_project_document_sub_item_id",
+          "unique": false,
+          "columns": [
+            "sub_item_id"
+          ]
+        },
+        {
+          "name": "idx_biz_project_document_uploader_id",
+          "unique": false,
+          "columns": [
+            "uploader_id"
+          ]
+        }
+      ]
+    }
+  ],
+  "compositeIndexes": [
+    {
+      "tableName": "sys_message",
+      "indexName": "idx_sys_message_receiver_read",
+      "columns": [
+        "receiver_id",
+        "is_read"
+      ],
+      "purpose": "消息中心：按接收人+是否已读查未读列表/未读数（MessageService.list、countByReceiverIdAndIsRead）"
+    },
+    {
+      "tableName": "biz_supervision_diary",
+      "indexName": "idx_biz_supervision_diary_project_date",
+      "columns": [
+        "project_id",
+        "diary_date"
+      ],
+      "purpose": "监理日记：按项目+日记日期的列表页日期范围查询与日记统计（diary-statistics）"
+    },
+    {
+      "tableName": "biz_supervision_log",
+      "indexName": "idx_biz_supervision_log_project_date",
+      "columns": [
+        "project_id",
+        "log_date"
+      ],
+      "purpose": "监理日志：按项目+日志日期的列表页日期范围查询与日志统计（log-statistics）"
+    },
+    {
+      "tableName": "sys_user",
+      "indexName": "idx_sys_user_dept_status",
+      "columns": [
+        "dept_id",
+        "status"
+      ],
+      "purpose": "用户管理：按部门+状态筛选人员列表（UserService.list 同时传 deptId 与 status）"
+    },
+    {
+      "tableName": "biz_safety_log",
+      "indexName": "idx_biz_safety_log_project_date",
+      "columns": [
+        "project_id",
+        "log_date"
+      ],
+      "purpose": "安全日志：按项目+日志日期的列表页日期范围查询与安全日志统计（safety-log-statistics）"
+    },
+    {
+      "tableName": "biz_daily_inspection",
+      "indexName": "idx_biz_daily_inspection_project_date",
+      "columns": [
+        "project_id",
+        "inspection_date"
+      ],
+      "purpose": "日常巡检：按项目+巡检日期的列表页日期范围查询（daily-inspection 列表页）"
+    },
+    {
+      "tableName": "biz_sideline_inspection",
+      "indexName": "idx_biz_sideline_inspection_project_date",
+      "columns": [
+        "project_id",
+        "inspection_date"
+      ],
+      "purpose": "旁站巡检：按项目+旁站日期的列表页日期范围查询（sideline-inspection 列表页）"
+    }
+  ],
+  "pages": [
+    {
+      "fileName": "daily-inspection.html",
+      "title": "监理现场管理系统 - 日常巡检"
+    },
+    {
+      "fileName": "department-management.html",
+      "title": "监理现场管理系统 - 部门管理"
+    },
+    {
+      "fileName": "diary-report.html",
+      "title": "监理现场管理系统 - 日记报表"
+    },
+    {
+      "fileName": "diary-statistics.html",
+      "title": "监理现场管理系统 - 日记统计"
+    },
+    {
+      "fileName": "index.html",
+      "title": "监理现场管理系统 - 仪表盘"
+    },
+    {
+      "fileName": "log-statistics.html",
+      "title": "监理现场管理系统 - 日志统计"
+    },
+    {
+      "fileName": "login.html",
+      "title": "登录 - 监理现场管理系统"
+    },
+    {
+      "fileName": "meeting-minutes.html",
+      "title": "监理现场管理系统 - 会议纪要"
+    },
+    {
+      "fileName": "message-center.html",
+      "title": "监理现场管理系统 - 消息中心"
+    },
+    {
+      "fileName": "operation-log.html",
+      "title": "监理现场管理系统 - 操作日志"
+    },
+    {
+      "fileName": "permission-settings.html",
+      "title": "监理现场管理系统 - 权限设置"
+    },
+    {
+      "fileName": "personnel-management.html",
+      "title": "监理现场管理系统 - 人员管理"
+    },
+    {
+      "fileName": "process-management.html",
+      "title": "监理现场管理系统 - 流程管理"
+    },
+    {
+      "fileName": "project-data-upload.html",
+      "title": "监理现场管理系统 - 工程资料上传"
+    },
+    {
+      "fileName": "project-ledger.html",
+      "title": "监理现场管理系统 - 项目台账"
+    },
+    {
+      "fileName": "safety-log-statistics.html",
+      "title": "监理现场管理系统 - 安全日志统计"
+    },
+    {
+      "fileName": "safety-log.html",
+      "title": "监理现场管理系统 - 监理安全日志"
+    },
+    {
+      "fileName": "sideline-inspection.html",
+      "title": "监理现场管理系统 - 旁站"
+    },
+    {
+      "fileName": "sub-item-database.html",
+      "title": "监理现场管理系统 - 工程资料目录设置"
+    },
+    {
+      "fileName": "supervision-diary.html",
+      "title": "监理现场管理系统 - 监理日记"
+    },
+    {
+      "fileName": "supervision-log.html",
+      "title": "监理现场管理系统 - 监理日志"
+    },
+    {
+      "fileName": "supervision-monthly-report.html",
+      "title": "监理现场管理系统 - 监理月报"
+    },
+    {
+      "fileName": "supervision-notice.html",
+      "title": "监理现场管理系统 - 监理通知单"
+    },
+    {
+      "fileName": "welcome.html",
+      "title": "监理现场管理系统 · 系统导览"
+    },
+    {
+      "fileName": "work-contact.html",
+      "title": "监理现场管理系统 - 工作联系单"
+    },
+    {
+      "fileName": "work-standard-config.html",
+      "title": "监理现场管理系统 - 工作标准配置"
+    }
+  ]
+}

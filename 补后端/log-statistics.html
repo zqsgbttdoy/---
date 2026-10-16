@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监理现场管理系统 - 日志统计</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background: #F0F5FF; color: #1F2937; display: flex; min-height: 100vh; }
+        .sidebar { width: 240px; background: linear-gradient(180deg, #1E3A5F 0%, #0F2440 100%); color: #fff; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; overflow-y: auto; }
+        .sidebar-logo { padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo h2 { font-size: 16px; font-weight: 600; letter-spacing: 1px; }
+        .sidebar-logo p { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+        .menu-group { padding: 8px 0; }
+        .menu-group-title { padding: 10px 20px 6px; font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
+        .menu-item { display: flex; align-items: center; padding: 10px 20px; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; transition: all 0.2s; cursor: pointer; }
+        .menu-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+        .menu-item.active { background: rgba(37,99,235,0.3); color: #fff; border-right: 3px solid #2563EB; }
+        .menu-item .icon { width: 20px; margin-right: 10px; text-align: center; font-size: 14px; }
+        .main { margin-left: 240px; flex: 1; }
+        .header { background: #fff; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 50; }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .header-left h3 { font-size: 15px; font-weight: 600; color: #1E3A5F; }
+        .breadcrumb { font-size: 12px; color: #6B7280; }
+        .breadcrumb a { color: #2563EB; text-decoration: none; }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .notification { position: relative; cursor: pointer; font-size: 18px; }
+        .badge { position: absolute; top: -6px; right: -6px; background: #EF4444; color: #fff; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .user-info { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #2563EB; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; }
+        .user-name { font-size: 13px; color: #374151; }
+        .content { padding: 24px; }
+        .filter-bar { background: #fff; border-radius: 10px; padding: 16px 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .filter-bar label { font-size: 13px; color: #6B7280; white-space: nowrap; }
+        .filter-select { height: 36px; border: 1px solid #E5E7EB; border-radius: 6px; padding: 0 12px; font-size: 13px; color: #374151; background: #fff; outline: none; cursor: pointer; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; border: none; transition: all 0.2s; }
+        .btn-primary { background: #2563EB; color: #fff; }
+        .btn-primary:hover { background: #1D4ED8; }
+        .btn-outline { background: #fff; color: #374151; border: 1px solid #E5E7EB; }
+        .btn-outline:hover { background: #F9FAFB; }
+        .btn-success { background: #10B981; color: #fff; }
+        .btn-success:hover { background: #059669; }
+        .btn-danger { background: #EF4444; color: #fff; }
+        .btn-danger:hover { background: #DC2626; }
+        .btn-sm { padding: 4px 10px; font-size: 12px; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; background: #E5E7EB; color: #9CA3AF; border-color: #D1D5DB; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+        .stat-card { background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        .stat-card .label { font-size: 13px; color: #6B7280; margin-bottom: 8px; }
+        .stat-card .value { font-size: 28px; font-weight: 700; }
+        .stat-card .sub { font-size: 12px; color: #9CA3AF; margin-top: 4px; }
+        .stat-card.blue .value { color: #2563EB; }
+        .stat-card.green .value { color: #10B981; }
+        .stat-card.orange .value { color: #F59E0B; }
+        .stat-card.red .value { color: #EF4444; }
+        .panel { background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        .panel-header { padding: 16px 20px; border-bottom: 1px solid #F3F4F6; display: flex; align-items: center; justify-content: space-between; }
+        .panel-header h4 { font-size: 14px; font-weight: 600; color: #1E3A5F; }
+        .panel-body { padding: 20px; }
+        .attendance-table { width: 100%; border-collapse: collapse; }
+        .attendance-table th { padding: 10px 12px; text-align: left; font-size: 12px; font-weight: 600; color: #6B7280; border-bottom: 1px solid #E5E7EB; background: #F8FAFC; }
+        .attendance-table td { padding: 10px 12px; font-size: 13px; color: #374151; border-bottom: 1px solid #F3F4F6; }
+        .attendance-table tr:hover td { background: #F8FAFC; }
+        .progress-bar { width: 100px; height: 8px; background: #E5E7EB; border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 4px; }
+        .progress-fill.green { background: #10B981; }
+        .progress-fill.orange { background: #F59E0B; }
+        .progress-fill.red { background: #EF4444; }
+        .submit-status { display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; }
+        .submit-status.submitted { background: #D1FAE5; color: #059669; }
+        .submit-status.unsubmitted { background: #FEE2E2; color: #DC2626; }
+        .submit-info { font-size: 11px; color: #9CA3AF; margin-top: 2px; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+        .modal-overlay.show { display: flex; }
+        .modal { background: #fff; border-radius: 12px; width: 480px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: space-between; }
+        .modal-header h3 { font-size: 16px; font-weight: 600; color: #1E3A5F; }
+        .modal-close { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer; font-size: 18px; color: #6B7280; border: none; background: none; }
+        .modal-close:hover { background: #F3F4F6; }
+        .modal-body { padding: 24px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid #E5E7EB; display: flex; justify-content: flex-end; gap: 12px; }
+        .confirm-icon { text-align: center; font-size: 48px; margin-bottom: 16px; }
+        .confirm-text { text-align: center; font-size: 14px; color: #374151; margin-bottom: 8px; }
+        .confirm-sub { text-align: center; font-size: 12px; color: #9CA3AF; }
+        .submit-detail-row { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #F3F4F6; }
+        .submit-detail-row:last-child { border-bottom: none; }
+        .submit-detail-label { font-size: 13px; color: #6B7280; width: 100px; flex-shrink: 0; }
+        .submit-detail-value { font-size: 13px; color: #1F2937; flex: 1; }
+    </style>
+    <script src="assets/app.js"></script>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/responsive.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-logo"><h2>监理现场管理系统</h2><p>Supervision Site Management</p></div>
+        <div class="menu-group"><a class="menu-item" href="index.html"><span class="icon">📊</span> 仪表盘</a></div>
+        <div class="menu-group"><div class="menu-group-title">项目管理</div><a class="menu-item" href="project-ledger.html"><span class="icon">📁</span> 项目台账</a></div>
+        <div class="menu-group"><div class="menu-group-title">监理现场工作</div><a class="menu-item" href="daily-inspection.html"><span class="icon">🔍</span> 日常巡检</a><a class="menu-item" href="sideline-inspection.html"><span class="icon">👁️</span> 旁站</a><a class="menu-item" href="supervision-notice.html"><span class="icon">📋</span> 监理通知单</a><a class="menu-item" href="work-contact.html"><span class="icon">✉️</span> 工作联系单</a><a class="menu-item" href="supervision-diary.html"><span class="icon">📝</span> 监理日记</a><a class="menu-item" href="supervision-log.html"><span class="icon">📄</span> 监理日志</a><a class="menu-item" href="safety-log.html"><span class="icon">🛡️</span> 监理安全日志</a><a class="menu-item" href="meeting-minutes.html"><span class="icon">📅</span> 会议纪要</a><a class="menu-item" href="supervision-monthly-report.html"><span class="icon">📊</span> 监理月报</a></div>
+        <div class="menu-group"><div class="menu-group-title">项目资料</div><a class="menu-item" href="sub-item-database.html"><span class="icon">🗄️</span> 工程资料目录设置</a><a class="menu-item" href="project-data-upload.html"><span class="icon">📤</span> 工程资料上传</a></div>
+        <div class="menu-group"><div class="menu-group-title">数据统计</div><a class="menu-item" href="diary-statistics.html"><span class="icon">📈</span> 日记统计</a><a class="menu-item" href="diary-report.html"><span class="icon">📑</span> 日记报表</a><a class="menu-item active" href="log-statistics.html"><span class="icon">📊</span> 日志统计</a><a class="menu-item" href="safety-log-statistics.html"><span class="icon">🛡️</span> 安全日志统计</a></div>
+        <div class="menu-group"><div class="menu-group-title">团队管理</div><a class="menu-item" href="department-management.html"><span class="icon">🏢</span> 部门管理</a><a class="menu-item" href="personnel-management.html"><span class="icon">👥</span> 人员管理</a><a class="menu-item" href="permission-settings.html"><span class="icon">🔐</span> 权限设置</a><a class="menu-item" href="process-management.html"><span class="icon">🔄</span> 流程管理</a></div>
+        <div class="menu-group"><div class="menu-group-title">系统设置</div><a class="menu-item" href="operation-log.html"><span class="icon">📜</span> 操作日志</a><a class="menu-item" href="message-center.html"><span class="icon">🔔</span> 消息中心</a><a class="menu-item" href="work-standard-config.html"><span class="icon">⚙️</span> 工作标准配置</a></div>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <div class="header-left"><h3>日志统计</h3><span class="breadcrumb"><a href="index.html">首页</a> / 数据统计 / 日志统计</span></div>
+            <div class="header-right"><div class="notification">🔔<span class="badge" id="notifBadge" style="display:none;">0</span></div><div class="user-info"><div class="user-avatar">张</div><span class="user-name">张监理</span></div></div>
+        </div>
+
+        <div class="content">
+            <div style="background:#FEF3C7;border:1px solid #F59E0B;border-radius:8px;padding:10px 16px;margin-bottom:16px;display:flex;align-items:center;gap:8px;">
+                <span style="font-size:16px;">🔒</span>
+                <span style="font-size:13px;color:#92400E;">当前页面为只读模式，数据统计模块仅支持查看操作，不支持提交、修改、删除或添加。</span>
+            </div>
+            <div class="filter-bar">
+                <label>选择项目：</label>
+                <select class="filter-select" id="projectSelect">
+                    <option value="">全部项目</option>
+                </select>
+                <label>时间范围：</label>
+                <input type="date" class="filter-select" id="startDate">
+                <span>~</span>
+                <input type="date" class="filter-select" id="endDate">
+                <button class="btn btn-primary" onclick="queryData()">查询</button>
+                <button class="btn btn-outline" onclick="resetFilters()">重置</button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="label">应写日志数</div>
+                    <div class="value">87</div>
+                    <div class="sub">本月工作日总计</div>
+                </div>
+                <div class="stat-card green">
+                    <div class="label">已通过日志</div>
+                    <div class="value">72</div>
+                    <div class="sub">完成率 82.8%</div>
+                </div>
+                <div class="stat-card red">
+                    <div class="label">被驳回/未提交日志</div>
+                    <div class="value">10</div>
+                    <div class="sub">审核未通过或未提交</div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="label">未提交日志</div>
+                    <div class="value">5</div>
+                    <div class="sub">未提交日志</div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h4>日志-项目提交统计</h4>
+                    <button class="btn btn-primary btn-sm" onclick="openSubmitModal()" style="display:none;">📤 提交统计</button>
+                </div>
+                <div class="panel-body" style="padding:0;">
+                    <table class="attendance-table">
+                        <thead>
+                            <tr>
+                                <th>项目名称</th>
+                                <th>应写天数</th>
+                                <th>已通过</th>
+                                <th>完成率</th>
+                                <th>今日提交状态</th>
+                                <th>提交人</th>
+                                <th>提交时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="submitModal">
+        <div class="modal">
+            <div class="modal-header"><h3>提交日志统计</h3><button class="modal-close" onclick="closeModal('submitModal')">✕</button></div>
+            <div class="modal-body">
+                <div class="submit-detail-row">
+                    <div class="submit-detail-label">当前项目</div>
+                    <div class="submit-detail-value" id="modalProject">城东综合体项目</div>
+                </div>
+                <div class="submit-detail-row">
+                    <div class="submit-detail-label">当前日期</div>
+                    <div class="submit-detail-value" id="modalDate"></div>
+                </div>
+                <div class="submit-detail-row">
+                    <div class="submit-detail-label">提交人</div>
+                    <div class="submit-detail-value">张监理</div>
+                </div>
+                <div class="submit-detail-row">
+                    <div class="submit-detail-label">提交状态</div>
+                    <div class="submit-detail-value" id="modalStatus"></div>
+                </div>
+                <div style="margin-top:16px;padding:12px;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:6px;font-size:12px;color:#1E40AF;">
+                    ℹ️ 每个项目每个自然日仅允许一名用户提交统计数据，提交后不可重复提交。
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('submitModal')">取消</button>
+                <button class="btn btn-success" id="confirmSubmitBtn" disabled onclick="showReadonlyTip()">确认提交</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal">
+            <div class="modal-header"><h3>提交详情</h3><button class="modal-close" onclick="closeModal('detailModal')">✕</button></div>
+            <div class="modal-body" id="detailModalBody">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('detailModal')">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var projectData = [];
+        var rawLogs = [];
+        var projectsMap = {};
+        var currentUser = (window.App && App.getUser && App.getUser().userName) || '';
+
+        function loadProjects() {
+            return apiGetPage('/projects', { pageNum: 1, pageSize: 500 }).then(function(res) {
+                var sel = document.getElementById('projectSelect');
+                sel.innerHTML = '<option value="">全部项目</option>';
+                (res.list || []).forEach(function(p) {
+                    projectsMap[p.id] = p.name;
+                    var opt = document.createElement('option');
+                    opt.value = p.id; opt.textContent = p.name;
+                    sel.appendChild(opt);
+                });
+            });
+        }
+
+        function loadData() {
+            var pid = document.getElementById('projectSelect').value;
+            var params = { pageNum: 1, pageSize: 2000 };
+            if (pid) params.projectId = pid;
+            return apiGetPage('/supervision-logs', params).then(function(res) {
+                rawLogs = res.list || [];
+                queryData();
+            });
+        }
+
+        function aggregate(logs) {
+            var groups = {};
+            var today = getTodayStr();
+            logs.forEach(function(l) {
+                var pid = l.projectId;
+                if (!groups[pid]) groups[pid] = { name: projectsMap[pid] || ('项目#' + pid), totalDays: 0, passed: 0, todaySubmitted: false, submittedBy: '', submittedAt: '' };
+                var g = groups[pid];
+                g.totalDays++;
+                if (l.status === 'approved') g.passed++;
+                if ((l.logDate || '') === today) {
+                    g.todaySubmitted = true;
+                    if (l.submittedBy) g.submittedBy = l.submittedBy;
+                    if (l.submittedAt) g.submittedAt = String(l.submittedAt).replace('T', ' ').slice(0, 19);
+                }
+            });
+            return Object.keys(groups).map(function(k) { return groups[k]; });
+        }
+
+        function getTodayStr() {
+            var d = new Date();
+            var y = d.getFullYear();
+            var m = String(d.getMonth() + 1).padStart(2, '0');
+            var day = String(d.getDate()).padStart(2, '0');
+            return y + '-' + m + '-' + day;
+        }
+
+        function renderTable(data) {
+            data = data || projectData;
+            var tbody = document.getElementById('tableBody');
+            var html = '';
+            for (var i = 0; i < data.length; i++) {
+                var p = data[i];
+                var origIndex = projectData.indexOf(p);
+                var rate = Math.round((p.passed / p.totalDays) * 100);
+                var fillClass = rate >= 80 ? 'green' : (rate >= 60 ? 'orange' : 'red');
+
+                var statusHtml = '';
+                if (p.todaySubmitted) {
+                    statusHtml = '<span class="submit-status submitted">✓ 已提交</span>';
+                } else {
+                    statusHtml = '<span class="submit-status unsubmitted">○ 未提交</span>';
+                }
+
+                var submitterHtml = p.todaySubmitted ? App.escape(p.submittedBy) : '<span style="color:#9CA3AF;">—</span>';
+                var submitTimeHtml = p.todaySubmitted ? p.submittedAt : '<span style="color:#9CA3AF;">—</span>';
+
+                var actionHtml = '';
+                if (p.todaySubmitted) {
+                    actionHtml = '<button class="btn btn-outline btn-sm" onclick="viewSubmitDetail(' + origIndex + ')">查看详情</button>';
+                } else {
+                    actionHtml = '<button class="btn btn-outline btn-sm" disabled title="只读模式，无法提交">查看</button>';
+                }
+
+                html += '<tr>' +
+                    '<td>' + App.escape(p.name) + '</td>' +
+                    '<td>' + p.totalDays + '</td>' +
+                    '<td>' + p.passed + '</td>' +
+                    '<td><div style="display:flex;align-items:center;gap:8px;"><div class="progress-bar"><div class="progress-fill ' + fillClass + '" style="width:' + rate + '%"></div></div><span style="font-size:12px;">' + rate + '%</span></div></td>' +
+                    '<td>' + statusHtml + '</td>' +
+                    '<td>' + submitterHtml + '</td>' +
+                    '<td>' + submitTimeHtml + '</td>' +
+                    '<td>' + actionHtml + '</td>' +
+                '</tr>';
+            }
+            tbody.innerHTML = html;
+        }
+
+        function openSubmitModal() {
+            showReadonlyTip();
+        }
+
+        var currentSubmitIndex = -1;
+
+        function openSubmitModalForProject(index) {
+            showReadonlyTip();
+        }
+
+        function confirmSubmit() {
+            showReadonlyTip();
+        }
+
+        function showReadonlyTip() {
+            alert('🔒 只读模式提示：当前页面为数据统计模块，仅支持查看操作，无法进行提交、修改、删除或添加操作。');
+        }
+
+        function viewSubmitDetail(index) {
+            var p = projectData[index];
+            var bodyHtml = '<div class="submit-detail-row">' +
+                '<div class="submit-detail-label">项目名称</div>' +
+                '<div class="submit-detail-value">' + p.name + '</div>' +
+            '</div>' +
+            '<div class="submit-detail-row">' +
+                '<div class="submit-detail-label">提交日期</div>' +
+                '<div class="submit-detail-value">' + getTodayStr() + '</div>' +
+            '</div>' +
+            '<div class="submit-detail-row">' +
+                '<div class="submit-detail-label">提交人</div>' +
+                '<div class="submit-detail-value">' + p.submittedBy + '</div>' +
+            '</div>' +
+            '<div class="submit-detail-row">' +
+                '<div class="submit-detail-label">提交时间</div>' +
+                '<div class="submit-detail-value">' + p.submittedAt + '</div>' +
+            '</div>' +
+            '<div class="submit-detail-row">' +
+                '<div class="submit-detail-label">提交状态</div>' +
+                '<div class="submit-detail-value"><span class="submit-status submitted">✓ 已提交</span></div>' +
+            '</div>' +
+            '<div class="submit-detail-row">' +
+                '<div class="submit-detail-label">应写天数</div>' +
+                '<div class="submit-detail-value">' + p.totalDays + ' 天</div>' +
+            '</div>' +
+            '<div class="submit-detail-row">' +
+                '<div class="submit-detail-label">已通过</div>' +
+                '<div class="submit-detail-value">' + p.passed + ' 天</div>' +
+            '</div>';
+
+            document.getElementById('detailModalBody').innerHTML = bodyHtml;
+            document.getElementById('detailModal').classList.add('show');
+        }
+
+        function queryData() {
+            var startDate = document.getElementById('startDate').value;
+            var endDate = document.getElementById('endDate').value;
+            if (startDate && endDate && startDate > endDate) {
+                if (window.App) App.toast('开始日期不能晚于结束日期', 'warning'); else alert('开始日期不能大于结束日期！');
+                return;
+            }
+            var filtered = rawLogs.filter(function(l) {
+                var d = l.logDate || '';
+                if (startDate && d && d < startDate) return false;
+                if (endDate && d && d > endDate) return false;
+                return true;
+            });
+            projectData = aggregate(filtered);
+            renderTable(projectData);
+            updateStats(projectData);
+        }
+
+        function resetFilters() {
+            document.getElementById('projectSelect').value = '';
+            document.getElementById('startDate').value = '';
+            document.getElementById('endDate').value = '';
+            loadData();
+        }
+
+        function updateStats(data) {
+            data = data || projectData;
+            var totalDays = 0, passed = 0, unsubmitted = 0;
+            for (var i = 0; i < data.length; i++) {
+                totalDays += data[i].totalDays;
+                passed += data[i].passed;
+                if (!data[i].todaySubmitted) unsubmitted++;
+            }
+            var rejected = totalDays - passed;
+            var rate = totalDays > 0 ? (passed / totalDays * 100).toFixed(1) : '0.0';
+
+            var cards = document.querySelectorAll('.stat-card');
+            cards[0].querySelector('.value').textContent = totalDays;
+            cards[0].querySelector('.sub').textContent = '本月工作日总计';
+            cards[1].querySelector('.value').textContent = passed;
+            cards[1].querySelector('.sub').textContent = '完成率 ' + rate + '%';
+            cards[2].querySelector('.value').textContent = rejected;
+            cards[2].querySelector('.sub').textContent = '审核未通过或未提交';
+            cards[3].querySelector('.value').textContent = unsubmitted;
+            cards[3].querySelector('.sub').textContent = '未提交日志';
+        }
+
+        function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+        if (window.App) {
+            App.requireAuth();
+            App.initTopbar();
+            loadProjects().then(loadData);
+        }
+    </script>
+</body>
+</html>
