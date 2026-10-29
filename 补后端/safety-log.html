@@ -17,7 +17,7 @@
         .menu-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
         .menu-item.active { background: rgba(37,99,235,0.3); color: #fff; border-right: 3px solid #2563EB; }
         .menu-item .icon { width: 20px; margin-right: 10px; text-align: center; font-size: 14px; }
-        .main { margin-left: 240px; flex: 1; }
+        .main { margin-left: 240px; flex: 1; min-width: 0; }
         .header { background: #fff; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 50; }
         .header-left { display: flex; align-items: center; gap: 16px; }
         .header-left h3 { font-size: 15px; font-weight: 600; color: #1E3A5F; }
@@ -333,7 +333,10 @@
             .content { padding: 12px; }
             .toolbar { flex-direction: column; align-items: stretch; }
             .toolbar-left { flex-wrap: wrap; }
-            .filter-select, .search-box input { width: 100% !important; min-width: 0; }
+            .toolbar-left { width: 100%; min-width: 0; }
+            .filter-select, .search-box { width: 100% !important; min-width: 0; }
+            .search-box { flex-wrap: wrap; height: auto; padding: 6px 12px; }
+            .search-box input { flex: 1 1 auto; width: auto !important; min-width: 0; }
             .modal { width: 95% !important; max-height: 90vh; }
             .modal-body { padding: 16px; max-height: calc(90vh - 130px); overflow-y: auto; -webkit-overflow-scrolling: touch; }
             table { font-size: 12px; }
@@ -361,10 +364,31 @@
         html { scroll-behavior: smooth; }
         .table-container { -webkit-overflow-scrolling: touch; }
         .modal-overlay { -webkit-overflow-scrolling: touch; }
+
+        /* ===== 新建/编辑表单：对齐公司定稿模板（fd-* 规范，见 assets/field-records.css） ===== */
+        .create-modal { padding: 24px; background: rgba(15,23,42,.45); }
+        .create-modal .modal { width: 100%; max-width: 1000px; max-height: calc(100vh - 48px); display: flex; flex-direction: column; overflow: hidden; border-radius: 12px; }
+        .create-modal .modal-header { padding: 20px 28px 14px; position: static; }
+        .create-modal .modal-body { display: block; flex: 1; min-height: 0; overflow-y: auto; padding: 6px 28px 4px; }
+        .create-modal .form-main { overflow: visible; padding-right: 0; }
+        .create-modal .version-tabs { margin: 0 -28px; padding: 0 28px; }
+        .create-modal .fd-grid { margin-top: 0; }
+        .create-modal .photo-grid { gap: 12px; margin-top: 12px; }
+        .create-modal .photo-item { width: 96px; height: 96px; border-style: solid; border-color: #E5E7EB; cursor: default; }
+        .create-modal .fd-dropzone + .photo-grid:empty { display: none; }
+        .create-modal .modal-footer { z-index: 3; padding: 16px 28px; }
+        @media (max-width: 900px) {
+            .create-modal { padding: 0; }
+            .create-modal .modal { max-width: none; max-height: 100vh; height: 100vh; border-radius: 0; }
+            .create-modal .modal-header { padding: 14px 16px 10px; }
+            .create-modal .modal-body { padding: 4px 16px; }
+            .create-modal .version-tabs { margin: 0 -16px; padding: 0 16px; }
+        }
     </style>
     <script src="assets/app.js"></script>
     <link rel="stylesheet" href="assets/style.css">
     <link rel="stylesheet" href="assets/responsive.css">
+    <link rel="stylesheet" href="assets/field-records.css">
 </head>
 <body>
     <div class="sidebar">
@@ -392,7 +416,7 @@
     <div class="main">
         <div class="header">
             <div class="header-left"><h3>监理安全日志</h3><span class="breadcrumb"><a href="index.html">首页</a> / 监理现场工作 / 监理安全日志</span></div>
-            <div class="header-right"><div class="notification">🔔<span class="badge">3</span></div><div class="user-info"><div class="user-avatar">张</div><span class="user-name">张监理</span></div></div>
+            <div class="header-right"><div class="notification">🔔<span class="badge">3</span></div><div class="user-info"><div class="user-avatar"></div><span class="user-name"></span></div></div>
         </div>
 
         <div class="content">
@@ -404,17 +428,19 @@
                         <button class="role-btn" onclick="switchRole('reviewer')">审核人</button>
                     </div>
                     <div class="search-box"><span class="search-icon">🔍</span><input type="text" placeholder="搜索安全日志..." id="searchInput"><button class="btn btn-primary btn-sm" onclick="searchData()" style="margin-left:8px;height:32px;">搜索</button></div>
-                    <select class="filter-select" id="projectFilter"><option value="">全部项目</option><option>城东综合体项目</option><option>滨河路改造工程</option><option>科技产业园二期</option></select>
+                    <select class="filter-select" id="projectFilter" aria-label="筛选或选择本次填报项目" onchange="clearSafetyProjectHint()"><option value="">全部项目</option></select>
                     <select class="filter-select" id="statusFilter"><option value="">全部状态</option><option value="draft">草稿</option><option value="pending">待审核</option><option value="approved">审核通过</option><option value="rejected">驳回</option></select>
                     <button class="btn btn-primary btn-sm" onclick="filterData()" style="height:36px;">确认</button>
                     <button class="btn btn-outline btn-sm" onclick="resetFilters()" style="height:36px;">重置</button>
                 </div>
                 <div style="display:flex;gap:8px;">
-                    <button class="btn btn-outline" onclick="exportData()">📥 导出</button>
+                    <button class="btn btn-outline" onclick="exportData()">📥 导出CSV</button>
+                    <button class="btn btn-outline" onclick="exportWordBatch()">📄 导出Word</button>
                     <button class="btn btn-primary" onclick="openCreateModal()">＋ 新建安全日志</button>
                 </div>
             </div>
 
+            <div class="fd-error" id="safetyPageHint" role="status" aria-live="polite"></div>
             <div class="table-container">
                 <table>
                     <thead>
@@ -430,52 +456,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr data-status="approved">
-                            <td style="font-weight:500;">AQ-2026-015</td>
-                            <td>城东综合体项目</td>
-                            <td>2026-04-30</td>
-                            <td>张监理</td>
-                            <td>赵总监</td>
-                            <td><span class="status-tag status-approved">审核通过</span></td>
-                            <td class="action-cell"></td>
-                        </tr>
-                        <tr data-status="pending">
-                            <td style="font-weight:500;">AQ-2026-014</td>
-                            <td>城东综合体项目</td>
-                            <td>2026-04-29</td>
-                            <td>张监理</td>
-                            <td>赵总监</td>
-                            <td><span class="status-tag status-pending">待审核</span></td>
-                            <td class="action-cell"></td>
-                        </tr>
-                        <tr data-status="rejected" class="abnormal-row">
-                            <td style="color:#DC2626;font-weight:500;">AQ-2026-013</td>
-                            <td>科技产业园二期</td>
-                            <td>2026-04-28</td>
-                            <td>王监理</td>
-                            <td>赵总监</td>
-                            <td><span class="status-tag status-rejected">驳回</span></td>
-                            <td class="action-cell"></td>
-                        </tr>
-                        <tr data-status="approved">
-                            <td style="font-weight:500;">AQ-2026-012</td>
-                            <td>城东综合体项目</td>
-                            <td>2026-04-28</td>
-                            <td>李监理</td>
-                            <td>赵总监</td>
-                            <td><span class="status-tag status-approved">审核通过</span></td>
-                            <td class="action-cell"></td>
-                        </tr>
-                        <tr data-status="draft">
-                            <td style="font-weight:500;">AQ-2026-D01</td>
-                            <td>城东综合体项目</td>
-                            <td>2026-04-30</td>
-                            <td>张监理</td>
-                            <td>赵总监</td>
-                            <td><span class="status-tag status-draft">草稿</span></td>
-                            <td class="action-cell"></td>
-                        </tr>
-
+                        <tr data-app-placeholder="1"><td colspan="8" style="text-align:center;color:#9CA3AF;padding:40px;">数据加载中...</td></tr>
                     </tbody>
                 </table>
                 <div class="pagination">
@@ -486,61 +467,127 @@
         </div>
     </div>
 
-    <div class="modal-overlay create-modal" id="createModal">
-        <div class="modal">
-            <div class="modal-header"><div class="modal-header-row"><h3 id="modalTitle">新建监理安全日志</h3><button class="modal-close" onclick="closeModal('createModal')">✕</button></div></div>
+    <div class="modal-overlay create-modal" id="createModal" data-kind="safety-logs" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal fd-modal">
+            <div class="modal-header">
+                <div class="modal-header-row">
+                    <div>
+                        <h3 class="fd-title" id="modalTitle">新建监理安全日志</h3>
+                        <div class="fd-sub">如实记录当日安全监理工作；框内灰色文字为填写提示，不会保存为正文。</div>
+                    </div>
+                    <button class="modal-close fd-close" onclick="closeModal('createModal')" title="关闭" aria-label="关闭">✕</button>
+                </div>
+            </div>
             <div class="modal-body">
                 <div class="form-main">
-                <div class="section-title" style="margin-top:0;padding-top:0;border-top:none;"><span class="section-num">1</span>基本信息</div>
-                <div class="form-row-compact">
-                    <div class="form-group"><label>工程名称 <span class="required">*</span></label><select class="form-control" id="projectSelect"><option value="">请选择工程</option><option>城东综合体项目</option><option>滨河路改造工程</option><option>科技产业园二期</option></select></div>
-                    <div class="form-group"><label>日期</label><div class="readonly-field">2026-04-30</div></div>
-                </div>
-                <div class="form-row-3-compact">
-                    <div class="form-group"><label>天气</label><input type="text" class="form-control" id="safetyWeather" placeholder="如：晴、多云、小雨等"></div>
-                    <div class="form-group"><label>风力</label><select class="form-control" id="safetyWind"><option value="">请选择</option><option>微风</option><option>3-4级</option><option>4-5级</option><option>5-6级</option><option>6级以上</option></select></div>
-                    <div class="form-group"><label>气温</label><input type="text" class="form-control" id="safetyTemp" placeholder="如：18℃~26℃"></div>
-                </div>
-                <div class="form-row-compact">
-                    <div class="form-group"><label>填写人</label><div class="readonly-field">张监理</div></div>
-                    <div class="form-group"><label>审核人</label><div class="readonly-field">赵总监</div></div>
-                </div>
-
-                <div class="section-title"><span class="section-num">2</span>施工部位及形象进度</div>
-                <div class="form-group"><textarea class="form-control" id="safetyContent" placeholder="现场施工的当前具体部位及其形象进度进展"></textarea></div>
-
-                <div class="section-title"><span class="section-num">3</span>巡视检查内容资料审核及验收情况</div>
-                <div class="form-group"><textarea class="form-control" id="safetyInspection" style="min-height:120px;" placeholder="现场安全巡查项目包括但不限于：&#10;①专职安全员是否在岗履职；&#10;②特种作业人员是否持有有效证件上岗；&#10;③施工机械运行状态是否正常，有无进出场登记及环保合规记录；&#10;④临时用电系统安全状态；&#10;⑤脚手架、吊篮、升降机、吊车等设备的验收记录与现场状态检查等"></textarea></div>
-
-                <div class="section-title"><span class="section-num">4</span>存在的安全问题处理结果</div>
-                <div class="form-group"><textarea class="form-control" id="safetySafety" placeholder="明确当日施工区域是否存有重大危险源，描述当天整体安全生产现状与异常问题"></textarea></div>
-
-                <div class="section-title"><span class="section-num">5</span>重大事项</div>
-                <div class="form-group"><textarea class="form-control" id="safetyMajorIssue" placeholder="如发生安全事故、停工、重要会议、主管部门检查等需记录的重大事件，应在此栏填写"></textarea></div>
-
-                <div class="section-title"><span class="section-num">6</span>附件上传</div>
-                <div class="upload-section">
-                    <h5>现场照片</h5>
-                    <div class="photo-grid" id="createPhotoGrid">
-                        <div class="photo-item" onclick="document.getElementById('createPhotoInput').click()">+</div>
+                <div class="fd-error" id="safetyFormError" role="status" aria-live="polite"></div>
+                <div class="fd-info">
+                    <div class="fd-info-col">
+                        <div class="fd-info-title">填写提示</div>
+                        <div class="fd-info-item on">准确记录当天的气象信息，并在“施工部位及形象进度”栏简要概述本专业工程的当日形象进度。</div>
                     </div>
-                    <input type="file" id="createPhotoInput" accept="image/*" multiple style="display:none" onchange="handleCreatePhoto(this)">
-                </div>
-                <div class="upload-section" style="margin-top:16px;">
-                    <h5>附件材料</h5>
-                    <div id="createAttachmentList">
-                        <div style="font-size:12px;color:#9CA3AF;padding:12px 0;text-align:center;" id="emptyAttTip">暂无附件，点击下方按钮添加</div>
+                    <div class="fd-info-col">
+                        <div class="fd-info-title">附件要求</div>
+                        <div class="fd-info-item on">现场照片与验收材料请一并上传，每个附件均需选择存储目录。</div>
                     </div>
-                    <button class="upload-btn" onclick="document.getElementById('createFileInput').click()">+ 添加附件</button>
-                    <input type="file" id="createFileInput" multiple style="display:none" onchange="handleCreateFile(this)">
-                    <div class="field-hint" style="margin-top:8px;">应提供与安全监理行为或验收结果相关的材料，例如：签发的《监理工程师通知单》；相关专题会议纪要；签发的《工程暂停令》；脚手架、机械、吊篮等设备的第三方验收单等。<strong style="color:#D97706;">每个附件均需选择存储目录。</strong></div>
+                </div>
+                <h4 class="fd-section-heading">基础信息</h4>
+                <div class="fd-grid">
+                    <div class="fd-field">
+                        <div class="fd-label" id="safetyProjectLabel">工程名称</div>
+                        <input type="hidden" id="projectSelect">
+                        <div class="fd-readonly" id="safetyProjectName" aria-labelledby="safetyProjectLabel" aria-describedby="safetyProjectHint"></div>
+                        <div class="fd-hint" id="safetyProjectHint">由系统根据本次填报项目自动带入；编辑时保留原工程。</div>
+                    </div>
+                    <div class="fd-field">
+                        <label class="fd-label" for="safetyLogDate">日期</label>
+                        <input type="date" class="fd-input" id="safetyLogDate" readonly aria-describedby="safetyDateHint">
+                        <div class="fd-hint" id="safetyDateHint">由系统自动生成当天日期；编辑时保留原记录日期。</div>
+                    </div>
+                    <div class="fd-field">
+                        <div class="fd-label" id="safetyAuthorLabel">填写人</div>
+                        <div class="fd-readonly" id="safetyAuthor" aria-labelledby="safetyAuthorLabel" aria-describedby="safetyAuthorHint"></div>
+                        <div class="fd-hint" id="safetyAuthorHint">应由项目安全监理工程师负责记录。新建按当前登录账号带入，编辑显示原填写人。</div>
+                    </div>
+                    <div class="fd-field">
+                        <div class="fd-label" id="safetyReviewerLabel">审核人</div>
+                        <div class="fd-readonly" id="safetyReviewer" aria-labelledby="safetyReviewerLabel">—</div>
+                        <div class="fd-hint">由系统显示已有审核记录，未审核时不代填人员。</div>
+                    </div>
+                    <div class="fd-field">
+                        <label class="fd-label" for="safetyWeather">天气</label>
+                        <input type="text" class="fd-input" id="safetyWeather" placeholder="准确记录当天的天气状况。">
+                    </div>
+                    <div class="fd-field">
+                        <label class="fd-label" for="safetyWind">风力</label>
+                        <input type="text" class="fd-input" id="safetyWind" placeholder="准确记录当天的风力信息。">
+                    </div>
+                    <div class="fd-field">
+                        <label class="fd-label" for="safetyTemp">气温</label>
+                        <input type="text" class="fd-input" id="safetyTemp" placeholder="准确记录当天的气温信息。">
+                    </div>
+                </div>
+
+                <div class="fd-sec">
+                    <label class="fd-sec-title" for="safetyContent">施工部位及形象进度</label>
+                    <div class="fd-field">
+                        <textarea class="fd-textarea" id="safetyContent" placeholder="现场施工的当前具体部位及其形象进度进展。"></textarea>
+                    </div>
+                </div>
+
+                <div class="fd-sec">
+                    <label class="fd-sec-title" for="safetyInspection">巡视检查内容资料审核及验收情况</label>
+                    <div class="fd-field">
+                        <textarea class="fd-textarea" id="safetyInspection" placeholder="巡查内容示例：现场安全巡查项目包括但不限于：&#10;①专职安全员是否在岗履职；&#10;②特种作业人员是否持有有效证件上岗；&#10;③施工机械运行状态是否正常，有无进出场登记及环保合规记录；&#10;④临时用电系统安全状态；&#10;⑤脚手架、吊篮、升降机、吊车等设备的验收记录与现场状态检查等。"></textarea>
+                    </div>
+                </div>
+
+                <div class="fd-sec">
+                    <label class="fd-sec-title" for="safetySafety">存在的安全问题处理结果</label>
+                    <div class="fd-field">
+                        <textarea class="fd-textarea" id="safetySafety" placeholder="当日危险源及安全生产评估：明确当日施工区域是否存有重大危险源，描述当天整体安全生产现状与异常问题；对发现的问题写明处理措施、处理结果及待跟踪事项。"></textarea>
+                    </div>
+                </div>
+
+                <div class="fd-sec">
+                    <label class="fd-sec-title" for="safetyMajorIssue">重大事项</label>
+                    <div class="fd-field">
+                        <textarea class="fd-textarea" id="safetyMajorIssue" placeholder="如发生安全事故、停工、重要会议、主管部门检查等需记录的重大事件，应在此栏填写。"></textarea>
+                    </div>
+                </div>
+
+                <div class="fd-sec">
+                    <div class="fd-sec-title">附件上传</div>
+                    <div class="fd-field">
+                        <div class="fd-label">现场照片</div>
+                        <label class="fd-dropzone" id="photoDropzone" for="createPhotoInput">
+                            <span class="fd-dz-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 18a4 4 0 1 1 .6-7.96A6 6 0 0 1 19 12a3 3 0 0 1-1 5.83M12 16V8m0 0-3 3m3-3 3 3"/></svg></span>
+                            <span class="fd-dz-title">点击或拖拽图片到此处上传</span>
+                            <span class="fd-dz-sub">支持 JPG、PNG、GIF 格式，单张不超过5MB</span>
+                            <input type="file" id="createPhotoInput" accept="image/*" multiple onchange="handleCreatePhoto(this)">
+                        </label>
+                        <div class="photo-grid" id="createPhotoGrid"></div>
+                    </div>
+                    <div class="fd-field">
+                        <div class="fd-label">附件材料</div>
+                        <label class="fd-dropzone" id="fileDropzone" for="createFileInput" aria-describedby="safetyAttachmentHint">
+                            <span class="fd-dz-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 18a4 4 0 1 1 .6-7.96A6 6 0 0 1 19 12a3 3 0 0 1-1 5.83M12 16V8m0 0-3 3m3-3 3 3"/></svg></span>
+                            <span class="fd-dz-title"><span class="fd-dz-link">点击上传</span> 或拖放文件</span>
+                            <span class="fd-dz-sub">支持 PNG, JPG, PDF 格式，单个文件不超过10MB</span>
+                            <input type="file" id="createFileInput" multiple onchange="handleCreateFile(this)">
+                        </label>
+                        <div id="createAttachmentList">
+                            <div style="font-size:12px;color:#9CA3AF;padding:12px 0;text-align:center;" id="emptyAttTip">暂无附件，点击上方区域添加</div>
+                        </div>
+                        <div class="fd-hint" id="safetyAttachmentHint">应提供与安全监理行为或验收结果相关的材料，例如：签发的《监理工程师通知单》；相关专题会议纪要；签发的《工程暂停令》；脚手架、机械、吊篮等设备的第三方验收单等。<strong>每个附件均需选择存储目录。</strong></div>
+                    </div>
                 </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline" onclick="closeModal('createModal')">取消</button>
-                <button class="btn btn-outline" onclick="saveDraft()">保存草稿</button>
-                <button class="btn btn-primary" onclick="submitLog()">提交</button>
+            <div class="modal-footer fd-footer">
+                <button class="fd-btn fd-btn-draft" onclick="saveDraft()">保存草稿</button>
+                <button class="fd-btn fd-btn-cancel" onclick="closeModal('createModal')">取消</button>
+                <button class="fd-btn fd-btn-primary" onclick="submitLog()">提交</button>
             </div>
         </div>
     </div>
@@ -565,9 +612,9 @@
             <div class="modal-body">
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
                     <div><span style="font-size:12px;color:#9CA3AF;">日志编号</span><div style="font-size:14px;margin-top:4px;color:#2563EB;font-weight:500;">AQ-2026-0428</div></div>
-                    <div><span style="font-size:12px;color:#9CA3AF;">工程名称</span><div style="font-size:14px;margin-top:4px;">城东综合体项目</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">工程名称</span><div style="font-size:14px;margin-top:4px;">—</div></div>
                     <div><span style="font-size:12px;color:#9CA3AF;">日期</span><div style="font-size:14px;margin-top:4px;">2026-04-28</div></div>
-                    <div><span style="font-size:12px;color:#9CA3AF;">填写人</span><div style="font-size:14px;margin-top:4px;">张监理</div></div>
+                    <div><span style="font-size:12px;color:#9CA3AF;">填写人</span><div style="font-size:14px;margin-top:4px;">—</div></div>
                     <div><span style="font-size:12px;color:#9CA3AF;">天气</span><div style="font-size:14px;margin-top:4px;">晴</div></div>
                     <div><span style="font-size:12px;color:#9CA3AF;">风力/气温</span><div style="font-size:14px;margin-top:4px;">微风 / 18℃~26℃</div></div>
                     <div><span style="font-size:12px;color:#9CA3AF;">状态</span><div style="margin-top:4px;"><span class="status-tag status-approved">审核通过</span></div></div>
@@ -595,6 +642,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('viewModal')">关闭</button>
+                <button class="btn btn-primary" onclick="exportWordCurrent()">📄 导出Word</button>
             </div>
         </div>
     </div>
@@ -611,107 +659,7 @@
                     </div>
                 </div>
                 <div class="dir-tree-container" id="dirTreeContainer">
-                    <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目')" data-path="城东综合体项目">
-                        <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▼</span><span class="node-icon">🏗️</span> 城东综合体项目
-                    </div>
-                    <div class="dir-tree-children">
-                        <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼')" data-path="城东综合体项目 / 主楼">
-                            <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▼</span><span class="node-icon">📁</span> 单位工程：主楼
-                        </div>
-                        <div class="dir-tree-children">
-                            <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 地基基础')" data-path="城东综合体项目 / 主楼 / 地基基础">
-                                <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▼</span><span class="node-icon">📂</span> 分部工程：地基基础
-                            </div>
-                            <div class="dir-tree-children">
-                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 地基基础 / 土方工程')" data-path="城东综合体项目 / 主楼 / 地基基础 / 土方工程"><span class="node-icon">📄</span> 分项：土方工程</div>
-                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 地基基础 / 地基处理')" data-path="城东综合体项目 / 主楼 / 地基基础 / 地基处理"><span class="node-icon">📄</span> 分项：地基处理</div>
-                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 地基基础 / 桩基工程')" data-path="城东综合体项目 / 主楼 / 地基基础 / 桩基工程"><span class="node-icon">📄</span> 分项：桩基工程</div>
-                            </div>
-                            <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 主体结构')" data-path="城东综合体项目 / 主楼 / 主体结构">
-                                <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📂</span> 分部工程：主体结构
-                            </div>
-                            <div class="dir-tree-children collapsed">
-                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 主体结构 / 钢筋工程')" data-path="城东综合体项目 / 主楼 / 主体结构 / 钢筋工程"><span class="node-icon">📄</span> 分项：钢筋工程</div>
-                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 主体结构 / 混凝土工程')" data-path="城东综合体项目 / 主楼 / 主体结构 / 混凝土工程"><span class="node-icon">📄</span> 分项：混凝土工程</div>
-                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 主体结构 / 模板工程')" data-path="城东综合体项目 / 主楼 / 主体结构 / 模板工程"><span class="node-icon">📄</span> 分项：模板工程</div>
-                            </div>
-                            <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 装饰装修')" data-path="城东综合体项目 / 主楼 / 装饰装修">
-                                <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📂</span> 分部工程：装饰装修
-                            </div>
-                            <div class="dir-tree-children collapsed">
-                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 装饰装修 / 抹灰工程')" data-path="城东综合体项目 / 主楼 / 装饰装修 / 抹灰工程"><span class="node-icon">📄</span> 分项：抹灰工程</div>
-                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 主楼 / 装饰装修 / 门窗工程')" data-path="城东综合体项目 / 主楼 / 装饰装修 / 门窗工程"><span class="node-icon">📄</span> 分项：门窗工程</div>
-                            </div>
-                        </div>
-                        <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 裙楼')" data-path="城东综合体项目 / 裙楼">
-                            <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📁</span> 单位工程：裙楼
-                        </div>
-                        <div class="dir-tree-children collapsed">
-                            <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 裙楼 / 地基基础')" data-path="城东综合体项目 / 裙楼 / 地基基础">
-                                <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📂</span> 分部工程：地基基础
-                            </div>
-                            <div class="dir-tree-children collapsed">
-                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 裙楼 / 地基基础 / 土方工程')" data-path="城东综合体项目 / 裙楼 / 地基基础 / 土方工程"><span class="node-icon">📄</span> 分项：土方工程</div>
-                            </div>
-                            <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 裙楼 / 主体结构')" data-path="城东综合体项目 / 裙楼 / 主体结构">
-                                <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📂</span> 分部工程：主体结构
-                            </div>
-                            <div class="dir-tree-children collapsed">
-                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 裙楼 / 主体结构 / 钢筋工程')" data-path="城东综合体项目 / 裙楼 / 主体结构 / 钢筋工程"><span class="node-icon">📄</span> 分项：钢筋工程</div>
-                                <div class="dir-tree-node" onclick="selectDirNode(this, '城东综合体项目 / 裙楼 / 主体结构 / 混凝土工程')" data-path="城东综合体项目 / 裙楼 / 主体结构 / 混凝土工程"><span class="node-icon">📄</span> 分项：混凝土工程</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程')" data-path="滨河路改造工程">
-                        <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">🏗️</span> 滨河路改造工程
-                    </div>
-                    <div class="dir-tree-children collapsed">
-                        <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程 / 道路工程')" data-path="滨河路改造工程 / 道路工程">
-                            <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📁</span> 单位工程：道路工程
-                        </div>
-                        <div class="dir-tree-children collapsed">
-                            <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程 / 道路工程 / 路基工程')" data-path="滨河路改造工程 / 道路工程 / 路基工程">
-                                <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📂</span> 分部工程：路基工程
-                            </div>
-                            <div class="dir-tree-children collapsed">
-                                <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程 / 道路工程 / 路基工程 / 土方工程')" data-path="滨河路改造工程 / 道路工程 / 路基工程 / 土方工程"><span class="node-icon">📄</span> 分项：土方工程</div>
-                                <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程 / 道路工程 / 路基工程 / 排水工程')" data-path="滨河路改造工程 / 道路工程 / 路基工程 / 排水工程"><span class="node-icon">📄</span> 分项：排水工程</div>
-                            </div>
-                            <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程 / 道路工程 / 路面工程')" data-path="滨河路改造工程 / 道路工程 / 路面工程">
-                                <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📂</span> 分部工程：路面工程
-                            </div>
-                            <div class="dir-tree-children collapsed">
-                                <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程 / 道路工程 / 路面工程 / 基层')" data-path="滨河路改造工程 / 道路工程 / 路面工程 / 基层"><span class="node-icon">📄</span> 分项：基层</div>
-                                <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程 / 道路工程 / 路面工程 / 面层')" data-path="滨河路改造工程 / 道路工程 / 路面工程 / 面层"><span class="node-icon">📄</span> 分项：面层</div>
-                            </div>
-                        </div>
-                        <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程 / 桥梁工程')" data-path="滨河路改造工程 / 桥梁工程">
-                            <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📁</span> 单位工程：桥梁工程
-                        </div>
-                        <div class="dir-tree-children collapsed">
-                            <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程 / 桥梁工程 / 基础工程')" data-path="滨河路改造工程 / 桥梁工程 / 基础工程"><span class="node-icon">📂</span> 分部工程：基础工程</div>
-                            <div class="dir-tree-node" onclick="selectDirNode(this, '滨河路改造工程 / 桥梁工程 / 上部结构')" data-path="滨河路改造工程 / 桥梁工程 / 上部结构"><span class="node-icon">📂</span> 分部工程：上部结构</div>
-                        </div>
-                    </div>
-                    <div class="dir-tree-node" onclick="selectDirNode(this, '科技产业园二期')" data-path="科技产业园二期">
-                        <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">🏗️</span> 科技产业园二期
-                    </div>
-                    <div class="dir-tree-children collapsed">
-                        <div class="dir-tree-node" onclick="selectDirNode(this, '科技产业园二期 / 厂房A')" data-path="科技产业园二期 / 厂房A">
-                            <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📁</span> 单位工程：厂房A
-                        </div>
-                        <div class="dir-tree-children collapsed">
-                            <div class="dir-tree-node" onclick="selectDirNode(this, '科技产业园二期 / 厂房A / 地基基础')" data-path="科技产业园二期 / 厂房A / 地基基础"><span class="node-icon">📂</span> 分部工程：地基基础</div>
-                            <div class="dir-tree-node" onclick="selectDirNode(this, '科技产业园二期 / 厂房A / 主体结构')" data-path="科技产业园二期 / 厂房A / 主体结构"><span class="node-icon">📂</span> 分部工程：主体结构</div>
-                        </div>
-                        <div class="dir-tree-node" onclick="selectDirNode(this, '科技产业园二期 / 厂房B')" data-path="科技产业园二期 / 厂房B">
-                            <span class="expand" onclick="event.stopPropagation();toggleDirExpand(this)">▶</span><span class="node-icon">📁</span> 单位工程：厂房B
-                        </div>
-                        <div class="dir-tree-children collapsed">
-                            <div class="dir-tree-node" onclick="selectDirNode(this, '科技产业园二期 / 厂房B / 地基基础')" data-path="科技产业园二期 / 厂房B / 地基基础"><span class="node-icon">📂</span> 分部工程：地基基础</div>
-                            <div class="dir-tree-node" onclick="selectDirNode(this, '科技产业园二期 / 厂房B / 主体结构')" data-path="科技产业园二期 / 厂房B / 主体结构"><span class="node-icon">📂</span> 分部工程：主体结构</div>
-                        </div>
-                    </div>
+                    <div class="demo-placeholder" style="padding:24px;text-align:center;color:#9CA3AF;font-size:13px;">正在加载项目目录...</div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -724,24 +672,50 @@
     <script>
         var currentRole = 'initiator';
         var editingId = null;
+        var editingRecord = null;
+        var safetySaving = false;
+        var safetyUploadGeneration = 0;
+        var safetyProjectsReady = false;
+        var safetyProjectRequired = '请先在上方选择本次填报项目，系统将自动带入工程名称和当天日期。';
+
+        function clearSafetyProjectHint() {
+            var hint = document.getElementById('safetyPageHint');
+            var pf = document.getElementById('projectFilter');
+            if (hint.textContent === safetyProjectRequired && pf.value && projectsMap[pf.value]) hint.textContent = '';
+        }
+        function safetyToday() {
+            var d = new Date();
+            var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
+            return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+        }
+        function fillSafetyProject(id, name) {
+            document.getElementById('projectSelect').value = id || '';
+            document.getElementById('safetyProjectName').textContent = name || projectsMap[id] || ('项目#' + id);
+        }
+        function setSafetySaving(value) {
+            safetySaving = value;
+            document.getElementById('createModal').setAttribute('aria-busy', String(value));
+            document.querySelectorAll('#createModal input, #createModal textarea, #createModal button').forEach(function (el) { el.disabled = value; });
+        }
 
         var roleActionMap = {
             initiator: {
-                draft: ['view', 'edit', 'delete'],
-                pending: ['view'],
-                approved: ['view'],
-                rejected: ['view', 'edit']
+                draft: ['view', 'export', 'edit', 'delete'],
+                pending: ['view', 'export'],
+                approved: ['view', 'export'],
+                rejected: ['view', 'export', 'edit']
             },
             reviewer: {
-                draft: ['view', 'edit', 'delete'],
-                pending: ['view', 'approve', 'reject'],
-                approved: ['view'],
-                rejected: ['view']
+                draft: ['view', 'export', 'edit', 'delete'],
+                pending: ['view', 'export', 'approve', 'reject'],
+                approved: ['view', 'export'],
+                rejected: ['view', 'export']
             }
         };
 
         var actionLabelMap = {
             view: '查看',
+            export: '导出',
             edit: '编辑',
             delete: '删除',
             approve: '通过',
@@ -750,6 +724,7 @@
 
         var actionClassMap = {
             view: 'btn-outline',
+            export: 'btn-outline',
             edit: 'btn-primary',
             delete: 'btn-danger',
             approve: 'btn-success',
@@ -781,6 +756,7 @@
                     var cls = actionClassMap[act];
                     var onclick = '';
                     if (act === 'view') onclick = 'viewDetail(' + (i + 1) + ')';
+                    else if (act === 'export') onclick = 'exportWordRow(' + (i + 1) + ')';
                     else if (act === 'edit') onclick = 'openEditModal(' + (i + 1) + ')';
                     else if (act === 'delete') onclick = 'confirmDelete(' + (i + 1) + ')';
                     else if (act === 'approve') onclick = 'approveLog(' + (i + 1) + ')';
@@ -837,10 +813,7 @@
             var v2Hint = formMain ? formMain.querySelector('.v2-edit-hint') : null;
             var allPanels = formMain ? formMain.querySelectorAll('.version-panel') : [];
 
-            var d = null;
-            for (var i = 0; i < tableData.length; i++) {
-                if (tableData[i].status === 'rejected') { d = tableData[i]; break; }
-            }
+            var d = editingRecord;
             if (!d) return;
             var nextVersion = d.version + 1;
 
@@ -911,36 +884,36 @@
             html += '<div class="version-card-header">';
             html += '<div class="vch-left"><span class="vch-version">V' + v.num + '.0 版本详情</span>';
             var statusClass = v.status === 'approved' ? 'approved' : (v.status === 'rejected' ? 'rejected' : 'pending');
-            var statusText = v.status === 'approved' ? '审核通过' : (v.status === 'rejected' ? '已驳回' : '待审核');
+            var statusText = statusTextOf(v.status);
             html += '<span class="vch-status ' + statusClass + '">' + statusText + '</span></div>';
-            html += '<span class="vch-meta">提交人：' + v.submittedBy + ' | 提交时间：' + v.submittedAt + '</span>';
+            html += '<span class="vch-meta">提交人：' + esc(v.submittedBy) + ' | 提交时间：' + esc(v.submittedAt) + '</span>';
             html += '</div>';
             if (v.status === 'rejected' && v.rejectReason) {
                 html += '<div class="version-card-reject">';
                 html += '<div class="vcr-title">❌ 驳回原因</div>';
-                html += '<div class="vcr-reason">' + v.rejectReason + '</div>';
-                html += '<div class="vcr-meta">驳回人：' + v.rejectedBy + ' | 驳回时间：' + v.rejectedAt + '</div>';
+                html += '<div class="vcr-reason">' + esc(v.rejectReason) + '</div>';
+                html += '<div class="vcr-meta">驳回人：' + esc(v.rejectedBy) + ' | 驳回时间：' + esc(v.rejectedAt) + '</div>';
                 html += '</div>';
             }
             html += '<div class="version-card-body">';
             html += '<div class="vc-field-grid">';
             html += '<div class="vc-section-divider"><span class="vc-sec-num">1</span><span class="vc-sec-title">基本信息</span></div>';
-            html += '<div class="vc-field-item"><div class="vc-field-label">工程名称</div><div class="vc-field-value">' + (d.project || '未填写') + '</div></div>';
-            html += '<div class="vc-field-item"><div class="vc-field-label">日期</div><div class="vc-field-value">' + (d.date || '未填写') + '</div></div>';
-            html += '<div class="vc-field-item"><div class="vc-field-label">填写人</div><div class="vc-field-value">' + (d.author || '未填写') + '</div></div>';
-            html += '<div class="vc-field-item"><div class="vc-field-label">审核人</div><div class="vc-field-value">' + (d.reviewer || '未填写') + '</div></div>';
+            html += '<div class="vc-field-item"><div class="vc-field-label">工程名称</div><div class="vc-field-value">' + (esc(d.project) || '未填写') + '</div></div>';
+            html += '<div class="vc-field-item"><div class="vc-field-label">日期</div><div class="vc-field-value">' + (esc(d.date) || '未填写') + '</div></div>';
+            html += '<div class="vc-field-item"><div class="vc-field-label">填写人</div><div class="vc-field-value">' + (esc(d.author) || '未填写') + '</div></div>';
+            html += '<div class="vc-field-item"><div class="vc-field-label">审核人</div><div class="vc-field-value">' + (esc(d.reviewer) || '未填写') + '</div></div>';
             html += '<div class="vc-section-divider"><span class="vc-sec-num">2</span><span class="vc-sec-title">天气信息</span></div>';
-            html += '<div class="vc-field-item"><div class="vc-field-label">天气</div><div class="vc-field-value' + (v.fields && v.fields.weather ? '' : ' empty') + '">' + (v.fields && v.fields.weather ? v.fields.weather : '未填写') + '</div></div>';
-            html += '<div class="vc-field-item"><div class="vc-field-label">风力</div><div class="vc-field-value' + (v.fields && v.fields.wind ? '' : ' empty') + '">' + (v.fields && v.fields.wind ? v.fields.wind : '未填写') + '</div></div>';
-            html += '<div class="vc-field-item"><div class="vc-field-label">气温</div><div class="vc-field-value' + (v.fields && v.fields.temperature ? '' : ' empty') + '">' + (v.fields && v.fields.temperature ? v.fields.temperature : '未填写') + '</div></div>';
+            html += '<div class="vc-field-item"><div class="vc-field-label">天气</div><div class="vc-field-value' + (v.fields && v.fields.weather ? '' : ' empty') + '">' + (v.fields && v.fields.weather ? esc(v.fields.weather) : '未填写') + '</div></div>';
+            html += '<div class="vc-field-item"><div class="vc-field-label">风力</div><div class="vc-field-value' + (v.fields && v.fields.wind ? '' : ' empty') + '">' + (v.fields && v.fields.wind ? esc(v.fields.wind) : '未填写') + '</div></div>';
+            html += '<div class="vc-field-item"><div class="vc-field-label">气温</div><div class="vc-field-value' + (v.fields && v.fields.temperature ? '' : ' empty') + '">' + (v.fields && v.fields.temperature ? esc(v.fields.temperature) : '未填写') + '</div></div>';
             html += '<div class="vc-section-divider"><span class="vc-sec-num">3</span><span class="vc-sec-title">施工部位及形象进度</span></div>';
-            html += '<div class="vc-field-item full-width"><div class="vc-field-label">施工部位及形象进度</div><div class="vc-field-value' + (v.fields && v.fields.construction ? '' : ' empty') + '">' + (v.fields && v.fields.construction ? v.fields.construction : '未填写') + '</div></div>';
+            html += '<div class="vc-field-item full-width"><div class="vc-field-label">施工部位及形象进度</div><div class="vc-field-value' + (v.fields && v.fields.construction ? '' : ' empty') + '">' + (v.fields && v.fields.construction ? esc(v.fields.construction) : '未填写') + '</div></div>';
             html += '<div class="vc-section-divider"><span class="vc-sec-num">4</span><span class="vc-sec-title">巡视检查内容</span></div>';
-            html += '<div class="vc-field-item full-width"><div class="vc-field-label">巡视检查内容资料审核及验收情况</div><div class="vc-field-value' + (v.fields && v.fields.inspection ? '' : ' empty') + '">' + (v.fields && v.fields.inspection ? v.fields.inspection : v.content || '未填写') + '</div></div>';
+            html += '<div class="vc-field-item full-width"><div class="vc-field-label">巡视检查内容资料审核及验收情况</div><div class="vc-field-value' + (v.fields && v.fields.inspection ? '' : ' empty') + '">' + (v.fields && v.fields.inspection ? esc(v.fields.inspection) : '未填写') + '</div></div>';
             html += '<div class="vc-section-divider"><span class="vc-sec-num">5</span><span class="vc-sec-title">安全问题处理结果</span></div>';
-            html += '<div class="vc-field-item full-width"><div class="vc-field-label">存在的安全问题处理结果</div><div class="vc-field-value' + (v.fields && v.fields.safety ? '' : ' empty') + '">' + (v.fields && v.fields.safety ? v.fields.safety : '未填写') + '</div></div>';
+            html += '<div class="vc-field-item full-width"><div class="vc-field-label">存在的安全问题处理结果</div><div class="vc-field-value' + (v.fields && v.fields.safety ? '' : ' empty') + '">' + (v.fields && v.fields.safety ? esc(v.fields.safety) : '未填写') + '</div></div>';
             html += '<div class="vc-section-divider"><span class="vc-sec-num">6</span><span class="vc-sec-title">重大事项</span></div>';
-            html += '<div class="vc-field-item full-width"><div class="vc-field-label">重大事项</div><div class="vc-field-value' + (v.fields && v.fields.majorIssue ? '' : ' empty') + '">' + (v.fields && v.fields.majorIssue ? v.fields.majorIssue : '未填写') + '</div></div>';
+            html += '<div class="vc-field-item full-width"><div class="vc-field-label">重大事项</div><div class="vc-field-value' + (v.fields && v.fields.majorIssue ? '' : ' empty') + '">' + (v.fields && v.fields.majorIssue ? esc(v.fields.majorIssue) : '未填写') + '</div></div>';
             html += '<div class="vc-section-divider"><span class="vc-sec-num">7</span><span class="vc-sec-title">附件上传</span></div>';
 
             var versionPhotos = v.photos;
@@ -955,7 +928,7 @@
             if (versionPhotos && versionPhotos.length > 0) {
                 html += '<div class="vc-field-item full-width"><div class="vc-field-label">现场照片</div><div class="vc-photo-grid">';
                 for (var pi = 0; pi < versionPhotos.length; pi++) {
-                    html += '<div class="vc-photo-item" onclick="viewPhoto(this)" data-url="' + versionPhotos[pi].url + '" data-name="' + versionPhotos[pi].name + '"><img src="' + versionPhotos[pi].url + '" alt="' + versionPhotos[pi].name + '" onerror="this.classList.add(\'error\')"><div class="vc-photo-fallback">📷<span>' + versionPhotos[pi].name + '</span></div><div class="vc-photo-name">' + versionPhotos[pi].name + '</div><div class="vc-photo-time">' + v.submittedAt + '</div></div>';
+                    html += '<div class="vc-photo-item" onclick="viewPhoto(this)" data-url="' + esc(versionPhotos[pi].url) + '" data-name="' + esc(versionPhotos[pi].name) + '"><img src="' + esc(versionPhotos[pi].url) + '" alt="' + esc(versionPhotos[pi].name) + '" onerror="this.classList.add(\'error\')"><div class="vc-photo-fallback">📷<span>' + esc(versionPhotos[pi].name) + '</span></div><div class="vc-photo-name">' + esc(versionPhotos[pi].name) + '</div><div class="vc-photo-time">' + esc(v.submittedAt) + '</div></div>';
                 }
                 html += '</div></div>';
             } else {
@@ -968,7 +941,7 @@
                 for (var ai = 0; ai < versionAttachments.length; ai++) {
                     var att = versionAttachments[ai];
                     var attIcon = att.name.indexOf('.pdf') > -1 ? '📄' : (att.name.indexOf('.doc') > -1 ? '📝' : (att.name.indexOf('.xls') > -1 ? '📊' : '📎'));
-                    html += '<div class="vc-attachment-item"><span class="vc-att-icon">' + attIcon + '</span><span class="vc-att-name">' + att.name + '</span><span class="vc-att-size">' + att.size + '</span><span class="vc-att-time">' + att.time + '</span></div>';
+                    html += '<div class="vc-attachment-item"><span class="vc-att-icon">' + attIcon + '</span><span class="vc-att-name">' + esc(att.name) + '</span><span class="vc-att-size">' + esc(att.size) + '</span><span class="vc-att-time">' + esc(att.time) + '</span></div>';
                 }
                 html += '</div></div>';
             } else {
@@ -980,10 +953,11 @@
         }
 
         function resetUploadAreas() {
+            safetyUploadGeneration++;
             var grid = document.getElementById('createPhotoGrid');
             if (grid) { var addBtn = grid.querySelector('.photo-item[onclick]'); grid.innerHTML = ''; if (addBtn) grid.appendChild(addBtn); }
             var list = document.getElementById('createAttachmentList');
-            if (list) { list.innerHTML = '<div style="font-size:12px;color:#9CA3AF;padding:12px 0;text-align:center;" id="emptyAttTip">暂无附件，点击下方按钮添加</div>'; }
+            if (list) { list.innerHTML = '<div style="font-size:12px;color:#9CA3AF;padding:12px 0;text-align:center;" id="emptyAttTip">暂无附件，点击上方区域添加</div>'; }
         }
         function populateUploadAreas(lv) {
             resetUploadAreas();
@@ -995,8 +969,9 @@
                 item.className = 'photo-item';
                 item.setAttribute('data-url', p.url);
                 item.setAttribute('data-fname', p.name || '');
-                item.innerHTML = '<img src="' + p.url + '"><span class="remove-photo" onclick="this.parentElement.remove()">✕</span>';
-                if (grid) grid.insertBefore(item, grid.lastElementChild);
+                item.safetyMetadata = p;
+                item.innerHTML = '<img src="' + esc(p.url) + '"><span class="remove-photo" onclick="this.parentElement.remove()">✕</span>';
+                if (grid) grid.appendChild(item);
             });
             var list = document.getElementById('createAttachmentList');
             var atts = lv.attachments || [];
@@ -1009,15 +984,66 @@
                     item.setAttribute('data-url', a.url);
                     item.setAttribute('data-fname', a.name || '');
                     item.setAttribute('data-fsize', a.size || '');
-                    item.innerHTML = '<div class="file-icon doc">FILE</div><div style="flex:1;min-width:0;"><div class="file-name">' + (a.name || '附件') + '</div></div><span class="remove-att" onclick="this.parentElement.remove()">✕</span>';
+                    item.safetyMetadata = a;
+                    item.innerHTML = '<div class="file-icon doc">FILE</div><div style="flex:1;min-width:0;"><div class="file-name">' + (esc(a.name) || '附件') + '</div></div><span class="remove-att" onclick="this.parentElement.remove()">✕</span>';
+                    var savedDirs = (a.dirs || []).filter(Boolean);
+                    if (savedDirs.length) {
+                        var dirBody = item.querySelector('.file-name').parentNode;
+                        var dirPathDiv = document.createElement('div');
+                        dirPathDiv.className = 'dir-path';
+                        dirPathDiv.innerHTML = '<span class="dir-label set">' + esc(savedDirs.length === 1 ? savedDirs[0] : savedDirs.length + '个目录') + '</span>';
+                        var tagsDiv = document.createElement('div');
+                        tagsDiv.className = 'att-dir-tags';
+                        savedDirs.forEach(function (p) {
+                            var tag = document.createElement('span');
+                            tag.className = 'att-dir-tag';
+                            tag.setAttribute('data-path', p);
+                            tag.textContent = p.split(' / ').pop();
+                            tag.title = p;
+                            tagsDiv.appendChild(tag);
+                        });
+                        dirBody.appendChild(dirPathDiv);
+                        dirBody.appendChild(tagsDiv);
+                    }
                     list.appendChild(item);
                 });
             }
         }
+        // 填写人与日期不再写死在模板里，均按当前登录会话生成
+        function fillAuthorAndDate() {
+            var user = (window.App && App.getUser) ? App.getUser() : {};
+            var dateEl = document.getElementById('safetyLogDate');
+            if (dateEl) {
+                dateEl.value = safetyToday();
+            }
+            var authorEl = document.getElementById('safetyAuthor');
+            if (authorEl) authorEl.textContent = user.userName || '—';
+        }
+
         function openCreateModal() {
+            if (safetySaving) return;
+            var hint = document.getElementById('safetyPageHint');
+            if (!safetyProjectsReady) { hint.textContent = '项目尚未加载完成，请稍后重试；如加载失败请刷新页面。'; return; }
+            var pf = document.getElementById('projectFilter');
+            var pid = pf.value;
+            var ids = Object.keys(projectsMap);
+            if (!pid && ids.length === 1) pid = ids[0];
+            if (!pid || !projectsMap[pid]) {
+                hint.textContent = ids.length ? safetyProjectRequired : '暂无可填报项目，请先获取项目访问权限。';
+                pf.focus();
+                return;
+            }
+            closeModal('createModal');
             editingId = null;
+            editingRecord = null;
+            hint.textContent = '';
+            document.getElementById('safetyFormError').textContent = '';
+            ['safetyWeather', 'safetyWind', 'safetyTemp', 'safetyContent', 'safetyInspection', 'safetySafety', 'safetyMajorIssue', 'createPhotoInput', 'createFileInput'].forEach(function (id) { document.getElementById(id).value = ''; });
+            document.getElementById('safetyReviewer').textContent = '—';
+            fillSafetyProject(pid);
             resetUploadAreas();
             document.getElementById('modalTitle').textContent = '新建监理安全日志';
+            fillAuthorAndDate();
             var modalHeader = document.querySelector('#createModal .modal-header');
             modalHeader.style.borderBottom = '1px solid #E5E7EB';
             modalHeader.style.paddingBottom = '16px';
@@ -1034,22 +1060,32 @@
                 }
             }
             document.getElementById('createModal').classList.add('show');
+            document.body.classList.add('fw-modal-open');
+            modalBody.scrollTop = 0;
         }
         function openEditModal(id) {
-            editingId = id;
+            if (safetySaving) return;
             var d = filteredData[id - 1] || tableData[id - 1];
-            if (!d) return;
+            if (!d || ['draft', 'rejected'].indexOf(d.status) < 0) return;
+            editingId = id;
+            editingRecord = d;
+            document.getElementById('safetyFormError').textContent = '';
+            document.getElementById('safetyAuthor').textContent = d.author || '未记录';
+            document.getElementById('safetyReviewer').textContent = d.reviewer || '—';
             (function () {
                 var lv = d.versions && d.versions.length ? d.versions[d.versions.length - 1] : null;
                 var f = lv && lv.fields ? lv.fields : {};
                 var set = function (fid, v) { var el = document.getElementById(fid); if (el) el.value = v || ''; };
-                var ps = document.getElementById('projectSelect'); if (ps && d.projectId) ps.value = d.projectId;
+                fillSafetyProject(d.projectId, d.project);
+                set('safetyLogDate', d.date);
                 set('safetyWeather', f.weather); set('safetyWind', f.wind); set('safetyTemp', f.temperature);
                 set('safetyContent', f.construction); set('safetyInspection', f.inspection);
                 set('safetySafety', f.safety); set('safetyMajorIssue', f.majorIssue);
                 populateUploadAreas(lv);
             })();
             document.getElementById('createModal').classList.add('show');
+            document.body.classList.add('fw-modal-open');
+            document.querySelector('#createModal .modal-body').scrollTop = 0;
             var modalHeader = document.querySelector('#createModal .modal-header');
             var existingTabs = modalHeader.querySelector('.version-tabs');
             if (existingTabs) existingTabs.remove();
@@ -1097,36 +1133,36 @@
                     panelHtml += '<div class="version-card-header">';
                     panelHtml += '<div class="vch-left"><span class="vch-version">V' + v.num + '.0 版本详情</span>';
                     var statusClass = v.status === 'approved' ? 'approved' : (v.status === 'rejected' ? 'rejected' : 'pending');
-                    var statusText = v.status === 'approved' ? '审核通过' : (v.status === 'rejected' ? '已驳回' : '待审核');
+                    var statusText = statusTextOf(v.status);
                     panelHtml += '<span class="vch-status ' + statusClass + '">' + statusText + '</span></div>';
-                    panelHtml += '<span class="vch-meta">提交人：' + v.submittedBy + ' | 提交时间：' + v.submittedAt + '</span>';
+                    panelHtml += '<span class="vch-meta">提交人：' + esc(v.submittedBy) + ' | 提交时间：' + esc(v.submittedAt) + '</span>';
                     panelHtml += '</div>';
                     if (v.status === 'rejected' && v.rejectReason) {
                         panelHtml += '<div class="version-card-reject">';
                         panelHtml += '<div class="vcr-title">❌ 驳回原因</div>';
-                        panelHtml += '<div class="vcr-reason">' + v.rejectReason + '</div>';
-                        panelHtml += '<div class="vcr-meta">驳回人：' + v.rejectedBy + ' | 驳回时间：' + v.rejectedAt + '</div>';
+                        panelHtml += '<div class="vcr-reason">' + esc(v.rejectReason) + '</div>';
+                        panelHtml += '<div class="vcr-meta">驳回人：' + esc(v.rejectedBy) + ' | 驳回时间：' + esc(v.rejectedAt) + '</div>';
                         panelHtml += '</div>';
                     }
                     panelHtml += '<div class="version-card-body">';
                     panelHtml += '<div class="vc-field-grid">';
                     panelHtml += '<div class="vc-section-divider"><span class="vc-sec-num">1</span><span class="vc-sec-title">基本信息</span></div>';
-                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">工程名称</div><div class="vc-field-value">' + d.project + '</div></div>';
-                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">日期</div><div class="vc-field-value">' + d.date + '</div></div>';
-                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">填写人</div><div class="vc-field-value">' + d.author + '</div></div>';
-                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">审核人</div><div class="vc-field-value">' + d.reviewer + '</div></div>';
+                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">工程名称</div><div class="vc-field-value">' + esc(d.project) + '</div></div>';
+                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">日期</div><div class="vc-field-value">' + esc(d.date) + '</div></div>';
+                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">填写人</div><div class="vc-field-value">' + esc(d.author) + '</div></div>';
+                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">审核人</div><div class="vc-field-value">' + esc(d.reviewer) + '</div></div>';
                     panelHtml += '<div class="vc-section-divider"><span class="vc-sec-num">2</span><span class="vc-sec-title">天气信息</span></div>';
-                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">天气</div><div class="vc-field-value' + (v.fields && v.fields.weather ? '' : ' empty') + '">' + (v.fields && v.fields.weather ? v.fields.weather : '未填写') + '</div></div>';
-                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">风力</div><div class="vc-field-value' + (v.fields && v.fields.wind ? '' : ' empty') + '">' + (v.fields && v.fields.wind ? v.fields.wind : '未填写') + '</div></div>';
-                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">气温</div><div class="vc-field-value' + (v.fields && v.fields.temperature ? '' : ' empty') + '">' + (v.fields && v.fields.temperature ? v.fields.temperature : '未填写') + '</div></div>';
+                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">天气</div><div class="vc-field-value' + (v.fields && v.fields.weather ? '' : ' empty') + '">' + (v.fields && v.fields.weather ? esc(v.fields.weather) : '未填写') + '</div></div>';
+                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">风力</div><div class="vc-field-value' + (v.fields && v.fields.wind ? '' : ' empty') + '">' + (v.fields && v.fields.wind ? esc(v.fields.wind) : '未填写') + '</div></div>';
+                    panelHtml += '<div class="vc-field-item"><div class="vc-field-label">气温</div><div class="vc-field-value' + (v.fields && v.fields.temperature ? '' : ' empty') + '">' + (v.fields && v.fields.temperature ? esc(v.fields.temperature) : '未填写') + '</div></div>';
                     panelHtml += '<div class="vc-section-divider"><span class="vc-sec-num">3</span><span class="vc-sec-title">施工部位及形象进度</span></div>';
-                    panelHtml += '<div class="vc-field-item full-width"><div class="vc-field-label">施工部位及形象进度</div><div class="vc-field-value' + (v.fields && v.fields.construction ? '' : ' empty') + '">' + (v.fields && v.fields.construction ? v.fields.construction : '未填写') + '</div></div>';
+                    panelHtml += '<div class="vc-field-item full-width"><div class="vc-field-label">施工部位及形象进度</div><div class="vc-field-value' + (v.fields && v.fields.construction ? '' : ' empty') + '">' + (v.fields && v.fields.construction ? esc(v.fields.construction) : '未填写') + '</div></div>';
                     panelHtml += '<div class="vc-section-divider"><span class="vc-sec-num">4</span><span class="vc-sec-title">巡视检查内容</span></div>';
-                    panelHtml += '<div class="vc-field-item full-width"><div class="vc-field-label">巡视检查内容资料审核及验收情况</div><div class="vc-field-value' + (v.fields && v.fields.inspection ? '' : ' empty') + '">' + (v.fields && v.fields.inspection ? v.fields.inspection : v.content || '未填写') + '</div></div>';
+                    panelHtml += '<div class="vc-field-item full-width"><div class="vc-field-label">巡视检查内容资料审核及验收情况</div><div class="vc-field-value' + (v.fields && v.fields.inspection ? '' : ' empty') + '">' + (v.fields && v.fields.inspection ? esc(v.fields.inspection) : '未填写') + '</div></div>';
                     panelHtml += '<div class="vc-section-divider"><span class="vc-sec-num">5</span><span class="vc-sec-title">安全问题处理结果</span></div>';
-                    panelHtml += '<div class="vc-field-item full-width"><div class="vc-field-label">存在的安全问题处理结果</div><div class="vc-field-value' + (v.fields && v.fields.safety ? '' : ' empty') + '">' + (v.fields && v.fields.safety ? v.fields.safety : '未填写') + '</div></div>';
+                    panelHtml += '<div class="vc-field-item full-width"><div class="vc-field-label">存在的安全问题处理结果</div><div class="vc-field-value' + (v.fields && v.fields.safety ? '' : ' empty') + '">' + (v.fields && v.fields.safety ? esc(v.fields.safety) : '未填写') + '</div></div>';
                     panelHtml += '<div class="vc-section-divider"><span class="vc-sec-num">6</span><span class="vc-sec-title">重大事项</span></div>';
-                    panelHtml += '<div class="vc-field-item full-width"><div class="vc-field-label">重大事项</div><div class="vc-field-value' + (v.fields && v.fields.majorIssue ? '' : ' empty') + '">' + (v.fields && v.fields.majorIssue ? v.fields.majorIssue : '未填写') + '</div></div>';
+                    panelHtml += '<div class="vc-field-item full-width"><div class="vc-field-label">重大事项</div><div class="vc-field-value' + (v.fields && v.fields.majorIssue ? '' : ' empty') + '">' + (v.fields && v.fields.majorIssue ? esc(v.fields.majorIssue) : '未填写') + '</div></div>';
                     panelHtml += '<div class="vc-section-divider"><span class="vc-sec-num">7</span><span class="vc-sec-title">附件上传</span></div>';
 
                     var versionPhotos = v.photos;
@@ -1141,7 +1177,7 @@
                     if (versionPhotos && versionPhotos.length > 0) {
                         panelHtml += '<div class="vc-field-item full-width"><div class="vc-field-label">现场照片</div><div class="vc-photo-grid">';
                         for (var pi = 0; pi < versionPhotos.length; pi++) {
-                            panelHtml += '<div class="vc-photo-item" onclick="viewPhoto(this)" data-url="' + versionPhotos[pi].url + '" data-name="' + versionPhotos[pi].name + '"><img src="' + versionPhotos[pi].url + '" alt="' + versionPhotos[pi].name + '" onerror="this.classList.add(\'error\')"><div class="vc-photo-fallback">📷<span>' + versionPhotos[pi].name + '</span></div><div class="vc-photo-name">' + versionPhotos[pi].name + '</div><div class="vc-photo-time">' + v.submittedAt + '</div></div>';
+                            panelHtml += '<div class="vc-photo-item" onclick="viewPhoto(this)" data-url="' + esc(versionPhotos[pi].url) + '" data-name="' + esc(versionPhotos[pi].name) + '"><img src="' + esc(versionPhotos[pi].url) + '" alt="' + esc(versionPhotos[pi].name) + '" onerror="this.classList.add(\'error\')"><div class="vc-photo-fallback">📷<span>' + esc(versionPhotos[pi].name) + '</span></div><div class="vc-photo-name">' + esc(versionPhotos[pi].name) + '</div><div class="vc-photo-time">' + esc(v.submittedAt) + '</div></div>';
                         }
                         panelHtml += '</div></div>';
                     } else {
@@ -1154,7 +1190,7 @@
                         for (var ai = 0; ai < versionAttachments.length; ai++) {
                             var att = versionAttachments[ai];
                             var attIcon = att.name.indexOf('.pdf') > -1 ? '📄' : (att.name.indexOf('.doc') > -1 ? '📝' : (att.name.indexOf('.xls') > -1 ? '📊' : '📎'));
-                            panelHtml += '<div class="vc-attachment-item"><span class="vc-att-icon">' + attIcon + '</span><span class="vc-att-name">' + att.name + '</span><span class="vc-att-size">' + att.size + '</span><span class="vc-att-time">' + att.time + '</span></div>';
+                            panelHtml += '<div class="vc-attachment-item"><span class="vc-att-icon">' + attIcon + '</span><span class="vc-att-name">' + esc(att.name) + '</span><span class="vc-att-size">' + esc(att.size) + '</span><span class="vc-att-time">' + esc(att.time) + '</span></div>';
                         }
                         panelHtml += '</div></div>';
                     } else {
@@ -1181,6 +1217,7 @@
         function viewDetail(id) {
             var d = filteredData[id - 1] || tableData[id - 1];
             if (!d) { document.getElementById('viewModal').classList.add('show'); return; }
+            currentViewRecordId = d.id || null;
 
             var viewHeader = document.querySelector('#viewModal .modal-header');
             var existingTabs = viewHeader.querySelector('.version-tabs');
@@ -1191,7 +1228,16 @@
             var existingViewPanels = viewBody.querySelectorAll('.version-view-panel');
             for (var p = 0; p < existingViewPanels.length; p++) existingViewPanels[p].remove();
             var existingContent = viewBody.querySelector('.view-static-content');
-            if (existingContent) existingContent.style.display = '';
+            // 模板里的静态详情是示例内容，一律隐藏；详情全部由真实数据渲染
+            if (!existingContent) {
+                var bodyChildren = viewBody.children;
+                var staticWrap = document.createElement('div');
+                staticWrap.className = 'view-static-content';
+                while (bodyChildren.length > 0) staticWrap.appendChild(bodyChildren[0]);
+                viewBody.appendChild(staticWrap);
+                existingContent = staticWrap;
+            }
+            existingContent.style.display = 'none';
 
             document.getElementById('viewModal').classList.add('show');
 
@@ -1228,9 +1274,15 @@
                 var panelHtml = buildViewVersionPanel(d, lastV);
                 viewBody.insertAdjacentHTML('beforeend', panelHtml);
             } else {
+                // 单版本/草稿：直接渲染真实数据面板（模板静态示例已隐藏）
+                var singleV = (d.versions && d.versions[0]) || {
+                    num: 1, status: d.status, submittedBy: d.author, submittedAt: '',
+                    fields: {}, photos: [], attachments: []
+                };
+                viewBody.insertAdjacentHTML('beforeend', buildViewVersionPanel(d, singleV));
                 var timeline = document.getElementById('viewVersionTimeline');
                 var historySection = document.getElementById('viewVersionHistory');
-                if (d.versions && d.versions.length > 0) {
+                if (d.status !== 'draft' && d.versions && d.versions.length > 0) {
                     if (historySection) historySection.style.display = '';
                     var html = '';
                     for (var i = 0; i < d.versions.length; i++) {
@@ -1240,12 +1292,12 @@
                         var statusClass = 'vs-' + v.status;
                         html += '<div class="version-item ' + vClass + '">';
                         html += '<div class="version-header"><span class="version-label">V' + v.num + '.0</span><span class="version-status ' + statusClass + '">' + statusLabel + '</span></div>';
-                        html += '<div class="version-meta">提交人：' + v.submittedBy + '　｜　提交时间：' + v.submittedAt + '</div>';
-                        html += '<div class="version-content">' + v.content + '</div>';
+                        html += '<div class="version-meta">提交人：' + esc(v.submittedBy) + '　｜　提交时间：' + esc(v.submittedAt) + '</div>';
+                        html += '<div class="version-content">' + esc(v.content) + '</div>';
                         if (v.status === 'rejected' && v.rejectReason) {
-                            html += '<div class="version-reject-reason"><div class="reason-label">驳回原因</div>' + v.rejectReason + '</div>';
+                            html += '<div class="version-reject-reason"><div class="reason-label">驳回原因</div>' + esc(v.rejectReason) + '</div>';
                             if (v.rejectedAt) {
-                                html += '<div style="font-size:11px;color:#9CA3AF;margin-top:4px;">驳回人：' + v.rejectedBy + '　｜　驳回时间：' + v.rejectedAt + '</div>';
+                                html += '<div style="font-size:11px;color:#9CA3AF;margin-top:4px;">驳回人：' + esc(v.rejectedBy) + '　｜　驳回时间：' + esc(v.rejectedAt) + '</div>';
                             }
                         }
                         html += '</div>';
@@ -1268,15 +1320,15 @@
         }
         function collectSafetyDTO(status) {
             var val = function (fid) { var el = document.getElementById(fid); return el ? el.value : ''; };
-            var rec = editingId ? (filteredData[editingId - 1] || tableData[editingId - 1]) : null;
+            var rec = editingRecord;
             var photos = [];
-            document.querySelectorAll('#createPhotoGrid .photo-item[data-url]').forEach(function (el) { var u = el.getAttribute('data-url'); if (u) photos.push({ url: u, name: el.getAttribute('data-fname') || '' }); });
+            document.querySelectorAll('#createPhotoGrid .photo-item[data-url]').forEach(function (el) { var u = el.getAttribute('data-url'); if (u) photos.push(Object.assign({}, el.safetyMetadata || {}, { url: u, name: el.getAttribute('data-fname') || '' })); });
             var atts = [];
-            document.querySelectorAll('#createAttachmentList .attachment-item[data-url]').forEach(function (el) { var u = el.getAttribute('data-url'); if (u) atts.push({ url: u, name: el.getAttribute('data-fname') || '', size: el.getAttribute('data-fsize') || '' }); });
+            document.querySelectorAll('#createAttachmentList .attachment-item[data-url]').forEach(function (el) { var u = el.getAttribute('data-url'); if (u) atts.push(Object.assign({}, el.safetyMetadata || {}, { url: u, name: el.getAttribute('data-fname') || '', size: el.getAttribute('data-fsize') || '' })); });
             return {
                 code: rec ? rec.code : ('AQ-' + new Date().getFullYear() + '-' + String(Date.now()).slice(-6)),
-                projectId: Number(val('projectSelect')),
-                logDate: (rec && rec.date) ? rec.date : new Date().toISOString().slice(0, 10),
+                projectId: rec ? rec.projectId : Number(val('projectSelect')),
+                logDate: rec ? rec.date : (val('safetyLogDate') || safetyToday()),
                 content: val('safetyContent'), inspection: val('safetyInspection'),
                 safety: val('safetySafety'), majorIssue: val('safetyMajorIssue'),
                 weather: val('safetyWeather'), wind: val('safetyWind'), temperature: val('safetyTemp'),
@@ -1285,19 +1337,53 @@
                 attachments: JSON.stringify(atts)
             };
         }
-        function saveLog(status, msg) {
+        async function saveLog(status, msg) {
+            if (safetySaving) return;
+            var error = document.getElementById('safetyFormError');
             var proj = document.getElementById('projectSelect');
-            if (!proj || !proj.value) { alert('请选择工程'); return; }
-            var rec = editingId ? (filteredData[editingId - 1] || tableData[editingId - 1]) : null;
-            var realId = rec ? rec.id : null;
-            var dto = collectSafetyDTO(status);
-            var p = realId ? App.apiFetch('/safety-logs/' + realId, { method: 'PUT', body: dto }) : App.apiFetch('/safety-logs', { method: 'POST', body: dto });
-            p.then(function () { App.toast(msg, 'success'); closeModal('createModal'); editingId = null; loadData(); }).catch(function () { });
+            if (!proj || !proj.value) { error.textContent = safetyProjectRequired; return; }
+            if (document.querySelector('#createPhotoGrid .photo-item:not([data-url]), #createPhotoGrid .photo-item[data-url=""], #createAttachmentList .attachment-item:not([data-url]), #createAttachmentList .attachment-item[data-url=""]')) {
+                error.textContent = '仍有照片或附件未上传成功，请等待上传完成或移除失败项后重试。'; return;
+            }
+            var rec = editingRecord;
+            var existed = !!rec;
+            var dto = collectSafetyDTO(status === 'pending' ? 'submitted' : status);
+            error.textContent = '';
+            setSafetySaving(true);
+            try {
+                // 新建接口只创建草稿；取得真实 ID 后再按原更新接口提交审核。
+                if (!rec) {
+                    var created = await App.apiFetch('/safety-logs', { method: 'POST', body: Object.assign({}, dto, { status: 'draft' }) });
+                    if (!created || !created.id) throw new Error('保存响应缺少记录 ID，请刷新列表核实后重试');
+                    editingRecord = mapLog(created);
+                    rec = editingRecord;
+                    dto.code = created.code || dto.code;
+                }
+                if (existed || dto.status === 'submitted') {
+                    await App.apiFetch('/safety-logs/' + rec.id, { method: 'PUT', body: dto });
+                }
+                setSafetySaving(false);
+                App.toast(msg, 'success');
+                closeModal('createModal');
+                editingId = null;
+                editingRecord = null;
+                loadData();
+            } catch (e) {
+                error.textContent = '保存或提交未完成：' + ((e && e.message) || '网络异常') + '。内容仍保留，请核对后重试。';
+                document.querySelector('#createModal .modal-body').scrollTop = 0;
+            } finally {
+                setSafetySaving(false);
+            }
         }
-        function saveDraft() { saveLog('draft', '草稿已保存'); }
-        function submitLog() { saveLog('pending', '安全日志已提交'); }
+        function saveDraft() { return saveLog('draft', '草稿已保存'); }
+        function submitLog() { return saveLog('pending', '安全日志已提交'); }
         function closeModal(id) {
+            if (id === 'createModal' && safetySaving) return;
             document.getElementById(id).classList.remove('show');
+            if (id === 'createModal') {
+                safetyUploadGeneration++;
+                document.body.classList.remove('fw-modal-open');
+            }
             var existingDynamic = document.getElementById('dynamic-tab-indicator');
             if (existingDynamic) existingDynamic.remove();
             if (id === 'createModal') {
@@ -1331,17 +1417,12 @@
                 var viewPanels = viewBody.querySelectorAll('.version-view-panel');
                 for (var i = 0; i < viewPanels.length; i++) viewPanels[i].remove();
                 var staticContent = viewBody.querySelector('.view-static-content');
-                if (staticContent) staticContent.style.display = '';
+                if (staticContent) staticContent.style.display = 'none';
             }
         }
-        var tableData = [
-            { id: 1, code: 'AQ-2026-015', project: '城东综合体项目', date: '2026-04-30', author: '张监理', reviewer: '赵总监', status: 'approved', statusText: '审核通过', version: 1, versions: [{ num: 1, content: 'A区主体结构15层施工安全巡查，专职安全员在岗，特种作业人员持证上岗，施工机械运行正常，临时用电安全，脚手架验收合格。', fields: { weather: '晴', wind: '微风', temperature: '18℃~26℃', construction: 'A区主体结构15层施工，B区地下室防水施工完成，C区基坑支护进行中。', inspection: '①专职安全员在岗履职；②特种作业人员持证上岗，证件均在有效期内；③施工机械运行正常，进出场登记完整；④临时用电系统安全，无违规接线；⑤脚手架验收合格，吊篮设备状态良好。', safety: '当日无重大危险源，安全生产状况正常。', majorIssue: '无重大事项。' }, submittedAt: '2026-04-30 09:15', submittedBy: '张监理', status: 'approved', rejectReason: '', rejectedAt: '', rejectedBy: '', photos: [{ url: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=construction%20site%20safety%20inspection%20A%20zone%20structure%20realistic&image_size=landscape_4_3', name: 'A区安全巡检01.jpg' }, { url: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=construction%20scaffold%20inspection%20safety%20harness%20realistic&image_size=landscape_4_3', name: '脚手架验收02.jpg' }], attachments: [{ name: '安全巡检记录.pdf', size: '1.8MB', time: '2026-04-30 09:15' }] }] },
-            { id: 2, code: 'AQ-2026-014', project: '城东综合体项目', date: '2026-04-29', author: '张监理', reviewer: '赵总监', status: 'pending', statusText: '待审核', version: 1, versions: [{ num: 1, content: 'B区地下室防水施工安全巡查，临边防护到位，施工人员佩戴安全帽，临时用电规范。', fields: { weather: '多云', wind: '3-4级', temperature: '16℃~24℃', construction: 'B区地下室防水施工，临边防护到位。', inspection: 'B区地下室防水施工安全巡查，临边防护到位，施工人员佩戴安全帽，临时用电规范。', safety: '安全生产状况正常。', majorIssue: '无重大事项。' }, submittedAt: '2026-04-29 10:30', submittedBy: '张监理', status: 'pending', rejectReason: '', rejectedAt: '', rejectedBy: '', photos: [{ url: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=construction%20basement%20waterproof%20safety%20edge%20protection%20realistic&image_size=landscape_4_3', name: 'B区防水巡检01.jpg' }], attachments: [] }] },
-            { id: 3, code: 'AQ-2026-013', project: '科技产业园二期', date: '2026-04-28', author: '王监理', reviewer: '赵总监', status: 'rejected', statusText: '驳回', abnormal: true, version: 2, versions: [{ num: 1, content: '科技产业园二期现场安全巡查，发现临边防护缺失，已要求整改。', fields: { weather: '晴', wind: '微风', temperature: '20℃~28℃', construction: '科技产业园二期厂房A区3层施工。', inspection: '科技产业园二期现场安全巡查，发现临边防护缺失，已要求整改。', safety: '发现临边防护缺失，已要求整改。', majorIssue: '无。' }, submittedAt: '2026-04-28 08:45', submittedBy: '王监理', status: 'rejected', rejectReason: '安全巡查记录不够详细，缺少具体隐患位置、整改要求和整改期限，请补充完善。', rejectedAt: '2026-04-28 14:20', rejectedBy: '赵总监', photos: [{ url: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=construction%20site%20missing%20edge%20protection%20safety%20hazard%20realistic&image_size=landscape_4_3', name: '临边防护缺失01.jpg' }, { url: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=construction%20safety%20warning%20sign%20inspection%20site%20real&image_size=landscape_4_3', name: '安全警示不足02.jpg' }], attachments: [] }, { num: 2, content: '补充说明：厂房A区3层东侧临边防护栏杆缺失约5米，已下发整改通知单要求2日内完成整改；厂房B区基坑边缘警示标志不足，已要求当日补充设置。', fields: { weather: '多云', wind: '3-4级', temperature: '19℃~27℃', construction: '科技产业园二期厂房A区3层施工（补充）。', inspection: '补充说明：厂房A区3层东侧临边防护栏杆缺失约5米，已下发整改通知单要求2日内完成整改；厂房B区基坑边缘警示标志不足，已要求当日补充设置。', safety: '临边防护缺失已下发整改通知单，基坑警示标志不足已要求当日补充。', majorIssue: '无重大事项。' }, submittedAt: '2026-04-29 09:00', submittedBy: '王监理', status: 'rejected', rejectReason: '整改措施描述仍不够具体，缺少整改责任人及复查时间安排，请再次补充。', rejectedAt: '2026-04-29 16:10', rejectedBy: '赵总监', photos: [{ url: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=construction%20rectification%20notice%20edge%20protection%20barrier%20realistic&image_size=landscape_4_3', name: '整改通知单01.jpg' }, { url: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=construction%20foundation%20pit%20warning%20signs%20safety%20realistic&image_size=landscape_4_3', name: '基坑警示标志02.jpg' }, { url: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=construction%20safety%20rectification%20on%20site%20barrier%20installed&image_size=landscape_4_3', name: '整改后复查03.jpg' }], attachments: [{ name: '整改通知单TZ-AQ-013.pdf', size: '1.2MB', time: '2026-04-29 09:00' }, { name: '安全隐患整改记录.doc', size: '560KB', time: '2026-04-29 09:00' }] }] },
-            { id: 4, code: 'AQ-2026-012', project: '城东综合体项目', date: '2026-04-28', author: '李监理', reviewer: '赵总监', status: 'approved', statusText: '审核通过', version: 1, versions: [{ num: 1, content: 'C区基坑支护施工安全巡查，支护结构稳定，排水系统正常，周边监测数据在安全范围内。', fields: { weather: '晴', wind: '微风', temperature: '17℃~25℃', construction: 'C区基坑支护施工。', inspection: 'C区基坑支护施工安全巡查，支护结构稳定，排水系统正常，周边监测数据在安全范围内。', safety: '支护结构稳定，排水系统正常，监测数据安全。', majorIssue: '无重大事项。' }, submittedAt: '2026-04-28 11:00', submittedBy: '李监理', status: 'approved', rejectReason: '', rejectedAt: '', rejectedBy: '', photos: [{ url: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=construction%20foundation%20pit%20support%20structure%20safety%20monitoring&image_size=landscape_4_3', name: '基坑支护巡检01.jpg' }, { url: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=construction%20drainage%20system%20inspection%20foundation%20pit%20realistic&image_size=landscape_4_3', name: '排水系统检查02.jpg' }], attachments: [{ name: '基坑监测报告.pdf', size: '3.2MB', time: '2026-04-28 11:00' }] }] },
-            { id: 5, code: 'AQ-2026-D01', project: '城东综合体项目', date: '2026-04-30', author: '张监理', reviewer: '赵总监', status: 'draft', statusText: '草稿', version: 0, versions: [] }
-        ];
+        var tableData = [];
         var filteredData = tableData.slice();
+        var loadSeq = 0;
 
         // ==================== 后端集成 ====================
         var projectsMap = {};
@@ -1355,37 +1436,42 @@
             try { var a = JSON.parse(s); return Array.isArray(a) ? a : []; } catch (e) { return []; }
         }
         function fmtDateTime(t) { return t ? String(t).replace('T', ' ').slice(0, 16) : ''; }
+        function esc(v) {
+            if (typeof App !== 'undefined' && App && typeof App.escape === 'function') return App.escape(v);
+            return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+        function jsAttr(v) {
+            return esc(String(v == null ? '' : v).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\r?\n/g, '\\n'));
+        }
 
         function mapLog(r) {
-            var status = r.status || 'draft';
+            var status = r.status === 'submitted' ? 'pending' : (r.status || 'draft');
             var abnormal = status === 'rejected';
             var photos = parseArr(r.photos).map(function (p) { return (typeof p === 'string') ? { url: p, name: p.split('/').pop() } : p; });
             var atts = parseArr(r.attachments);
             var version = (r.version != null) ? r.version : (status === 'draft' ? 0 : 1);
-            var versions = [];
-            if (status !== 'draft') {
-                versions.push({
-                    num: version || 1,
-                    content: r.content || '',
-                    fields: { weather: r.weather, wind: r.wind, temperature: r.temperature, construction: r.content, inspection: r.inspection, safety: r.safety, majorIssue: r.majorIssue },
-                    submittedAt: fmtDateTime(r.submittedAt || r.createTime),
-                    submittedBy: r.submittedBy || '',
-                    status: status,
-                    rejectReason: r.rejectReason || '',
-                    rejectedAt: fmtDateTime(r.rejectedAt),
-                    rejectedBy: r.rejectedBy || '',
-                    photos: photos,
-                    attachments: atts
-                });
-            }
+            // 草稿也保留字段快照，供编辑和详情原样回显。
+            var versions = [{
+                num: version || 1,
+                content: r.content || '',
+                fields: { weather: r.weather, wind: r.wind, temperature: r.temperature, construction: r.content, inspection: r.inspection, safety: r.safety, majorIssue: r.majorIssue },
+                submittedAt: status === 'draft' ? '' : fmtDateTime(r.submittedAt || r.createTime),
+                submittedBy: r.submittedBy || '',
+                status: status,
+                rejectReason: r.rejectReason || '',
+                rejectedAt: fmtDateTime(r.rejectedAt),
+                rejectedBy: r.rejectedBy || '',
+                photos: photos,
+                attachments: atts
+            }];
             return {
                 id: r.id,
                 projectId: r.projectId,
                 code: r.code || '',
                 date: (r.logDate || '').slice(0, 10),
                 project: projectsMap[r.projectId] || ('项目#' + (r.projectId || '')),
-                author: r.submittedBy || (r.authorId ? ('用户#' + r.authorId) : ''),
-                reviewer: r.rejectedBy || '',
+                author: r.authorName || (r.authorId && window.App && String(r.authorId) === String(App.getUser().userId) ? App.getUser().userName : '') || (r.authorId ? ('用户#' + r.authorId) : '未记录'),
+                reviewer: r.reviewerName || r.rejectedBy || (r.reviewerId ? ('用户#' + r.reviewerId) : ''),
                 status: status,
                 statusText: statusTextOf(status),
                 abnormal: abnormal,
@@ -1394,30 +1480,44 @@
             };
         }
 
-        function loadProjects() {
-            if (!window.App) return Promise.resolve();
-            return App.apiGetPage('/projects', { pageNum: 1, pageSize: 200 }).then(function (page) {
-                var list = page.list || [];
+        async function loadProjects() {
+            if (!window.App) return;
+            safetyProjectsReady = false;
+            try {
+                var list = [], pageNum = 1, page;
+                do {
+                    page = await App.apiGetPage('/projects', { pageNum: pageNum++, pageSize: 200 });
+                    list = list.concat(page.list || []);
+                } while ((page.list || []).length && list.length < page.total);
+                projectsMap = {};
                 list.forEach(function (p) { projectsMap[p.id] = p.name; });
                 var pf = document.getElementById('projectFilter');
-                if (pf) pf.innerHTML = '<option value="">全部项目</option>' + list.map(function (p) { return '<option value="' + p.id + '">' + p.name + '</option>'; }).join('');
-                var ps = document.getElementById('projectSelect');
-                if (ps) ps.innerHTML = '<option value="">请选择工程</option>' + list.map(function (p) { return '<option value="' + p.id + '">' + p.name + '</option>'; }).join('');
-            }).catch(function () { });
+                if (pf) pf.innerHTML = '<option value="">全部项目</option>' + list.map(function (p) { return '<option value="' + esc(p.id) + '">' + esc(p.name) + '</option>'; }).join('');
+                safetyProjectsReady = true;
+                document.getElementById('safetyPageHint').textContent = '';
+            } catch (e) {
+                document.getElementById('safetyPageHint').textContent = '项目加载失败，请刷新页面后重试。';
+            }
         }
 
         function loadData() {
             if (!window.App) return Promise.resolve();
             var params = { pageNum: 1, pageSize: 200 };
             var pf = document.getElementById('projectFilter'); if (pf && pf.value) params.projectId = pf.value;
-            var sf = document.getElementById('statusFilter'); if (sf && sf.value) params.status = sf.value;
+            var sf = document.getElementById('statusFilter'); if (sf && sf.value) params.status = sf.value === 'pending' ? 'submitted' : sf.value;
             var si = document.getElementById('searchInput'); if (si && si.value.trim()) params.code = si.value.trim();
+            var seq = ++loadSeq;
+            App.tableLoading(document.querySelector('tbody'), 8);
             return App.apiGetPage('/safety-logs', params).then(function (page) {
+                if (seq !== loadSeq) return;
                 tableData = (page.list || []).map(mapLog);
                 filteredData = tableData.slice();
                 if (window.__urlStatus === 'abnormal') { filteredData = tableData.filter(function (d) { return d.abnormal; }); }
                 renderTable();
-            }).catch(function () { tableData = []; filteredData = []; renderTable(); });
+            }).catch(function () {
+                if (seq !== loadSeq) return;
+                tableData = []; filteredData = []; renderTable();
+            });
         }
 
         function renderTable() {
@@ -1429,17 +1529,17 @@
                     var rowClass = d.abnormal ? ' class="abnormal-row"' : '';
                     var codeStyle = d.abnormal ? 'color:#DC2626;font-weight:500;' : 'font-weight:500;';
                     html += '<tr data-status="' + d.status + '"' + rowClass + '>' +
-                        '<td style="' + codeStyle + '">' + d.code + '</td>' +
-                        '<td>' + d.project + '</td>' +
-                        '<td>' + d.date + '</td>' +
-                        '<td>' + d.author + '</td>' +
-                        '<td>' + d.reviewer + '</td>' +
-                        '<td><span class="status-tag status-' + d.status + '">' + d.statusText + '</span></td>' +
+                        '<td style="' + codeStyle + '">' + esc(d.code) + '</td>' +
+                        '<td>' + esc(d.project) + '</td>' +
+                        '<td>' + esc(d.date) + '</td>' +
+                        '<td>' + esc(d.author) + '</td>' +
+                        '<td>' + esc(d.reviewer) + '</td>' +
+                        '<td><span class="status-tag status-' + esc(d.status) + '">' + esc(d.statusText) + '</span></td>' +
                         '<td>' + (d.version > 0 ? '<span class="version-tag">V' + d.version + '.0</span>' : '<span style="font-size:11px;color:#9CA3AF;">—</span>') + '</td>' +
                         '<td class="action-cell"></td>' +
                         '</tr>';
                 }
-                tbody.innerHTML = html;
+                tbody.innerHTML = html || '<tr data-app-placeholder="1"><td colspan="8" style="text-align:center;color:#9CA3AF;padding:40px;">暂无数据</td></tr>';
                 var info = document.querySelector('.pagination-info');
                 if (info) info.textContent = '共 ' + filteredData.length + ' 条记录，第 1/1 页';
                 renderAllActions();
@@ -1470,6 +1570,51 @@
             } catch(e) { console.error('导出出错：', e); alert('导出失败，请重试'); }
         }
 
+        // ==================== Word 导出 ====================
+        // 导出统一走后端 /safety-logs/{id}/export 与 /safety-logs/export：
+        // 权限、人员名称、审核留痕均以服务端数据为准，避免前端拼装失真。
+        var currentViewRecordId = null;
+
+        function exportWordRow(index) {
+            var d = filteredData[index - 1] || tableData[index - 1];
+            if (!d || !d.id) { App.toast('记录尚未保存，无法导出', 'error'); return; }
+            exportWordById(d.id, d.code);
+        }
+
+        function exportWordCurrent() {
+            if (!currentViewRecordId) { App.toast('请先选择要导出的日志', 'info'); return; }
+            var code = '';
+            for (var i = 0; i < tableData.length; i++) {
+                if (tableData[i].id === currentViewRecordId) { code = tableData[i].code; break; }
+            }
+            exportWordById(currentViewRecordId, code);
+        }
+
+        function exportWordById(id, code) {
+            if (!App || !App.downloadFile) { alert('当前浏览器不支持文件导出，请升级浏览器'); return; }
+            App.toast('正在生成 Word 文档…', 'info');
+            App.downloadFile('/safety-logs/' + id + '/export',
+                '监理安全日志' + (code ? '_' + code : '') + '.docx')
+                .then(function (name) { App.toast('已导出：' + name, 'success'); })
+                .catch(function () { });
+        }
+
+        function exportWordBatch() {
+            if (!App || !App.downloadFile) { alert('当前浏览器不支持文件导出，请升级浏览器'); return; }
+            if (filteredData.length === 0) { App.toast('当前列表没有可导出的记录', 'info'); return; }
+            var params = {};
+            var pf = document.getElementById('projectFilter'); if (pf && pf.value) params.projectId = pf.value;
+            var sf = document.getElementById('statusFilter'); if (sf && sf.value) params.status = sf.value === 'pending' ? 'submitted' : sf.value;
+            var si = document.getElementById('searchInput'); if (si && si.value.trim()) params.code = si.value.trim();
+            // 从“异常记录”入口进来时，列表已被客户端限定为驳回记录，导出保持一致
+            if (window.__urlStatus === 'abnormal' && !params.status) params.status = 'rejected';
+            var qs = App.buildQuery ? App.buildQuery(params) : '';
+            App.toast('正在生成 Word 汇编，共 ' + filteredData.length + ' 份…', 'info');
+            App.downloadFile('/safety-logs/export' + (qs ? ('?' + qs) : ''), '监理安全日志汇编.docx')
+                .then(function (name) { App.toast('已导出：' + name, 'success'); })
+                .catch(function () { });
+        }
+
         function resetFilters() {
             document.getElementById('searchInput').value = '';
             document.getElementById('projectFilter').value = '';
@@ -1479,17 +1624,26 @@
         }
 
         function handleCreatePhoto(input) {
+            var files = Array.prototype.slice.call(input.files || []);
+            input.value = '';
+            uploadPhotoFiles(files);
+        }
+
+        function uploadPhotoFiles(files) {
+            if (safetySaving || !document.getElementById('createModal').classList.contains('show')) return;
+            var generation = safetyUploadGeneration;
             var grid = document.getElementById('createPhotoGrid');
-            var files = input.files;
             for (var i = 0; i < files.length; i++) {
                 (function (file) {
+                    var item = document.createElement('div');
+                    item.className = 'photo-item';
+                    item.setAttribute('data-fname', file.name);
+                    item.innerHTML = '<span style="font-size:12px;">读取中…</span><span class="remove-photo" onclick="this.parentElement.remove()">✕</span>';
+                    grid.appendChild(item);
                     var reader = new FileReader();
                     reader.onload = function (e) {
-                        var item = document.createElement('div');
-                        item.className = 'photo-item';
-                        item.setAttribute('data-fname', file.name);
+                        if (generation !== safetyUploadGeneration || item.parentNode !== grid) return;
                         item.innerHTML = '<img src="' + e.target.result + '"><span class="remove-photo" onclick="this.parentElement.remove()">✕</span>';
-                        grid.insertBefore(item, grid.lastElementChild);
                         if (window.App && App.uploadFile) {
                             App.uploadFile(file).then(function (res) {
                                 item.setAttribute('data-url', (res && res.url) || '');
@@ -1498,10 +1652,14 @@
                             });
                         }
                     };
+                    reader.onerror = function () {
+                        if (generation !== safetyUploadGeneration || item.parentNode !== grid) return;
+                        item.innerHTML = '<span style="font-size:12px;">读取失败</span><span class="remove-photo" onclick="this.parentElement.remove()">✕</span>';
+                        App.toast('照片读取失败，请移除后重新选择：' + file.name, 'error');
+                    };
                     reader.readAsDataURL(file);
                 })(files[i]);
             }
-            input.value = '';
         }
 
         var pendingAttIds = [];
@@ -1511,10 +1669,16 @@
         var selectedDirPaths = [];
 
         function handleCreateFile(input) {
+            var files = Array.prototype.slice.call(input.files || []);
+            input.value = '';
+            uploadAttachmentFiles(files);
+        }
+
+        function uploadAttachmentFiles(files) {
+            if (safetySaving || !document.getElementById('createModal').classList.contains('show')) return;
             var list = document.getElementById('createAttachmentList');
             var emptyTip = document.getElementById('emptyAttTip');
             if (emptyTip) emptyTip.remove();
-            var files = input.files;
             pendingAttIds = [];
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
@@ -1530,8 +1694,8 @@
                 item.id = itemId;
                 item.innerHTML = '<div class="file-icon ' + iconClass + '">' + iconText + '</div>' +
                     '<div style="flex:1;min-width:0;">' +
-                        '<div class="file-name">' + file.name + '<span class="pending-badge">待选目录</span></div>' +
-                        '<div class="dir-path">存储位置：<span class="dir-label">未选择</span><span class="change-dir" onclick="openDirSelector(\'' + itemId + '\',\'' + file.name.replace(/'/g, "\\'") + '\')">选择目录</span></div><div class="att-dir-tags"></div>' +
+                        '<div class="file-name">' + esc(file.name) + '<span class="pending-badge">待选目录</span></div>' +
+                        '<div class="dir-path">存储位置：<span class="dir-label">未选择</span><span class="change-dir" onclick="openDirSelector(\'' + itemId + '\',\'' + jsAttr(file.name) + '\')">选择目录</span></div><div class="att-dir-tags"></div>' +
                     '</div>' +
                     '<span class="remove-att" onclick="this.parentElement.remove()">✕</span>';
                 list.appendChild(item);
@@ -1550,7 +1714,6 @@
                 })(file, item);
                 pendingAttIds.push({ id: itemId, name: file.name });
             }
-            input.value = '';
             if (pendingAttIds.length > 0) {
                 pendingAttId = pendingAttIds[0].id;
                 pendingFileName = pendingAttIds[0].name;
@@ -1560,8 +1723,32 @@
                 selectedDirPaths = [];
                 updateSelectedDirList();
                 document.getElementById('dirTreeModal').classList.add('show');
+                ensureDirTree();
             }
         }
+
+        // 拖拽上传：与共用记录组件的交互保持一致（点击仍由 label 触发隐藏的 input）
+        (function bindDropzones() {
+            var zones = [
+                { el: document.getElementById('photoDropzone'), upload: uploadPhotoFiles },
+                { el: document.getElementById('fileDropzone'), upload: uploadAttachmentFiles }
+            ];
+            zones.forEach(function (zone) {
+                if (!zone.el) return;
+                ['dragenter', 'dragover'].forEach(function (name) {
+                    zone.el.addEventListener(name, function (e) { e.preventDefault(); zone.el.classList.add('dragover'); });
+                });
+                ['dragleave', 'dragend'].forEach(function (name) {
+                    zone.el.addEventListener(name, function (e) { e.preventDefault(); zone.el.classList.remove('dragover'); });
+                });
+                zone.el.addEventListener('drop', function (e) {
+                    e.preventDefault();
+                    zone.el.classList.remove('dragover');
+                    var dropped = e.dataTransfer && e.dataTransfer.files;
+                    if (dropped && dropped.length) zone.upload(Array.prototype.slice.call(dropped));
+                });
+            });
+        })();
 
         function toggleDirExpand(el) {
             var parentNode = el.parentElement;
@@ -1585,6 +1772,90 @@
             updateSelectedDirList();
         }
 
+        // 目录树按当前填报项目实时加载，数据源与“工程资料目录设置”一致，仅末级目录可选
+        var dirTreeProjectId = null;
+        var dirTreeReady = false;
+
+        function setDirTreePlaceholder(text) {
+            var container = document.getElementById('dirTreeContainer');
+            if (!container) return;
+            container.innerHTML = '<div class="demo-placeholder" style="padding:24px;text-align:center;color:#9CA3AF;font-size:13px;">' + esc(text) + '</div>';
+        }
+
+        function appendDirTreeNodes(nodes, container, parentPath) {
+            (nodes || []).forEach(function (node) {
+                if (!node || node.status === 'inactive') return;
+                var path = parentPath ? parentPath + ' / ' + node.name : node.name;
+                var children = (node.children || []).filter(function (c) { return c && c.status !== 'inactive'; });
+                var row = document.createElement('div');
+                row.className = 'dir-tree-node ' + (children.length ? 'parent-node' : 'leaf-node');
+                row.setAttribute('data-path', path);
+
+                var cb = document.createElement('input');
+                cb.type = 'checkbox';
+                cb.value = path;
+                if (children.length) {
+                    cb.disabled = true;
+                    cb.style.cssText = 'accent-color:#9CA3AF;width:15px;height:15px;cursor:default;flex-shrink:0;margin-right:4px;opacity:0.5;';
+                } else {
+                    cb.style.cssText = 'accent-color:#2563EB;width:15px;height:15px;cursor:pointer;flex-shrink:0;margin-right:4px;';
+                    cb.onclick = function (e) { e.stopPropagation(); };
+                }
+                row.appendChild(cb);
+
+                var expand = document.createElement('span');
+                expand.className = 'expand';
+                expand.textContent = children.length ? '▼' : '';
+                if (children.length) expand.onclick = function (e) { e.stopPropagation(); toggleDirExpand(expand); };
+                row.appendChild(expand);
+
+                var icon = document.createElement('span');
+                icon.className = 'node-icon';
+                icon.textContent = children.length ? '📁' : '📄';
+                row.appendChild(icon);
+                row.appendChild(document.createTextNode(node.name));
+
+                row.onclick = function () { selectDirNode(row, path); };
+                container.appendChild(row);
+
+                if (children.length) {
+                    var childBox = document.createElement('div');
+                    childBox.className = 'dir-tree-children';
+                    container.appendChild(childBox);
+                    appendDirTreeNodes(children, childBox, path);
+                }
+            });
+        }
+
+        function applyDirSelection(paths) {
+            var container = document.getElementById('dirTreeContainer');
+            var leafCheckboxes = container.querySelectorAll('.leaf-node input[type="checkbox"]');
+            for (var i = 0; i < leafCheckboxes.length; i++) {
+                leafCheckboxes[i].checked = paths.indexOf(leafCheckboxes[i].value) > -1;
+            }
+            updateSelectedDirList();
+        }
+
+        function ensureDirTree() {
+            if (!window.App || !App.apiFetch) { setDirTreePlaceholder('目录加载失败：当前页面缺少请求组件'); return Promise.resolve(); }
+            var pid = document.getElementById('projectSelect').value;
+            if (!pid) { setDirTreePlaceholder('未带入填报项目，请关闭后重新选择项目'); return Promise.resolve(); }
+            if (dirTreeReady && dirTreeProjectId === pid) return Promise.resolve();
+            dirTreeProjectId = pid;
+            dirTreeReady = false;
+            setDirTreePlaceholder('正在加载项目目录...');
+            return App.apiFetch('/sub-item-databases/tree?projectId=' + encodeURIComponent(pid)).then(function (tree) {
+                var nodes = (tree || []).filter(function (n) { return n && n.status !== 'inactive'; });
+                if (!nodes.length) { setDirTreePlaceholder('该项目暂无资料目录，请先在“工程资料目录设置”中创建'); return; }
+                var container = document.getElementById('dirTreeContainer');
+                container.innerHTML = '';
+                appendDirTreeNodes(nodes, container, '');
+                dirTreeReady = true;
+            }).catch(function () {
+                setDirTreePlaceholder('目录加载失败，请稍后重试');
+            });
+        }
+
         function updateSelectedDirList() {
             var container = document.getElementById('dirTreeContainer');
             var leafCheckboxes = container.querySelectorAll('.leaf-node input[type="checkbox"]');
@@ -1602,7 +1873,7 @@
             } else {
                 var html = '';
                 for (var j = 0; j < selectedDirPaths.length; j++) {
-                    html += '<span class="dir-selected-tag">' + selectedDirPaths[j] + '<span class="remove-dir-tag" onclick="removeDirTag(\'' + selectedDirPaths[j].replace(/'/g, "\\'") + '\')">✕</span></span>';
+                    html += '<span class="dir-selected-tag">' + esc(selectedDirPaths[j]) + '<span class="remove-dir-tag" onclick="removeDirTag(\'' + jsAttr(selectedDirPaths[j]) + '\')">✕</span></span>';
                 }
                 tagsEl.innerHTML = html;
             }
@@ -1629,15 +1900,11 @@
             for (var i = 0; i < existingTags.length; i++) {
                 existingPaths.push(existingTags[i].getAttribute('data-path'));
             }
-            var container = document.getElementById('dirTreeContainer');
-            var leafCheckboxes = container.querySelectorAll('.leaf-node input[type="checkbox"]');
-            for (var j = 0; j < leafCheckboxes.length; j++) {
-                leafCheckboxes[j].checked = existingPaths.indexOf(leafCheckboxes[j].value) > -1;
-            }
             selectedDirPaths = existingPaths.slice();
             document.getElementById('currentFileName').textContent = fileName;
             updateSelectedDirList();
             document.getElementById('dirTreeModal').classList.add('show');
+            ensureDirTree().then(function () { applyDirSelection(existingPaths); });
         }
 
         function confirmDirSelection() {
@@ -1669,6 +1936,7 @@
                 dirPathEl.parentNode.insertBefore(tagsDiv, dirPathEl.nextSibling);
                 var badge = attItem.querySelector('.pending-badge');
                 if (badge) badge.remove();
+                attItem.safetyMetadata = Object.assign({}, attItem.safetyMetadata || {}, { dirs: selectedDirPaths.slice() });
             }
             pendingAttIndex++;
             if (pendingAttIndex < pendingAttIds.length) {
@@ -1687,36 +1955,10 @@
             }
         }
 
-        function initDirCheckboxes() {
-            var container = document.getElementById('dirTreeContainer');
-            var nodes = container.querySelectorAll('.dir-tree-node');
-            for (var i = 0; i < nodes.length; i++) {
-                var node = nodes[i];
-                var hasExpand = node.querySelector('.expand');
-                var match = node.getAttribute('onclick');
-                var path = '';
-                if (match) {
-                    var pathMatch = match.match(/selectDirNode\([^,]+,\s*'([^']+)'\)/);
-                    if (pathMatch) path = pathMatch[1];
-                }
-                if (!path) continue;
-                var cb = document.createElement('input');
-                cb.type = 'checkbox';
-                cb.value = path;
-                if (hasExpand) {
-                    node.classList.add('parent-node');
-                    cb.style.cssText = 'accent-color:#9CA3AF;width:15px;height:15px;cursor:default;flex-shrink:0;margin-right:4px;opacity:0.5;';
-                    cb.disabled = true;
-                } else {
-                    node.classList.add('leaf-node');
-                    cb.style.cssText = 'accent-color:#2563EB;width:15px;height:15px;cursor:pointer;flex-shrink:0;margin-right:4px;';
-                    cb.onclick = function(e) { e.stopPropagation(); };
-                }
-                node.insertBefore(cb, node.firstChild);
-            }
-        }
-
-        initDirCheckboxes();
+        document.querySelectorAll('#createModal input[placeholder], #createModal textarea[placeholder]').forEach(function (el) {
+            el.setAttribute('title', el.getAttribute('placeholder'));
+            el.setAttribute('aria-description', el.getAttribute('placeholder'));
+        });
 
         (function () {
             var params = new URLSearchParams(window.location.search);
@@ -1750,7 +1992,7 @@
             var viewer = document.createElement('div');
             viewer.className = 'vc-photo-viewer';
             viewer.onclick = function() { viewer.remove(); };
-            viewer.innerHTML = '<div class="vc-viewer-close">✕</div><img src="' + url + '" alt="' + name + '"><div class="vc-viewer-name">' + name + '</div>';
+            viewer.innerHTML = '<div class="vc-viewer-close">✕</div><img src="' + esc(url) + '" alt="' + esc(name) + '"><div class="vc-viewer-name">' + esc(name) + '</div>';
             document.body.appendChild(viewer);
         }
     </script>
