@@ -89,7 +89,9 @@
     }
 
     /* ---- 主区域全宽 ---- */
-    .main { margin-left: 0 !important; }
+    /* min-width:0 必须显式声明：.main 是 body 的 flex 子项，默认 min-width:auto 会被
+       列表表格（th nowrap）的固有宽度撑大，导致窄屏出现整页横向滚动 */
+    .main { margin-left: 0 !important; min-width: 0 !important; }
     body { min-width: 0 !important; }
 
     /* ---- Header 压缩 ---- */
